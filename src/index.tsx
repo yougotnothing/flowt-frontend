@@ -7,11 +7,11 @@ import { MainPage } from './components/mainPage/mainPage';
 import { Search } from './components/search/search';
 import { Home } from './components/mainPage/home/home';
 import { Login } from './components/mainPage/login-register/login';
-import { Register } from './components/mainPage/register/register';
+import { Register } from './components/mainPage/login-register/register';
 
 const pageRouter = createBrowserRouter([
   {
-    path: '/home',
+    path: '/',
     element: <MainPage />,
     children: [
       {

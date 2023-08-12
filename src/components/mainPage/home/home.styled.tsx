@@ -1,49 +1,183 @@
 import styled from "styled-components";
 import { COLORS } from "../../../colors.const";
 
-export const HomeContainer = styled('div')`
-  margin: 0;
+export const UserContainer = styled('div')`
   display: flex;
-  flex-direction: row;
-  width: 1720px;
-`;
-
-export const UtilsContainer = styled('div')`
-  display: flex;
-  flex-direction: row;
-  width: 680px;
-  height: 80vh;
+  flex-direction: column;
   align-self: start;
+  width: 286px;
+  height: 98%;
+  background-color: ${COLORS.front};
+  padding: 2%;
+  border-radius: 20px;
+  gap: 2%;
 `;
 
-export const Utils = styled('div')`
-  width: 640px;
-  align-self: flex-start;
-  border-radius: 0px 25px 25px 0px;
-  background-color: ${COLORS.front};
+export const FavoriteContainer = styled('div')`
+  display: flex;
+  width: 306px;
+  flex-direction: column;
+  height: 76vh;
 `;
 
-export const Settings = styled('button')`
-  justify-self: start;
-  width: 62px;
-  height: 62px;
-  background-image: url('/settings.png');
-  background-size: 62px;
-  background-color: ${COLORS.front};
-  border: none;
-  border-radius: 50%;
+export const Card = styled('button')`
+  padding-left: 4%;
+  width: 286px;
+  height: 84px;
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  background: none;
+  border: 3px solid ${COLORS.input};
+  border-radius: 14px;
+  justify-content: center;
+  transition: all 0.3s;
 
   &:hover {
-    max-width: 168px;
+    border-color: ${COLORS.firstFont};
     cursor: pointer;
   }
 `;
 
-export const SongContainer = styled('div')`
+export const CardIcon = styled('img')`
+  width: 56px;
+  height: 56px;
+  background: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 56px;
+  margin-top: auto;
+  margin-bottom: auto;
+  align-self: start;
+  background-image: url('/androidIcon.jpg');
+  border: none;
+  border-radius: 14px;
+`;
+
+export const CardHeader = styled('div')`
+  font-size: 22px;
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 800;
+  letter-spacing: normal;
+  color: ${COLORS.firstFontHover};
+  margin: auto;
+`;
+
+export const Recommendations = styled('div')`
+  margin-top: 40px;
+  padding: 1%;
   display: flex;
   flex-direction: column;
-  background-color: ${COLORS.container};
+  height: 340px;
+  text-align: start;
+  justify-content: end;
+  background: linear-gradient(90deg, ${COLORS.container} 0%, ${COLORS.green} 100%);
+  border-radius: 20px;
+`;
+
+export const Title = styled('div')`
+  align-self: start;
+  font-family: 'Raleway', sans-serif;
+  font-size: 34px;
+  font-weight: 900;
+  color: ${COLORS.firstFontHover};
+`;
+
+export const RecommendationsContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 30px;
+  width: 780px;
+  height: 240px;
+  gap: 40px;
+`;
+
+export const RecommendationCard = styled('button')`
+  display: flex;
+  border: none;
+  flex-direction: column;
   align-items: center;
-  padding: 20px;
-  align-self: center;
+  justify-content: center;
+  border-radius: 14px;
+  width: 174px;
+  height: 240px;
+  background-color: ${COLORS.front};
+  gap: 20px;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: ${COLORS.frontHover};
+    cursor: pointer;
+  }
+`;
+
+export const RecommendationTitle = styled('div')`
+  font-family: 'Raleway', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  text-align: start;
+  text-transform: lowercase;
+  justify-content: flex-start;
+  color: ${COLORS.firstFont};
+  transition: all 0.2s;
+  
+  &:hover {
+    color: ${COLORS.firstFontHover};
+  }
+`;
+
+export const RecTextContainer = styled('div')`
+  gap: 10px;
+`;
+
+export const RecommendationsHeader = styled('div')`
+  font-size: 20px;
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 300;
+  color: ${COLORS.firstFont};
+  transition: all 0.3s;
+
+  &:hover {
+    color: ${COLORS.firstFontHover};
+  }
+`;
+
+export const RecommendationsIcon = styled('picture')`
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 14px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-image: url('https://avatars.githubusercontent.com/u/114938803?v=');
+`;
+
+export const LastListenContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 26px;
+  background: rgb(70, 147, 177);
+  background: linear-gradient(0deg, rgba(70, 147, 177, 1) 0%, rgba(108, 255, 92, 1) 100%);
+`;
+
+export const LastListenCard = styled('button')`
+  display: flex;
+  border: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  width: 194px;
+  height: 220px;
+  background-color: ${COLORS.front};
+  gap: 20px;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: ${COLORS.frontHover};
+    cursor: pointer;
+  }
 `;

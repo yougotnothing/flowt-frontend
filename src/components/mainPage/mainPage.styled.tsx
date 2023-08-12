@@ -72,14 +72,13 @@ export const SearchButton = styled('button')`
 `;
 
 export const ContentContainer = styled('div')`
-  padding: 3%;
+  padding-top: 3%;
   display: flex;
-  flex-direction: column;
-  max-width: 80%;
-  max-height: 90vh;
+  flex-direction: row;
+  width: 96%;
+  max-height: 78%;
   align-self: center;
-  justify-items: center;
-  align-items: cetner;
+  gap: 6%;
 `;
 
 export const Button = styled('button')`
@@ -120,12 +119,22 @@ export const Button = styled('button')`
   }
 `;
 
-export const Logo = styled('div')`
-  width: 55px;
-  heigth: 85px;
-  border-radius: 50%;
+export const Logo = styled('button')`
+  height: 60px;
+  width: 164px;
+  background: none;
+  border: none;
   color: white;
   margin: auto;
+  background-image: url('/flowt.png');
+  background-size: 100%;
+
+  .logoLink {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
 `;
 
 export const ButtonsContainer = styled('div')`
@@ -160,4 +169,29 @@ export const ButtonsContainer = styled('div')`
       color: ${COLORS.firstFontHover};
     }
   }
+`;
+
+export const Settings = styled('button')`
+  align-self: center;
+  width: 38px;
+  height: 38px;
+  background-image: url('/settings.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 46px;
+  background-color: ${COLORS.front};
+  border: none;
+  border-radius: 50%;
+  transform: rotate(-90deg);
+  transition: all 0.5s;
+
+  &:hover {
+    transform: rotate(90deg);
+    max-width: 168px;
+    cursor: pointer;
+  }
+`;
+
+export const CardButton = styled('button')`
+  
 `;

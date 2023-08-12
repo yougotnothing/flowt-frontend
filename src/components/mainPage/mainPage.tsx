@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Form, Link, Outlet } from "react-router-dom";
-import { Container, Navbar, Search, SearchButton, ContentContainer, Button, Logo, ButtonsContainer } from "./mainPage.styled";
+import { Container, Navbar, Search, SearchButton, ContentContainer, Logo, Settings, ButtonsContainer } from "./mainPage.styled";
 
 export const MainPage: React.FC = () => {
+
     return (
       <Container>
         <Navbar>
-          <Logo>logo</Logo>
+          <Logo>
+            <Link to={`/home`} className="logoLink">FLOWT</Link>
+          </Logo>
           <Form className="form" method="post" action="/search">
             <Search placeholder="search" />
             <SearchButton>
@@ -16,6 +19,7 @@ export const MainPage: React.FC = () => {
           <ButtonsContainer>
             <Link to={`/login`} className="link">Login</Link>
             <Link to={`/register`} className="link">Register</Link>
+            <Settings></Settings>
           </ButtonsContainer>
         </Navbar>
         <ContentContainer>

@@ -23,7 +23,9 @@ export const LoginCard = styled('div')`
   flex-direction: column;
   align-items: center;
   align-self: center;
-  justify-self: center;
+  margin-top: 7%;
+  margin-left: auto;
+  margin-right: auto;
   padding: 24px;
   box-shadow: 0px 0px 16px 0px ${COLORS.border};
   border-radius: 24px;
@@ -98,4 +100,11 @@ export const RegisteredButton = styled('button')`
     border-right-width: 0;
     color: ${COLORS.secondaryHover};
   }
+`;
+
+export const ValidationSpan = styled('span')`
+  display: none;
+  font-family: 'Urbanist' sans-serif;
+  font-weight: 200;
+  color: ${COLORS.krasniy};
 `;
