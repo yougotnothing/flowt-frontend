@@ -6,12 +6,17 @@ export const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    function handleLogin() {
+    async function handleLogin() {
       const loginDto: { username: string, password: string } = {
         username: username,
         password: password
       }
-      login(loginDto);
+
+      try {
+        await login(loginDto);
+      } catch (error: any) {
+        console.log(error.response.data);
+      }
     }
 
     return (

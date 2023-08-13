@@ -11,7 +11,7 @@ const api = axios.create({
 api.interceptors.request.use((config => {
     config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
     config.headers['Content-Type'] = 'application/json';
-    config.headers['Access-Control-Allow-Origin'] = "http://localhost:8080";
+    config.headers['Access-Control-Allow-Origin'] = API_URL;
     return config;
 }));
  
