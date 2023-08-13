@@ -59,6 +59,9 @@ export const LoginInput = styled('input')`
 `;
 
 export const LoginButton = styled('button')`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 124px;
   height: 38px;
   background-color: ${COLORS.secondary};
@@ -69,6 +72,13 @@ export const LoginButton = styled('button')`
   font-family: 'Urbanist', sans-serif;
   font-weight: 300;
   font-size: 16px;
+
+  .link {
+    position: absolute;
+    opacity: 0;
+    width: 124px;
+    height: 38px;
+  }
 
   &:hover {
     background-color: ${COLORS.border};

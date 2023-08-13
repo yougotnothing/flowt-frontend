@@ -1,4 +1,5 @@
 import { SetStateAction, useState } from "react";
+import { Link } from "react-router-dom";
 import { LoginCard, LoginButton, LoginHeader, LoginInput, RegisteredButton, Span } from "./login.register.styled";
 import { registration } from '../../../api/axiosConfig';
 
@@ -26,22 +27,27 @@ export const Register = () => {
           onChange={(event: { target: { value: SetStateAction<string>; }; }) => setUsername(event.target.value)}
           placeholder="username"
         />
-        <LoginInput 
+        <LoginInput
           value={email} 
           onChange={(event: { target: { value: SetStateAction<string>; }; }) => setEmail(event.target.value)} 
           placeholder="email"
         />
-        <LoginInput 
+        <LoginInput
+          type="password"
           value={password} 
           onChange={(event: { target: { value: SetStateAction<string>; }; }) => setPassword(event.target.value)} 
           placeholder="password" 
         />
-        <LoginInput 
+        <LoginInput
+          type="password"
           value={confirmPassword} 
           onChange={(event: { target: { value: SetStateAction<string>; }; }) => setConfirmPassword(event.target.value)} 
           placeholder="repeat password" 
         />
-        <LoginButton onClick={handleRegister}>register</LoginButton>
+        <LoginButton onClick={handleRegister}>
+          <Link to={`/login`} className="link"/>
+            register
+        </LoginButton>
         <RegisteredButton>Registered?</RegisteredButton>
       </LoginCard>
     );

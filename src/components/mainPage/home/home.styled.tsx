@@ -17,7 +17,7 @@ export const FavoriteContainer = styled('div')`
   display: flex;
   width: 306px;
   flex-direction: column;
-  height: 76vh;
+  height: 78vh;
 `;
 
 export const Card = styled('button')`
@@ -155,10 +155,13 @@ export const RecommendationsIcon = styled('picture')`
 `;
 
 export const LastListenContainer = styled('div')`
+  margin-top: 40px;
+  border-radius: 20px;
+  width: 411px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 26px;
+  padding: 14px;
   background: rgb(70, 147, 177);
   background: linear-gradient(0deg, rgba(70, 147, 177, 1) 0%, rgba(108, 255, 92, 1) 100%);
 `;
@@ -173,11 +176,12 @@ export const LastListenCard = styled('button')`
   width: 194px;
   height: 220px;
   background-color: ${COLORS.front};
+  opacity: 0.3;
   gap: 20px;
   transition: all 0.2s;
 
   &:hover {
-    background-color: ${COLORS.frontHover};
+    background-color: black;
     cursor: pointer;
   }
 `;

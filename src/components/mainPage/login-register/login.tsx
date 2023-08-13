@@ -1,4 +1,5 @@
 import { SetStateAction, useState } from "react";
+import { Link } from "react-router-dom";
 import { LoginHeader, LoginButton, LoginCard, LoginInput, Span } from "./login.register.styled";
 import { login } from "../../../api/axiosConfig";
 
@@ -27,7 +28,10 @@ export const Login = () => {
           onChange={(event: { target: { value: SetStateAction<string>; }; }) => setPassword(event.target.value)} 
           placeholder="password"
         />
-        <LoginButton onClick={handleLogin}>login</LoginButton>
+        <LoginButton onClick={handleLogin}>
+          <Link to={`/home`} className="link"/>
+            login
+          </LoginButton>
       </LoginCard>
     );
 };

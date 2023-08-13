@@ -1,4 +1,6 @@
-import { UserContainer, FavoriteContainer, Card, CardHeader, CardIcon, RecommendationsContainer, Title, Recommendations, RecommendationCard, RecommendationTitle, RecommendationsHeader, RecommendationsIcon, RecTextContainer } from "./home.styled";
+import { UserContainer, FavoriteContainer, Card, CardHeader, CardIcon, RecommendationsContainer,
+  Title, Recommendations, RecommendationCard, RecommendationTitle, RecommendationsHeader, RecommendationsIcon,
+  RecTextContainer, LastListenCard, LastListenContainer } from "./home.styled";
 
 export const Home = () => {
 
@@ -25,6 +27,11 @@ export const Home = () => {
           </RecommendationCard>
         </RecommendationsContainer>
         </Recommendations>
+        <LastListenContainer>
+          <LastListenCard>
+
+          </LastListenCard>
+        </LastListenContainer>
       </>
     );
 }
