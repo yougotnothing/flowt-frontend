@@ -1,13 +1,12 @@
 import axios from "axios";
  
 export const API_URL = 'http://localhost:8080';
+let isRetry = false;
  
 const api = axios.create({
     baseURL: API_URL,
     withCredentials: true
 });
- 
-let isRetry = false;
  
 api.interceptors.request.use((config => {
     config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
@@ -20,16 +19,21 @@ api.interceptors.response.use(
     (config) => config,
     async (error) => {
         const originalRequest = error.config;
-        if (error.response.status === 401 && !isRetry) {
-            isRetry = true;
-            try {
-                await refreshToken(); 
-                return api.request(originalRequest);
-            } catch (e) {
-                console.log('UNAUTHORIZED');
+        if (error.response.status === 401) {
+            if (!isRetry && !originalRequest.url.includes('/auth/')) {
+                isRetry = true;
+                try {
+                    await refreshToken();
+                    return api.request(originalRequest);
+                } catch (e) {
+                    console.log(error.response.data);
+                    throw error;
+                }
+            } else if (originalRequest.url.includes('/auth/')) {
+                return Promise.reject(error);
             }
+            throw error;
         }
-        throw error;
     }
 );
  

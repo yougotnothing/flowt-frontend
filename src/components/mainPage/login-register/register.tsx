@@ -8,14 +8,18 @@ export const Register = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    function handleRegister(): any {
+    async function handleRegister() {
       const registerDto: any = {
         username: username,
         email: email,
         password: password,
         confirmPassword: confirmPassword
       }
-      registration(registerDto);
+      try {
+        await registration(registerDto);
+      } catch (error: any) {
+        console.log(error.response.data);
+      }
     }
 
     return (
