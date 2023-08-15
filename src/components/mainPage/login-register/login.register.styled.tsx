@@ -17,7 +17,6 @@ export const Span = styled('span')`
 `;
 
 export const LoginCard = styled('div')`
-  gap: 6px;
   width: 360px;
   display: flex;
   flex-direction: column;
@@ -113,8 +112,17 @@ export const RegisteredButton = styled('button')`
 `;
 
 export const ValidationSpan = styled('span')`
-  display: none;
+  display: flex;
+  align-self: top;
   font-family: 'Urbanist' sans-serif;
-  font-weight: 200;
+  font-weight: 700;
   color: ${COLORS.krasniy};
+`;
+
+export const InputContainer = styled('div')`
+  display: flex;
+  align-self: center;
+  width: 250px;
+  flex-direction: column;
+  gap: 10px;
 `;

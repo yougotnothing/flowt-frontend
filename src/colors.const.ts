@@ -14,5 +14,5 @@ export const COLORS: { background: string, front: string, frontHover: string,  s
   border: "#3e5454",
   container: "#077373",
   green: "#32a852",
-  krasniy: "#87010d"
+  krasniy: "#ff4a4d"
 }

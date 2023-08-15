@@ -1,8 +1,11 @@
+import { render } from "@testing-library/react";
 import { useState } from "react";
-import { Form, Link, Outlet } from "react-router-dom";
+import { Form, Link, Outlet, redirect } from "react-router-dom";
+import { Home } from "./home/home";
 import { Container, Navbar, Search, SearchButton, ContentContainer, Logo, Settings, ButtonsContainer } from "./mainPage.styled";
 
 export const MainPage: React.FC = () => {
+  let [main, setMain] = useState(true);
 
     return (
       <Container>

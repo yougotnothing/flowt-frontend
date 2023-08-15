@@ -173,10 +173,10 @@ export const LastListenCard = styled('button')`
   align-items: center;
   justify-content: center;
   border-radius: 14px;
-  width: 194px;
-  height: 220px;
+  width: 100%;
+  height: 126px;
   background-color: ${COLORS.front};
-  opacity: 0.3;
+  opacity: 0.6;
   gap: 20px;
   transition: all 0.2s;
 
