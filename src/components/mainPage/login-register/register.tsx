@@ -5,7 +5,7 @@ import { registration } from '../../../api/axiosConfig';
 export const Register: React.FC = () => {
     const [username, setUsername] = useState('');
     const [usernameDirty, setUsernameDirty] = useState(false);
-    const [usernameError, setUsernameError] = useState("username is not valid");
+    const [usernameError, setUsernameError] = useState("username is already exist");
     const [email, setEmail] = useState('');
     const [emailDirty, setEmailDirty] = useState(false);
     const [emailError, setEmailError] = useState('email is not valid');
@@ -19,6 +19,10 @@ export const Register: React.FC = () => {
     
     let errorMessage: any = "";
     let isErrorOccurred: boolean = false;
+
+    let isUsernameError: boolean = false;
+    let isEmailError: boolean = false;
+    let isPasswordError: boolean = false;
 
     function blurHandler(e: any) {
       switch(e.target.name) {
@@ -51,7 +55,7 @@ export const Register: React.FC = () => {
       setUsername(e.target.value);
       if(e.target.value.length < 3) {
         setUsernameError("username too short");
-      }else if(e.target.value.length >= 16) {
+      }else if(e.target.value.length > 16) {
         setUsernameError("username too long");
       }else{
         setUsernameError("");
@@ -61,9 +65,9 @@ export const Register: React.FC = () => {
     const passwordHandler = (e: any) => {
       setPassword(e.target.value);
 
-      if(e.target.value.length <= 7) {
-        setPasswordError("password may be longer than 7 char");
-      }else if(e.target.value.length >= 120) {
+      if(e.target.value.length < 8) {
+        setPasswordError("password may be longer than 8 char");
+      }else if(e.target.value.length > 16) {
         setPasswordError("password too long");
       }else{
         setPasswordError("");
@@ -90,9 +94,20 @@ export const Register: React.FC = () => {
       try {
         await registration(registerDto);
       } catch (error: any) {
-        errorMessage = error.response.data;
-        setError(errorMessage);
-        isErrorOccurred = true;
+        const field = error.response.data.field;
+        console.log(field);
+        switch(field) {
+          case "username":
+            isUsernameError = true;
+            console.log(isUsernameError);
+            break;
+          case "email":
+            isEmailError = true;
+            break;
+          case "password": 
+            isPasswordError = true;
+            break;
+        }
       }
     }
 
@@ -100,41 +115,44 @@ export const Register: React.FC = () => {
       <LoginCard>
         <LoginHeader>Welcome<Span>!</Span></LoginHeader>
         <InputContainer>
-        <LoginInput 
-          value={username}
-          name="username" 
-          onBlur={(e: any) => blurHandler(e)}
-          onChange={(e: any) => usernameHandler(e)}
-          placeholder="username"
+          <LoginInput 
+            value={username}
+            name="username" 
+            onBlur={(e: any) => blurHandler(e)}
+            onChange={(e: any) => usernameHandler(e)}
+            placeholder="username"
           />
-          {(usernameDirty && usernameError) && <ValidationSpan>{usernameError}</ValidationSpan>}
-        <LoginInput
-          value={email}
-          name="email"
-          onBlur={(e: any) => blurHandler(e)}
-          onChange={(e: any) => emailHandler(e)} 
-          placeholder="email"
+            {(usernameDirty && usernameError && isUsernameError) && <ValidationSpan>{usernameError}</ValidationSpan>}
+            {isUsernameError ? <ValidationSpan>{usernameError}</ValidationSpan> : null}
+          <LoginInput
+            value={email}
+            name="email"
+            onBlur={(e: any) => blurHandler(e)}
+            onChange={(e: any) => emailHandler(e)} 
+            placeholder="email"
           />
-          {(emailDirty && emailError) && <ValidationSpan>{emailError}</ValidationSpan>}
-        <LoginInput
-          name="password"
-          type="password"
-          value={password}
-          onBlur={(e: any) => blurHandler(e)}
-          onChange={(e: any) => passwordHandler(e)} 
-          placeholder="password" 
+            {(emailDirty && emailError) && <ValidationSpan>{emailError}</ValidationSpan>}
+            {(isEmailError) && <ValidationSpan>{emailError}</ValidationSpan>}
+          <LoginInput
+            name="password"
+            type="password"
+            value={password}
+            onBlur={(e: any) => blurHandler(e)}
+            onChange={(e: any) => passwordHandler(e)} 
+            placeholder="password" 
           />
-          {(passwordDirty && passwordError) && <ValidationSpan>{passwordError}</ValidationSpan>}
-        <LoginInput
-          name="confirm password"
-          type="password"
-          value={confirmPassword} 
-          onBlur={(e: any) => blurHandler(e)}
-          onChange={(e: any) => confirmPasswordHandler(e)}  
-          placeholder="repeat password" 
+            {(passwordDirty && passwordError) && <ValidationSpan>{passwordError}</ValidationSpan>}
+            {(isPasswordError) && <ValidationSpan>{passwordError}</ValidationSpan>}
+          <LoginInput
+            name="confirm password"
+            type="password"
+            value={confirmPassword} 
+            onBlur={(e: any) => blurHandler(e)}
+            onChange={(e: any) => confirmPasswordHandler(e)}  
+            placeholder="repeat password" 
           />
-          {(confirmPasswordDirty && confirmPasswordError) && <ValidationSpan>{confirmPasswordError}</ValidationSpan>}
-          </InputContainer>
+            {(confirmPasswordDirty && confirmPasswordError) && <ValidationSpan>{confirmPasswordError}</ValidationSpan>}
+        </InputContainer>
         <LoginButton onClick={handleRegister}>
           register
         </LoginButton>
