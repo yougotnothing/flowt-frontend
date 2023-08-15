@@ -39,6 +39,7 @@ export const LoginInput = styled('input')`
   border: none;
   border-radius: 10px;
   padding-left: 20px;
+  margin-top: 10px;
   background-color: ${COLORS.input};
   color: #bdbdbd;
   outline: none;
@@ -124,5 +125,4 @@ export const InputContainer = styled('div')`
   align-self: center;
   width: 250px;
   flex-direction: column;
-  gap: 10px;
 `;

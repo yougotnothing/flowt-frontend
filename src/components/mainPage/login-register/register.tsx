@@ -63,10 +63,8 @@ export const Register: React.FC = () => {
 
       if(e.target.value.length <= 7) {
         setPasswordError("password may be longer than 7 char");
-        console.log(passwordError);
       }else if(e.target.value.length >= 120) {
         setPasswordError("password too long");
-        console.log(passwordError);
       }else{
         setPasswordError("");
       }
@@ -75,9 +73,9 @@ export const Register: React.FC = () => {
     const confirmPasswordHandler = (e: any) => {
       setConfirmPassword(e.target.value);
 
-      if (confirmPassword !== password) {
+      if(e.target.value !== password) {
         setConfirmPasswordError("password mismatch");
-      } else {
+      }else{
         setConfirmPasswordError("");
       }
     }
@@ -94,8 +92,6 @@ export const Register: React.FC = () => {
       } catch (error: any) {
         errorMessage = error.response.data;
         setError(errorMessage);
-        console.log(errorMessage);
-        console.log(error1);
         isErrorOccurred = true;
       }
     }
@@ -121,6 +117,7 @@ export const Register: React.FC = () => {
           />
           {(emailDirty && emailError) && <ValidationSpan>{emailError}</ValidationSpan>}
         <LoginInput
+          name="password"
           type="password"
           value={password}
           onBlur={(e: any) => blurHandler(e)}
@@ -129,6 +126,7 @@ export const Register: React.FC = () => {
           />
           {(passwordDirty && passwordError) && <ValidationSpan>{passwordError}</ValidationSpan>}
         <LoginInput
+          name="confirm password"
           type="password"
           value={confirmPassword} 
           onBlur={(e: any) => blurHandler(e)}
