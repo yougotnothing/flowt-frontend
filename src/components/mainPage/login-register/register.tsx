@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { LoginCard, LoginButton, LoginHeader, LoginInput, RegisteredButton, Span, ValidationSpan, InputContainer } from "./login.register.styled";
 import { registration } from '../../../api/axiosConfig';
 
@@ -15,15 +15,12 @@ export const Register: React.FC = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordDirty, setConfirmPasswordDirty] = useState(false);
     const [confirmPasswordError, setConfirmPasswordError] = useState('passwords not match');
-    const [error1, setError] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [isUsernameCustomError, setUsernameCustomError] = useState(false);
+    const [isEmailCustomError, setEmailCustomError] = useState(false);
+    const [isPasswordCustomError, setPasswordCustomError] = useState(false);
+    const [registerButton, setRegisterButton] = useState(false);
     
-    let errorMessage: any = "";
-    let isErrorOccurred: boolean = false;
-
-    let isUsernameError: boolean = false;
-    let isEmailError: boolean = false;
-    let isPasswordError: boolean = false;
-
     function blurHandler(e: any) {
       switch(e.target.name) {
         case "username":
@@ -85,7 +82,7 @@ export const Register: React.FC = () => {
     }
 
     async function handleRegister() {
-      const registerDto: { username: string, email: string, password: string, confirmPassword: string } = {
+      const registerDto: any = {
         username: username,
         email: email,
         password: password,
@@ -93,37 +90,41 @@ export const Register: React.FC = () => {
       }
       try {
         await registration(registerDto);
+        setErrorMessage(null);
       } catch (error: any) {
         const field = error.response.data.field;
-        console.log(field);
+
+        setUsernameCustomError(false);
+        setEmailCustomError(false);
+        setPasswordCustomError(false);
+        setErrorMessage(error.response.data.message)
         switch(field) {
           case "username":
-            isUsernameError = true;
-            console.log(isUsernameError);
+            setUsernameCustomError(true);
             break;
           case "email":
-            isEmailError = true;
+            setEmailCustomError(true);
             break;
-          case "password": 
-            isPasswordError = true;
+          case "password":
+            setPasswordCustomError(true);
             break;
         }
       }
     }
 
-    return (
-      <LoginCard>
-        <LoginHeader>Welcome<Span>!</Span></LoginHeader>
-        <InputContainer>
-          <LoginInput 
-            value={username}
-            name="username" 
-            onBlur={(e: any) => blurHandler(e)}
-            onChange={(e: any) => usernameHandler(e)}
-            placeholder="username"
-          />
-            {(usernameDirty && usernameError && isUsernameError) && <ValidationSpan>{usernameError}</ValidationSpan>}
-            {isUsernameError ? <ValidationSpan>{usernameError}</ValidationSpan> : null}
+  return (
+    <LoginCard>
+      <LoginHeader>Welcome<Span>!</Span></LoginHeader>
+      <InputContainer>
+        <LoginInput
+          value={username}
+          name="username"
+          onBlur={(e: any) => blurHandler(e)}
+          onChange={(e: any) => usernameHandler(e)}
+          placeholder="username"
+        />
+        {(usernameDirty && usernameError) && <ValidationSpan>{usernameError}</ValidationSpan>}
+        {errorMessage && isUsernameCustomError && <ValidationSpan>{errorMessage}</ValidationSpan>}
           <LoginInput
             value={email}
             name="email"
@@ -132,7 +133,7 @@ export const Register: React.FC = () => {
             placeholder="email"
           />
             {(emailDirty && emailError) && <ValidationSpan>{emailError}</ValidationSpan>}
-            {(isEmailError) && <ValidationSpan>{emailError}</ValidationSpan>}
+            {errorMessage && isEmailCustomError && <ValidationSpan>{errorMessage}</ValidationSpan>}
           <LoginInput
             name="password"
             type="password"
@@ -141,8 +142,8 @@ export const Register: React.FC = () => {
             onChange={(e: any) => passwordHandler(e)} 
             placeholder="password" 
           />
-            {(passwordDirty && passwordError) && <ValidationSpan>{passwordError}</ValidationSpan>}
-            {(isPasswordError) && <ValidationSpan>{passwordError}</ValidationSpan>}
+            {((passwordDirty || isPasswordCustomError) && passwordError) && <ValidationSpan>{passwordError}</ValidationSpan>}
+            {errorMessage && isPasswordCustomError && <ValidationSpan>{errorMessage}</ValidationSpan>}
           <LoginInput
             name="confirm password"
             type="password"
@@ -153,7 +154,7 @@ export const Register: React.FC = () => {
           />
             {(confirmPasswordDirty && confirmPasswordError) && <ValidationSpan>{confirmPasswordError}</ValidationSpan>}
         </InputContainer>
-        <LoginButton onClick={handleRegister}>
+      <LoginButton onClick={handleRegister}>
           register
         </LoginButton>
         <RegisteredButton>Registered?</RegisteredButton>
