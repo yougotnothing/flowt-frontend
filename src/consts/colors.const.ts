@@ -1,7 +1,7 @@
 export const COLORS: { background: string, front: string, frontHover: string,  secondary: string, secondaryHover: string,
   firstFont: string, firstFontHover: string, input: string, inputHover: string, border: string,
-  container: string, green: string, krasniy: string } = {
-    
+  container: string, green: string, krasniy: string, grey: string } = {
+
   background: "#1c1b1a",
   front: "#332F2C",
   frontHover: "#3d3a38",
@@ -14,5 +14,6 @@ export const COLORS: { background: string, front: string, frontHover: string,  s
   border: "#3e5454",
   container: "#077373",
   green: "#32a852",
-  krasniy: "#ff4a4d"
+  krasniy: "#ff4a4d",
+  grey: "#32353C"
 }

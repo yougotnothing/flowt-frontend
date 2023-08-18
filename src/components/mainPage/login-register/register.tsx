@@ -1,160 +1,124 @@
 import { useState } from "react";
-import { LoginCard, LoginButton, LoginHeader, LoginInput, RegisteredButton, Span, ValidationSpan, InputContainer } from "./login.register.styled";
-import { registration } from '../../../api/axiosConfig';
+import { useNavigate } from "react-router-dom";
+
+import { 
+  LoginCard, 
+  LoginButton, 
+  LoginHeader, 
+  LoginInput, 
+  RegisteredButton, 
+  Span,
+  ValidationSpan,
+  InputContainer 
+} from "./login.register.styled";
+import { useRegistration } from "../../../auth/authService";
+import { useFormik } from "formik";
+import { registrationValidationSchema } from "../../../validation/yup.config";
+import { Loader } from "../../loader/loader";
 
 export const Register: React.FC = () => {
-    const [username, setUsername] = useState('');
-    const [usernameDirty, setUsernameDirty] = useState(false);
-    const [usernameError, setUsernameError] = useState("username is already exist");
-    const [email, setEmail] = useState('');
-    const [emailDirty, setEmailDirty] = useState(false);
-    const [emailError, setEmailError] = useState('email is not valid');
-    const [password, setPassword] = useState('');
-    const [passwordDirty, setPasswordDirty] = useState(false);
-    const [passwordError, setPasswordError] = useState('password is not valid');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [confirmPasswordDirty, setConfirmPasswordDirty] = useState(false);
-    const [confirmPasswordError, setConfirmPasswordError] = useState('passwords not match');
-    const [error1, setError] = useState(null);
-    
-    let errorMessage: any = "";
-    let isErrorOccurred: boolean = false;
+  const navigate = useNavigate();
+  const registrationMutation = useRegistration(); 
+  const[isLoading, setIsLoading] = useState(false);
 
-    let isUsernameError: boolean = false;
-    let isEmailError: boolean = false;
-    let isPasswordError: boolean = false;
+    const formik = useFormik<{
+      username: "";
+      email: "";
+      password: "";
+      confirmPassword: ""
+    }>({
+      initialValues:{
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+      },
+      validationSchema: registrationValidationSchema,
+      onSubmit: () => {}
+    });
 
-    function blurHandler(e: any) {
-      switch(e.target.name) {
-        case "username":
-          setUsernameDirty(true);
-          break;
-        case "email":
-          setEmailDirty(true);
-          break;
-        case "password":
-          setPasswordDirty(true);
-          break;
-        case "confirm password": 
-          setConfirmPasswordDirty(true);
-          break;
+    const isValid =
+      !isLoading &&
+      !formik.errors.email &&
+      !formik.errors.password &&
+      formik.touched.password &&
+      !formik.errors.username &&
+      formik.touched.username &&
+      !formik.errors.confirmPassword &&
+      formik.touched.confirmPassword;
+
+    const handleAuthorized = async (route: string) => {
+      const { email, username, password } = formik.values;
+      setIsLoading(true);
+  
+      if (email && password && username) {
+        const user = await registrationMutation.mutateAsync({
+          username,
+          email,
+          password,
+        });
       }
-    }
-
-    const emailHandler = (e: any) => {
-      setEmail(e.target.value);
-      const re:RegExp = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-      if(!re.test(String(e.target.value).toLowerCase())) {
-        setEmailError("email incorrect");
-      }else{
-        setEmailError("");
+  
+      setIsLoading(false);
+  
+      if (isValid) {
+        navigate(route);
+      } else {
+        console.log(formik.errors)
+        setIsLoading(false);
       }
-    }
-
-    const usernameHandler = (e: any) => {
-      setUsername(e.target.value);
-      if(e.target.value.length < 3) {
-        setUsernameError("username too short");
-      }else if(e.target.value.length > 16) {
-        setUsernameError("username too long");
-      }else{
-        setUsernameError("");
-      }
-    }
-
-    const passwordHandler = (e: any) => {
-      setPassword(e.target.value);
-
-      if(e.target.value.length < 8) {
-        setPasswordError("password may be longer than 8 char");
-      }else if(e.target.value.length > 16) {
-        setPasswordError("password too long");
-      }else{
-        setPasswordError("");
-      }
-    }
-
-    const confirmPasswordHandler = (e: any) => {
-      setConfirmPassword(e.target.value);
-
-      if(e.target.value !== password) {
-        setConfirmPasswordError("password mismatch");
-      }else{
-        setConfirmPasswordError("");
-      }
-    }
-
-    async function handleRegister() {
-      const registerDto: { username: string, email: string, password: string, confirmPassword: string } = {
-        username: username,
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword
-      }
-      try {
-        await registration(registerDto);
-      } catch (error: any) {
-        const field = error.response.data.field;
-        console.log(field);
-        switch(field) {
-          case "username":
-            isUsernameError = true;
-            console.log(isUsernameError);
-            break;
-          case "email":
-            isEmailError = true;
-            break;
-          case "password": 
-            isPasswordError = true;
-            break;
-        }
-      }
-    }
+    };
 
     return (
       <LoginCard>
         <LoginHeader>Welcome<Span>!</Span></LoginHeader>
         <InputContainer>
           <LoginInput 
-            value={username}
             name="username" 
-            onBlur={(e: any) => blurHandler(e)}
-            onChange={(e: any) => usernameHandler(e)}
             placeholder="username"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
-            {(usernameDirty && usernameError && isUsernameError) && <ValidationSpan>{usernameError}</ValidationSpan>}
-            {isUsernameError ? <ValidationSpan>{usernameError}</ValidationSpan> : null}
+          { formik.errors.username && formik.touched.username ? (
+             <ValidationSpan>{formik.errors.username}</ValidationSpan>
+           ) : null }
           <LoginInput
-            value={email}
             name="email"
-            onBlur={(e: any) => blurHandler(e)}
-            onChange={(e: any) => emailHandler(e)} 
             placeholder="email"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
-            {(emailDirty && emailError) && <ValidationSpan>{emailError}</ValidationSpan>}
-            {(isEmailError) && <ValidationSpan>{emailError}</ValidationSpan>}
+          { formik.errors.email && formik.touched.email ? (
+             <ValidationSpan>{formik.errors.email}</ValidationSpan>
+           ) : null }
           <LoginInput
             name="password"
             type="password"
-            value={password}
-            onBlur={(e: any) => blurHandler(e)}
-            onChange={(e: any) => passwordHandler(e)} 
-            placeholder="password" 
+            placeholder="password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
-            {(passwordDirty && passwordError) && <ValidationSpan>{passwordError}</ValidationSpan>}
-            {(isPasswordError) && <ValidationSpan>{passwordError}</ValidationSpan>}
+          { formik.errors.password && formik.touched.password ? (
+             <ValidationSpan>{formik.errors.password}</ValidationSpan>
+           ) : null }
           <LoginInput
             name="confirm password"
             type="password"
-            value={confirmPassword} 
-            onBlur={(e: any) => blurHandler(e)}
-            onChange={(e: any) => confirmPasswordHandler(e)}  
-            placeholder="repeat password" 
+            placeholder="confirm password"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
-            {(confirmPasswordDirty && confirmPasswordError) && <ValidationSpan>{confirmPasswordError}</ValidationSpan>}
+          { formik.errors.confirmPassword && formik.touched.confirmPassword ? (
+             <ValidationSpan>{formik.errors.confirmPassword}</ValidationSpan>
+          ) : null }
         </InputContainer>
-        <LoginButton onClick={handleRegister}>
-          register
+        <LoginButton
+          onClick={() => handleAuthorized("/home")}
+          disabled={isLoading}
+        >
+          {
+            isLoading ? <Loader /> :  "register"
+          }
         </LoginButton>
         <RegisteredButton>Registered?</RegisteredButton>
       </LoginCard>
