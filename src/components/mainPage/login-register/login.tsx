@@ -1,14 +1,21 @@
-import { SetStateAction, useState } from "react";
-import { Link } from "react-router-dom";
-import { LoginHeader, LoginButton, LoginCard, LoginInput, Span, ValidationSpan } from "./login.register.styled";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import {
+  LoginHeader, 
+  LoginButton, 
+  LoginCard, 
+  LoginInput, 
+  Span, 
+  ValidationSpan } from "./login.register.styled";
 import { login } from "../../../api/axiosConfig";
 
 export const Login = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-
-    let errorMessage: string = "";
-    let isErrorOccurred: boolean = false;
+    const navigate = useNavigate();
+    const[username, setUsername] = useState('');
+    const[password, setPassword] = useState('');
+    const[errorMessage, setErrorMessage] = useState(null);
+    const[isLoading, setIsLoading] = useState(false);
 
     async function handleLogin() {
       const loginDto: { username: string, password: string } = {
@@ -18,37 +25,32 @@ export const Login = () => {
 
       try {
         await login(loginDto);
+        setErrorMessage(null);
+        navigate("/home");
       } catch (error: any) {
-        errorMessage = error.response.data;
-        isErrorOccurred = true;
+        setErrorMessage(error.response.data.message);
       }
     }
-
-    const ValidationError = (
-      <>
-        { isErrorOccurred ? <ValidationSpan>{errorMessage}</ValidationSpan> : null }
-      </>
-    );
 
     return (
       <LoginCard>
         <LoginHeader>Welcome<Span>!</Span></LoginHeader>
         <LoginInput
-          value={username}
-          onChange={(event: { target: { value: SetStateAction<string>; }; }) => setUsername(event.target.value)}
+          name="username"
+          type="username"
           placeholder="username"
+          onChange={(e: any) => setUsername(e.target.value)}
         />
-          {ValidationError}
         <LoginInput
-          value={password} 
-          onChange={(event: { target: { value: SetStateAction<string>; }; }) => setPassword(event.target.value)} 
+          name="password"
+          type="password"
           placeholder="password"
+          onChange={(e: any) => setPassword(e.target.value)} 
         />
-          {ValidationError}
+          { errorMessage && <ValidationSpan>{errorMessage}</ValidationSpan> }
         <LoginButton onClick={handleLogin}>
-          <Link to={`/home`} className="link"/>
-            login
-          </LoginButton>
+          login
+        </LoginButton>
       </LoginCard>
     );
 };
