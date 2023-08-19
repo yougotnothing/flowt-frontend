@@ -19,7 +19,6 @@ export const Register: React.FC = () => {
     const [isUsernameCustomError, setUsernameCustomError] = useState(false);
     const [isEmailCustomError, setEmailCustomError] = useState(false);
     const [isPasswordCustomError, setPasswordCustomError] = useState(false);
-    const [registerButton, setRegisterButton] = useState(false);
     
     function blurHandler(e: any) {
       switch(e.target.name) {
