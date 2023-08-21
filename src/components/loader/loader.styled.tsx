@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { COLORS } from "../../consts/colors.const";
 
-export const LoaderContainer = styled.div`
+export const LoaderContainer = styled("div")`
   width: 100%;
   height: 1rem;
   display: flex;
@@ -9,7 +9,7 @@ export const LoaderContainer = styled.div`
   align-items: center;
 `
 
-export const Spinner = styled.div`
+export const Spinner = styled("div")`
   width: 1rem;
   height: 1rem;
   border: 2px solid;

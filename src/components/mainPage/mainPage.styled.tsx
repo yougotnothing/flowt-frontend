@@ -128,6 +128,7 @@ export const Logo = styled('button')`
   margin: auto;
   background-image: url('/flowt.png');
   background-size: 100%;
+  cursor: pointer;
 
   .logoLink {
     display: inline-block;

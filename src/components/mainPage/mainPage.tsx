@@ -1,31 +1,38 @@
 import { useState, useEffect } from "react";
-import { Form, Link, Outlet, useNavigate } from "react-router-dom";
+import { Form, Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+
 import { Container, Navbar, Search, SearchButton, ContentContainer, Logo, Settings, ButtonsContainer } from "./mainPage.styled";
+import { AlertSuccess, AlertWarning } from "./alert/alert";
 
 export const MainPage: React.FC = () => {
+    const location = useLocation();
     const navigate = useNavigate();
-    const[main, setMain] = useState(true);
+    const[isVisible, setIsVisible] = useState(false);
     const client = new QueryClient();
+    const successAlert = localStorage.getItem('success');
+    const warningAlert = localStorage.getItem('warning');
 
     useEffect(() => {
-      if(main) {
-        navigate("/home");
-        setMain(false);
-      }  
+      if(successAlert !== null || warningAlert !== null) {
+        setIsVisible(true);
+        setTimeout(() => {
+          localStorage.removeItem('success');
+          localStorage.removeItem('warning');
+          setIsVisible(false);
+        }, 3000);
+      }
     }, []);
-
+     
     return (
       <Container>
+        { isVisible && successAlert && <AlertSuccess /> }
+        { isVisible && warningAlert && <AlertWarning /> }
         <Navbar>
-          <Logo>
-            <Link to={`/home`} className="logoLink">FLOWT</Link>
-          </Logo>
+          <Logo onClick={() => navigate("/home")} />
           <Form className="form" method="post" action="/search">
             <Search placeholder="search" />
-            <SearchButton>
-              <Link to={`/search`} />
-            </SearchButton>
+            <SearchButton onClick={() => navigate("/search")} />
           </Form>
           <ButtonsContainer>
             <Link to={`/login`} className="link">Login</Link>

@@ -95,7 +95,7 @@ export const RegisteredButton = styled('button')`
   background: none;
   background-color: none;
   border: none;
-  width: 98px;
+  width: max-content;
   height: 38px;
   color: ${COLORS.secondary};
   justify-content: center;
@@ -125,4 +125,37 @@ export const InputContainer = styled('div')`
   align-self: center;
   width: 250px;
   flex-direction: column;
+`;
+
+export const NotRegistered = styled('button')`
+  margin: auto;
+  align-self: start;
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 300;
+  background: none;
+  background-color: none;
+  border: none;
+  width: 98px;
+  height: 38px;
+  color: ${COLORS.secondary};
+  justify-content: center;
+  align-self: end;
+
+  &:hover {
+    transition: all 0.2s;
+    cursor: pointer;
+    border: 1px solid ${COLORS.secondaryHover};
+    border-top-width: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+    color: ${COLORS.secondaryHover};
+  }
+`;
+
+export const HelpButtons = styled('div')`
+  display: flex;
+  align-self: center;
+  flex-direction: row;
+  max-width: 100%;
+  gap: 40px;
 `;

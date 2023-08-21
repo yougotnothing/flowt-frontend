@@ -7,7 +7,10 @@ import {
   LoginCard, 
   LoginInput, 
   Span, 
-  ValidationSpan } from "./login.register.styled";
+  ValidationSpan,
+  RegisteredButton,
+  HelpButtons } from "./login.register.styled";
+import { Loader } from "../../loader/loader";
 import { login } from "../../../api/axiosConfig";
 
 export const Login = () => {
@@ -48,9 +51,16 @@ export const Login = () => {
           onChange={(e: any) => setPassword(e.target.value)} 
         />
           { errorMessage && <ValidationSpan>{errorMessage}</ValidationSpan> }
-        <LoginButton onClick={handleLogin}>
-          login
+        <LoginButton
+          onClick={handleLogin}
+          disabled={isLoading}
+        >
+          { isLoading ? <Loader /> :  "register" }
         </LoginButton>
+        <HelpButtons>
+          <RegisteredButton>Forgot password?</RegisteredButton>
+          <RegisteredButton>Not register?</RegisteredButton>
+        </HelpButtons>
       </LoginCard>
     );
 };

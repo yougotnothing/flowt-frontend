@@ -1,9 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import { MainPage } from "../mainPage/mainPage";
 import { Home } from "../mainPage/home/home";
 import { Login } from "../mainPage/login-register/login";
 import { Register } from "../mainPage/login-register/register";
-import { Search } from "../search/search";
+import { Search } from "../mainPage/search/search";
+import { Verify } from "../mainPage/verify/verify";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -11,20 +13,24 @@ export const pageRouter = createBrowserRouter([
     element: <MainPage />,
     children: [
       {
-        path: '/home',
+        path: '/home/',
         element: <Home />
       },
       {
-        path: 'login',
+        path: '/login',
         element: <Login />
       },
       {
-        path: 'register',
+        path: '/register',
         element: <Register />
       },
       {
-        path: 'search',
+        path: '/search',
         element: <Search />
+      },
+      {
+        path: '/verify',
+        element: <Verify />
       }
     ]
   }

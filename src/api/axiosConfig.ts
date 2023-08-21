@@ -70,6 +70,15 @@ export const refreshToken = async () => {
         localStorage.setItem('token', token);
     }
 }
+
+export const verifyEmail = async (code: any) => {
+    const response = await api.get('/verify', {
+        params: {
+            code: code
+        }
+    });
+    return response;
+}
  
 export const getUser = async () => await api.get('/secured/auth');
  

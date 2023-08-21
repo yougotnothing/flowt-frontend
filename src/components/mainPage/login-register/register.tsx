@@ -17,9 +17,9 @@ import { registrationValidationSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/loader";
 import { registration } from "../../../api/axiosConfig";
 
-export const Register: React.FC = () => {
+export const Register: React.FC = () => { 
+    const registrationMutation = useRegistration();
     const navigate = useNavigate();
-    const registrationMutation = useRegistration(); 
     const[isLoading, setIsLoading] = useState(false);
     const[usernameError, setUsernameError] = useState(false);
     const[emailError, setEmailError] = useState(false);
@@ -28,7 +28,7 @@ export const Register: React.FC = () => {
     const[username, setUsername] = useState("");
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
-    const[confirmPassword, setConfirmPassord] = useState("");
+    const[confirmPassword, setConfirmPassword] = useState("");
 
     const formik = useFormik<{
       username: "";
@@ -56,39 +56,39 @@ export const Register: React.FC = () => {
       !formik.errors.confirmPassword &&
       formik.touched.confirmPassword;
 
-      async function handleRegister() {
-        const registerDto: any = {
-          username: username,
-          email: email,
-          password: password,
-          confirmPassword: confirmPassword
-        }
-        try {
-          await registration(registerDto);
-          setErrorMessage(null);
-          navigate("/login");
-        } catch (error: any) {
-          const field = error.response.data.field;
-   
-          setUsernameError(false);
-          setEmailError(false);
-          setPasswordError(false);
-          setErrorMessage(error.response.data.message)
-          switch(field) {
-            case "username":
-              setUsernameError(true);
-              break;
-            case "email":
-              setEmailError(true);
-              break;
-            case "password":
-              setPasswordError(true);
-              break;
-          }
+    async function handleRegister() {
+      const registerDto: any = {
+        username: username,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword
+      }
+      try {
+        await registration(registerDto);
+        navigate("login");
+        setErrorMessage(null);
+      } catch (error: any) {
+        const field = error.response.data.field;
+    
+        setUsernameError(false);
+        setEmailError(false);
+        setPasswordError(false);
+        setErrorMessage(error.response.data.message);
+        switch(field) {
+          case "username":
+            setUsernameError(true);
+            break;
+          case "email":
+            setEmailError(true);
+            break;
+          case "password":
+            setPasswordError(true);
+            break;
         }
       }
+    }
 
-    const handleAuthorized = async (route: string) => {
+    const handleAuthorized = async () => {
       const { email, username, password, confirmPassword } = formik.values;
       setIsLoading(true);
   
@@ -100,9 +100,10 @@ export const Register: React.FC = () => {
         });
         console.log("user", user);
       }
+      handleRegister();
+      console.log(isValid);
   
       setIsLoading(false);
-      handleRegister();
     };
 
     return (
@@ -155,16 +156,13 @@ export const Register: React.FC = () => {
             placeholder="confirm password"
             onChange={(e: any) => {
               formik.handleChange(e);
-              setConfirmPassord(e.target.value);
+              setConfirmPassword(e.target.value);
             }}
             onBlur={formik.handleBlur}
           />
-          { formik.errors.confirmPassword && formik.touched.confirmPassword ? (
-             <ValidationSpan>{formik.errors.confirmPassword}</ValidationSpan>
-          ) : null }
         </InputContainer>
         <LoginButton
-          onClick={() => handleAuthorized("/home")}
+          onClick={() => handleAuthorized()}
           disabled={isLoading}
         >
           { isLoading ? <Loader /> :  "register" }
