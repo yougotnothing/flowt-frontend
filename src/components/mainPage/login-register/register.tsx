@@ -90,20 +90,16 @@ export const Register: React.FC = () => {
 
     const handleAuthorized = async () => {
       const { email, username, password, confirmPassword } = formik.values;
+      
       setIsLoading(true);
-  
       if (email && password && username && confirmPassword) {
         const user = await registrationMutation.mutateAsync({
           username,
           email,
           password,
         });
-        console.log("user", user);
       }
       handleRegister();
-      console.log(isValid);
-  
-      setIsLoading(false);
     };
 
     return (
@@ -165,7 +161,7 @@ export const Register: React.FC = () => {
           onClick={() => handleAuthorized()}
           disabled={isLoading}
         >
-          { isLoading ? <Loader /> :  "register" }
+          { isLoading ? <Loader /> : "register" }
         </LoginButton>
         <RegisteredButton>Registered?</RegisteredButton>
       </LoginCard>

@@ -63,7 +63,11 @@ export const AlertSuccess: React.FC = () => {
       alignSelf="flex-start"
       right={-1}
       top={-1}
-      onClick={onClose}
+      onClick={() => { 
+        localStorage.removeItem('success');
+        onClose();
+        }
+      }
       transition="all 0.5s"
     />
   </Alert>
@@ -120,7 +124,11 @@ export const AlertWarning: React.FC = () => {
       alignSelf="flex-start"
       right={-1}
       top={-1}
-      onClick={onClose}
+      onClick={() => { 
+        localStorage.removeItem('warning');
+        onClose();
+        }
+      }
       transition="all 0.5s"
     />
   </Alert>

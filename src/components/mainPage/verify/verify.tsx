@@ -20,17 +20,16 @@ export const Verify = () => {
         });
         localStorage.setItem('success', 'true');
         console.log(response);
-      }catch (e) {
+      } catch (e) {
         localStorage.setItem('warning', 'false');
       }
+      navigate("/home");
     }
-    setTimeout(() => verifyStatus(), 4000);
-  }, []);
+    
+    setTimeout(verifyStatus, 1000);
+  }, [navigate]);
   
   return (
-    <>
-      {setTimeout(() => navigate("/home"), 5000)}
-      <Loader />
-    </>
+    <Loader />
   );
 }

@@ -6,6 +6,7 @@ import { Login } from "../mainPage/login-register/login";
 import { Register } from "../mainPage/login-register/register";
 import { Search } from "../mainPage/search/search";
 import { Verify } from "../mainPage/verify/verify";
+import { ChangePassword } from "../mainPage/login-register/changePassword";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -14,7 +15,7 @@ export const pageRouter = createBrowserRouter([
     children: [
       {
         path: '/home/',
-        element: <Home />
+        element: <Home />,
       },
       {
         path: '/login',
@@ -31,6 +32,10 @@ export const pageRouter = createBrowserRouter([
       {
         path: '/verify',
         element: <Verify />
+      },
+      {
+        path: '/change-password',
+        element: <ChangePassword />
       }
     ]
   }

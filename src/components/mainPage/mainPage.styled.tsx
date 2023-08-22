@@ -193,6 +193,35 @@ export const Settings = styled('button')`
   }
 `;
 
-export const CardButton = styled('button')`
-  
+export const VerifyedUserContainer = styled('div')`
+  display: flex;
+  margin: auto;
+  gap: 40px;
+`;
+
+export const UserButton = styled('button')`
+  display: flex;
+  flex-direction: row;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 20px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+`;
+
+export const UserAvatar = styled('picture')`
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  background-image: url('https://avatars.githubusercontent.com/u/114938803?v=');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+`;
+
+export const UserNickname = styled('div')`
+  margin: auto;
+  color: ${COLORS.firstFont}
 `;

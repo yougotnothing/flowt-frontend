@@ -2,10 +2,12 @@ import styled from "styled-components";
 import { COLORS } from "../../../consts/colors.const";
 
 export const LoginHeader = styled('div')`
+  text-align: center;
   font-family: 'Urbanist' sans-serif;
   font-weight: 800;
+  margin-top: 24px;
+  margin-bottom: 24px;
   font-size: 36px;
-  margin: 24px;
   color: ${COLORS.firstFontHover};
 `;
 
@@ -114,7 +116,7 @@ export const RegisteredButton = styled('button')`
 
 export const ValidationSpan = styled('span')`
   display: flex;
-  align-self: top;
+  align-self: start;
   font-family: 'Urbanist' sans-serif;
   font-weight: 700;
   color: ${COLORS.krasniy};
