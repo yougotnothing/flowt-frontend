@@ -2,19 +2,12 @@ import { useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { verifyEmail } from "../../../api/axiosConfig";
 import { Loader } from "../../loader/loader";
 
 export const Verify = () => {
   const[searchParams] = useSearchParams();
   const verifyCode = searchParams.get('code');
   const navigate = useNavigate();
-
-  const didi = {
-    username: "",
-    password: ""
-  };
-
   console.log(verifyCode);
 
   useEffect(() => {
@@ -31,12 +24,12 @@ export const Verify = () => {
         localStorage.setItem('warning', 'false');
       }
     }
-    verifyStatus();
+    setTimeout(() => verifyStatus(), 4000);
   }, []);
   
   return (
     <>
-      {/* {setTimeout(() => navigate("/home"), 5000)} */}
+      {setTimeout(() => navigate("/home"), 5000)}
       <Loader />
     </>
   );
