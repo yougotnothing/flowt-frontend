@@ -9,7 +9,7 @@ export const Verify = () => {
   const verifyCode = searchParams.get('code');
   const navigate = useNavigate();
   console.log(verifyCode);
-
+  
   useEffect(() => {
     const verifyStatus = async () => {
       try {
@@ -21,13 +21,13 @@ export const Verify = () => {
         localStorage.setItem('success', 'true');
         console.log(response);
       } catch (e) {
-        localStorage.setItem('warning', 'false');
+        localStorage.setItem('warning', 'true');
       }
-      navigate("/home");
+      navigate('/home');
     }
     
     setTimeout(verifyStatus, 1000);
-  }, [navigate]);
+  });
   
   return (
     <Loader />

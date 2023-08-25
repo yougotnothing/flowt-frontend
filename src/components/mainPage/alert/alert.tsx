@@ -31,6 +31,7 @@ export const AlertSuccess: React.FC = () => {
       padding={10}
       color="#ffc400"
       borderRadius={20}
+      transition="0.5s all"
     >
     <AlertIcon
       color="#6aff57"

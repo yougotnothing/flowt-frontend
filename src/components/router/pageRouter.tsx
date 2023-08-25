@@ -6,7 +6,8 @@ import { Login } from "../mainPage/login-register/login";
 import { Register } from "../mainPage/login-register/register";
 import { Search } from "../mainPage/search/search";
 import { Verify } from "../mainPage/verify/verify";
-import { ChangePassword } from "../mainPage/login-register/changePassword";
+import { RestorePassword } from "../mainPage/login-register/restorePassword";
+import { PutEmail } from "../mainPage/login-register/putEmail";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -34,8 +35,12 @@ export const pageRouter = createBrowserRouter([
         element: <Verify />
       },
       {
-        path: '/change-password',
-        element: <ChangePassword />
+        path: '/verify/restore-password',
+        element: <RestorePassword />
+      },
+      {
+        path: '/verify/restore-password/email',
+        element: <PutEmail />
       }
     ]
   }

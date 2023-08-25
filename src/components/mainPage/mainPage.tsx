@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
 import { Form, Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { observer } from "mobx-react-lite";
+
+import toVerify from "../../consts/toVerify";
 
 import { 
-  Container, 
+  Container,
   Navbar, 
   Search, 
   SearchButton, 
   ContentContainer, 
   Logo, 
-  Settings, 
+  Settings,
   ButtonsContainer, 
   VerifyedUserContainer,
   UserAvatar, 
@@ -17,20 +20,36 @@ import {
   UserNickname
 } from "./mainPage.styled";
 import { AlertSuccess, AlertWarning } from "./alert/alert";
+import { API_URL } from "../../api/axiosConfig";
+import api from "../../api/axiosConfig";
 
-export const MainPage: React.FC = () => {
-    const location = useLocation();
+export const MainPage: React.FC = observer(() => {
+    let location = useLocation();
     const navigate = useNavigate();
     const[isVisible, setIsVisible] = useState(false);
-    const[isVerifyed, setIsVerifyed] = useState(false);
+    const[user, setUser] = useState<any>(null);
+    const[avatar, setAvatar] = useState<any>(null);
     const client = new QueryClient();
     const successAlert = localStorage.getItem('success');
     const warningAlert = localStorage.getItem('warning');
-    
+
+    const getUser = async () => {
+      const response = await api.get('/users/authenticated');
+      setUser(response.data);
+    };
+
     useEffect(() => {
-      if (localStorage.getItem('token') !== null) {
-        setIsVerifyed(true);
+      const currentUrl = location.pathname;
+      if(!currentUrl || currentUrl === '/') {
+        navigate('/home');
       }
+      if (localStorage.getItem('token') !== null) {
+        toVerify.alreadyVerify();
+        getUser()
+      }
+    }, []);
+
+    useEffect(() => {
       if (successAlert !== null || warningAlert !== null) {
         setIsVisible(true);
         setTimeout(() => {
@@ -40,7 +59,7 @@ export const MainPage: React.FC = () => {
           setIsVisible(false);
         }, 3000);
       }
-    }, []);
+    });
 
     return (
       <Container>
@@ -52,19 +71,19 @@ export const MainPage: React.FC = () => {
             <Search placeholder="search" />
             <SearchButton onClick={() => navigate("/search")} />
           </Form>
-          { isVerifyed === true ?
+          { toVerify.isVerify && user !== null ?
             <VerifyedUserContainer>
               <UserButton>
-                <UserAvatar />
-                <UserNickname>nick</UserNickname>
+                <UserAvatar style={{
+                  backgroundImage: `url(${API_URL}/images/user/${user.username})`,
+                }} />
+                <UserNickname>{user.username}</UserNickname>
               </UserButton>
-              <Settings />
             </VerifyedUserContainer> 
             :
             <ButtonsContainer>
               <Link to={`/login`} className="link">Login</Link>
               <Link to={`/register`} className="link">Register</Link>
-              <Settings></Settings>
             </ButtonsContainer>
           }
         </Navbar>
@@ -75,4 +94,4 @@ export const MainPage: React.FC = () => {
         </ContentContainer>
       </Container>
     );
-};
+});

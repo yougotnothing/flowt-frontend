@@ -215,10 +215,9 @@ export const UserAvatar = styled('picture')`
   border-radius: 50%;
   width: 46px;
   height: 46px;
-  background-image: url('https://avatars.githubusercontent.com/u/114938803?v=');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
 `;
 
 export const UserNickname = styled('div')`

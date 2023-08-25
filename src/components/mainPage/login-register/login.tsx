@@ -9,7 +9,8 @@ import {
   Span, 
   ValidationSpan,
   RegisteredButton,
-  HelpButtons } from "./login.register.styled";
+  HelpButtons,
+  InputContainer } from "./login.register.styled";
 import { Loader } from "../../loader/loader";
 import { login } from "../../../api/axiosConfig";
 
@@ -29,7 +30,8 @@ export const Login = () => {
       try {
         await login(loginDto);
         setErrorMessage(null);
-        navigate("/home");
+        setIsLoading(true);
+        setTimeout(() => navigate("/home"), 300);
       } catch (error: any) {
         setErrorMessage(error.response.data.message);
       }
@@ -38,27 +40,33 @@ export const Login = () => {
     return (
       <LoginCard>
         <LoginHeader>Welcome<Span>!</Span></LoginHeader>
+        <InputContainer>
         <LoginInput
           name="username"
           type="username"
           placeholder="username"
           onChange={(e: any) => setUsername(e.target.value)}
-        />
+          />
         <LoginInput
           name="password"
           type="password"
           placeholder="password"
           onChange={(e: any) => setPassword(e.target.value)} 
-        />
+          />
           { errorMessage && <ValidationSpan>{errorMessage}</ValidationSpan> }
+        </InputContainer>
         <LoginButton
           onClick={handleLogin}
           disabled={isLoading}
-        >
+          >
           { isLoading ? <Loader /> :  "register" }
         </LoginButton>
         <HelpButtons>
-          <RegisteredButton>Forgot password?</RegisteredButton>
+          <RegisteredButton 
+            onClick={() => navigate("/login/restore-password")}
+          >
+            Forgot password?
+          </RegisteredButton>
           <RegisteredButton>Not register?</RegisteredButton>
         </HelpButtons>
       </LoginCard>
