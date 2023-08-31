@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Form, Link, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Form, Link, Outlet, useNavigate, useLocation, generatePath } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { observer } from "mobx-react-lite";
 
@@ -7,12 +7,11 @@ import toVerify from "../../consts/toVerify";
 
 import { 
   Container,
-  Navbar, 
+  Navbar,
   Search, 
   SearchButton, 
   ContentContainer, 
-  Logo, 
-  Settings,
+  Logo,
   ButtonsContainer, 
   VerifyedUserContainer,
   UserAvatar, 
@@ -20,22 +19,30 @@ import {
   UserNickname
 } from "./mainPage.styled";
 import { AlertSuccess, AlertWarning } from "./alert/alert";
-import { API_URL } from "../../api/axiosConfig";
-import api from "../../api/axiosConfig";
+import { api, API_URL } from "../../api/axiosConfig";
 
 export const MainPage: React.FC = observer(() => {
     let location = useLocation();
     const navigate = useNavigate();
     const[isVisible, setIsVisible] = useState(false);
     const[user, setUser] = useState<any>(null);
-    const[avatar, setAvatar] = useState<any>(null);
     const client = new QueryClient();
     const successAlert = localStorage.getItem('success');
     const warningAlert = localStorage.getItem('warning');
+    let URLToUser: string;
+
+    if (user !== null) {
+      URLToUser = generatePath('/profile/:id', { id: user.username });
+    } else {
+      URLToUser = '';
+    }
 
     const getUser = async () => {
       const response = await api.get('/users/authenticated');
       setUser(response.data);
+      if(response.status === 401) {
+        window.location.reload();
+      }
     };
 
     useEffect(() => {
@@ -45,7 +52,7 @@ export const MainPage: React.FC = observer(() => {
       }
       if (localStorage.getItem('token') !== null) {
         toVerify.alreadyVerify();
-        getUser()
+        getUser();
       }
     }, []);
 
@@ -73,7 +80,9 @@ export const MainPage: React.FC = observer(() => {
           </Form>
           { toVerify.isVerify && user !== null ?
             <VerifyedUserContainer>
-              <UserButton>
+              <UserButton
+                onClick={() => navigate(URLToUser)}
+              >
                 <UserAvatar style={{
                   backgroundImage: `url(${API_URL}/images/user/${user.username})`,
                 }} />

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
 
 import {
   LoginHeader, 
@@ -10,29 +11,42 @@ import {
   ValidationSpan,
   RegisteredButton,
   HelpButtons,
-  InputContainer } from "./login.register.styled";
+  InputContainer 
+} from "./login.register.styled";
+import { loginValidationSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/loader";
 import { login } from "../../../api/axiosConfig";
 
 export const Login = () => {
     const navigate = useNavigate();
-    const[username, setUsername] = useState('');
-    const[password, setPassword] = useState('');
     const[errorMessage, setErrorMessage] = useState(null);
     const[isLoading, setIsLoading] = useState(false);
 
+    const formik = useFormik<{
+      username: "",
+      password: ""
+    }>({
+      initialValues: {
+        username: "",
+        password: ""
+      },
+      validationSchema: loginValidationSchema,
+      onSubmit: () => {}
+    });
+    const field = formik.values;
+
     async function handleLogin() {
       const loginDto: { username: string, password: string } = {
-        username: username,
-        password: password
+        username: field.username,
+        password: field.password
       }
 
       try {
-        await login(loginDto);
         setErrorMessage(null);
-        setIsLoading(true);
-        setTimeout(() => navigate("/home"), 300);
+        await login(loginDto);
+        window.location.reload();
       } catch (error: any) {
+        setIsLoading(false);
         setErrorMessage(error.response.data.message);
       }
     }
@@ -45,26 +59,38 @@ export const Login = () => {
           name="username"
           type="username"
           placeholder="username"
-          onChange={(e: any) => setUsername(e.target.value)}
-          />
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+        />
+        {formik.errors.username && formik.touched.username ? (
+          <ValidationSpan>{formik.errors.username}</ValidationSpan>
+        ) : null}
         <LoginInput
           name="password"
           type="password"
           placeholder="password"
-          onChange={(e: any) => setPassword(e.target.value)} 
-          />
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange} 
+        />
+        {formik.errors.password && formik.touched.password ? (
+          <ValidationSpan>{formik.errors.password}</ValidationSpan>
+        ) : null}
           { errorMessage && <ValidationSpan>{errorMessage}</ValidationSpan> }
         </InputContainer>
         <LoginButton
-          onClick={handleLogin}
+          onClick={() => {
+            setIsLoading(true);
+            setTimeout(() => {
+              handleLogin();
+              navigate("/home");
+            }, 500);
+          }}
           disabled={isLoading}
-          >
-          { isLoading ? <Loader /> :  "register" }
+        >
+          { isLoading ? <Loader /> :  "Login" }
         </LoginButton>
         <HelpButtons>
-          <RegisteredButton 
-            onClick={() => navigate("/login/restore-password")}
-          >
+          <RegisteredButton onClick={() => navigate("/verify/restore-password")}>
             Forgot password?
           </RegisteredButton>
           <RegisteredButton>Not register?</RegisteredButton>

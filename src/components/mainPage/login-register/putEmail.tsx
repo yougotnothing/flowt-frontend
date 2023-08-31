@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import api from "../../../api/axiosConfig";
+import { api } from "../../../api/axiosConfig";
 
 import { putEmailSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/loader";

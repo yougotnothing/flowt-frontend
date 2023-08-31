@@ -6,7 +6,6 @@ export const Container = styled('div')`
   flex-direction: column;
   align-items: center;
   background-color: ${COLORS.background};
-  height: 100vh;
 `;
 
 export const Navbar = styled('div')`
@@ -169,27 +168,6 @@ export const ButtonsContainer = styled('div')`
       border-right-width: 0;
       color: ${COLORS.firstFontHover};
     }
-  }
-`;
-
-export const Settings = styled('button')`
-  align-self: center;
-  width: 38px;
-  height: 38px;
-  background-image: url('/settings.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 46px;
-  background-color: ${COLORS.front};
-  border: none;
-  border-radius: 50%;
-  transform: rotate(-90deg);
-  transition: all 0.5s;
-
-  &:hover {
-    transform: rotate(90deg);
-    max-width: 168px;
-    cursor: pointer;
   }
 `;
 

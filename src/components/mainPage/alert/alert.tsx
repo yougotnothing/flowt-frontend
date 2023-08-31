@@ -1,12 +1,7 @@
-import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
-
 import { Alert, AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/alert";
 import { useDisclosure, CloseButton } from "@chakra-ui/react";
 
 export const AlertSuccess: React.FC = () => {
-  const[isDisable, setIsDisable] = useState(false);
-  const[alertParams, setAlertParams] = useSearchParams();
   const successAlert = localStorage.getItem('success');
 
   const {

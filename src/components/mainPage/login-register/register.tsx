@@ -11,24 +11,18 @@ import {
   ValidationSpan,
   InputContainer
 } from "./login.register.styled";
-import { useRegistration } from "../../../auth/authService";
 import { useFormik } from "formik";
 import { registrationValidationSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/loader";
 import { registration } from "../../../api/axiosConfig";
 
 export const Register: React.FC = () => { 
-    const registrationMutation = useRegistration();
     const navigate = useNavigate();
     const[isLoading, setIsLoading] = useState(false);
     const[usernameError, setUsernameError] = useState(false);
     const[emailError, setEmailError] = useState(false);
     const[passwordError, setPasswordError] = useState(false);
     const[errorMessage, setErrorMessage] = useState(null);
-    const[username, setUsername] = useState("");
-    const[email, setEmail] = useState("");
-    const[password, setPassword] = useState("");
-    const[confirmPassword, setConfirmPassword] = useState("");
 
     const formik = useFormik<{
       username: "";
@@ -45,35 +39,31 @@ export const Register: React.FC = () => {
       validationSchema: registrationValidationSchema,
       onSubmit: () => {}
     });
-
-    const isValid =
-      !isLoading &&
-      !formik.errors.email &&
-      !formik.errors.password &&
-      formik.touched.password &&
-      !formik.errors.username &&
-      formik.touched.username &&
-      !formik.errors.confirmPassword &&
-      formik.touched.confirmPassword;
+    const field = formik.values;
 
     async function handleRegister() {
       const registerDto: any = {
-        username: username,
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword
+        username: field.username,
+        email: field.email,
+        password: field.password,
+        confirmPassword: field.confirmPassword
       }
+
+      setIsLoading(true);
+
       try {
         await registration(registerDto);
-        navigate("login");
+        navigate("/login");
         setErrorMessage(null);
       } catch (error: any) {
         const field = error.response.data.field;
     
+        setIsLoading(false);
         setUsernameError(false);
         setEmailError(false);
         setPasswordError(false);
         setErrorMessage(error.response.data.message);
+
         switch(field) {
           case "username":
             setUsernameError(true);
@@ -88,20 +78,6 @@ export const Register: React.FC = () => {
       }
     }
 
-    const handleAuthorized = async () => {
-      const { email, username, password, confirmPassword } = formik.values;
-      
-      setIsLoading(true);
-      if (email && password && username && confirmPassword) {
-        const user = await registrationMutation.mutateAsync({
-          username,
-          email,
-          password,
-        });
-      }
-      handleRegister();
-    };
-
     return (
       <LoginCard>
         <LoginHeader>Welcome<Span>!</Span></LoginHeader>
@@ -110,10 +86,7 @@ export const Register: React.FC = () => {
             name="username" 
             placeholder="username"
             onBlur={formik.handleBlur}
-            onChange={(e: any) => {
-              formik.handleChange(e);
-              setUsername(e.target.value);
-            }}
+            onChange={formik.handleChange}
           />
           { formik.errors.username && formik.touched.username ? (
              <ValidationSpan>{formik.errors.username}</ValidationSpan>
@@ -123,10 +96,7 @@ export const Register: React.FC = () => {
             name="email"
             placeholder="email"
             onBlur={formik.handleBlur}
-            onChange={(e: any) => {
-              formik.handleChange(e);
-              setEmail(e.target.value);
-            }}
+            onChange={formik.handleChange}
           />
           { formik.errors.email && formik.touched.email ? (
              <ValidationSpan>{formik.errors.email}</ValidationSpan>
@@ -136,10 +106,7 @@ export const Register: React.FC = () => {
             name="password"
             type="password"
             placeholder="password"
-            onChange={(e: any) => {
-              formik.handleChange(e);
-              setPassword(e.target.value);
-            }}
+            onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
           { formik.errors.password && formik.touched.password ? (
@@ -147,18 +114,18 @@ export const Register: React.FC = () => {
            ) : null }
           { errorMessage && passwordError && <ValidationSpan>{errorMessage}</ValidationSpan> }
           <LoginInput
-            name="confirm password"
+            name="confirmPassword"
             type="password"
             placeholder="confirm password"
-            onChange={(e: any) => {
-              formik.handleChange(e);
-              setConfirmPassword(e.target.value);
-            }}
+            onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
+          {formik.errors.confirmPassword && formik.touched.password ? (
+            <ValidationSpan>{formik.errors.confirmPassword}</ValidationSpan>
+          ) : null}
         </InputContainer>
         <LoginButton
-          onClick={() => handleAuthorized()}
+          onClick={() => handleRegister()}
           disabled={isLoading}
         >
           { isLoading ? <Loader /> : "register" }

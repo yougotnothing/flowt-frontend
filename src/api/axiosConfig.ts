@@ -3,7 +3,7 @@ import axios from "axios";
 export const API_URL = 'http://localhost:8080';
 let isRetry = false;
  
-const api = axios.create({
+export const api = axios.create({
     baseURL: API_URL,
     withCredentials: true
 });
@@ -81,5 +81,3 @@ export const verifyEmail = async (code: any) => {
 }
  
 export const getUser = async () => await api.get('/secured/auth');
- 
-export default api;
