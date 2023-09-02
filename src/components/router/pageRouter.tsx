@@ -10,8 +10,8 @@ import { RestorePassword } from "../mainPage/login-register/restorePassword";
 import { PutEmail } from "../mainPage/login-register/putEmail";
 import { Profile } from "../mainPage/profile/profile";
 import { Followers } from "../mainPage/profile/followers-subscribers/followers";
-import { Subscribers } from "../mainPage/profile/followers-subscribers/subscribers";
-import { Loader } from "../loader/loader";
+import { Subscribers } from "../mainPage/profile/followers-subscribers/subscribes";
+import { Account } from "../mainPage/account/account";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -57,6 +57,10 @@ export const pageRouter = createBrowserRouter([
       {
         path: '/profile/:id/subscribes',
         element: <Subscribers />
+      },
+      {
+        path: '/account/:id',
+        element: <Account />
       }
     ]
   }

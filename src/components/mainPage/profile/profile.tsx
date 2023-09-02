@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, generatePath } from "react-router-dom";
+import { useNavigate, generatePath, useLocation } from "react-router-dom";
 
 import toVerify from "../../../consts/toVerify";
 import { api, API_URL } from "../../../api/axiosConfig";
@@ -19,19 +19,15 @@ import {
   LikedTrackContainer,
   LikedTrackIcon
 } from "./profile.styled";
+import { Options } from "./options/options";
 
 export const Profile: React.FC = () => {
   const navigate = useNavigate();
-  const[user, setUser] = useState<any>(null);
+  const[user, setUser] = useState<any>('');
   const[subscribes, setSubscribes] = useState<any>([]);
   const[followers, setFollowers] = useState<any>([]);
-  let followersURL: string;
-  let subscribersURL: string;
-  
-  if(user) {
-    followersURL = generatePath('/profile/:id/followers', { id: `${user.username}` });
-    subscribersURL = generatePath('/profile/:id/subscribes', { id: `${user.username}` })
-  };
+  const[isOpen, setIsOpen] = useState<boolean>(false);
+  let counter: number = 0;
 
   const getUser = async () => {
     const response = await api.get('/users/authenticated');
@@ -55,15 +51,12 @@ export const Profile: React.FC = () => {
       getSubscribes();
       getFollowers();
     }
-    if(user !== null) {
-      if(user.status === 401) window.location.reload();
-    }
   }, []);
 
   return (
     <UserContainer>
+      {isOpen ? <Options /> : <Settings onClick={() => setIsOpen(true)} /> }
         <HeadContainer>
-          <Settings />
           { user && (
           <UserParams>
             <UserAvatar style={{
@@ -77,10 +70,14 @@ export const Profile: React.FC = () => {
                 {user.username}
               </UserNickname>
               <LinksContainer>
-                <FollowsSubscribes onClick={() => navigate(followersURL)}>
+                <FollowsSubscribes 
+                  onClick={() => navigate(generatePath('/profile/:id/followers', { id: user.username }))}
+                >
                   Followers {followers.length}
                 </FollowsSubscribes>
-                <FollowsSubscribes onClick={() => navigate(subscribersURL)}>
+                <FollowsSubscribes
+                  onClick={() => navigate(generatePath('/profile/:id/subscribes', { id: user.username }))}
+                >
                   Subscribes {subscribes.length}
                 </FollowsSubscribes>
               </LinksContainer>
@@ -90,15 +87,15 @@ export const Profile: React.FC = () => {
         </HeadContainer>
       <LikedText>Favorite</LikedText>
       <LikedContainer>
-          {subscribes.map((subscribe: any) => (
-            <LikedTrackContainer key={subscribe.id}>
-              <LikedTrackIcon style={{
-                  backgroundImage: `url(${API_URL}/images/user/${subscribe})`
-                }} 
-              />
-            {subscribes}
-          </LikedTrackContainer>
-          ))}
+        {subscribes.map((subscribe: any) => (
+          <LikedTrackContainer key={++counter}>
+            <LikedTrackIcon style={{
+                backgroundImage: `url(${API_URL}/images/user/${subscribe})`
+              }} 
+            />
+          {subscribe}
+        </LikedTrackContainer>
+        ))}
       </LikedContainer>
     </UserContainer>
   );

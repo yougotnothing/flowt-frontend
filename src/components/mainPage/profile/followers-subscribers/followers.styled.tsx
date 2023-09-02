@@ -5,6 +5,7 @@ export const Container = styled('div')`
   display: flex;
   flex-direction: column;
   background-color: ${COLORS.background};
+  gap: 24px;
 `;
 
 export const Card = styled('button')`
@@ -49,4 +50,5 @@ export const PageHeader = styled('div')`
   font-family: 'Raleway', sans-serif;
   font-size: 34px;
   font-weight: 900;
+  color: ${COLORS.firstFontHover};
 `;

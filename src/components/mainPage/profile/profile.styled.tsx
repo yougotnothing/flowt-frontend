@@ -25,6 +25,7 @@ export const UserContainer = styled('div')`
 `;
 
 export const Settings = styled('button')`
+  position: absolute;
   align-self: end;
   width: 38px;
   height: 38px;
@@ -32,16 +33,14 @@ export const Settings = styled('button')`
   background-position: center;
   background-repeat: no-repeat;
   background-size: 46px;
-  background-color: ${COLORS.front};
   border: none;
-  border-radius: 50%;
-  transform: rotate(-90deg);
+  background-color: ${COLORS.background};
   transition: all 0.5s;
+  transform: rotate(180deg);
+  cursor: pointer;
 
   &:hover {
-    transform: rotate(90deg);
-    max-width: 168px;
-    cursor: pointer;
+    transform: rotate(0deg);
   }
 `;
 
@@ -85,9 +84,9 @@ export const UserNickname = styled('a')`
 
 export const HeadContainer = styled('div')`
   display: flex;
-  flex-direction: column;
-  aligh-items: flex-start;
-  justify-content: top;
+  flex-direction: row;
+  justify-content: start;
+  width: 100%;
 `;
 
 export const UserParams = styled('div')`

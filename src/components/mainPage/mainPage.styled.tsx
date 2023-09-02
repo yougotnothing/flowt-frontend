@@ -187,6 +187,12 @@ export const UserButton = styled('button')`
   font-family: 'Raleway', sans-serif;
   font-size: 16px;
   font-weight: 400;
+  color: ${COLORS.firstFont};
+  transition: all 0.3s;
+
+  &:hover {
+    color: ${COLORS.firstFontHover};
+  }
 `;
 
 export const UserAvatar = styled('picture')`
@@ -200,5 +206,4 @@ export const UserAvatar = styled('picture')`
 
 export const UserNickname = styled('div')`
   margin: auto;
-  color: ${COLORS.firstFont}
 `;

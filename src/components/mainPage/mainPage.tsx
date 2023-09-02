@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 
 import toVerify from "../../consts/toVerify";
 
-import { 
+import {
   Container,
   Navbar,
   Search, 
@@ -25,28 +25,19 @@ export const MainPage: React.FC = observer(() => {
     let location = useLocation();
     const navigate = useNavigate();
     const[isVisible, setIsVisible] = useState(false);
-    const[user, setUser] = useState<any>(null);
+    const[user, setUser] = useState<any>('');
     const client = new QueryClient();
     const successAlert = localStorage.getItem('success');
     const warningAlert = localStorage.getItem('warning');
-    let URLToUser: string;
-
-    if (user !== null) {
-      URLToUser = generatePath('/profile/:id', { id: user.username });
-    } else {
-      URLToUser = '';
-    }
 
     const getUser = async () => {
       const response = await api.get('/users/authenticated');
       setUser(response.data);
-      if(response.status === 401) {
-        window.location.reload();
-      }
     };
-
+ 
     useEffect(() => {
       const currentUrl = location.pathname;
+      
       if(!currentUrl || currentUrl === '/') {
         navigate('/home');
       }
@@ -54,9 +45,6 @@ export const MainPage: React.FC = observer(() => {
         toVerify.alreadyVerify();
         getUser();
       }
-    }, []);
-
-    useEffect(() => {
       if (successAlert !== null || warningAlert !== null) {
         setIsVisible(true);
         setTimeout(() => {
@@ -66,7 +54,7 @@ export const MainPage: React.FC = observer(() => {
           setIsVisible(false);
         }, 3000);
       }
-    });
+    }, []);
 
     return (
       <Container>
@@ -81,7 +69,7 @@ export const MainPage: React.FC = observer(() => {
           { toVerify.isVerify && user !== null ?
             <VerifyedUserContainer>
               <UserButton
-                onClick={() => navigate(URLToUser)}
+                onClick={() => navigate(generatePath('/profile/:id', { id: user.username }))}
               >
                 <UserAvatar style={{
                   backgroundImage: `url(${API_URL}/images/user/${user.username})`,

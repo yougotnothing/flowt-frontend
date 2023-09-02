@@ -7,6 +7,7 @@ import { Container, Avatar, Card, Header, PageHeader } from "./followers.styled"
 export const Subscribers: React.FC = () => {
   const navigate = useNavigate();
   const[subscribes, setSubscribes] = useState<any>([]);
+  let counter: number = 0;
 
   const getSubscribes = async () => {
     const response = await api.get('/users/subscribes');
@@ -14,19 +15,14 @@ export const Subscribers: React.FC = () => {
   }
 
   useEffect(() => {
-    if(subscribes.length === 0) {
-      getSubscribes();
-    }else if(subscribes.status === 401) {
-      window.location.reload();
-    }
+    getSubscribes();
   }, []);
 
   return(
-    <>
-      <PageHeader>Subscribes</PageHeader>
       <Container>
+      <PageHeader>Subscribes</PageHeader>
         {subscribes.map((subscribe: any) => (
-          <Card key={subscribe.id}>
+          <Card key={++counter}>
             <Avatar style={{
               backgroundImage: `url(${API_URL}/images/user/${subscribe})`
             }} />
@@ -34,6 +30,5 @@ export const Subscribers: React.FC = () => {
           </Card>
         ))}
       </Container>
-    </>
   )
 }

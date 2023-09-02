@@ -10,7 +10,8 @@ import {
 
 export const Followers: React.FC = () => {
   const[followers, setFollowers] = useState<any>([]);
-  const followersArray = Object.values(followers);
+  const navigate = useNavigate();
+  let counter: number = 0;
 
   const getFollowers = async () => {
     const response = await api.get('/users/followers');
@@ -27,8 +28,8 @@ export const Followers: React.FC = () => {
 
   return(
     <Container>
-      {followersArray.map((follower: any) => (
-        <Card key={follower.id}>
+      {followers.map((follower: any) => (
+        <Card key={++counter}>
           <Avatar style={{
             backgroundImage: `url(${API_URL}/images/user/${follower.username})`
             }}
