@@ -22,7 +22,7 @@ export const Register: React.FC = () => {
     const[usernameError, setUsernameError] = useState(false);
     const[emailError, setEmailError] = useState(false);
     const[passwordError, setPasswordError] = useState(false);
-    const[errorMessage, setErrorMessage] = useState(null);
+    const[errorMessage, setErrorMessage] = useState<any>(null);
 
     const formik = useFormik<{
       username: "";

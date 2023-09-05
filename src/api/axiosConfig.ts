@@ -1,7 +1,8 @@
 import axios from "axios";
  
 export const API_URL = 'http://localhost:8080';
-let isRetry = false;
+let failedRequestsQueue: any = [];
+let isRefreshing = false;
  
 export const api = axios.create({
     baseURL: API_URL,
@@ -10,32 +11,39 @@ export const api = axios.create({
  
 api.interceptors.request.use((config => {
     config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
-    config.headers['Content-Type'] = 'application/json';
     config.headers['Access-Control-Allow-Origin'] = API_URL;
     return config;
 }));
  
 api.interceptors.response.use(
-    (config) => config,
+    (response) => response,
     async (error) => {
         const originalRequest = error.config;
-        if (error.response.status === 401) {
-            if (!isRetry && !originalRequest.url.includes('/auth/')) {
-                isRetry = true;
-                try {
-                    await refreshToken();
-                    return api.request(originalRequest);
-                } catch (e) {
-                    console.log(error.response.data);
-                    throw error;
-                }
-            } else if (originalRequest.url.includes('/auth/')) {
-                return Promise.reject(error);
+ 
+        if (error.response.status === 401 && !originalRequest._retry) {
+            if (isRefreshing) {
+                return new Promise(function (resolve) {
+                    failedRequestsQueue.push(() => {
+                        originalRequest._retry = true;
+                        resolve(api(originalRequest));
+                    });
+                });
             }
-            throw error;
+ 
+            isRefreshing = true;
+ 
+            await refreshToken();
+ 
+            isRefreshing = false;
+ 
+            failedRequestsQueue.forEach((callback: any) => callback());
+            failedRequestsQueue = [];
+ 
+            return api(originalRequest);
         }
+        return Promise.reject(error);
     }
-);
+    );
  
 export const registration = async (registerDto: any) => {
     const response = await api.post('/auth/registration', {
@@ -54,8 +62,7 @@ export const login = async (loginDto: any) => {
     });
     console.log(response.data);
     if (response) {
-        const json = response.data;
-        const token = json.token;
+        const token = response.data.token;
         console.log(token);
         localStorage.setItem('token', token);
     }
@@ -70,7 +77,7 @@ export const refreshToken = async () => {
         localStorage.setItem('token', token);
     }
 }
-
+ 
 export const verifyEmail = async (code: any) => {
     const response = await api.get('/verify', {
         params: {
@@ -79,5 +86,18 @@ export const verifyEmail = async (code: any) => {
     });
     return response;
 }
- 
-export const getUser = async () => await api.get('/secured/auth');
+
+export const getUser = async (setUser: any) => {
+    const response = await api.get('/users/authenticated');
+    setUser(response.data);
+};
+
+export const getSubscribes = async (setSubscribes: any) => {
+    const response = await api.get('/users/subscribes');
+    setSubscribes(response.data.subscribes);
+};
+
+export const getFollowers = async (setFollowers: any) => {
+    const response = await api.get('/users/followers');
+    setFollowers(response.data.followers);
+};

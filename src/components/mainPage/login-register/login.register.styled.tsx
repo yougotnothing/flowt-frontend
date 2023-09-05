@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { COLORS } from "../../../consts/colors.const";
+import { TITLE, BUTTON, INPUT, VALIDATION, NOT_REGISTERED, A_CONTAINER, A_ } from "../../../consts/styles.const";
 
 export const LoginHeader = styled('div')`
   text-align: center;
   font-family: 'Urbanist' sans-serif;
   font-weight: 800;
   margin-top: 24px;
-  margin-bottom: 24px;
   font-size: 36px;
   color: ${COLORS.firstFontHover};
 `;
@@ -24,103 +24,38 @@ export const LoginCard = styled('div')`
   flex-direction: column;
   align-items: center;
   align-self: center;
-  margin-top: 7%;
+  margin-top: 5em;
   margin-left: auto;
   margin-right: auto;
+  gap: 14px;
   padding: 24px;
-  box-shadow: 0px 0px 16px 0px ${COLORS.border};
   border-radius: 24px;
   background-color: ${COLORS.front};
 `;
 
 export const LoginInput = styled('input')`
-  display: flex;
-  align-self: center;
-  width: 228px;
+  ${INPUT};
+
+  margin-top: 12px;
   height: 38px;
-  border: none;
-  border-radius: 10px;
-  padding-left: 20px;
-  margin-top: 10px;
-  background-color: ${COLORS.input};
-  color: #bdbdbd;
-  outline: none;
-  transition: all 0.5s;
-
-  &::placeholder {
-    font-size: 18px;
-    font-family: 'Urbanist', sans-serif;
-    font-weight: 300;
-  }
-
-  &:hover {
-    transition: all 0.5s;
-    color: white;
-    background-color: ${COLORS.inputHover};
-  } 
+  width: 228px;
 `;
 
 export const LoginButton = styled('button')`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 124px;
+  ${BUTTON};
+
+  margin-top: 12px;
   height: 38px;
-  background-color: ${COLORS.secondary};
-  color: ${COLORS.firstFontHover};
-  border: none;
-  margin: 16px;
-  border-radius: 12px;
-  font-family: 'Urbanist', sans-serif;
-  font-weight: 300;
-  font-size: 16px;
-
-  .link {
-    position: absolute;
-    opacity: 0;
-    width: 124px;
-    height: 38px;
-  }
-
-  &:hover {
-    background-color: ${COLORS.border};
-    color: ${COLORS.firstFont};
-    cursor: pointer;
-    transition: all 0.2s;
-  }
+  width: 124px;
 `;
 
 export const RegisteredButton = styled('button')`
-  margin: auto;
-  font-family: 'Urbanist', sans-serif;
-  font-weight: 300;
-  background: none;
-  background-color: none;
-  border: none;
-  width: max-content;
-  height: 38px;
-  color: ${COLORS.secondary};
-  justify-content: center;
-  align-self: end;
+  ${NOT_REGISTERED};
 
-  &:hover {
-    transition: all 0.2s;
-    cursor: pointer;
-    border: 1px solid ${COLORS.secondaryHover};
-    border-top-width: 0;
-    border-left-width: 0;
-    border-right-width: 0;
-    color: ${COLORS.secondaryHover};
-  }
+  height: 38px; 
 `;
 
-export const ValidationSpan = styled('span')`
-  display: flex;
-  align-self: start;
-  font-family: 'Urbanist' sans-serif;
-  font-weight: 700;
-  color: ${COLORS.krasniy};
-`;
+export const ValidationSpan = styled('span')`${VALIDATION};`;
 
 export const InputContainer = styled('div')`
   display: flex;
@@ -130,28 +65,10 @@ export const InputContainer = styled('div')`
 `;
 
 export const NotRegistered = styled('button')`
-  margin: auto;
-  align-self: start;
-  font-family: 'Urbanist', sans-serif;
-  font-weight: 300;
-  background: none;
-  background-color: none;
-  border: none;
+  ${NOT_REGISTERED};
+
   width: 98px;
   height: 38px;
-  color: ${COLORS.secondary};
-  justify-content: center;
-  align-self: end;
-
-  &:hover {
-    transition: all 0.2s;
-    cursor: pointer;
-    border: 1px solid ${COLORS.secondaryHover};
-    border-top-width: 0;
-    border-left-width: 0;
-    border-right-width: 0;
-    color: ${COLORS.secondaryHover};
-  }
 `;
 
 export const HelpButtons = styled('div')`
@@ -161,3 +78,16 @@ export const HelpButtons = styled('div')`
   max-width: 100%;
   gap: 40px;
 `;
+
+export const AContainer = styled('div')`${A_CONTAINER}`;
+
+export const A = styled('a')`${A_}`;
+
+export const Container = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
+export const DescriptionTitle = styled('div')`${TITLE}`;

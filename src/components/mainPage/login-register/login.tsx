@@ -17,7 +17,7 @@ import { loginValidationSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/loader";
 import { login } from "../../../api/axiosConfig";
 
-export const Login = () => {
+export const Login: React.FC = () => {
     const navigate = useNavigate();
     const[errorMessage, setErrorMessage] = useState(null);
     const[isLoading, setIsLoading] = useState(false);
@@ -87,7 +87,7 @@ export const Login = () => {
           }}
           disabled={isLoading}
         >
-          { isLoading ? <Loader /> :  "Login" }
+          { isLoading ? <Loader /> : "Login" }
         </LoginButton>
         <HelpButtons>
           <RegisteredButton onClick={() => navigate("/verify/restore-password")}>

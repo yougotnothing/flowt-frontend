@@ -1,4 +1,4 @@
-import { type } from "os";
+import React from "react";
 
 export type booleanState = (value: React.SetStateAction<boolean>) => void;
 export type nullState = (value: React.SetStateAction<null>) => void;

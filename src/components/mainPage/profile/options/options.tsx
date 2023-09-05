@@ -4,10 +4,11 @@ import { useNavigate, generatePath } from "react-router-dom";
 import { api } from "../../../../api/axiosConfig";
 import { OptionsContainer, Select, SelectText, CloseOptions } from "./options.styled";
 import { Settings } from "../profile.styled";
+import { OptionsProps } from "./options.styled";
 
-export const Options: React.FC = () => {
-  const[isVisible, setIsVisible] = useState<boolean>(true);
+export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
   const[user, setUser] = useState<any>(null);
+  const[isVisible, setIsVisible] = useState<boolean>(prop);
   const navigate = useNavigate();
 
   const getUser = async () => {
@@ -21,20 +22,29 @@ export const Options: React.FC = () => {
 
   return (
     <>
-    {isVisible ? (
-      <OptionsContainer>
-        <CloseOptions onClick={() => setIsVisible(false)} />
-        <Select>
-          <SelectText>theme</SelectText>
-        </Select>
-        <Select onClick={() => navigate(generatePath('/account/:id', { id: user.username  }))}>
-          <SelectText>account</SelectText>
-        </Select>
-        <Select>
-          <SelectText>settings</SelectText>
-        </Select>
-      </OptionsContainer>
-      ) : <Settings onClick={() => setIsVisible(true)} />}
+      {isVisible ? (
+        <OptionsContainer $isVisible={isVisible}>
+          <CloseOptions onClick={() => setIsVisible(false)} />
+          <Select>
+            <SelectText>Theme</SelectText>
+          </Select>
+          <Select onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>
+            <SelectText>Account</SelectText>
+          </Select>
+          <Select>
+            <SelectText>Settings</SelectText>
+          </Select>
+          <Select onClick={() => {
+            localStorage.removeItem('token');
+            navigate('/home');
+            window.location.reload();
+          }}>
+            <SelectText>Logout</SelectText>
+          </Select>
+        </OptionsContainer>
+      ) : (
+        <Settings onClick={() => setIsVisible(true)} />
+      )}
     </>
   )
 }

@@ -15,16 +15,10 @@ export const Followers: React.FC = () => {
 
   const getFollowers = async () => {
     const response = await api.get('/users/followers');
-    setFollowers(response.data);
+    setFollowers(response.data.followers);
   }
 
-  useEffect(() => {
-    if (followers.length === 0) {
-      getFollowers();
-    } else if (followers.status === 401) {
-      window.location.reload();
-    }
-  }, []);
+  useEffect(() => { getFollowers(); }, []);
 
   return(
     <Container>

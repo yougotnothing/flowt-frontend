@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { COLORS } from "../../consts/colors.const";
+import { A_, A_CONTAINER } from "../../consts/styles.const";
 
 export const Container = styled('div')`
   display: flex;
@@ -34,11 +35,11 @@ export const Search = styled('input')`
   border-radius: 12px;
   padding-left: 20px;
   background-color: ${COLORS.input};
-  color: #bdbdbd;
   outline: none;
   transition: all 0.5s;
 
   &::placeholder {
+    color: ${COLORS.firstFont};
     font-size: 18px;
     font-family: 'Urbanist', sans-serif;
     font-weight: 300;
@@ -46,8 +47,8 @@ export const Search = styled('input')`
 
   &:hover {
     transition: all 0.5s;
-    color: white;
     background-color: ${COLORS.inputHover};
+    color: ${COLORS.firstFontHover};
   }
 `;
 
@@ -206,4 +207,22 @@ export const UserAvatar = styled('picture')`
 
 export const UserNickname = styled('div')`
   margin: auto;
+`;
+
+export const GoBackContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: max-content;
+  justify-content: end;
+`;
+
+export const AContainer = styled('div')`${A_CONTAINER};`;
+
+export const A = styled('a')`${A_};`;
+
+export const GlobalContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;

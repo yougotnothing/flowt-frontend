@@ -76,7 +76,8 @@ export const UserNickname = styled('a')`
   text-align: flex-start;
   font-size: 32px;
   font-weight: 800;
-  margin: auto;
+  margin-top: auto;
+  margin-bottom: auto;
   font-family: 'Raleway', sans-serif;
   color: ${COLORS.firstFontHover};
   cursor: pointer;
@@ -138,7 +139,7 @@ export const LikedContainer = styled('div')`
 
 export const LikedText = styled('div')`
   text-align: flex-start;
-  margin-top: 80px;
+  margin-top: 24px;
   margin-bottom: 16px;
   font-size: 32px;
   font-weight: 800;
@@ -181,4 +182,12 @@ export const LikedTrackIcon = styled('picture')`
   margin: 1%;
   border-radius: 14px;
   justify-content: start;
+`;
+
+export const Description = styled('div')`
+  font-family: 'Urbanist', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 24px;
+  color: ${COLORS.firstFontHover};
 `;

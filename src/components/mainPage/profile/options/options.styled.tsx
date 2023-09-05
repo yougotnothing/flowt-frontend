@@ -1,8 +1,30 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { COLORS } from "../../../../consts/colors.const";
 
-export const OptionsContainer = styled('div')`
-  width: 220px;
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+`;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+export interface OptionsProps {
+  $isVisible: boolean;
+}
+
+export const OptionsContainer = styled('div')<OptionsProps>`
+  width: 280px;
   position: absolute;
   align-self: end;
   display: flex;
@@ -11,7 +33,10 @@ export const OptionsContainer = styled('div')`
   background-color: ${COLORS.front};
   transition: all 0.3s;
   padding: 12px;
-  gap: 4px;
+  gap: 8px;
+  opacity: ${($isVisible) => ($isVisible ? '1' : '0')};
+  animation: ${($isVisible) =>
+    ($isVisible ? css`${fadeIn} 0.3s ease` : css`${fadeOut} 0.3s ease`)};
 `;
 
 export const Select = styled('button')`

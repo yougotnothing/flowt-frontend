@@ -25,4 +25,16 @@ export const restorePasswordSchema = Yup.object().shape({
 
 export const putEmailSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Enter email")
+});
+
+export const changeUsernameSchema = Yup.object().shape({
+  username: Yup.string().min(4, "Username is too short").max(15, "Username is too long").required("Enter username")
+});
+
+export const changeDescriptionSchema = Yup.object().shape({
+  description: Yup.string().max(120, "discription too long")
+});
+
+export const changeEmailSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email")
 })

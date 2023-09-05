@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, generatePath } from "react-router-dom";
 
-import { api } from "../../../api/axiosConfig";
+import { api, getUser } from "../../../api/axiosConfig";
 import { useFormik } from "formik";
 import { restorePasswordSchema } from "../../../validation/yup.config";
 import { 
@@ -12,14 +12,18 @@ import {
   Span, 
   RegisteredButton,
   ValidationSpan,
-  InputContainer
+  InputContainer,
+  A,
+  AContainer,
+  Container
 } from "./login.register.styled";
 import { Loader } from "../../loader/loader";
 
 export const RestorePassword: React.FC = () => {
-  const[errorMessage, setErrorMessage] = useState('');
-  const[isLoading, setIsLoading] = useState(false);
-  const[isVerify, setIsVerify] = useState(false);
+  const[errorMessage, setErrorMessage] = useState<any>('');
+  const[user, setUser] = useState<any>(null);
+  const[isLoading, setIsLoading] = useState<boolean>(false);
+  const[isVerify, setIsVerify] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const formik = useFormik<{
@@ -36,8 +40,11 @@ export const RestorePassword: React.FC = () => {
     onSubmit: () => {}
   });
 
+  useEffect(() => { getUser(setUser) }, []);
+
   const handleChangePassword = async () => {
     try{
+      setIsLoading(true);
       if(localStorage.getItem('email') === null) {
         await api.post('/users/change-password', {
           newPassword: formik.values.password,
@@ -55,9 +62,12 @@ export const RestorePassword: React.FC = () => {
           navigate('/home');
           setIsLoading(false);
         }
-      }catch(e){
+    }catch(error: any){
+      if(error) {
         setErrorMessage("Incorrect restore code");
+        setIsVerify(false);
       }
+    }
   }
 
   const passwordError = (formik.errors.password && formik.touched.password && <ValidationSpan>{formik.errors.password}</ValidationSpan>);
@@ -65,41 +75,52 @@ export const RestorePassword: React.FC = () => {
   const codeError = (formik.errors.code && formik.touched.code && <ValidationSpan>{formik.errors.code}</ValidationSpan>);
 
   return (
-    <LoginCard>
-      <LoginHeader><Span>Restore</Span> password</LoginHeader>
-      <InputContainer>
-      <LoginInput 
-        placeholder="password"
-        name="password"
-        type="password"
-        onBlur={formik.handleBlur}
-        onChange={formik.handleChange}
-      />
-      {passwordError}
-      <LoginInput 
-        placeholder="confirm password"
-        name="confirmPassword"
-        type="password"
-        onBlur={formik.handleBlur}
-        onChange={formik.handleChange}
-      />
-      {confirmPasswordError}
-      <LoginInput 
-        placeholder="Enter code" 
-        name="code"
-        onBlur={formik.handleBlur}
-        onChange={formik.handleChange}
-        />
-      {codeError}
-      <ValidationSpan>{errorMessage}</ValidationSpan>
-      </InputContainer>
-      <LoginButton
-        onClick={handleChangePassword}
-       disabled={isLoading}
-      >
-        {isLoading ? <Loader /> : "Send code"}
-      </LoginButton>
-      <RegisteredButton>go back</RegisteredButton>
-    </LoginCard>
+    <Container>
+      {localStorage.getItem('token') ? (
+        <AContainer>
+          <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>
+            Go back
+          </A>
+        </AContainer>
+      ) : (
+        <A></A> 
+        )}
+      <LoginCard>
+        <LoginHeader><Span>Restore/Change</Span> password</LoginHeader>
+        <InputContainer>
+        <LoginInput 
+          placeholder="password"
+          name="password"
+          type="password"
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          />
+        {passwordError}
+        <LoginInput 
+          placeholder="confirm password"
+          name="confirmPassword"
+          type="password"
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          />
+        {confirmPasswordError}
+        <LoginInput 
+          placeholder="Enter code" 
+          name="code"
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          />
+        {codeError}
+        <ValidationSpan>{errorMessage}</ValidationSpan>
+        </InputContainer>
+        <LoginButton
+          onClick={handleChangePassword}
+          disabled={isLoading}
+          >
+          {isLoading ? <Loader /> : "Send code"}
+        </LoginButton>
+        <RegisteredButton>go back</RegisteredButton>
+      </LoginCard>
+    </Container>
   );
 }

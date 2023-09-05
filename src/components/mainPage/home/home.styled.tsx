@@ -10,7 +10,6 @@ export const UserContainer = styled('div')`
   background-color: ${COLORS.front};
   padding: 2%;
   border-radius: 20px;
-  gap: 2%;
 `;
 
 export const FavoriteContainer = styled('div')`
@@ -21,46 +20,47 @@ export const FavoriteContainer = styled('div')`
 `;
 
 export const Card = styled('button')`
-  padding-left: 4%;
-  width: 286px;
-  height: 84px;
+  margin: 12px;
+  gap: 24px;
+  width: 90%;
+  padding: 12px;
   display: flex;
   flex-direction: row;
   align-self: center;
-  background: none;
-  border: 3px solid ${COLORS.input};
+  border: none;
+  background-color: ${COLORS.grey};
+  color: ${COLORS.firstFont};
   border-radius: 14px;
   justify-content: center;
   transition: all 0.3s;
-
+  cursor: pointer;
+  
   &:hover {
-    border-color: ${COLORS.firstFont};
-    cursor: pointer;
+    background-color: ${COLORS.green};
+    color: ${COLORS.firstFontHover};
   }
 `;
 
-export const CardIcon = styled('img')`
+export const CardIcon = styled('picture')`
   width: 56px;
   height: 56px;
-  background: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 56px;
+  background-size: cover;
   margin-top: auto;
   margin-bottom: auto;
   align-self: start;
-  background-image: url('/androidIcon.jpg');
   border: none;
   border-radius: 14px;
 `;
 
 export const CardHeader = styled('div')`
+  margin: auto;
+  padding-right: 12px;
   font-size: 22px;
   font-family: 'Urbanist', sans-serif;
   font-weight: 800;
   letter-spacing: normal;
-  color: ${COLORS.firstFontHover};
-  margin: auto;
 `;
 
 export const Recommendations = styled('div')`

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Form, Link, Outlet, useNavigate, useLocation, generatePath } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { observer } from "mobx-react-lite";
 
 import toVerify from "../../consts/toVerify";
@@ -10,30 +9,25 @@ import {
   Navbar,
   Search, 
   SearchButton, 
-  ContentContainer, 
+  ContentContainer,
   Logo,
   ButtonsContainer, 
   VerifyedUserContainer,
-  UserAvatar, 
   UserButton,
+  UserAvatar,
   UserNickname
 } from "./mainPage.styled";
 import { AlertSuccess, AlertWarning } from "./alert/alert";
-import { api, API_URL } from "../../api/axiosConfig";
+import { API_URL, getUser } from "../../api/axiosConfig";
 
 export const MainPage: React.FC = observer(() => {
     let location = useLocation();
     const navigate = useNavigate();
     const[isVisible, setIsVisible] = useState(false);
-    const[user, setUser] = useState<any>('');
-    const client = new QueryClient();
+    const[user, setUser] = useState<any>(null);
+    const[isAvatar, setIsAvatar] = useState<boolean>(false);
     const successAlert = localStorage.getItem('success');
     const warningAlert = localStorage.getItem('warning');
-
-    const getUser = async () => {
-      const response = await api.get('/users/authenticated');
-      setUser(response.data);
-    };
  
     useEffect(() => {
       const currentUrl = location.pathname;
@@ -43,7 +37,7 @@ export const MainPage: React.FC = observer(() => {
       }
       if (localStorage.getItem('token') !== null) {
         toVerify.alreadyVerify();
-        getUser();
+        getUser(setUser);
       }
       if (successAlert !== null || warningAlert !== null) {
         setIsVisible(true);
@@ -62,7 +56,7 @@ export const MainPage: React.FC = observer(() => {
         { isVisible && warningAlert && <AlertWarning /> }
         <Navbar>
           <Logo onClick={() => navigate("/home")} />
-          <Form className="form" method="post" action="/search">
+          <Form className="form" method="post" action={`${API_URL}`}>
             <Search placeholder="search" />
             <SearchButton onClick={() => navigate("/search")} />
           </Form>
@@ -71,9 +65,15 @@ export const MainPage: React.FC = observer(() => {
               <UserButton
                 onClick={() => navigate(generatePath('/profile/:id', { id: user.username }))}
               >
-                <UserAvatar style={{
-                  backgroundImage: `url(${API_URL}/images/user/${user.username})`,
-                }} />
+                {user.username ?
+                  <UserAvatar style={{
+                    backgroundImage: `url(${API_URL}/images/user/${user.username})`
+                  }} />
+                   :
+                  <UserAvatar style={{
+                    backgroundImage: 'url(/defaultAvatar.png)'
+                  }} />
+                }
                 <UserNickname>{user.username}</UserNickname>
               </UserButton>
             </VerifyedUserContainer> 
@@ -85,9 +85,7 @@ export const MainPage: React.FC = observer(() => {
           }
         </Navbar>
         <ContentContainer>
-          <QueryClientProvider client={client}>
-            <Outlet />
-          </QueryClientProvider>
+          <Outlet />
         </ContentContainer>
       </Container>
     );

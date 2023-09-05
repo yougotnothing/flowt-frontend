@@ -31,19 +31,21 @@ export const PutEmail: React.FC = () => {
     onSubmit: () => {}
   });
 
-    const handlePutEmail: any = async () => {
-      setIsLoading(true);
-      try {
-        await api.post('/verify/restore-password', { email: formik.values.email });
-        localStorage.setItem('email', formik.values.email);
-        setTimeout(() => navigate('/verify/restore-password'), 300);
-      }catch(e) {
-        setValidationError('Email invalid');
-        setIsLoading(false);
-      }
-    };
+  const handlePutEmail = async () => {
+    setIsLoading(true);
+    try {
+      await api.post('/verify/restore-password', { email: formik.values.email });
+      localStorage.setItem('email', formik.values.email);
+      setTimeout(() => navigate('/verify/restore-password'), 300);
+    }catch(e) {
+      setValidationError('Email invalid');
+      setIsLoading(false);
+    }
+  };
 
-    const emailError = ( formik.errors.email && formik.touched.email && <ValidationSpan>{formik.errors.email}</ValidationSpan> );
+  const emailError = (
+    formik.errors.email && formik.touched.email && <ValidationSpan>{formik.errors.email}</ValidationSpan>
+  );
       
   return (
     <LoginCard>
