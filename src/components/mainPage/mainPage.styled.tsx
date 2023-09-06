@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { COLORS } from "../../consts/colors.const";
-import { A_, A_CONTAINER } from "../../consts/styles.const";
+import { A_, A_CONTAINER, INPUT, BUTTON } from "../../consts/styles.const";
 
 export const Container = styled('div')`
   display: flex;
@@ -27,29 +27,10 @@ export const Navbar = styled('div')`
 `;
 
 export const Search = styled('input')`
-  display: flex;
-  align-self: center;
+  ${INPUT};
+
   width: 300px;
   height: 38px;
-  border: none;
-  border-radius: 12px;
-  padding-left: 20px;
-  background-color: ${COLORS.input};
-  outline: none;
-  transition: all 0.5s;
-
-  &::placeholder {
-    color: ${COLORS.firstFont};
-    font-size: 18px;
-    font-family: 'Urbanist', sans-serif;
-    font-weight: 300;
-  }
-
-  &:hover {
-    transition: all 0.5s;
-    background-color: ${COLORS.inputHover};
-    color: ${COLORS.firstFontHover};
-  }
 `;
 
 export const SearchButton = styled('button')`

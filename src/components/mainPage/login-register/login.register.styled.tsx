@@ -15,7 +15,7 @@ export const Span = styled('span')`
   color: ${COLORS.secondary};
   font-family: 'Urbanist' sans-serif;
   font-weight: 800;
-  font-size: 36px;
+  font-size: 32px;
 `;
 
 export const LoginCard = styled('div')`
@@ -24,7 +24,7 @@ export const LoginCard = styled('div')`
   flex-direction: column;
   align-items: center;
   align-self: center;
-  margin-top: 5em;
+  margin-top: 4em;
   margin-left: auto;
   margin-right: auto;
   gap: 14px;

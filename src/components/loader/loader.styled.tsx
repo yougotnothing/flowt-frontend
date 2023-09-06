@@ -13,7 +13,7 @@ export const Spinner = styled("div")`
   width: 1rem;
   height: 1rem;
   border: 2px solid;
-  border-color: ${COLORS.grey} transparent ${COLORS.grey} transparent;
+  border-color: ${COLORS.secondary} transparent ${COLORS.secondary} transparent;
   border-radius: 50%;
   animation: spin-anim 0.8s linear infinite;
 

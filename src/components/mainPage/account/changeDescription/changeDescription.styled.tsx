@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { COLORS } from "../../../../consts/colors.const";
-import { TITLE } from "../../../../consts/styles.const";
+import { BUTTON, TITLE, INPUT } from "../../../../consts/styles.const";
 
 export const Container = styled('div')`
   display: flex;
@@ -24,47 +24,21 @@ export const ChangeDescriptionContainer = styled('div')`
 
 
 export const Input = styled('textarea')`
-  background-color: ${COLORS.input};
-  color: ${COLORS.firstFont};
-  padding: 12px;
+  ${INPUT};
+
   width: 92%;
   height: 220px;
-  font-family: 'Urbanist', sans-serif;
-  font-size: 18px;
-  font-weight: 400;
-  border: none;
-  border-radius: 8px;
-  outline: none;
-  transition: all 0.3s;
+  padding-top: 12px;
+  padding-right: 12px;
+  padding-bottom: 12px;
   resize: none;
-
-  &:hover {
-    background-color: ${COLORS.inputHover};
-    color: ${COLORS.firstFontHover};
-  }
-
-  &::placeholder {
-    opacity: 1;
-  }
 `;
 
 export const Button = styled('button')`
+  ${BUTTON};
+
   width: 142px;
   height: 46px;
-  background-color: ${COLORS.secondary};
-  color: ${COLORS.firstFontHover};
-  font-family: 'Urbanist', sans-serif;
-  font-size: 18px;
-  font-weight: 400;
-  transition: all 0.3s;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${COLORS.border};
-    color: ${COLORS.firstFont};
-  }
 `;
 
 export const Title = styled('div')`

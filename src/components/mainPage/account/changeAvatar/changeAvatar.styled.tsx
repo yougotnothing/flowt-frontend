@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import { COLORS } from "../../../../consts/colors.const";
+import { BUTTON } from "../../../../consts/styles.const";
 
 export const ChangeAvatarContainer = styled('div')`
   display: flex;
-  width: 100%;
+  margin-top: 3em;
+  margin-left: auto;
+  margin-right: auto;
   flex-direction: column;
   align-items: center;
   gap: 24px;
@@ -23,7 +26,7 @@ export const Input = styled('input')`
 
 export const InputWrapper = styled('div')`
   display: flex;
-  padding: 20px;
+  padding: 24px;
   flex-direction: column;
   align-items: center;
   gap: 18px;
@@ -32,19 +35,9 @@ export const InputWrapper = styled('div')`
 `;
 
 export const Label = styled('label')`
-  display: flex;
-  cursor: pointer;
-  padding: 10px 15px;
-  background-color: ${COLORS.secondary};
-  color: ${COLORS.firstFontHover};
-  border-radius: 5px;
-  font-family: 'Urbanist', sans-serif;
-  font-weight: 400;
-  transition: all 0.3s;
+  ${BUTTON};
 
-  &:hover {
-    background-color: ${COLORS.border};
-  }
+  padding: 10px 15px;
 `;
 
 export const NewAvatar = styled('picture')`

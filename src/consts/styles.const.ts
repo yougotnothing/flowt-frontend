@@ -18,7 +18,7 @@ export const VALIDATION = `
 export const INPUT = `
   border: 2px solid ${COLORS.border};
   border-radius: 12px;
-  background-color: ${COLORS.front};
+  background-color: ${COLORS.darkGrey};
   color: ${COLORS.firstFont};
   padding-left: 12px;
   outline: none;
@@ -38,19 +38,20 @@ export const INPUT = `
 `;
 
 export const BUTTON = `
-  margin-top: 12px;
-  background-color: ${COLORS.secondary};
-  cursor: pointer;
-  border: none;
-  border-radius: 8px;
+  background-color: ${COLORS.grey};
+  color: ${COLORS.firstFont};
+  border: 2px solid ${COLORS.border};
+  font-weight: 600;
+  font-size: 18px;
   font-family: 'Urbanist', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  color: ${COLORS.firstFontHover};
+  border-radius: 8px;
+  flex-direction: column;
   transition: 0.3s;
+  cursor: pointer;
 
   &:hover {
     background-color: ${COLORS.border};
+    color: ${COLORS.secondary}; 
   }
 `;
 

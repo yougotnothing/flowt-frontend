@@ -14,11 +14,13 @@ export const Title = styled('div')`${TITLE};`;
 export const UserSettingsContainer = styled('div')`
   display: flex;
   flex-direction: column;
+  position: absolute;
   gap: 24px;
 `;
 
 export const UserSettings = styled('div')`
   display: flex;
+  width: 286px;
   flex-direction: column;
   align-self: start;
   align-items: start;
@@ -60,6 +62,7 @@ export const A = styled('a')`
 export const InfoContainer = styled('div')`
   display: flex;
   flex-direction: column;
+  margin: auto;
   gap: 24px;
   text-align: start;
 `;
@@ -70,6 +73,7 @@ export const UserContainer = styled('div')`
   gap: 6em;
   align-items: start;
   align-self: start;
+  width: 63em;
   padding: 36px;
   border-radius: 18px;
   background: linear-gradient(90deg, ${COLORS.grey} 0%, ${COLORS.secondary} 100%);

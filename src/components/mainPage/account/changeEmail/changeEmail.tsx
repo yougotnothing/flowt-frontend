@@ -6,7 +6,10 @@ import { changeEmailSchema } from "../../../../validation/yup.config";
 import { useFormik } from "formik";
 import { A, AContainer, GoBackContainer, GlobalContainer } from "../../mainPage.styled";
 import { ChangeEmailContainer, Input, Button, Header, ContentContainer, Error } from "./changeEmail.styled";
+import { Span } from "../../login-register/login.register.styled";
 import { Loader } from "../../../loader/loader";
+import { Account } from "../account";
+import { AccountContainer } from "../account.styled";
 
 export const ChangeEmail: React.FC = () => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
@@ -44,34 +47,37 @@ export const ChangeEmail: React.FC = () => {
   const EmailError = formik.errors.email && formik.touched.email && <Error>{formik.errors.email}</Error>
 
   return (
-    <GlobalContainer>
-      {user && (
-        <>
-          <GoBackContainer>
-            <AContainer>
-              <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>
-                Go back
-              </A>
-            </AContainer>
-          </GoBackContainer>
-          <ChangeEmailContainer>
-            <ContentContainer>
-              <Header>Change email</Header>
-              <Input 
-                name="email"
-                type="text"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                placeholder={user.email}
-              />
-              {EmailError}
-              <Button onClick={() => handleChangeEmail()}>
-                {isLoading ? <Loader /> : "Submit"}
-              </Button>
-            </ContentContainer>
-          </ChangeEmailContainer>
-        </>
-      )}
-    </GlobalContainer>
+    <AccountContainer>
+      {user && <Account />}
+      <GlobalContainer>
+        {user && (
+          <>
+            <GoBackContainer>
+              <AContainer>
+                <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>
+                  Go back
+                </A>
+              </AContainer>
+            </GoBackContainer>
+            <ChangeEmailContainer>
+              <ContentContainer>
+                <Header>Change <Span>email</Span></Header>
+                <Input 
+                  name="email"
+                  type="text"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder={user.email}
+                />
+                {EmailError}
+                <Button onClick={() => handleChangeEmail()}>
+                  {isLoading ? <Loader /> : "Submit"}
+                </Button>
+              </ContentContainer>
+            </ChangeEmailContainer>
+          </>
+        )}
+      </GlobalContainer>
+    </AccountContainer>
   )
 }

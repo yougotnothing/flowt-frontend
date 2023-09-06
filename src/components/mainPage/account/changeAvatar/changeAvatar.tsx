@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, generatePath } from "react-router-dom";
 
 import { api, getUser } from "../../../../api/axiosConfig";
+import { AccountContainer } from "../account.styled";
+import { Account } from "../account";
+import { Span } from "../../login-register/login.register.styled";
+import { A, AContainer, GoBackContainer, GlobalContainer } from "../../mainPage.styled";
 import { ChangeAvatarContainer, Title, InputWrapper, Input, Label, NewAvatar, SetNewAvatarButton, ButtonContainer } from "./changeAvatar.styled";
 
 export const ChangeAvatar: React.FC = () => {
@@ -41,39 +45,51 @@ export const ChangeAvatar: React.FC = () => {
   }
 
   return (
-    <>
+    <AccountContainer>
+      {user && 
+      <GlobalContainer>
+        <GoBackContainer>
+          <AContainer>
+            <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>
+              Go back
+            </A>
+          </AContainer>
+        </GoBackContainer>
+      <Account />
       <ChangeAvatarContainer>
-        <Title>Change avatar</Title>
         <InputWrapper>
-          <Input
-            type='file'
-            id="avatarInput" 
-            accept="image/*"
-            onChange={(event: any) => isFileChoosen(event)}
-          />
-          {file ? (
-            <>
-              <NewAvatar style={{
-                backgroundImage: `url(${URL.createObjectURL(file)})`
-              }} />
-              <ButtonContainer>
-                <SetNewAvatarButton 
-                  onClick={() => handleChangedAvatar()}
-                  >
-                  Set avatar
-                </SetNewAvatarButton>
-              </ButtonContainer>
-            </>
-          ) : (
-            <>
-              <NewAvatar style={{
-                backgroundImage: 'url(/plus.jpg)'
-              }} />
-            </>
-          )}
+          <Title>Change <Span>avatar</Span></Title>
+            <Input
+              type='file'
+              id="avatarInput" 
+              accept="image/*"
+              onChange={(event: any) => isFileChoosen(event)}
+              />
+            {file ? (
+              <>
+                <NewAvatar style={{
+                  backgroundImage: `url(${URL.createObjectURL(file)})`
+                }} />
+                <ButtonContainer>
+                  <SetNewAvatarButton 
+                    onClick={() => handleChangedAvatar()}
+                    >
+                    Set avatar
+                  </SetNewAvatarButton>
+                </ButtonContainer>
+              </>
+            ) : (
+              <>
+                <NewAvatar style={{
+                  backgroundImage: 'url(/plus.jpg)'
+                }} />
+              </>
+            )}
           <Label htmlFor="avatarInput">{file ? 'select another' : 'select avatar'}</Label>
         </InputWrapper> 
       </ChangeAvatarContainer>
-    </>
+        </GlobalContainer>
+      }
+    </AccountContainer>
   )
 }

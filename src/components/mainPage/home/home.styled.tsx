@@ -103,11 +103,13 @@ export const RecommendationCard = styled('button')`
   width: 174px;
   height: 240px;
   background-color: ${COLORS.front};
+  color: ${COLORS.firstFont};
   gap: 20px;
   transition: all 0.2s;
 
   &:hover {
-    background-color: ${COLORS.frontHover};
+    background-color: ${COLORS.background};
+    color: ${COLORS.firstFontHover};
     cursor: pointer;
   }
 `;
@@ -119,12 +121,7 @@ export const RecommendationTitle = styled('div')`
   text-align: start;
   text-transform: lowercase;
   justify-content: flex-start;
-  color: ${COLORS.firstFont};
   transition: all 0.2s;
-  
-  &:hover {
-    color: ${COLORS.firstFontHover};
-  }
 `;
 
 export const RecTextContainer = styled('div')`
@@ -135,12 +132,7 @@ export const RecommendationsHeader = styled('div')`
   font-size: 20px;
   font-family: 'Urbanist', sans-serif;
   font-weight: 300;
-  color: ${COLORS.firstFont};
   transition: all 0.3s;
-
-  &:hover {
-    color: ${COLORS.firstFontHover};
-  }
 `;
 
 export const RecommendationsIcon = styled('picture')`
