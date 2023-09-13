@@ -38,6 +38,7 @@ export const INPUT = `
 `;
 
 export const BUTTON = `
+  display: flex;
   background-color: ${COLORS.grey};
   color: ${COLORS.firstFont};
   border: 2px solid ${COLORS.border};
@@ -46,6 +47,8 @@ export const BUTTON = `
   font-family: 'Urbanist', sans-serif;
   border-radius: 8px;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   transition: 0.3s;
   cursor: pointer;
 

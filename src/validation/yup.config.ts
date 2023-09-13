@@ -17,6 +17,10 @@ export const changePasswordSchema = Yup.object().shape({
   confirmPassword: Yup.string().oneOf([Yup.ref('password')], `Passwords don't match`)
 });
 
+export const songNameSchema = Yup.object().shape({
+  songName: Yup.string().min(1, "Song name too short").max(18, "Song name too long").required("Enter song name")
+});
+
 export const restorePasswordSchema = Yup.object().shape({
   password: Yup.string().min(8, "Password is too short").max(30, "Password is too long").required("Enter password"),
   confirmPassword: Yup.string().oneOf([Yup.ref('password')], `passwords don't match`),

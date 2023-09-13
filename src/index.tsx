@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from "react-router-dom";
 
-import { pageRouter } from './components/router/pageRouter';
+import { pageRouter } from './components/router/PageRouter';
 import './index.css';
 
 const root = ReactDOM.createRoot(
