@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { 
@@ -14,69 +14,70 @@ import {
 import { useFormik } from "formik";
 import { registrationValidationSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/Loader";
-import { registration } from "../../../api/axiosConfig";
+import {api, registration} from "../../../api/axiosConfig";
 
 export const Register: React.FC = () => { 
-    const navigate = useNavigate();
-    const[isLoading, setIsLoading] = useState(false);
-    const[usernameError, setUsernameError] = useState(false);
-    const[emailError, setEmailError] = useState(false);
-    const[passwordError, setPasswordError] = useState(false);
-    const[errorMessage, setErrorMessage] = useState<any>(null);
+  const navigate = useNavigate();
+  const[isLoading, setIsLoading] = useState(false);
+  const[usernameError, setUsernameError] = useState(false);
+  const[emailError, setEmailError] = useState(false);
+  const[passwordError, setPasswordError] = useState(false);
+  const[errorMessage, setErrorMessage] = useState<any>(null);
+  const avatar: any = "/public/defaultAvatar.png";
 
-    const formik = useFormik<{
-      username: "";
-      email: "";
-      password: "";
+  const formik = useFormik<{
+    username: "";
+    email: "";
+    password: "";
+    confirmPassword: ""
+  }>({
+    initialValues:{
+      username: "",
+      email: "",
+      password: "",
       confirmPassword: ""
-    }>({
-      initialValues:{
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
-      },
-      validationSchema: registrationValidationSchema,
-      onSubmit: () => {}
-    });
-    const field = formik.values;
+    },
+    validationSchema: registrationValidationSchema,
+    onSubmit: () => {}
+  });
+  const field = formik.values;
 
-    async function handleRegister() {
-      const registerDto: any = {
-        username: field.username,
-        email: field.email,
-        password: field.password,
-        confirmPassword: field.confirmPassword
-      }
+  async function handleRegister() {
+    const registerDto: any = {
+      username: field.username,
+      email: field.email,
+      password: field.password,
+      confirmPassword: field.confirmPassword
+    }
 
-      setIsLoading(true);
+    setIsLoading(true);
 
-      try {
-        await registration(registerDto);
-        navigate("/login");
-        setErrorMessage(null);
-      } catch (error: any) {
-        const field = error.response.data.field;
-    
-        setIsLoading(false);
-        setUsernameError(false);
-        setEmailError(false);
-        setPasswordError(false);
-        setErrorMessage(error.response.data.message);
+    try {
+      await registration(registerDto);
+      navigate("/login");
+      setErrorMessage(null);
+    } catch (error: any) {
+      const field = error.response.data.field;
 
-        switch(field) {
-          case "username":
-            setUsernameError(true);
-            break;
-          case "email":
-            setEmailError(true);
-            break;
-          case "password":
-            setPasswordError(true);
-            break;
-        }
+      setIsLoading(false);
+      setUsernameError(false);
+      setEmailError(false);
+      setPasswordError(false);
+      setErrorMessage(error.response.data.message);
+
+      switch(field) {
+        case "username":
+          setUsernameError(true);
+          break;
+        case "email":
+          setEmailError(true);
+          break;
+        case "password":
+          setPasswordError(true);
+          break;
       }
     }
+  }
 
     return (
       <LoginCard>

@@ -20,7 +20,7 @@ import {
 } from "./MainPage.styled";
 import { AlertSuccess, AlertWarning } from "./alert/Alert";
 import { Player } from "./player/Player";
-import { API_URL, getUser } from "../../api/axiosConfig";
+import { api, API_URL, getUser } from "../../api/axiosConfig";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
 
 export const MainPage: React.FC = observer(() => {
@@ -28,11 +28,15 @@ export const MainPage: React.FC = observer(() => {
   const navigate = useNavigate();
   const[isVisible, setIsVisible] = useState(false);
   const[user, setUser] = useState<any>(null);
-  const[isAvatar, setIsAvatar] = useState<boolean>(false);
+  const[avatar, setAvatar] = useState<any>('/defaultAvatar.png');
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
 
+
   useEffect(() => {
+    const getUserAvatar = async () => {
+      setAvatar(`${API_URL}/images/user/${user.username}`);
+    }
     const currentUrl = location.pathname;
 
     if(!currentUrl || currentUrl === '/') {
@@ -50,30 +54,27 @@ export const MainPage: React.FC = observer(() => {
         setIsVisible(false);
       }, 3000);
     }
+    if(user) setAvatar(`${API_URL}/images/user/${user.username}`);
   }, []);
 
   return (
     <SongsProvider>
       <Container>
-        { !user && <PageLoader /> }
-        { isVisible && successAlert && <AlertSuccess /> }
-        { isVisible && warningAlert && <AlertWarning /> }
+        {!user && <PageLoader />}
+        {isVisible && successAlert && <AlertSuccess />}
+        {isVisible && warningAlert && <AlertWarning />}
         <Navbar>
           <Logo onClick={() => navigate("/home")} />
           <Form className="form" method="post" action={`${API_URL}`}>
             <Search placeholder="search" />
             <SearchButton onClick={() => navigate("/search")} />
           </Form>
-          { toVerify.isVerify && user !== null ?
+          {toVerify.isVerify && user !== null ?
             <VerifyedUserContainer>
               <UserButton
                 onClick={() => navigate(generatePath('/profile/:id', { id: user.username }))}
               >
-                {user.status !== 200 ?
-                  <UserAvatar style={{backgroundImage: `url(${API_URL}/images/user/${user.username})`}} />
-                   :
-                  <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />
-                }
+                <UserAvatar style={{backgroundImage: `url(${avatar})`}}/>
                 <UserNickname>{user.username}</UserNickname>
               </UserButton>
             </VerifyedUserContainer>

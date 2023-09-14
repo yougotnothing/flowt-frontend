@@ -26,26 +26,15 @@ export const Playlist: React.FC = () => {
   }
 
   useEffect(() => {
-    const getSongAvatar = async () => {
-      if(user && songs) {
-        const response = await api.get(`/images/song/${user.username}/${songName}`);
-        setSongAvatar(response.data);
-      }
-    }
-
     getUser(setUser);
     getUserSongs();
-    getSongAvatar();
-    if(songs) {
-      console.log(songs);
-    }
   }, []);
 
   return (
     <>
       {user && songs ? songs.map((song: any) => (
         <PlaylistContainer key={++counter}>
-          <TitleImage style={{backgroundImage: songAvatar}}/>
+          <TitleImage style={{backgroundImage: `url(${API_URL}/images/song/${user.username}/${song.name})`}}/>
           <TextContainer>
             <PlaylistName>{user.username}</PlaylistName>
             <PlaylistText>{song.name}</PlaylistText>
