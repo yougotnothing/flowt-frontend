@@ -22,21 +22,19 @@ import { AlertSuccess, AlertWarning } from "./alert/Alert";
 import { Player } from "./player/Player";
 import { api, API_URL, getUser } from "../../api/axiosConfig";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
+import { useSongURL } from "../../contexts/SongsContext";
 
 export const MainPage: React.FC = observer(() => {
   let location = useLocation();
   const navigate = useNavigate();
   const[isVisible, setIsVisible] = useState(false);
   const[user, setUser] = useState<any>(null);
-  const[avatar, setAvatar] = useState<any>('/defaultAvatar.png');
+  const { userAvatar } = useSongURL();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
 
 
   useEffect(() => {
-    const getUserAvatar = async () => {
-      setAvatar(`${API_URL}/images/user/${user.username}`);
-    }
     const currentUrl = location.pathname;
 
     if(!currentUrl || currentUrl === '/') {
@@ -54,7 +52,6 @@ export const MainPage: React.FC = observer(() => {
         setIsVisible(false);
       }, 3000);
     }
-    if(user) setAvatar(`${API_URL}/images/user/${user.username}`);
   }, []);
 
   return (
@@ -74,7 +71,7 @@ export const MainPage: React.FC = observer(() => {
               <UserButton
                 onClick={() => navigate(generatePath('/profile/:id', { id: user.username }))}
               >
-                <UserAvatar style={{backgroundImage: `url(${avatar})`}}/>
+                <UserAvatar style={{backgroundImage: `url(${userAvatar})`}}/>
                 <UserNickname>{user.username}</UserNickname>
               </UserButton>
             </VerifyedUserContainer>
