@@ -69,7 +69,9 @@ export const MainPage: React.FC = observer(() => {
           {toVerify.isVerify && user !== null ?
             <VerifyedUserContainer>
               <UserButton
-                onClick={() => navigate(generatePath('/profile/:id', { id: user.username }))}
+                onClick={() => {
+                  navigate(generatePath('/profile/:id', {id: user.username}))
+                }}
               >
                 <UserAvatar style={{backgroundImage: `url(${userAvatar})`}}/>
                 <UserNickname>{user.username}</UserNickname>

@@ -20,7 +20,7 @@ api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
  
-        if (error.response.status === 401 && !originalRequest._retry) {
+        if (error.response.status === 401 && !originalRequest._retry && !originalRequest.url.includes('/auth/')) {
             if (isRefreshing) {
                 return new Promise(function (resolve) {
                     failedRequestsQueue.push(() => {
@@ -54,7 +54,7 @@ export const registration = async (registerDto: any) => {
     });
     console.log(response.data);
 }
- 
+
 export const login = async (loginDto: any) => {
     const response = await api.post('/auth/login', {
         username: loginDto.username,

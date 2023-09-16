@@ -16,6 +16,8 @@ import {
 import { loginValidationSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/Loader";
 import { login } from "../../../api/axiosConfig";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 export const Login: React.FC = () => {
     const navigate = useNavigate();
@@ -80,10 +82,13 @@ export const Login: React.FC = () => {
         <LoginButton
           onClick={() => {
             setIsLoading(true);
-            setTimeout(() => {
+            if(errorMessage) {
               handleLogin();
-              navigate("/home");
-            }, 500);
+              console.log(errorMessage);
+            }else if(!errorMessage) {
+              handleLogin();
+              navigate('/home');
+            }
           }}
           disabled={isLoading}
         >

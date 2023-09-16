@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
-import { api, API_URL, getUser, getFollowers, getSubscribes } from "../../../../api/axiosConfig";
-import { A, AContainer, GoBackContainer } from "../../MainPage.styled";
+import { getUser, getFollowers, getSubscribes } from "../../../../api/axiosConfig";
+import { A, AContainer } from "../../MainPage.styled";
 import { Account } from "../Account";
 import {
   Title, 
@@ -22,12 +22,13 @@ import {
 } from "../Account.styled";
 import { Playlist } from "../../playlist/Playlist";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
+import { useSongURL } from "../../../../contexts/SongsContext";
 
 export const AccountInfo: React.FC = () => {
   const[user, setUser] = useState<any>(null);
   const[followers, setFollowers] = useState<any>(null);
   const[subscribes, setSubscribes] = useState<any>(null);
-  const[songs, setSongs] = useState<any>(null);
+  const { userAvatar } = useSongURL();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,7 +52,7 @@ export const AccountInfo: React.FC = () => {
           <UserContainer>
             {user.username ? (
               <UserAvatar style={{
-                backgroundImage: `url(${API_URL}/images/user/${user.username})`
+                backgroundImage: `url(${userAvatar})`
               }} />
               ) : (
                 <UserAvatar style={{

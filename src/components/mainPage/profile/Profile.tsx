@@ -22,7 +22,8 @@ import {
 } from "./Profile.styled";
 
 import { Options } from "./options/Options";
-import {PageLoader} from "../../loader/pageLoader/PageLoader";
+import { PageLoader } from "../../loader/pageLoader/PageLoader";
+import { useSongURL } from "../../../contexts/SongsContext";
 
 export const Profile: React.FC = () => {
   const navigate = useNavigate();
@@ -31,6 +32,8 @@ export const Profile: React.FC = () => {
   const[followers, setFollowers] = useState<any>([]);
   const[isOpen, setIsOpen] = useState<boolean>(false);
   const[isVisible, setIsVisible] = useState<boolean>(false);
+  const { userAvatar } = useSongURL();
+
   let counter: number = 0;
   
   useEffect(() => {
@@ -53,7 +56,7 @@ export const Profile: React.FC = () => {
           <UserParams>
             {user.username ?
               <UserAvatar style={{
-                backgroundImage: `url(${API_URL}/images/user/${user.username})`
+                backgroundImage: `url(${userAvatar})`
               }} />
               : 
               <UserAvatar style={{
