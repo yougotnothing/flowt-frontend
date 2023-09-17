@@ -4,7 +4,7 @@ import { useNavigate, generatePath } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { Account } from '../Account';
 import { changeDescriptionSchema } from '../../../../validation/yup.config';
-import { api, getUser } from '../../../../api/axiosConfig';
+import { api } from '../../../../api/axiosConfig';
 import { Loader } from '../../../loader/Loader';
 import { A, AContainer, GoBackContainer } from '../../MainPage.styled';
 import { AccountContainer } from '../Account.styled';
@@ -18,11 +18,12 @@ import {
 } from './ChangeDescription.styled';
 import { Span } from '../../login-register/Login.register.styled';
 import {PageLoader} from "../../../loader/pageLoader/PageLoader";
+import { useContextValues } from "../../../../contexts/Context";
 
 export const ChangeDescription: React.FC = () => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
-  const[user, setUser] = useState<any>(null);
   const[newDescription, setNewDescription] = useState<any>('');
+  const { user } = useContextValues();
   const navigate = useNavigate();
   
   const formik = useFormik<{
@@ -55,8 +56,6 @@ export const ChangeDescription: React.FC = () => {
   );
 
   useEffect(() => {
-    getUser(setUser);
-    
     if(user){
       formik.setValues({
         description: user.description || ""

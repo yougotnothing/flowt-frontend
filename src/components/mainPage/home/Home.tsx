@@ -1,20 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-import { getSubscribes, API_URL, getUser } from "../../../api/axiosConfig";
-import { UserContainer, FavoriteContainer, Card, CardHeader, CardIcon, RecommendationsContainer,
-  Title, Recommendations, RecommendationCard, RecommendationTitle, RecommendationsHeader, RecommendationsIcon,
-  RecTextContainer, LastListenCard, LastListenContainer } from "./Home.styled";
-import {PageLoader} from "../../loader/pageLoader/PageLoader";
+import { API_URL } from "../../../api/axiosConfig";
+import {
+  UserContainer,
+  FavoriteContainer,
+  Card,
+  CardHeader,
+  CardIcon,
+  RecommendationsContainer,
+  Title,
+  Recommendations,
+  RecommendationCard,
+  RecommendationTitle,
+  RecommendationsHeader,
+  RecommendationsIcon,
+  RecTextContainer,
+  LastListenCard,
+  LastListenContainer
+} from "./Home.styled";
+import { PageLoader } from "../../loader/pageLoader/PageLoader";
+import { useContextValues } from "../../../contexts/Context";
 
 export const Home = () => {
-  const [user, setUser] = useState<any>(null);
-  const[subscribes, setSubscribes] = useState<any>([]);
+  const { user, subscribes, followers } = useContextValues();
   let counter: number = 0;
-
-  useEffect(() => {
-    getUser(setUser);
-    getSubscribes(setSubscribes);
-  }, []);
 
   return (
     <>

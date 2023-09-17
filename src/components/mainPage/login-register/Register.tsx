@@ -23,7 +23,6 @@ export const Register: React.FC = () => {
   const[emailError, setEmailError] = useState(false);
   const[passwordError, setPasswordError] = useState(false);
   const[errorMessage, setErrorMessage] = useState<any>(null);
-  const avatar: any = "/public/defaultAvatar.png";
 
   const formik = useFormik<{
     username: "";

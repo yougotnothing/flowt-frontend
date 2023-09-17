@@ -10,12 +10,10 @@ import {
 } from "./Player.styled";
 import 'react-h5-audio-player/lib/styles.css';
 import { api, API_URL, getUser } from "../../../api/axiosConfig";
-import { useSongURL } from "../../../contexts/SongsContext";
-import { SongUrlProps } from "../../../consts/props.const";
+import { useContextValues } from "../../../contexts/Context";
 
-export const Player: React.FC<SongUrlProps> = () => {
-  const [user, setUser] = useState<any>(null);
-  const { songURL, songName } = useSongURL();
+export const Player: React.FC = () => {
+  const { songURL, songName, user } = useContextValues();
 
   const getSongs = async () => {
     try {
@@ -26,9 +24,7 @@ export const Player: React.FC<SongUrlProps> = () => {
   }
 
   useEffect(() => {
-    getUser(setUser);
     getSongs();
-    console.log(songURL);
   }, [songURL]);
 
   return (

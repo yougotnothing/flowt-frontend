@@ -18,12 +18,13 @@ import {
   Container
 } from "./Login.register.styled";
 import { Loader } from "../../loader/Loader";
+import { useContextValues } from "../../../contexts/Context";
 
 export const RestorePassword: React.FC = () => {
   const[errorMessage, setErrorMessage] = useState<any>('');
-  const[user, setUser] = useState<any>(null);
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const[isVerify, setIsVerify] = useState<boolean>(false);
+  const { user } = useContextValues();
   const navigate = useNavigate();
 
   const formik = useFormik<{
@@ -39,8 +40,6 @@ export const RestorePassword: React.FC = () => {
     validationSchema: restorePasswordSchema,
     onSubmit: () => {}
   });
-
-  useEffect(() => { getUser(setUser) }, []);
 
   const handleChangePassword = async () => {
     try{

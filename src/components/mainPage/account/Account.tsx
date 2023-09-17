@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
-import { getUser } from "../../../api/axiosConfig";
 import {
   A,
   Title,
@@ -9,15 +8,12 @@ import {
   AContainer, 
   UserSettingsContainer,
 } from "./Account.styled";
-import {PageLoader} from "../../loader/pageLoader/PageLoader";
+import { PageLoader } from "../../loader/pageLoader/PageLoader";
+import { useContextValues } from "../../../contexts/Context";
 
 export const Account: React.FC = () => {
-  const[user, setUser] = useState<any>(null);
+  const { user } = useContextValues();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getUser(setUser);
-  }, []);
 
   return (
     <UserSettingsContainer>

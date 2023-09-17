@@ -10,13 +10,13 @@ import {
   OpenPlaylistButton,
   OpenPlaylistContainer
 } from "./Playlist.styled";
-import { useSongURL } from "../../../contexts/SongsContext";
+import { useContextValues } from "../../../contexts/Context";
 
 export const Playlist: React.FC = () => {
   const[user, setUser] = useState<any>(null);
   const[songs, setSongs] = useState<any>(null);
   const[songUrl, setSongUrl] = useState<any>(null);
-  const { setSongURL, setSongName, songName } = useSongURL();
+  const { setSongURL, setSongName, songName } = useContextValues();
   const [songAvatar, setSongAvatar] = useState<any>(null);
   let counter: number = 0;
 

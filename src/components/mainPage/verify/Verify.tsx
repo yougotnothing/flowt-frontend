@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -8,8 +9,7 @@ export const Verify = () => {
   const[searchParams] = useSearchParams();
   const verifyCode = searchParams.get('code');
   const navigate = useNavigate();
-  console.log(verifyCode);
-  
+
   const verifyStatus = async () => {
     try {
       await axios.get(`http://localhost:8080/verify?code=${verifyCode}`, {

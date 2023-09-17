@@ -22,25 +22,11 @@ import {
 } from "../Account.styled";
 import { Playlist } from "../../playlist/Playlist";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { useSongURL } from "../../../../contexts/SongsContext";
+import { useContextValues } from "../../../../contexts/Context";
 
 export const AccountInfo: React.FC = () => {
-  const[user, setUser] = useState<any>(null);
-  const[followers, setFollowers] = useState<any>(null);
-  const[subscribes, setSubscribes] = useState<any>(null);
-  const { userAvatar } = useSongURL();
+  const { userAvatar, user, followers, subscribes } = useContextValues();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getUser(setUser);
-    getFollowers(setFollowers);
-    getSubscribes(setSubscribes);
-  }, []);
-
-  if(user) {
-    console.log(user.region);
-  }
-
 
   return (
     <AccountContainer>

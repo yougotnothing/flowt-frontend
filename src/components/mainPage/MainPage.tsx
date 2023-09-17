@@ -3,7 +3,7 @@ import { Form, Link, Outlet, useNavigate, useLocation, generatePath } from "reac
 import { observer } from "mobx-react-lite";
 
 import toVerify from "../../consts/toVerify";
-import { SongsProvider } from "../../contexts/SongsContext";
+import { Context } from "../../contexts/Context";
 
 import {
   Container,
@@ -22,27 +22,21 @@ import { AlertSuccess, AlertWarning } from "./alert/Alert";
 import { Player } from "./player/Player";
 import { api, API_URL, getUser } from "../../api/axiosConfig";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
-import { useSongURL } from "../../contexts/SongsContext";
+import { useContextValues } from "../../contexts/Context";
 
-export const MainPage: React.FC = observer(() => {
+export const MainPage: React.FC = () => {
   let location = useLocation();
   const navigate = useNavigate();
   const[isVisible, setIsVisible] = useState(false);
-  const[user, setUser] = useState<any>(null);
-  const { userAvatar } = useSongURL();
+  const { userAvatar, user } = useContextValues();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
-
 
   useEffect(() => {
     const currentUrl = location.pathname;
 
     if(!currentUrl || currentUrl === '/') {
       navigate('/home');
-    }
-    if (localStorage.getItem('token') !== null) {
-      toVerify.alreadyVerify();
-      getUser(setUser);
     }
     if (successAlert !== null || warningAlert !== null) {
       setIsVisible(true);
@@ -55,7 +49,7 @@ export const MainPage: React.FC = observer(() => {
   }, []);
 
   return (
-    <SongsProvider>
+    <Context>
       <Container>
         {!user && <PageLoader />}
         {isVisible && successAlert && <AlertSuccess />}
@@ -66,13 +60,10 @@ export const MainPage: React.FC = observer(() => {
             <Search placeholder="search" />
             <SearchButton onClick={() => navigate("/search")} />
           </Form>
-          {toVerify.isVerify && user !== null ?
+          {user ?
             <VerifyedUserContainer>
               <UserButton
-                onClick={() => {
-                  navigate(generatePath('/profile/:id', {id: user.username}))
-                }}
-              >
+                onClick={() => navigate(generatePath('/profile/:id', {id: user.username}))}>
                 <UserAvatar style={{backgroundImage: `url(${userAvatar})`}}/>
                 <UserNickname>{user.username}</UserNickname>
               </UserButton>
@@ -89,6 +80,6 @@ export const MainPage: React.FC = observer(() => {
         </ContentContainer>
         <Player />
       </Container>
-    </SongsProvider>
+    </Context>
   );
-});
+};

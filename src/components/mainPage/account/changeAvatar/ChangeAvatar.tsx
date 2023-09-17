@@ -1,23 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
-import { api, getUser } from "../../../../api/axiosConfig";
+import { api } from "../../../../api/axiosConfig";
 import { AccountContainer } from "../Account.styled";
 import { Account } from "../Account";
 import { Span } from "../../login-register/Login.register.styled";
 import { A, AContainer, GoBackContainer, GlobalContainer } from "../../MainPage.styled";
 import { ChangeAvatarContainer, Title, InputWrapper, Input, Label, NewAvatar, SetNewAvatarButton, ButtonContainer } from "./ChangeAvatar.styled";
 import {PageLoader} from "../../../loader/pageLoader/PageLoader";
+import { useContextValues } from "../../../../contexts/Context";
 
 export const ChangeAvatar: React.FC = () => {
-  const[user, setUser] = useState<any>(null);
   const[file, setFile] = useState<any>(null);
+  const { user } = useContextValues();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getUser(setUser);
-    console.log(user);
-  }, [])
 
   const handleChangedAvatar = async () => {
     

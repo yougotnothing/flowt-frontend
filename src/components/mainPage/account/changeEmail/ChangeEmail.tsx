@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 
 import { useNavigate, generatePath } from "react-router-dom";
-import { getUser, api } from "../../../../api/axiosConfig";
+import { api } from "../../../../api/axiosConfig";
 import { changeEmailSchema } from "../../../../validation/yup.config";
 import { useFormik } from "formik";
 import { A, AContainer, GoBackContainer, GlobalContainer } from "../../MainPage.styled";
@@ -11,10 +11,11 @@ import { Loader } from "../../../loader/Loader";
 import { Account } from "../Account";
 import { AccountContainer } from "../Account.styled";
 import {PageLoader} from "../../../loader/pageLoader/PageLoader";
+import { useContextValues } from "../../../../contexts/Context";
 
 export const ChangeEmail: React.FC = () => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
-  const[user, setUser] = useState<any>(null);
+  const { user } = useContextValues();
   const navigate = useNavigate();
 
   const formik = useFormik<{
@@ -37,13 +38,9 @@ export const ChangeEmail: React.FC = () => {
         localStorage.setItem('token', token);
       }
     }catch(error: any) {
-      console.log('an error occured');
+      console.log('an error occurred');
     }
   }
-
-  useEffect(() => {
-    getUser(setUser);
-  }, []);
 
   const EmailError = formik.errors.email && formik.touched.email && <Error>{formik.errors.email}</Error>
 

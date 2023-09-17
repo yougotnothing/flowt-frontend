@@ -19,12 +19,13 @@ import {
   Container
 } from "../../login-register/Login.register.styled";
 import { Loader } from "../../../loader/Loader";
+import { useContextValues } from "../../../../contexts/Context";
 
 export const ChangePassword: React.FC = () => {
   const[errorMessage, setErrorMessage] = useState<any>('');
-  const[user, setUser] = useState<any>(null);
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const[isVerify, setIsVerify] = useState<boolean>(false);
+  const { user } = useContextValues();
   const navigate = useNavigate();
 
   const formik = useFormik<{
@@ -40,8 +41,6 @@ export const ChangePassword: React.FC = () => {
     validationSchema: restorePasswordSchema,
     onSubmit: () => {}
   });
-
-  useEffect(() => { getUser(setUser) }, []);
 
   const handleChangePassword = async () => {
     try{
@@ -115,7 +114,7 @@ export const ChangePassword: React.FC = () => {
           <ValidationSpan>{errorMessage}</ValidationSpan>
           </InputContainer>
           <LoginButton
-            onClick={handleChangePassword}
+            onClick={() => handleChangePassword()}
             disabled={isLoading}
             >
             {isLoading ? <Loader /> : "Send code"}

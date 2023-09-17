@@ -3,21 +3,22 @@ import { useNavigate, generatePath } from "react-router-dom";
 
 import { useFormik } from "formik";
 import { changeUsernameSchema } from "../../../../validation/yup.config";
-import { api, getUser } from "../../../../api/axiosConfig";
 import { A, AContainer, GoBackContainer, GlobalContainer } from "../../MainPage.styled";
+import { api } from "../../../../api/axiosConfig";
 import { Span } from "../../login-register/Login.register.styled";
 import { Container, Button, Input, Header, ChangeUsernameContainer } from "./ChangeUsername.styled";
 import { Loader } from "../../../loader/Loader";
 import { AccountContainer } from "../Account.styled";
 
 import { Account } from "../Account";
-import {PageLoader} from "../../../loader/pageLoader/PageLoader";
+import { PageLoader } from "../../../loader/pageLoader/PageLoader";
+import { useContextValues } from "../../../../contexts/Context";
 
 export const ChangeUsername: React.FC = () => {
-  const[user, setUser] = useState<any>(null);
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const[newUsername, setNewUsername] = useState<any>('');
   const navigate = useNavigate();
+  const { user } = useContextValues();
 
   const formik = useFormik<{
     username: ""
@@ -47,8 +48,6 @@ export const ChangeUsername: React.FC = () => {
   }
   
   useEffect(() => {
-    getUser(setUser);
-
     if(user) {
       formik.setValues({
         username: user.username || ""

@@ -21,15 +21,15 @@ import { ChangePassword } from "../mainPage/account/changePassword/ChangePasswor
 import { Playlist } from "../mainPage/playlist/Playlist";
 import { Upload } from "../upload/Upload";
 import { Player } from "../mainPage/player/Player";
-import { SongsProvider } from "../../contexts/SongsContext";
+import { Context } from "../../contexts/Context";
 
 export const pageRouter = createBrowserRouter([
   {
     path: '/',
     element:
-      <SongsProvider>
+      <Context>
         <MainPage />
-      </SongsProvider>,
+      </Context>,
     children: [
       {
         path: '/home/',

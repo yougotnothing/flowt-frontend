@@ -23,7 +23,7 @@ import {
 
 import { Options } from "./options/Options";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
-import { useSongURL } from "../../../contexts/SongsContext";
+import { useContextValues } from "../../../contexts/Context";
 
 export const Profile: React.FC = () => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ export const Profile: React.FC = () => {
   const[followers, setFollowers] = useState<any>([]);
   const[isOpen, setIsOpen] = useState<boolean>(false);
   const[isVisible, setIsVisible] = useState<boolean>(false);
-  const { userAvatar } = useSongURL();
+  const { userAvatar } = useContextValues();
 
   let counter: number = 0;
   
