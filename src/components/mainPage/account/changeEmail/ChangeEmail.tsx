@@ -32,10 +32,11 @@ export const ChangeEmail: React.FC = () => {
     setIsLoading(true);
     try {
       const response = await api.patch('/users/email', { newEmail: formik.values.email });
-      navigate(generatePath('/account/:id', { id: user.username }));
       if(response) {
         const token = response.data.token;
         localStorage.setItem('token', token);
+        navigate(generatePath('/account/:id', { id: user.username }));
+        window.location.reload();
       }
     }catch(error: any) {
       console.log('an error occurred');

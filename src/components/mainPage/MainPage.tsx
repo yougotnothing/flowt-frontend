@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Link, Outlet, useNavigate, useLocation, generatePath } from "react-router-dom";
-import { observer } from "mobx-react-lite";
 
-import toVerify from "../../consts/toVerify";
 import { Context } from "../../contexts/Context";
 
 import {
@@ -20,15 +18,16 @@ import {
 } from "./MainPage.styled";
 import { AlertSuccess, AlertWarning } from "./alert/Alert";
 import { Player } from "./player/Player";
-import { api, API_URL, getUser } from "../../api/axiosConfig";
+import { API_URL } from "../../api/axiosConfig";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
 import { useContextValues } from "../../contexts/Context";
 
 export const MainPage: React.FC = () => {
-  let location = useLocation();
+  const[isVisible, setIsVisible] = useState<boolean>(false);
+  const[isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
-  const[isVisible, setIsVisible] = useState(false);
   const { userAvatar, user } = useContextValues();
+  let location = useLocation();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
 
@@ -46,12 +45,15 @@ export const MainPage: React.FC = () => {
         setIsVisible(false);
       }, 3000);
     }
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
   }, []);
 
   return (
     <Context>
       <Container>
-        {!user && <PageLoader />}
         {isVisible && successAlert && <AlertSuccess />}
         {isVisible && warningAlert && <AlertWarning />}
         <Navbar>
@@ -76,7 +78,7 @@ export const MainPage: React.FC = () => {
           }
         </Navbar>
         <ContentContainer>
-          <Outlet />
+          {isLoading ? <PageLoader /> : <Outlet />}
         </ContentContainer>
         <Player />
       </Container>

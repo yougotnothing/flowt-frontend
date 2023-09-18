@@ -36,7 +36,7 @@ export const Button = styled('button')`
   flex-direction: column;
   overflow-y: auto;
   padding: 4px;
-  display: flex;
+  align-items: center;
   transition: 0.3s;
   gap: 4px;
   cursor: pointer;
@@ -82,7 +82,6 @@ export const ChoosenRegion = styled('div')`
   font-weight: 600;
   font-size: 18px;
   max-width: 80%;
-  text-wrap: wrap;
   color: ${COLORS.firstFontHover};
 `;  
 

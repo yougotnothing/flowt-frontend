@@ -74,7 +74,7 @@ export const AccountInfo: React.FC = () => {
             </DescriptionContainer>
           </>
         )}
-        {user && <Playlist/>}
+        {user && <Playlist />}
       </InfoContainer>
     </AccountContainer>
   );
