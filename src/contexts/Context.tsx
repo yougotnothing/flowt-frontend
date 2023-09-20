@@ -1,6 +1,6 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
 
-import { api, API_URL, getUser, getSubscribes, getFollowers } from "../api/axiosConfig";
+import { api, API_URL } from "../api/axiosConfig";
 import { ProviderProps, UserDTO } from "../consts/props.const";
 
 const ContextValue = createContext<ProviderProps>({
@@ -28,25 +28,52 @@ export const Context = ({ children }: any) => {
   const[userAvatar, setUserAvatar] = useState('');
   const[songURL, setSongURL] = useState('');
   const[songName, setSongName] = useState('');
-    const getUserAvatar = async () => {
-      try {
-        if(user) {
-          const response = await api.get(`/images/user/${user.username}`);
-          if(response.status === 200) {
-            setUserAvatar(`${API_URL}/images/user/${user.username}`);
-          }
-        }
-      }catch(error: any) {
-        setUserAvatar('/defaultAvatar.png');
-      }
+
+  const getSubscribes = async () => {
+    try {
+      const response = await api.get('/users/subscribes');
+      setSubscribes(response.data.subscribes);
+    }catch(error: any) {
+      console.log('an error occurred');
     }
+  };
+
+  const getFollowers = async () => {
+    try {
+      const response = await api.get('/users/followers');
+      setFollowers(response.data.followers);
+    }catch(error: any) {
+      console.log('an error occurred');
+    }
+  };
+
+  const getUserAvatar = async () => {
+    try {
+      if(user) {
+        const response = await api.get(`/images/user/${user.username}`);
+        if(response.status === 200) {
+          setUserAvatar(`${API_URL}/images/user/${user.username}`);
+        }
+      }
+    }catch(error: any) {
+      setUserAvatar('/defaultAvatar.png');
+    }
+  }
+
+  const getUser = async () => {
+    try {
+      const response = await api.get('/users/authenticated');
+      setUser(response.data);
+    }catch(error: any) {
+      console.log("an error occurred");
+    }
+  }
 
   useEffect(() => {
-    getUser(setUser);
-
+    getUser();
     if(localStorage.getItem('token')) {
-      getSubscribes(setSubscribes);
-      getFollowers(setFollowers);
+      getSubscribes();
+      getFollowers();
     }
   }, []);
 

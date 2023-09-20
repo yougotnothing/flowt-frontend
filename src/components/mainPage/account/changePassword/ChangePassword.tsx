@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { useFormik } from "formik";
-import { api, getUser } from "../../../../api/axiosConfig";
+import { api } from "../../../../api/axiosConfig";
 import { Account } from "../Account";
 import { AccountContainer } from "../Account.styled";
 import { restorePasswordSchema } from "../../../../validation/yup.config";
@@ -70,9 +70,18 @@ export const ChangePassword: React.FC = () => {
     }
   }
 
-  const passwordError = (formik.errors.password && formik.touched.password && <ValidationSpan>{formik.errors.password}</ValidationSpan>);
-  const confirmPasswordError = (formik.errors.confirmPassword && formik.touched.confirmPassword && <ValidationSpan>{formik.errors.confirmPassword}</ValidationSpan>);
-  const codeError = (formik.errors.code && formik.touched.code && <ValidationSpan>{formik.errors.code}</ValidationSpan>);
+  const passwordError = (
+      formik.errors.password && formik.touched.password &&
+      <ValidationSpan>{formik.errors.password}</ValidationSpan>
+  );
+  const confirmPasswordError = (
+      formik.errors.confirmPassword && formik.touched.confirmPassword &&
+      <ValidationSpan>{formik.errors.confirmPassword}</ValidationSpan>
+  );
+  const codeError = (
+    formik.errors.code && formik.touched.code &&
+      <ValidationSpan>{formik.errors.code}</ValidationSpan>
+  );
 
   return (
     <AccountContainer>

@@ -22,7 +22,7 @@ async (error) => {
 
   if (error.response.status === 401 && !originalRequest._retry && !originalRequest.url.includes('/auth/')) {
     if (isRefreshing) {
-      return new Promise(function (resolve) {
+      return new Promise((resolve: any) => {
         failedRequestsQueue.push(() => {
           originalRequest._retry = true;
           resolve(api(originalRequest));
@@ -69,14 +69,12 @@ export const login = async (loginDto: any) => {
 }
 
 export const refreshToken = async () => {
-  if(localStorage.getItem('token')) {
-    const response = await api.get('/auth/refresh');
-    if (response) {
-      const json = response.data;
-      const token = json.token;
-      console.log(token);
-      localStorage.setItem('token', token);
-    }
+  const response = await api.get('/auth/refresh');
+  if (response) {
+    const json = response.data;
+    const token = json.token;
+    console.log(token);
+    localStorage.setItem('token', token);
   }
 }
 
@@ -88,18 +86,3 @@ export const verifyEmail = async (code: any) => {
   });
   return response;
 }
-
-export const getUser = async (setUser: any) => {
-  const response = await api.get('/users/authenticated');
-  setUser(response.data);
-};
-
-export const getSubscribes = async (setSubscribes: any) => {
-  const response = await api.get('/users/subscribes');
-  setSubscribes(response.data.subscribes);
-};
-
-export const getFollowers = async (setFollowers: any) => {
-  const response = await api.get('/users/followers');
-  setFollowers(response.data.followers);
-};

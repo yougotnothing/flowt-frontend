@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useNavigate, generatePath} from "react-router-dom";
-import { api, getUser } from "../../api/axiosConfig";
+import { api } from "../../api/axiosConfig";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
 import {
   UploadContainer,
@@ -32,14 +32,15 @@ import { useFormik } from "formik";
 import { songNameSchema } from "../../validation/yup.config";
 import { Loader } from "../loader/Loader";
 import genresData from "../../consts/genres.json";
+import { useContextValues } from "../../contexts/Context";
 
 export const Upload = () => {
   const[songGenre, setSongGenre] = useState<any>(null);
-  const[user, setUser] = useState<any>(null);
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const[song, setSong] = useState<any>(null);
   const[avatar, setAvatar] = useState<any>(null);
   const navigate = useNavigate();
+  const { user } = useContextValues();
   let counter: number = 0;
 
   const formik = useFormik<{
@@ -51,10 +52,6 @@ export const Upload = () => {
     validationSchema: songNameSchema,
     onSubmit: () => {}
   });
-
-  useEffect(() => {
-    getUser(setUser);
-  }, []);
 
   const handleChoseSong = (event: any) => {
     const chosenSong = event.target.files[0];

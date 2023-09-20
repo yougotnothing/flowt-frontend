@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import H5AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import {
   PlayerContainer,
@@ -9,20 +10,20 @@ import {
   SongInfoContainer,
 } from "./Player.styled";
 import 'react-h5-audio-player/lib/styles.css';
-import { api, API_URL, getUser } from "../../../api/axiosConfig";
+import { api, API_URL } from "../../../api/axiosConfig";
 import { useContextValues } from "../../../contexts/Context";
 
 export const Player: React.FC = () => {
   const { songURL, songName, user } = useContextValues();
-  const [track, setTrack] = useState<string[]>([]);
-  const [trackIndex, setTrackIndex] = useState<number>(0);
+  const[track, setTrack] = useState<string[]>([]);
+  const[trackIndex, setTrackIndex] = useState<number>(0);
 
   const getSongs = async () => {
     try {
       const response = await api.get('/users/songs');
       const tracks = response.data.songs;
       setTrack(tracks);
-    } catch (error: any) {
+    }catch (error: any) {
       console.log('an error occurred');
     }
   }

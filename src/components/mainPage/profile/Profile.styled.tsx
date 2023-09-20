@@ -45,8 +45,8 @@ export const Settings = styled('button')`
 `;
 
 export const UserAvatar = styled('picture')`
-  width: 184px;
-  height: 184px;
+  width: 244px;
+  height: 244px;
   border: none;
   border-radius: 50%;
   background-position: center;
@@ -72,9 +72,30 @@ export const SwitchTheme = styled('button')`
   }
 `;
 
+export const DescriptionContainer = styled('div')`
+  margin: 0 auto 0 18rem;
+  display: flex;
+  flex-direction: column;
+  background-color: ${COLORS.front};
+  border: 2px solid ${COLORS.border};
+  border-radius: 14px;
+  gap: 16px;
+  padding: 14px;
+  height: 14em;
+  width: 38em;
+`;
+
+export const DescriptionTitle = styled('div')`
+  font-family: 'Raleway', sans-serif;
+  color: ${COLORS.secondary};
+  font-weight: 800;
+  font-size: 24px;
+  margin-bottom: 12px;
+`;
+
 export const UserNickname = styled('a')`
   text-align: flex-start;
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 800;
   margin-top: auto;
   margin-bottom: auto;
@@ -186,8 +207,8 @@ export const LikedTrackIcon = styled('picture')`
 
 export const Description = styled('div')`
   font-family: 'Urbanist', sans-serif;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
-  margin: 24px;
   color: ${COLORS.firstFontHover};
+  margin: 12px auto auto 0;
 `;

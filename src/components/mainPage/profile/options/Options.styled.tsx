@@ -26,6 +26,7 @@ export interface OptionsProps {
 export const OptionsContainer = styled('div')<OptionsProps>`
   width: 280px;
   position: absolute;
+  border: 2px solid ${COLORS.border};
   align-self: end;
   display: flex;
   flex-direction: column;

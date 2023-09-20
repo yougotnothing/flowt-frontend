@@ -17,12 +17,12 @@ import {
   Container 
 } from './ChangeDescription.styled';
 import { Span } from '../../login-register/Login.register.styled';
-import {PageLoader} from "../../../loader/pageLoader/PageLoader";
+import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useContextValues } from "../../../../contexts/Context";
 
 export const ChangeDescription: React.FC = () => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
-  const[newDescription, setNewDescription] = useState<any>('');
+  const[newDescription, setNewDescription] = useState<string | null>(null);
   const { user } = useContextValues();
   const navigate = useNavigate();
   
@@ -34,18 +34,14 @@ export const ChangeDescription: React.FC = () => {
     },
     validationSchema: changeDescriptionSchema,
     onSubmit: () => {}
-  })
-  
+  });
 
   const patchDescription = async () => {
     try {
-      const response = await api.patch('/users/description', { newDescription: newDescription });
+      await api.patch('/users/description', { newDescription: newDescription });
       setIsLoading(true);
       navigate(generatePath('/account/:id', { id: user.username }));
-      if(response) {
-        const token = response.data.token;
-        localStorage.setItem('token', token);
-      }
+      window.location.reload();
     }catch(error: any) {
       console.log('an error occured');
     }

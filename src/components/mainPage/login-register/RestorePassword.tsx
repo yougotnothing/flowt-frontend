@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
-import { api, getUser } from "../../../api/axiosConfig";
+import { api } from "../../../api/axiosConfig";
 import { useFormik } from "formik";
 import { restorePasswordSchema } from "../../../validation/yup.config";
 import { 

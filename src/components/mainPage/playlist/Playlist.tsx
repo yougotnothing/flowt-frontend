@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { api, API_URL, getUser } from "../../../api/axiosConfig";
+import { api, API_URL } from "../../../api/axiosConfig";
 import {
   PlaylistContainer,
   PlaylistName,
@@ -13,11 +13,8 @@ import {
 import { useContextValues } from "../../../contexts/Context";
 
 export const Playlist: React.FC = () => {
-  const[user, setUser] = useState<any>(null);
   const[songs, setSongs] = useState<any>(null);
-  const[songUrl, setSongUrl] = useState<any>(null);
-  const { setSongURL, setSongName, songName } = useContextValues();
-  const [songAvatar, setSongAvatar] = useState<any>(null);
+  const { setSongURL, setSongName, songName, user } = useContextValues();
   let counter: number = 0;
 
   const getUserSongs = async () => {
@@ -26,7 +23,6 @@ export const Playlist: React.FC = () => {
   }
 
   useEffect(() => {
-    getUser(setUser);
     getUserSongs();
   }, []);
 

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
-import { getUser, getFollowers, getSubscribes } from "../../../../api/axiosConfig";
 import { A, AContainer } from "../../MainPage.styled";
 import { Account } from "../Account";
 import {
