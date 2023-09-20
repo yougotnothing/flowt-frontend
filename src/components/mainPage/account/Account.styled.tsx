@@ -21,7 +21,6 @@ export const UserSettingsContainer = styled('div')`
 
 export const UserSettings = styled('div')`
   display: flex;
-  width: 286px;
   flex-direction: column;
   align-self: start;
   align-items: start;

@@ -14,12 +14,32 @@ import { useContextValues } from "../../../contexts/Context";
 
 export const Player: React.FC = () => {
   const { songURL, songName, user } = useContextValues();
+  const [track, setTrack] = useState<string[]>([]);
+  const [trackIndex, setTrackIndex] = useState<number>(0);
 
   const getSongs = async () => {
     try {
       const response = await api.get('/users/songs');
+      const tracks = response.data.songs;
+      setTrack(tracks);
     } catch (error: any) {
       console.log('an error occurred');
+    }
+  }
+
+  const playNextTrack = () => {
+    if(trackIndex < track.length) {
+      setTrackIndex(trackIndex + 1);
+    }else{
+      setTrackIndex(0);
+    }
+  }
+
+  const playPrevTrack = () => {
+    if(trackIndex > 0) {
+      setTrackIndex(trackIndex - 1);
+    }else{
+      setTrackIndex(track.length - 1);
     }
   }
 
@@ -33,8 +53,11 @@ export const Player: React.FC = () => {
         <PlayerContainer>
           <H5AudioPlayer
             layout='stacked-reverse'
-            onPlay={() => console.log('on play')}
+            onClickNext={() => playNextTrack()}
+            onClickPrevious={() => playPrevTrack()}
+            onEnded={() => playNextTrack()}
             autoPlay={true}
+            volume={1}
             src={songURL}
             customControlsSection={[
               <SongContainer>

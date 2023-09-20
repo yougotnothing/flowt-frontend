@@ -1,36 +1,40 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
 
 import { api, API_URL, getUser, getSubscribes, getFollowers } from "../api/axiosConfig";
-import { ProviderProps } from "../consts/props.const";
+import { ProviderProps, UserDTO } from "../consts/props.const";
 
 const ContextValue = createContext<ProviderProps>({
-  user: '',
-  followers: '',
-  subscribes: '',
-  songURL: '',
-  songName: '',
-  userAvatar: '',
-  setUser: (user: any) => {},
-  setFollowers: (followers: any) => {},
-  setSubscribes: (subscribes: any) => {},
-  setSongURL: (url: any) => {},
-  setSongName: (name: any) => {},
-  setUserAvatar: (url: any) => {}
+  user: null,
+  followers: null,
+  subscribes: null,
+  songInfo: null,
+  songURL: null,
+  songName: null,
+  userAvatar: null,
+  setUser: () => {},
+  setFollowers: () => {},
+  setSubscribes: () => {},
+  setSongInfo: () => {},
+  setSongURL: () => {},
+  setSongName: () => {},
+  setUserAvatar: () => {}
 });
 
 export const Context = ({ children }: any) => {
-  const[songInfo, setSongInfo] = useState<any>(null);
-  const[user, setUser] = useState<any>(null);
-  const[followers, setFollowers] = useState<any>(null);
-  const[subscribes, setSubscribes] = useState<any>(null);
+  const[songInfo, setSongInfo] = useState<string | null>(null);
+  const[user, setUser] = useState<UserDTO | null>(null);
+  const[followers, setFollowers] = useState<string | null>(null);
+  const[subscribes, setSubscribes] = useState<string | null>(null);
   const[userAvatar, setUserAvatar] = useState('');
   const[songURL, setSongURL] = useState('');
   const[songName, setSongName] = useState('');
     const getUserAvatar = async () => {
       try {
-        const response = await api.get(`/images/user/${user.username}`);
-        if(response.status === 200) {
-          setUserAvatar(`${API_URL}/images/user/${user.username}`);
+        if(user) {
+          const response = await api.get(`/images/user/${user.username}`);
+          if(response.status === 200) {
+            setUserAvatar(`${API_URL}/images/user/${user.username}`);
+          }
         }
       }catch(error: any) {
         setUserAvatar('/defaultAvatar.png');
