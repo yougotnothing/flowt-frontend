@@ -120,7 +120,7 @@ export const UserParams = styled('div')`
 
 export const ProfileTitle = styled('div')`
   font-size: 18px;
-  font-family: 'Urbanist', sans-serif;
+  font-family: 'Urbanist', 'Noto Color Emoji', sans-serif;
   font-weight: 400;
   color: ${COLORS.firstFontHover};
 `;

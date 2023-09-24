@@ -5,8 +5,8 @@ import { TITLE } from "../../../consts/styles.const";
 export const AccountContainer = styled('div')`
   display: flex;
   flex-direction: row;
-  gap: 38px;
   width: 100%;
+  gap: 10em;
   height: calc(99vh - 75px - 64px);
 `;
 
@@ -26,8 +26,9 @@ export const UserSettings = styled('div')`
   align-items: start;
   border-radius: 18px;
   background-color: ${COLORS.front};
-  padding: 21px;
+  width: 260px;
   gap: 38px;
+  padding: 21px;
   border: 2px solid ${COLORS.border};
 `;
 
@@ -51,7 +52,7 @@ export const A = styled('a')`
   font-weight: 600;
   font-size: 22px;
   transition: all 0.3s;
-
+  
   &:hover {
     border: 1px solid ${COLORS.secondaryHover};
     border-top-width: 0;
@@ -62,18 +63,19 @@ export const A = styled('a')`
 
 export const InfoContainer = styled('div')`
   overflow-y: scroll;
-  &::-webkit-scrollbar {
-    opacity: 0;
-  }
+  align-self: center;
   scrollbar-width: none;
   display: flex;
   flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   gap: 24px;
   padding: 4px;
   text-align: start;
   height: 100%;
+  
+  &::-webkit-scrollbar {
+    opacity: 0;
+  }
 `;
 
 export const UserContainer = styled('div')`
@@ -126,7 +128,7 @@ export const ButtonsContainer = styled('div')`
 `;
 
 export const Region = styled('div')`
-  font-family: 'Urbanist', sans-serif;
+  font-family: 'Urbanist', 'Noto Color Emoji', sans-serif;
   font-weight: 400;
   font-size: 18px;
   color: ${COLORS.firstFontHover};
@@ -177,4 +179,11 @@ export const Container = styled('div')`
   display: flex;
   flex-direction: column;
   width: 100%;
+`;
+
+export const PlaylistContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 120px;
+  gap: 24px;
 `;

@@ -18,7 +18,7 @@ export const Player: React.FC = () => {
   const[track, setTrack] = useState<string[]>([]);
   const[trackIndex, setTrackIndex] = useState<number>(0);
 
-  const getSongs = async () => {
+  const getSongs = async (): Promise<void> => {
     try {
       const response = await api.get('/users/songs');
       const tracks = response.data.songs;

@@ -17,7 +17,8 @@ import {
   DescriptionTitle,
   Email,
   StatsContainer,
-  AccountContainer
+  AccountContainer,
+  PlaylistContainer
 } from "../Account.styled";
 import { Playlist } from "../../playlist/Playlist";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
@@ -36,14 +37,10 @@ export const AccountInfo: React.FC = () => {
         {user && followers && subscribes && (
           <UserContainer>
             {user.username ? (
-              <UserAvatar style={{
-                backgroundImage: `url(${userAvatar})`
-              }} />
-              ) : (
-                <UserAvatar style={{
-                  backgroundImage: 'url(/defaultAvatar.png)'
-                }} />
-                )}
+              <UserAvatar style={{backgroundImage: `url(${userAvatar})`}} />
+            ) : (
+              <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />
+            )}
             <UserInfo>
               <Username>{user.username}</Username>
               <StatsContainer>
@@ -73,7 +70,11 @@ export const AccountInfo: React.FC = () => {
             </DescriptionContainer>
           </>
         )}
-        {user && <Playlist />}
+        {user &&
+          <PlaylistContainer>
+            <Playlist />
+          </PlaylistContainer>
+        }
       </InfoContainer>
     </AccountContainer>
   );

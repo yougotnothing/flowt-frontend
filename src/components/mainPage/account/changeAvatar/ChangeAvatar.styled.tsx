@@ -4,12 +4,11 @@ import { BUTTON } from "../../../../consts/styles.const";
 
 export const ChangeAvatarContainer = styled('div')`
   display: flex;
-  margin-top: 3em;
-  margin-left: auto;
-  margin-right: auto;
   flex-direction: column;
   align-items: center;
+  width: max-content;
   gap: 24px;
+  margin: 4em auto 0 auto;
 `;
 
 export const Title = styled('div')`
@@ -36,7 +35,7 @@ export const InputWrapper = styled('div')`
 
 export const Label = styled('label')`
   ${BUTTON};
-
+  
   padding: 10px 15px;
 `;
 

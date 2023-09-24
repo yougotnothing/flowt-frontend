@@ -6,9 +6,8 @@ export const ChangeEmailContainer = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 5em;
-  margin-left: auto;
-  margin-right: auto;
+  height: max-content;
+  margin: 5em auto;
   padding: 36px;
   background-color: ${COLORS.front};
   border-radius: 18px;

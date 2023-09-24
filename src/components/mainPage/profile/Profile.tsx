@@ -46,19 +46,21 @@ export const Profile: React.FC = () => {
               <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
             <ProfileTextContainer>
               <ProfileTitle>Profile</ProfileTitle>
-              <UserNickname
-                onClick={() => navigate("/home")}
-              >
+              <UserNickname onClick={() =>
+                navigate(generatePath('/account/:id/change-username', { id: user.username }))
+              }>
                 {user.username}
               </UserNickname>
               <ProfileTitle>{user.region}</ProfileTitle>
               <LinksContainer>
-                <FollowsSubscribes onClick={
-                  () => navigate(generatePath('/profile/:id/followers', { id: user.username }))}>
+                <FollowsSubscribes onClick={() =>
+                  navigate(generatePath('/profile/:id/followers', { id: user.username }))
+                }>
                   Followers {followers.length}
                 </FollowsSubscribes>
-                <FollowsSubscribes onClick={
-                  () => navigate(generatePath('/profile/:id/subscribes', { id: user.username }))}>
+                <FollowsSubscribes onClick={() =>
+                  navigate(generatePath('/profile/:id/subscribes', { id: user.username }))
+                }>
                   Subscribes {subscribes.length}
                 </FollowsSubscribes>
               </LinksContainer>

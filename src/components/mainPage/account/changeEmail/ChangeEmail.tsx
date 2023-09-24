@@ -28,13 +28,19 @@ export const ChangeEmail: React.FC = () => {
     onSubmit: () => {}
   });
 
+  useEffect(() => {
+    if(user) {
+      formik.setValues({
+        email: user.email || ""
+      });
+    }
+  }, []);
+
   const handleChangeEmail = async () => {
     setIsLoading(true);
     try {
       const response = await api.patch('/users/email', { newEmail: formik.values.email });
       if(response) {
-        const token = response.data.token;
-        localStorage.setItem('token', token);
         navigate(generatePath('/account/:id', { id: user.username }));
         window.location.reload();
       }
@@ -43,41 +49,40 @@ export const ChangeEmail: React.FC = () => {
     }
   }
 
-  const EmailError = formik.errors.email && formik.touched.email && <Error>{formik.errors.email}</Error>
+  const EmailError = formik.errors.email && formik.touched.email &&
+      <Error>{formik.errors.email}</Error>
 
   return (
     <AccountContainer>
       {!user && <PageLoader />}
-      <GlobalContainer>
-        {user && (
-          <>
-            <Account />
-            <GoBackContainer>
-              <AContainer>
-                <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>
-                  Go back
-                </A>
-              </AContainer>
-            </GoBackContainer>
-            <ChangeEmailContainer>
-              <ContentContainer>
-                <Header>Change <Span>email</Span></Header>
-                <Input 
-                  name="email"
-                  type="text"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  placeholder={user.email}
-                />
-                {EmailError}
-                <Button onClick={() => handleChangeEmail()}>
-                  {isLoading ? <Loader /> : "Submit"}
-                </Button>
-              </ContentContainer>
-            </ChangeEmailContainer>
-          </>
-        )}
-      </GlobalContainer>
+      {user && (
+        <GlobalContainer>
+          <Account />
+          <GoBackContainer>
+            <AContainer>
+              <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>
+                Go back
+              </A>
+            </AContainer>
+          </GoBackContainer>
+          <ChangeEmailContainer>
+            <ContentContainer>
+              <Header>Change <Span>email</Span></Header>
+              <Input
+                name="email"
+                type="text"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                defaultValue={formik.values.email}
+              />
+              {EmailError}
+              <Button onClick={handleChangeEmail}>
+                {isLoading ? <Loader /> : "Submit"}
+              </Button>
+            </ContentContainer>
+          </ChangeEmailContainer>
+        </GlobalContainer>
+      )}
     </AccountContainer>
   )
 }

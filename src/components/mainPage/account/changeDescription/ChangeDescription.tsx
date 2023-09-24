@@ -86,7 +86,7 @@ export const ChangeDescription: React.FC = () => {
               defaultValue={formik.values.description}
             />
             {descriptionError}
-            <Button onClick={() => patchDescription()}>
+            <Button onClick={patchDescription}>
               {isLoading ? <Loader /> : 'Set description'}
             </Button>
           </ChangeDescriptionContainer>

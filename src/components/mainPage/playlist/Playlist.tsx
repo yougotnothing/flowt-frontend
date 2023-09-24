@@ -14,6 +14,7 @@ import { useContextValues } from "../../../contexts/Context";
 
 export const Playlist: React.FC = () => {
   const[songs, setSongs] = useState<any>(null);
+  const[songAvatar, setSongAvatar] = useState<string | null>(null);
   const { setSongURL, setSongName, songName, user } = useContextValues();
   let counter: number = 0;
 
@@ -28,24 +29,26 @@ export const Playlist: React.FC = () => {
 
   return (
     <>
-      {user && songs ? songs.map((song: any) => (
-        <PlaylistContainer key={++counter}>
-          <TitleImage style={{backgroundImage: `url(${API_URL}/images/song/${user.username}/${song.name})`}}/>
-          <TextContainer>
-            <PlaylistName>{user.username}</PlaylistName>
-            <PlaylistText>{song.name}</PlaylistText>
-          </TextContainer>
-          <OpenPlaylistContainer>
-            <OpenPlaylistButton onClick={
-              () => {
-                setSongURL && setSongURL(`${API_URL}/songs/audio/${user.username}/${song.name}`);
-                setSongName && setSongName(song.name);
-              }}>
-              Listen
-            </OpenPlaylistButton>
-          </OpenPlaylistContainer>
-        </PlaylistContainer>
-      )) : null}
+      {user && songs ? songs.map((song: any) => {
+        return (
+          <PlaylistContainer key={++counter}>
+            <TitleImage style={{backgroundImage: `url(${API_URL}/images/song/${user.username}/${song.name})`}}/>
+            <TextContainer>
+              <PlaylistName>{user.username}</PlaylistName>
+              <PlaylistText>{song.name}</PlaylistText>
+            </TextContainer>
+            <OpenPlaylistContainer>
+              <OpenPlaylistButton onClick={
+                () => {
+                  setSongURL && setSongURL(`${API_URL}/songs/audio/${user.username}/${song.name}`);
+                  setSongName && setSongName(song.name);
+                }}>
+                Listen
+              </OpenPlaylistButton>
+            </OpenPlaylistContainer>
+          </PlaylistContainer>
+        )}
+      ) : null}
     </>
   );
 }

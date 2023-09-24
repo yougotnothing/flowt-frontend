@@ -25,11 +25,11 @@ export const Context = ({ children }: any) => {
   const[user, setUser] = useState<UserDTO | null>(null);
   const[followers, setFollowers] = useState<string | null>(null);
   const[subscribes, setSubscribes] = useState<string | null>(null);
-  const[userAvatar, setUserAvatar] = useState('');
-  const[songURL, setSongURL] = useState('');
-  const[songName, setSongName] = useState('');
+  const[userAvatar, setUserAvatar] = useState<string | null>(null);
+  const[songURL, setSongURL] = useState<string | null>(null);
+  const[songName, setSongName] = useState<string | null>(null);
 
-  const getSubscribes = async () => {
+  const getSubscribes = async (): Promise<void> => {
     try {
       const response = await api.get('/users/subscribes');
       setSubscribes(response.data.subscribes);
@@ -38,7 +38,17 @@ export const Context = ({ children }: any) => {
     }
   };
 
-  const getFollowers = async () => {
+  const getSongAvatar = async (): Promise<void> => {
+    try {
+      if(user) {
+        const response = await api.get(`/images/song/${user.username}`)
+      }
+    }catch (error: any) {
+      console.log('an error occurred');
+    }
+  }
+
+  const getFollowers = async (): Promise<void> => {
     try {
       const response = await api.get('/users/followers');
       setFollowers(response.data.followers);
@@ -47,7 +57,7 @@ export const Context = ({ children }: any) => {
     }
   };
 
-  const getUserAvatar = async () => {
+  const getUserAvatar = async (): Promise<void> => {
     try {
       if(user) {
         const response = await api.get(`/images/user/${user.username}`);
@@ -60,7 +70,7 @@ export const Context = ({ children }: any) => {
     }
   }
 
-  const getUser = async () => {
+  const getUser = async (): Promise<void> => {
     try {
       const response = await api.get('/users/authenticated');
       setUser(response.data);
@@ -78,7 +88,7 @@ export const Context = ({ children }: any) => {
   }, []);
 
   useEffect(() => {
-    const getSongURL = async () => {
+    const getSongURL = async (): Promise<void> => {
       try {
         const response = await api.get('/users/songs');
         setSongInfo(response.data.songs);

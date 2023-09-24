@@ -24,9 +24,9 @@ export const Verify = () => {
   }
 
   useEffect(() => {
-      verifyStatus();
-      navigate('/home');
-    }, []);
+    verifyStatus();
+    navigate('/home');
+  }, []);
   
   return (
     <Loader />

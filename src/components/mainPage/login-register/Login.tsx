@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {generatePath, useNavigate} from "react-router-dom";
 import { useFormik } from "formik";
 
 import {
@@ -16,8 +16,6 @@ import {
 import { loginValidationSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/Loader";
 import { login } from "../../../api/axiosConfig";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 
 export const Login: React.FC = () => {
     const navigate = useNavigate();
@@ -44,8 +42,10 @@ export const Login: React.FC = () => {
       }
 
       try {
+        setIsLoading(true);
         setErrorMessage(null);
         await login(loginDto);
+        navigate('/home');
         window.location.reload();
       } catch (error: any) {
         setIsLoading(false);
@@ -80,16 +80,7 @@ export const Login: React.FC = () => {
           { errorMessage && <ValidationSpan>{errorMessage}</ValidationSpan> }
         </InputContainer>
         <LoginButton
-          onClick={() => {
-            setIsLoading(true);
-            if(errorMessage) {
-              handleLogin();
-              console.log(errorMessage);
-            }else if(!errorMessage) {
-              handleLogin();
-              navigate('/home');
-            }
-          }}
+          onClick={handleLogin}
           disabled={isLoading}
         >
           { isLoading ? <Loader /> : "Login" }

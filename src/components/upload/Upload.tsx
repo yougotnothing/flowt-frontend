@@ -25,7 +25,8 @@ import {
   GenresItem,
   AvatarAndGenre,
   SongInfoContainer,
-  SongInfoText
+  SongInfoText,
+  SetAvatarLabelContainer
 } from "./Upload.styled";
 import { Account } from "../mainPage/account/Account";
 import { useFormik } from "formik";
@@ -35,10 +36,10 @@ import genresData from "../../consts/genres.json";
 import { useContextValues } from "../../contexts/Context";
 
 export const Upload = () => {
-  const[songGenre, setSongGenre] = useState<any>(null);
+  const[songGenre, setSongGenre] = useState<string | null>(null);
   const[isLoading, setIsLoading] = useState<boolean>(false);
-  const[song, setSong] = useState<any>(null);
-  const[avatar, setAvatar] = useState<any>(null);
+  const[song, setSong] = useState<any | Blob>(null);
+  const[avatar, setAvatar] = useState<any | Blob>(null);
   const navigate = useNavigate();
   const { user } = useContextValues();
   let counter: number = 0;
@@ -140,9 +141,9 @@ export const Upload = () => {
                     ) : (
                       <SongAvatar style={{display: "none"}} />
                     )}
-                    <div>
+                    <SetAvatarLabelContainer>
                       <SetAvatarLabel htmlFor="setAvatar">{avatar ? "Chose another" : "Set avatar"}</SetAvatarLabel>
-                    </div>
+                    </SetAvatarLabelContainer>
                     </AvatarContainer>
                     <Genres>
                       {genresData.map((genre: any) => (
@@ -159,7 +160,8 @@ export const Upload = () => {
               <ButtonsContainer>
                 <Label htmlFor="uploadAudio">{song ? "Chose another" : "Chose song"}</Label>
                 <SubmitContainer>
-                  <UploadButton onClick={() => postSongInfo()}>{isLoading ? <Loader /> : "submit" }</UploadButton>
+                  <UploadButton
+                    onClick={() => postSongInfo()}>{isLoading ? <Loader /> : "submit" }</UploadButton>
                 </SubmitContainer>
               </ButtonsContainer>
             </Container>

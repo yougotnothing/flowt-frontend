@@ -12,10 +12,10 @@ import {
   Container, 
   Droplist, 
   DroplistItem, 
-  ChoosenRegion 
+  ChosenRegion
 } from "./ChangeRegion.styled";
 
-import { A, AContainer, GoBackContainer, GlobalContainer } from "../../MainPage.styled";
+import { A, AContainer,GoBackContainer, GlobalContainer } from "../../MainPage.styled";
 import { Account } from "../Account";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useContextValues } from "../../../../contexts/Context";
@@ -30,8 +30,8 @@ export const ChangeRegion: React.FC = () => {
     try {
       const response = await api.patch('/users/region', { newRegion: chosenRegion });
       if(response) {
-        localStorage.setItem('token', response.data.token);
         navigate(generatePath('/account/:id', { id: user.username }));
+        window.location.reload();
       }
     }catch(error: any) {
       console.log("an error occurred");
@@ -42,31 +42,31 @@ export const ChangeRegion: React.FC = () => {
     <AccountContainer>
     {!user && <PageLoader />}
     {user && (
-      <GlobalContainer> 
-        <GoBackContainer>
-          <AContainer>
-            <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>
-              Go back
-            </A>
-          </AContainer>
-        </GoBackContainer>
+      <GlobalContainer>
         <Account />
+          <GoBackContainer>
+            <AContainer>
+              <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>
+                Go back
+              </A>
+            </AContainer>
+          </GoBackContainer>
           <ChangeRegionContainer>
-              <Container>
-                <Title>Change <Span>region</Span></Title>
-                {chosenRegion && <ChoosenRegion>{chosenRegion}</ChoosenRegion>}
-                <Droplist>
-                  {regionData.map((region: any) => (
-                    <DroplistItem
-                      key={++counter}
-                      onClick={() => choseRegion(region)}
-                    >
-                      {region}
-                    </DroplistItem>
-                  ))}
-                </Droplist>
-                <Button onClick={() => handleChangedRegion()}>Apply</Button>
-              </Container>
+            <Container>
+              <Title>Change <Span>region</Span></Title>
+              {chosenRegion && <ChosenRegion>{chosenRegion}</ChosenRegion>}
+              <Droplist>
+                {regionData.map((region: any) => (
+                  <DroplistItem
+                    key={++counter}
+                    onClick={() => choseRegion(region)}
+                  >
+                    {region}
+                  </DroplistItem>
+                ))}
+              </Droplist>
+              <Button onClick={() => handleChangedRegion()}>Apply</Button>
+            </Container>
           </ChangeRegionContainer>
         </GlobalContainer>
       )}

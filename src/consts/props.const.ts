@@ -1,11 +1,11 @@
+type setStateAction<T> = (value: any) => void;
+
 export interface UserDTO {
   username?: string | null;
   region?: string | null;
   email?: string | null;
   description?: string | null;
 }
-
-type setStateAction<T> = (value: any) => void;
 
 export interface ProviderProps {
   user: UserDTO | null;

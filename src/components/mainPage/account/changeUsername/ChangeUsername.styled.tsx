@@ -12,9 +12,7 @@ export const Container = styled('div')`
   gap: 26px;
   border-radius: 18px;
   align-self: center;
-  margin-top: 5em;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 4em auto auto auto;
 `;
 
 export const Input = styled('input')`

@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
+import { useContextValues } from "../../../../contexts/Context";
 import { useFormik } from "formik";
 import { changeUsernameSchema } from "../../../../validation/yup.config";
-import { A, AContainer, GoBackContainer, GlobalContainer } from "../../MainPage.styled";
-import { api } from "../../../../api/axiosConfig";
 import { Span } from "../../login-register/Login.register.styled";
-import { Container, Button, Input, Header, ChangeUsernameContainer } from "./ChangeUsername.styled";
-import { Loader } from "../../../loader/Loader";
 import { AccountContainer } from "../Account.styled";
+import {
+  A,
+  AContainer,
+  GoBackContainer,
+  GlobalContainer
+} from "../../MainPage.styled";
+import {
+  Container,
+  Button,
+  Input,
+  Header,
+  ChangeUsernameContainer
+} from "./ChangeUsername.styled";
+import { api } from "../../../../api/axiosConfig";
+import { Loader } from "../../../loader/Loader";
 
 import { Account } from "../Account";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { useContextValues } from "../../../../contexts/Context";
 
 export const ChangeUsername: React.FC = () => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
@@ -43,7 +54,7 @@ export const ChangeUsername: React.FC = () => {
       window.location.reload();
     }catch(error: any) {
       setIsLoading(false);
-      console.log('an error occured');
+      console.log('an error occurred');
     }
   }
   
@@ -58,9 +69,9 @@ export const ChangeUsername: React.FC = () => {
   return (
     <AccountContainer>
       {!user && <PageLoader />}
-      {user && <Account />}
-      <GlobalContainer>
-        {user && (
+      {user && (
+        <GlobalContainer>
+          <Account />
           <GoBackContainer>
             <AContainer>
               <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>
@@ -68,25 +79,23 @@ export const ChangeUsername: React.FC = () => {
               </A>
             </AContainer>
           </GoBackContainer>
-          )}
-          {user && (
-            <ChangeUsernameContainer>
-              <Container>
-                <Header>Change <Span>username</Span></Header>
-                <Input
-                  name="username"
-                  onBlur={formik.handleBlur}
-                  onChange={(e: any) => {
-                    setNewUsername(e.target.value);
-                    formik.setFieldValue('username', e.target.value);
-                  }}
-                  defaultValue={formik.values.username}
-                  />
-                <Button onClick={() => handleChangedUsername()}>{isLoading ? <Loader /> : 'Apply'}</Button>
-              </Container>
-            </ChangeUsernameContainer>
-          )}
-      </GlobalContainer>
+          <ChangeUsernameContainer>
+            <Container>
+              <Header>Change <Span>username</Span></Header>
+              <Input
+                name="username"
+                onBlur={formik.handleBlur}
+                onChange={(e: any) => {
+                  setNewUsername(e.target.value);
+                  formik.setFieldValue('username', e.target.value);
+                }}
+                defaultValue={formik.values.username}
+                />
+              <Button onClick={() => handleChangedUsername()}>{isLoading ? <Loader /> : 'Apply'}</Button>
+            </Container>
+          </ChangeUsernameContainer>
+        </GlobalContainer>
+      )}
     </AccountContainer>
   );
 }

@@ -5,9 +5,7 @@ import { BUTTON, TITLE } from "../../../../consts/styles.const";
 export const ChangeRegionContainer = styled('div')`
   display: flex;
   flex-direction: column;
-  margin-top: 4em;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 3em auto;
   align-items: center;
   width: 100%;
 `;
@@ -68,7 +66,7 @@ export const DroplistItem = styled('li')`
   transition: 0.3s;
   font-weight: 600;
   font-size: 18px;
-  font-family: 'Urbanist', sans-serif;
+  font-family: 'Urbanist', 'Noto Color Emoji', sans-serif;
   color: ${COLORS.firstFont};
 
   &:hover {
@@ -77,8 +75,8 @@ export const DroplistItem = styled('li')`
   }
 `;
 
-export const ChoosenRegion = styled('div')`
-  font-family: 'Urbanist', sans-serif;
+export const ChosenRegion = styled('div')`
+  font-family: 'Urbanist', 'Noto Color Emoji', sans-serif;
   font-weight: 600;
   font-size: 18px;
   max-width: 80%;

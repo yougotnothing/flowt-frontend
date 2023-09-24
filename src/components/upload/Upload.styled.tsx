@@ -57,6 +57,10 @@ export const SongNameContainer = styled('div')`
   height: 61px;
 `;
 
+export const SetAvatarLabelContainer = styled('div')`
+  margin: auto auto 0;
+`;
+
 export const SetAvatarLabel = styled('label')`
   ${A_};
   
@@ -101,6 +105,8 @@ export const AvatarContainer = styled('div')`
   flex-direction: column;
   align-self: start;
   align-items: center;
+  width: 180px;
+  height: calc(255px - 36px);
   gap: 12px;
   padding: 18px;
   background-color: ${COLORS.grey};
