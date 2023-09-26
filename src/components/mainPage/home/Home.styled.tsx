@@ -7,7 +7,7 @@ export const UserContainer = styled('div')`
   align-self: start;
   width: 286px;
   height: 98%;
-  background-color: ${colors.DARK_WHITE};
+  background-color: ${colors.DARK_BLUE};
   padding: 2%;
   border-radius: 20px;
 `;
