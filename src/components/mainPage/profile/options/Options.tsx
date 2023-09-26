@@ -46,7 +46,7 @@ export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
             <SelectText>Settings</SelectText>
           </Select>
           <Select onClick={() =>
-            navigate(generatePath('/account/:id/notifications', {id: user.username}))}>
+            navigate(generatePath('/notifications/:id', {id: user.username}))}>
             <SelectText>Notifications</SelectText>
           </Select>
           <Select onClick={() => {

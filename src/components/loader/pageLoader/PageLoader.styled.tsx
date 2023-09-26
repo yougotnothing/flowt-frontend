@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { COLORS } from "../../../consts/colors.const";
+import { colors } from "../../../consts/colors.const";
 
 export const Spinner = styled('div')`
   width: 3em;
   height: 3em;
   border: 6px solid;
   margin: auto;
-  border-color: ${COLORS.secondary} transparent ${COLORS.secondary} transparent;
+  border-color: ${colors.SECONDARY} transparent ${colors.SECONDARY} transparent;
   border-radius: 50%;
   animation: spin-anim 0.8s linear infinite;
 

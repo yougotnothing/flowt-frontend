@@ -1,10 +1,13 @@
 import React from "react";
+
 import { useNavigate, generatePath } from "react-router-dom";
+import { observer } from "mobx-react-lite";
+import { userRegionStore } from "../../../../store/toChangeRegion"
 
 import { A, AContainer } from "../../MainPage.styled";
 import { Account } from "../Account";
 import {
-  Title, 
+  Title,
   InfoContainer,
   UserAvatar,
   UserContainer,
@@ -24,14 +27,14 @@ import { Playlist } from "../../playlist/Playlist";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useContextValues } from "../../../../contexts/Context";
 
-export const AccountInfo: React.FC = () => {
-  const { userAvatar, user, followers, subscribes } = useContextValues();
+export const AccountInfo: React.FC = observer(() => {
+  const { userAvatar, user, followers, subscribes, userRegionStore, userUsernameStore } = useContextValues();
   const navigate = useNavigate();
 
   return (
     <AccountContainer>
       {!user && <PageLoader />}
-      {user && <Account />}
+      <Account />
       <InfoContainer>
         <Title>Your info</Title>
         {user && followers && subscribes && (
@@ -42,20 +45,20 @@ export const AccountInfo: React.FC = () => {
               <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />
             )}
             <UserInfo>
-              <Username>{user.username}</Username>
+              <Username>{userUsernameStore.Username}</Username>
               <StatsContainer>
                 <Email>{user.email}</Email>
-                <Region>{user.region}</Region>
+                <Region>{userRegionStore.userRegion}</Region>
               </StatsContainer>
               <ButtonsContainer>
                 <AContainer>
                   <A onClick={() => navigate(generatePath('/profile/:id/followers', { id: user.username }))}>
-                    followers {followers.length}
+                    followers: {followers.length}
                   </A>
                 </AContainer>
                 <AContainer>
                   <A onClick={() => navigate(generatePath('/profile/:id/subscribes', { id: user.username }))}>
-                    subscribes {subscribes.length}
+                    subscribes: {subscribes.length}
                   </A>
                 </AContainer>
               </ButtonsContainer>
@@ -78,4 +81,4 @@ export const AccountInfo: React.FC = () => {
       </InfoContainer>
     </AccountContainer>
   );
-}
+});

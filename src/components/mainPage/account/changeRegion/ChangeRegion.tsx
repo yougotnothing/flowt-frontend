@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
+import { observer } from "mobx-react-lite";
+import { userRegionStore } from "../../../../store/toChangeRegion"
 import regionData from "../../../../consts/countries.json"
 import { api } from "../../../../api/axiosConfig";
-import { Span } from "../../login-register/Login.register.styled";
 import { AccountContainer } from "../Account.styled";
 import { 
   ChangeRegionContainer, 
@@ -20,23 +21,21 @@ import { Account } from "../Account";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useContextValues } from "../../../../contexts/Context";
 
-export const ChangeRegion: React.FC = () => {
-  const[chosenRegion, choseRegion] = useState<any>(null);
+export const ChangeRegion: React.FC = observer(() => {
   const { user } = useContextValues();
   const navigate = useNavigate();
   let counter: number = 0;
 
   const handleChangedRegion = async () => {
     try {
-      const response = await api.patch('/users/region', { newRegion: chosenRegion });
+      const response = await api.patch('/users/region', {newRegion: userRegionStore.userRegion});
       if(response) {
-        navigate(generatePath('/account/:id', { id: user.username }));
-        window.location.reload();
+        navigate(generatePath('/account/:id', {id: user.username}));
       }
     }catch(error: any) {
-      console.log("an error occurred");
+      console.error("an error occurred");
     }
-  }
+  };
 
   return (
     <AccountContainer>
@@ -53,13 +52,13 @@ export const ChangeRegion: React.FC = () => {
           </GoBackContainer>
           <ChangeRegionContainer>
             <Container>
-              <Title>Change <Span>region</Span></Title>
-              {chosenRegion && <ChosenRegion>{chosenRegion}</ChosenRegion>}
+              <Title>Change region</Title>
+              {userRegionStore && <ChosenRegion>{userRegionStore.userRegion}</ChosenRegion>}
               <Droplist>
-                {regionData.map((region: any) => (
+                {regionData.map((region: string) => (
                   <DroplistItem
                     key={++counter}
-                    onClick={() => choseRegion(region)}
+                    onClick={() => userRegionStore.setUserRegion(region)}
                   >
                     {region}
                   </DroplistItem>
@@ -72,4 +71,4 @@ export const ChangeRegion: React.FC = () => {
       )}
     </AccountContainer>
   )
-}
+});

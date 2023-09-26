@@ -1,19 +1,16 @@
 import styled from "styled-components";
-import { COLORS } from "../../../consts/colors.const";
+import { colors } from "../../../consts/colors.const";
 import { TITLE, BUTTON, INPUT, VALIDATION, NOT_REGISTERED, A_CONTAINER, A_ } from "../../../consts/styles.const";
 
 export const LoginHeader = styled('div')`
-  text-align: center;
-  font-family: 'Urbanist' sans-serif;
-  font-weight: 800;
-  margin-top: 24px;
-  font-size: 36px;
-  color: ${COLORS.firstFontHover};
+  ${TITLE};
+  
+  margin-top: 16px;
 `;
 
 export const Span = styled('span')`
-  color: ${COLORS.secondary};
-  font-family: 'Urbanist' sans-serif;
+  color: ${colors.SECONDARY};
+  font-family: 'Urbanist', sans-serif;
   font-weight: 800;
   font-size: 32px;
 `;
@@ -30,7 +27,7 @@ export const LoginCard = styled('div')`
   gap: 14px;
   padding: 24px;
   border-radius: 24px;
-  background-color: ${COLORS.front};
+  background-color: ${colors.FRONT};
 `;
 
 export const LoginInput = styled('input')`

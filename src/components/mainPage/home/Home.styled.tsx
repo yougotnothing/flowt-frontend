@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLORS } from "../../../consts/colors.const";
+import { colors } from "../../../consts/colors.const";
 
 export const UserContainer = styled('div')`
   display: flex;
@@ -7,7 +7,7 @@ export const UserContainer = styled('div')`
   align-self: start;
   width: 286px;
   height: 98%;
-  background-color: ${COLORS.front};
+  background-color: ${colors.DARK_WHITE};
   padding: 2%;
   border-radius: 20px;
 `;
@@ -28,16 +28,16 @@ export const Card = styled('button')`
   flex-direction: row;
   align-self: center;
   border: none;
-  background-color: ${COLORS.grey};
-  color: ${COLORS.firstFont};
+  background-color: ${colors.GREY};
+  color: ${colors.DARK_WHITE};
   border-radius: 14px;
   justify-content: center;
   transition: all 0.3s;
   cursor: pointer;
   
   &:hover {
-    background-color: ${COLORS.green};
-    color: ${COLORS.firstFontHover};
+    background-color: ${colors.GREEN};
+    color: ${colors.WHITE};
   }
 `;
 
@@ -71,7 +71,7 @@ export const Recommendations = styled('div')`
   height: 340px;
   text-align: start;
   justify-content: end;
-  background: linear-gradient(90deg, ${COLORS.container} 0%, ${COLORS.green} 100%);
+  background: linear-gradient(90deg, ${colors.AQUAMARINE} 0%, ${colors.GREEN} 100%);
   border-radius: 20px;
 `;
 
@@ -80,7 +80,7 @@ export const Title = styled('div')`
   font-family: 'Raleway', sans-serif;
   font-size: 34px;
   font-weight: 900;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
 `;
 
 export const RecommendationsContainer = styled('div')`
@@ -102,15 +102,15 @@ export const RecommendationCard = styled('button')`
   border-radius: 14px;
   width: 174px;
   height: 240px;
-  background-color: ${COLORS.front};
-  color: ${COLORS.firstFont};
+  background-color: ${colors.FRONT};
+  color: ${colors.DARK_WHITE};
   gap: 20px;
   transition: all 0.2s;
+  cursor: pointer;
 
   &:hover {
-    background-color: ${COLORS.background};
-    color: ${COLORS.firstFontHover};
-    cursor: pointer;
+    background-color: ${colors.BACKGROUND};
+    color: ${colors.WHITE};
   }
 `;
 
@@ -165,7 +165,7 @@ export const LastListenCard = styled('button')`
   border-radius: 14px;
   width: 100%;
   height: 126px;
-  background-color: ${COLORS.front};
+  background-color: ${colors.FRONT};
   opacity: 0.6;
   gap: 20px;
   transition: all 0.2s;

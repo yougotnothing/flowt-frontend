@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { COLORS } from "../../../consts/colors.const";
-import {BUTTON, TITLE} from "../../../consts/styles.const";
+import { colors } from "../../../consts/colors.const";
+import { BUTTON, TITLE } from "../../../consts/styles.const";
 
 export const PlaylistContainer = styled('div')`
   display: flex;
@@ -9,8 +9,8 @@ export const PlaylistContainer = styled('div')`
   padding: 12px;
   border-radius: 14px;
   gap: 24px;
-  border: 2px solid ${COLORS.border};
-  background-color: ${COLORS.front};
+  border: 2px solid ${colors.BORDER};
+  background-color: ${colors.FRONT};
 `;
 
 export const TitleImage = styled('picture')`
@@ -29,7 +29,7 @@ export const TextContainer = styled('div')`
   text-align: start;
   padding: 12px;
   border-radius: 12px;
-  background-color: ${COLORS.grey};
+  background-color: ${colors.VERY_DARK_BLUE};
   gap: 12px;
 `;
 
@@ -37,7 +37,7 @@ export const PlaylistText = styled('div')`
   font-family: 'Urbanist', sans-serif;
   font-weight: 600;
   font-size: 18px;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
 `;
 
 export const OpenPlaylistButton = styled('button')`

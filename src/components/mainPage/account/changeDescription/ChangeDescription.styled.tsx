@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLORS } from "../../../../consts/colors.const";
+import { colors } from "../../../../consts/colors.const";
 import { BUTTON, TITLE, INPUT } from "../../../../consts/styles.const";
 
 export const Container = styled('div')`
@@ -17,7 +17,7 @@ export const ChangeDescriptionContainer = styled('div')`
   padding: 2em;
   border-radius: 18px;
   gap: 24px;
-  background-color: ${COLORS.front};
+  background-color: ${colors.FRONT};
   width: max-content;
   height: max-content;
 `;
@@ -48,6 +48,6 @@ export const Title = styled('div')`
 export const Error = styled('div')`
   font-family: 'Urbanist', sans-serif;
   font-weight: 600;
-  font-size; 18px;
-  color: ${COLORS.krasniy};
+  font-size: 18px;
+  color: ${colors.RED};
 `;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import {A_, BUTTON, TITLE, INPUT, VALIDATION} from "../../consts/styles.const";
-import {COLORS} from "../../consts/colors.const";
+import { A_, BUTTON, TITLE, INPUT, VALIDATION } from "../../consts/styles.const";
+import { colors } from "../../consts/colors.const";
 
 export const UploadContainer = styled('div')`
   display: flex;
@@ -36,9 +36,9 @@ export const Container = styled('div')`
   width: 860px;
   padding: 32px;
   gap: 24px;
-  border: 2px solid ${COLORS.border};
+  border: 2px solid ${colors.BORDER};
   border-radius: 16px;
-  background-color: ${COLORS.front};
+  background-color: ${colors.FRONT};
 `;
 
 export const DataContainer = styled('div')`
@@ -64,18 +64,18 @@ export const SetAvatarLabelContainer = styled('div')`
 export const SetAvatarLabel = styled('label')`
   ${A_};
   
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
   &:hover {
-    color: ${COLORS.secondaryHover};
+    color: ${colors.SECONDARY_HOVER};
   }
 `;
 
 export const UploadButton = styled('a')`
   ${A_};
   
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
   &:hover {
-    color: ${COLORS.secondaryHover};
+    color: ${colors.SECONDARY_HOVER};
   }
 `;
 
@@ -109,7 +109,7 @@ export const AvatarContainer = styled('div')`
   height: calc(255px - 36px);
   gap: 12px;
   padding: 18px;
-  background-color: ${COLORS.grey};
+  background-color: ${colors.VERY_DARK_BLUE};
   border-radius: 14px;
 `;
 
@@ -132,8 +132,8 @@ export const SubmitContainer = styled('div')`
 export const Genres = styled('ul')`
   width: 246px;
   max-height: 227px;
-  background-color: ${COLORS.grey};
-  border: 2px solid ${COLORS.border};
+  background-color: ${colors.VERY_DARK_BLUE};
+  border: 2px solid ${colors.BORDER};
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -151,11 +151,11 @@ export const GenresItem = styled('li')`
   font-weight: 600;
   font-size: 18px;
   font-family: 'Urbanist', sans-serif;
-  color: ${COLORS.firstFont};
+  color: ${colors.DARK_WHITE};
 
   &:hover {
-    background-color: ${COLORS.border};
-    color: ${COLORS.secondary};
+    background-color: ${colors.BORDER};
+    color: ${colors.SECONDARY};
   }
 `;
 
@@ -171,7 +171,7 @@ export const SongInfoContainer = styled('div')`
   align-items: start;
   margin: 24px auto auto 0;
   gap: 24px;
-  background-color: ${COLORS.grey};
+  background-color: ${colors.VERY_DARK_BLUE};
   border-radius: 14px;
   padding: 24px;
 `;
@@ -180,5 +180,5 @@ export const SongInfoText = styled('div')`
   font-family: 'Urbanist', sans-serif;
   font-weight: 600;
   font-size: 18px;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
 `;

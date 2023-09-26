@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { COLORS } from "../../../../consts/colors.const";
+import { colors } from "../../../../consts/colors.const";
 
 export const Container = styled('div')`
   display: flex;
   flex-direction: column;
-  background-color: ${COLORS.background};
+  background-color: ${colors.BACKGROUND};
   gap: 24px;
 `;
 
@@ -18,14 +18,14 @@ export const Card = styled('button')`
   padding: 24px;
   gap: 24px;
   border-radius: 16px;
-  background-color: ${COLORS.front};
-  color: ${COLORS.firstFontHover};
+  background-color: ${colors.FRONT};
+  color: ${colors.WHITE};
   transition: all 0.3s;
 
   &:hover {
     cursor: pointer;
-    background-color: ${COLORS.frontHover};
-    color: ${COLORS.firstFont};
+    background-color: ${colors.FRONT_HOVER};
+    color: ${colors.DARK_WHITE};
   }
 `;
 
@@ -50,5 +50,5 @@ export const PageHeader = styled('div')`
   font-family: 'Raleway', sans-serif;
   font-size: 34px;
   font-weight: 900;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
 `;

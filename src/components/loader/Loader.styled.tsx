@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLORS } from "../../consts/colors.const";
+import { colors } from "../../consts/colors.const";
 
 export const LoaderContainer = styled("div")`
   width: 100%;
@@ -13,7 +13,7 @@ export const Spinner = styled("div")`
   width: 1rem;
   height: 1rem;
   border: 2px solid;
-  border-color: ${COLORS.secondary} transparent ${COLORS.secondary} transparent;
+  border-color: ${colors.SECONDARY} transparent ${colors.SECONDARY} transparent;
   border-radius: 50%;
   animation: spin-anim 0.8s linear infinite;
 

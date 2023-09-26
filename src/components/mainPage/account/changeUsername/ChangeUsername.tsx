@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
+import { observer } from "mobx-react-lite";
 import { useContextValues } from "../../../../contexts/Context";
 import { useFormik } from "formik";
 import { changeUsernameSchema } from "../../../../validation/yup.config";
-import { Span } from "../../login-register/Login.register.styled";
 import { AccountContainer } from "../Account.styled";
 import {
   A,
@@ -25,11 +25,10 @@ import { Loader } from "../../../loader/Loader";
 import { Account } from "../Account";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 
-export const ChangeUsername: React.FC = () => {
+export const ChangeUsername: React.FC = observer(() => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
-  const[newUsername, setNewUsername] = useState<any>('');
   const navigate = useNavigate();
-  const { user } = useContextValues();
+  const { user, userUsernameStore } = useContextValues();
 
   const formik = useFormik<{
     username: ""
@@ -43,7 +42,9 @@ export const ChangeUsername: React.FC = () => {
 
   const handleChangedUsername = async () => {
     try {
-      const response = await api.patch('/users/username', { newUsername: newUsername });
+      const response = await api.patch('/users/username', {
+        newUsername: userUsernameStore.Username
+      });
       setIsLoading(true);
       navigate(generatePath('/account/:id', { id: user.username }));
       if (response) {
@@ -51,7 +52,6 @@ export const ChangeUsername: React.FC = () => {
         console.log(token);
         localStorage.setItem('token', token);
       }
-      window.location.reload();
     }catch(error: any) {
       setIsLoading(false);
       console.log('an error occurred');
@@ -59,11 +59,7 @@ export const ChangeUsername: React.FC = () => {
   }
   
   useEffect(() => {
-    if(user) {
-      formik.setValues({
-        username: user.username || ""
-      })
-    }
+    if(user) formik.setValues({ username: userUsernameStore.Username || "" });
   }, [user]);
   
   return (
@@ -81,12 +77,12 @@ export const ChangeUsername: React.FC = () => {
           </GoBackContainer>
           <ChangeUsernameContainer>
             <Container>
-              <Header>Change <Span>username</Span></Header>
+              <Header>Change username</Header>
               <Input
                 name="username"
                 onBlur={formik.handleBlur}
                 onChange={(e: any) => {
-                  setNewUsername(e.target.value);
+                  userUsernameStore.setUsername(e.target.value);
                   formik.setFieldValue('username', e.target.value);
                 }}
                 defaultValue={formik.values.username}
@@ -98,4 +94,4 @@ export const ChangeUsername: React.FC = () => {
       )}
     </AccountContainer>
   );
-}
+});

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { useFormik } from "formik";
@@ -95,7 +95,7 @@ export const ChangePassword: React.FC = () => {
           </AContainer>
         ) : null}
         <LoginCard>
-          <LoginHeader>Change <Span>password</Span></LoginHeader>
+          <LoginHeader>Change password</LoginHeader>
           <InputContainer>
           <LoginInput 
             placeholder="password"
@@ -103,6 +103,7 @@ export const ChangePassword: React.FC = () => {
             type="password"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
+            autoComplete="new-password"
             />
           {passwordError}
           <LoginInput 

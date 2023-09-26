@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLORS } from "../../../consts/colors.const";
+import { colors } from "../../../consts/colors.const";
 import { TITLE } from "../../../consts/styles.const";
 
 export const AccountContainer = styled('div')`
@@ -25,22 +25,22 @@ export const UserSettings = styled('div')`
   align-self: start;
   align-items: start;
   border-radius: 18px;
-  background-color: ${COLORS.front};
+  background-color: ${colors.FRONT};
   width: 260px;
   gap: 38px;
   padding: 21px;
-  border: 2px solid ${COLORS.border};
+  border: 2px solid ${colors.BORDER};
 `;
 
 export const AContainer = styled('div')`
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
   padding: 5px;
   border-radius: 8px;
   width: max-content;
   
   &:hover {
-    background-color: ${COLORS.grey};
-    color: ${COLORS.secondaryHover};
+    background-color: ${colors.VERY_DARK_BLUE};
+    color: ${colors.SECONDARY_HOVER};
   }
 `;
 
@@ -54,7 +54,7 @@ export const A = styled('a')`
   transition: all 0.3s;
   
   &:hover {
-    border: 1px solid ${COLORS.secondaryHover};
+    border: 1px solid ${colors.SECONDARY_HOVER};
     border-top-width: 0;
     border-left-width: 0;
     border-right-width: 0;
@@ -88,9 +88,9 @@ export const UserContainer = styled('div')`
   padding: 36px;
   border-radius: 18px;
   max-height: 400px;
-  border: 2px solid ${COLORS.border};
-  box-shadow: 0px 0px 3px 1px ${COLORS.border};
-  background: linear-gradient(90deg, ${COLORS.grey} 0%, ${COLORS.secondary} 100%);
+  border: 2px solid ${colors.BORDER};
+  box-shadow: 0px 0px 3px 1px ${colors.BORDER};
+  background: linear-gradient(135deg, ${colors.DARK_BLUE} 0% , ${colors.AQUAMARINE} 60%, ${colors.SECONDARY_HOVER} 120%);
 `;
 
 export const UserAvatar = styled('picture')`
@@ -118,7 +118,7 @@ export const Username = styled('div')`
   text-align: start;
   background: none;
   border: none;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
 `;
 
 export const ButtonsContainer = styled('div')`
@@ -131,7 +131,7 @@ export const Region = styled('div')`
   font-family: 'Urbanist', 'Noto Color Emoji', sans-serif;
   font-weight: 400;
   font-size: 18px;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
 `;
 
 export const DescriptionContainer = styled('div')`
@@ -141,23 +141,23 @@ export const DescriptionContainer = styled('div')`
   align-items: start;
   padding: 12px;
   gap: 24px;
-  border: 2px solid ${COLORS.border};
+  border: 2px solid ${colors.BORDER};
   border-radius: 12px;
-  background-color: ${COLORS.front};
+  background-color: ${colors.FRONT};
 `;
 
 export const Description = styled('div')`
   font-family: 'Raleway', sans-serif;
   font-weight: 600;
   font-size: 24px;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
 `;
 
 export const DescriptionTitle = styled('div')`
   font-family: 'Raleway', sans-serif;
   font-size: 36px;
   font-weight: 800;
-  color: ${COLORS.secondary};
+  color: ${colors.SECONDARY};
 `;
 
 export const Email = styled('div')`
@@ -172,7 +172,7 @@ export const StatsContainer = styled('div')`
   align-items: start;
   width: max-content;
   gap: 12px;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
 `;
 
 export const Container = styled('div')`

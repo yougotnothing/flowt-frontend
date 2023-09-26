@@ -1,10 +1,10 @@
-import { COLORS } from "./colors.const";
+import { colors } from "./colors.const";
 
 export const TITLE = `
   font-family: 'Raleway', sans-serif;
   font-size: 32px;
   font-weight: 800;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
 `;
 
 export const VALIDATION = `
@@ -12,14 +12,14 @@ export const VALIDATION = `
   font-family: 'Urbanist', sans-serif;
   font-size: 16px;
   font-weight: 600;
-  color: ${COLORS.krasniy};
+  color: ${colors.RED};
 `;
 
 export const INPUT = `
-  border: 2px solid ${COLORS.border};
+  border: 2px solid ${colors.BORDER};
   border-radius: 12px;
-  background-color: ${COLORS.darkGrey};
-  color: ${COLORS.firstFont};
+  background-color: ${colors.VERY_DARK_BLUE};
+  color: ${colors.DARK_WHITE};
   padding-left: 12px;
   outline: none;
   font-family: 'Urbanist', sans-serif;
@@ -32,16 +32,16 @@ export const INPUT = `
   }
 
   &:hover {
-    background-color: ${COLORS.grey};
-    color: ${COLORS.firstFontHover};
+    background-color: ${colors.DARK_BLUE};
+    color: ${colors.WHITE};
   }
 `;
 
 export const BUTTON = `
   display: flex;
-  background-color: ${COLORS.grey};
-  color: ${COLORS.firstFont};
-  border: 2px solid ${COLORS.border};
+  background-color: ${colors.DARK_BLUE};
+  color: ${colors.DARK_WHITE};
+  border: 2px solid ${colors.BORDER};
   font-weight: 600;
   font-size: 18px;
   font-family: 'Urbanist', sans-serif;
@@ -53,8 +53,8 @@ export const BUTTON = `
   cursor: pointer;
 
   &:hover {
-    background-color: ${COLORS.border};
-    color: ${COLORS.secondary}; 
+    background-color: ${colors.BORDER};
+    color: ${colors.SECONDARY}; 
   }
 `;
 
@@ -68,7 +68,7 @@ export const A_ = `
   transition: all 0.3s;
 
   &:hover {
-    border: 1px solid ${COLORS.secondaryHover};
+    border: 1px solid ${colors.SECONDARY_HOVER};
     border-top-width: 0;
     border-left-width: 0;
     border-right-width: 0;
@@ -76,15 +76,15 @@ export const A_ = `
 `;
 
 export const A_CONTAINER = `
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
   padding: 5px;
   align-self: end;
   border-radius: 8px;
   width: max-content;
 
   &:hover {
-    background-color: ${COLORS.grey};
-    color: ${COLORS.secondaryHover};
+    background-color: ${colors.DARK_BLUE};
+    color: ${colors.SECONDARY_HOVER};
   }
 `;
 
@@ -104,17 +104,17 @@ export const NOT_REGISTERED = `
   background: none;
   background-color: none;
   border: none;
-  color: ${COLORS.secondary};
+  color: ${colors.SECONDARY};
   justify-content: center;
   align-self: end;
 
   &:hover {
     transition: all 0.2s;
     cursor: pointer;
-    border: 1px solid ${COLORS.secondaryHover};
+    border: 1px solid ${colors.SECONDARY_HOVER};
     border-top-width: 0;
     border-left-width: 0;
     border-right-width: 0;
-    color: ${COLORS.secondaryHover};
+    color: ${colors.SECONDARY_HOVER};
   }
 `;

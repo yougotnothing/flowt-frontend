@@ -22,6 +22,7 @@ import { Playlist } from "../mainPage/playlist/Playlist";
 import { Upload } from "../upload/Upload";
 import { Player } from "../mainPage/player/Player";
 import { Context } from "../../contexts/Context";
+import { Notifications } from "../mainPage/notifications/Notifications";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -110,6 +111,10 @@ export const pageRouter = createBrowserRouter([
       {
         path: '/:song/play',
         element: <Player />
+      },
+      {
+        path: '/notifications/:id',
+        element: <Notifications />
       }
     ]
   }

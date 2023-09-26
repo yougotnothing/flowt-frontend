@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLORS } from "../../../consts/colors.const";
+import { colors } from "../../../consts/colors.const";
 
 export const PlayerContainer = styled('div')`
   display: flex;
@@ -13,8 +13,8 @@ export const PlayerContainer = styled('div')`
     margin-left: auto;
     margin-right: auto;
     border-radius: 12px;
-    background-color: ${COLORS.darkGrey};
-    box-shadow: 0 0 12px 1px ${COLORS.border};
+    background-color: ${colors.VERY_DARK_BLUE};
+    box-shadow: 0 0 12px 1px ${colors.BORDER};
   }
   
   .rhap_time,
@@ -22,15 +22,15 @@ export const PlayerContainer = styled('div')`
   .rhap_volume-button,
   .rhap_main-controls-button {
     font-family: 'Urbanist', sans-serif;
-    color: ${COLORS.firstFontHover} !important;
+    color: ${colors.WHITE} !important;
     
     :hover {
-      color: ${COLORS.firstFont};
+      color: ${colors.DARK_WHITE};
     }
   }
 
   .rhap_progress-bar {
-    background-color: ${COLORS.firstFont};
+    background-color: ${colors.DARK_WHITE};
     border-radius: 5px;
   }
   
@@ -59,7 +59,7 @@ export const PlayerContainer = styled('div')`
   }
 
   .rhap_progress-filled {
-    background-color: ${COLORS.secondary};
+    background-color: ${colors.SECONDARY};
     border-radius: 5px;
   }
 
@@ -68,8 +68,8 @@ export const PlayerContainer = styled('div')`
     height: 14px;
     z-index: 5;
     top: -5px;
-    background: ${COLORS.firstFontHover};
-    box-shadow: ${COLORS.border} 0 0 5px !important;
+    background: ${colors.WHITE};
+    box-shadow: ${colors.BORDER} 0 0 5px !important;
   }
 `;
 
@@ -85,7 +85,7 @@ export const SongPicture = styled('picture')`
 export const SongContainer = styled('div')`
   display: flex;
   flex-direction: row;
-  background-color: ${COLORS.grey};
+  background-color: ${colors.GREY};
   padding: 6px;
   width: max-content;
   gap: 12px;
@@ -105,18 +105,18 @@ export const SongTitle = styled('div')`
   font-family: 'Urbanist', sans-serif;
   font-weight: 600;
   font-size: 16px;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
 `;
 
 export const SongCreatorLink = styled('a')`
   font-family: 'Urbanist', sans-serif;
   font-weight: 400;
   font-size: 14px;
-  color: ${COLORS.firstFont};
+  color: ${colors.DARK_WHITE};
   
   &:hover {
-    color: ${COLORS.secondary};
-    border: 1px solid ${COLORS.secondary};
+    color: ${colors.SECONDARY};
+    border: 1px solid ${colors.SECONDARY};
     border-top-width: 0;
     border-left-width: 0;
     border-right-width: 0;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLORS } from "../../../../consts/colors.const";
+import { colors } from "../../../../consts/colors.const";
 import { BUTTON, TITLE } from "../../../../consts/styles.const";
 
 export const ChangeRegionContainer = styled('div')`
@@ -14,42 +14,24 @@ export const Container = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${COLORS.front};
+  background-color: ${colors.FRONT};
   padding: 24px;
   gap: 12px;
   border-radius: 18px;
 `;
 
 export const Button = styled('button')`
+  ${BUTTON};
+  
   width: 124px;
   height: 36px;
-  background-color: ${COLORS.grey};
-  color: ${COLORS.firstFont};
-  border: 2px solid ${COLORS.border};
-  font-weight: 600;
-  font-size: 18px;
-  font-family: 'Urbanist', sans-serif;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  padding: 4px;
-  align-items: center;
-  transition: 0.3s;
-  gap: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${COLORS.border};
-    color: ${COLORS.secondary}; 
-  }
 `;
 
 export const Droplist = styled('ul')`
   width: 268px;
   max-height: 227px; 
-  background-color: ${COLORS.grey};
-  border: 2px solid ${COLORS.border};
+  background-color: ${colors.VERY_DARK_BLUE};
+  border: 2px solid ${colors.BORDER};
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -67,11 +49,11 @@ export const DroplistItem = styled('li')`
   font-weight: 600;
   font-size: 18px;
   font-family: 'Urbanist', 'Noto Color Emoji', sans-serif;
-  color: ${COLORS.firstFont};
+  color: ${colors.DARK_WHITE};
 
   &:hover {
-    background-color: ${COLORS.border};
-    color: ${COLORS.secondary}; 
+    background-color: ${colors.BORDER};
+    color: ${colors.SECONDARY}; 
   }
 `;
 
@@ -80,7 +62,7 @@ export const ChosenRegion = styled('div')`
   font-weight: 600;
   font-size: 18px;
   max-width: 80%;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
 `;  
 
 export const Title = styled('div')`${TITLE};`;

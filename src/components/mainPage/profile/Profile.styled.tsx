@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { COLORS } from "../../../consts/colors.const";
+import { colors } from "../../../consts/colors.const";
 
 export const UserContainer = styled('div')`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background-color: ${COLORS.background};
+  background-color: ${colors.BACKGROUND};
   width: 100%;
   height: max-content;
 
@@ -14,12 +14,12 @@ export const UserContainer = styled('div')`
     font-size: 18px;
     text-decoration: none;
     text-align: center;
-    color: ${COLORS.firstFont};
+    color: ${colors.DARK_WHITE};
     width: 100%;
     height: 100%;
   
     &:hover {
-      color: ${COLORS.firstFontHover};
+      color: ${colors.WHITE};
     }
   }
 `;
@@ -34,7 +34,7 @@ export const Settings = styled('button')`
   background-repeat: no-repeat;
   background-size: 46px;
   border: none;
-  background-color: ${COLORS.background};
+  background-color: ${colors.BACKGROUND};
   transition: all 0.5s;
   transform: rotate(180deg);
   cursor: pointer;
@@ -57,8 +57,8 @@ export const UserAvatar = styled('picture')`
 export const SwitchTheme = styled('button')`
   width: 146px;
   height: 48px;
-  color: ${COLORS.firstFont};
-  background-color: ${COLORS.secondary};
+  color: ${colors.DARK_WHITE};
+  background-color: ${colors.SECONDARY};
   text-align: center;
   font-family: 'Urbanist', sans-serif;
   font-size: 18px;
@@ -67,8 +67,8 @@ export const SwitchTheme = styled('button')`
   align-self: start;
 
   &:hover {
-    color: ${COLORS.firstFontHover};
-    background-color: ${COLORS.secondaryHover};
+    color: ${colors.WHITE};
+    background-color: ${colors.SECONDARY_HOVER};
   }
 `;
 
@@ -76,8 +76,8 @@ export const DescriptionContainer = styled('div')`
   margin: 0 auto 0 18rem;
   display: flex;
   flex-direction: column;
-  background-color: ${COLORS.front};
-  border: 2px solid ${COLORS.border};
+  background-color: ${colors.FRONT};
+  border: 2px solid ${colors.BORDER};
   border-radius: 14px;
   gap: 16px;
   padding: 14px;
@@ -87,20 +87,20 @@ export const DescriptionContainer = styled('div')`
 
 export const DescriptionTitle = styled('div')`
   font-family: 'Raleway', sans-serif;
-  color: ${COLORS.secondary};
+  color: ${colors.SECONDARY};
   font-weight: 800;
   font-size: 24px;
   margin-bottom: 12px;
 `;
 
 export const UserNickname = styled('a')`
-  text-align: flex-start;
+  text-align: start;
   font-size: 40px;
   font-weight: 800;
   margin-top: auto;
   margin-bottom: auto;
   font-family: 'Raleway', sans-serif;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
   cursor: pointer;
 `;
 
@@ -122,7 +122,7 @@ export const ProfileTitle = styled('div')`
   font-size: 18px;
   font-family: 'Urbanist', 'Noto Color Emoji', sans-serif;
   font-weight: 400;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
 `;
 
 export const ProfileTextContainer = styled('div')`
@@ -141,12 +141,12 @@ export const FollowsSubscribes = styled('a')`
   font-size: 18px;
   text-decoration: none;
   text-align: center;
-  color: ${COLORS.firstFont};
+  color: ${colors.DARK_WHITE};
   transition: all 0.3s;
   cursor: pointer;
 
   &:hover {
-    color: ${COLORS.firstFontHover};
+    color: ${colors.WHITE};
   }
 `;
 
@@ -159,14 +159,13 @@ export const LikedContainer = styled('div')`
 `;
 
 export const LikedText = styled('div')`
-  text-align: flex-start;
+  text-align: start;
   margin-top: 24px;
   margin-bottom: 16px;
   font-size: 32px;
   font-weight: 800;
-  align-self: top;
   font-family: 'Raleway', sans-serif;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
 `;
 
 export const LikedTrackContainer = styled('div')`
@@ -175,9 +174,9 @@ export const LikedTrackContainer = styled('div')`
   flex-direction: column;
   align-items: center;
   padding: 16px;
-  background-color: ${COLORS.front};
+  background-color: ${colors.FRONT};
   border-radius: 14px;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
   font-size: 24px;
   font-family: 'Urbanist', sans-serif;
   font-weight: 700;
@@ -186,8 +185,8 @@ export const LikedTrackContainer = styled('div')`
   gap: 24px;
 
   &:hover {
-    background-color: ${COLORS.frontHover};
-    color: ${COLORS.firstFont}
+    background-color: ${colors.FRONT_HOVER};
+    color: ${colors.WHITE}
   }
 `;
 
@@ -209,6 +208,6 @@ export const Description = styled('div')`
   font-family: 'Urbanist', sans-serif;
   font-size: 28px;
   font-weight: 700;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
   margin: 12px auto auto 0;
 `;

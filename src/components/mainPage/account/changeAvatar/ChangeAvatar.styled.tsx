@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLORS } from "../../../../consts/colors.const";
+import { colors } from "../../../../consts/colors.const";
 import { BUTTON } from "../../../../consts/styles.const";
 
 export const ChangeAvatarContainer = styled('div')`
@@ -16,7 +16,7 @@ export const Title = styled('div')`
   font-family: 'Raleway', sans-serif;
   font-weight: 800;
   font-size: 34px;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
 `;
 
 export const Input = styled('input')`
@@ -29,7 +29,7 @@ export const InputWrapper = styled('div')`
   flex-direction: column;
   align-items: center;
   gap: 18px;
-  background-color: ${COLORS.front};
+  background-color: ${colors.FRONT};
   border-radius: 18px;
 `;
 
@@ -55,16 +55,16 @@ export const ButtonContainer = styled('div')`
 
 export const SetNewAvatarButton = styled('button')`
   border: none;
-  background-color: ${COLORS.front};
-  color: ${COLORS.firstFont};
+  background-color: ${colors.FRONT};
+  color: ${colors.DARK_WHITE};
   font-family: 'Raleway', sans-serif;
   font-weight: 400;
   font-size: 14px;
   cursor: pointer;
 
   &:hover {
-    color: ${COLORS.firstFontHover};
-    border: 1px solid ${COLORS.firstFontHover};
+    color: ${colors.WHITE};
+    border: 1px solid ${colors.WHITE};
     border-right-width: 0;
     border-top-width: 0;
     border-left-width: 0;

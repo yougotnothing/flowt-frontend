@@ -1,7 +1,9 @@
-import React, { useContext, createContext, useState, useEffect } from "react";
+import React, { useContext, createContext, useState, useEffect, useLayoutEffect } from "react";
 
 import { api, API_URL } from "../api/axiosConfig";
 import { ProviderProps, UserDTO } from "../consts/props.const";
+import { userRegionStore } from "../store/toChangeRegion";
+import { userUsernameStore } from "../store/toChangeUsername";
 
 const ContextValue = createContext<ProviderProps>({
   user: null,
@@ -11,6 +13,8 @@ const ContextValue = createContext<ProviderProps>({
   songURL: null,
   songName: null,
   userAvatar: null,
+  userRegionStore: null,
+  userUsernameStore: null,
   setUser: () => {},
   setFollowers: () => {},
   setSubscribes: () => {},
@@ -79,13 +83,20 @@ export const Context = ({ children }: any) => {
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getUser();
     if(localStorage.getItem('token')) {
       getSubscribes();
       getFollowers();
     }
   }, []);
+
+  useLayoutEffect(() => {
+    if(user) {
+      userRegionStore.setUserRegion(user.region);
+      userUsernameStore.setUsername(user.username);
+    }
+  }, [user]);
 
   useEffect(() => {
     const getSongURL = async (): Promise<void> => {
@@ -116,6 +127,8 @@ export const Context = ({ children }: any) => {
       userAvatar,
       songURL,
       songName,
+      userRegionStore,
+      userUsernameStore,
       setSongURL: updateSongURL,
       setSongName: updateSongName
     }}>

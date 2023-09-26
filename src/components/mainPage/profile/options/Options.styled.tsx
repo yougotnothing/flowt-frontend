@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
-import { COLORS } from "../../../../consts/colors.const";
+import { colors } from "../../../../consts/colors.const";
 
 const fadeOut = keyframes`
   from {
@@ -26,12 +26,12 @@ export interface OptionsProps {
 export const OptionsContainer = styled('div')<OptionsProps>`
   width: 280px;
   position: absolute;
-  border: 2px solid ${COLORS.border};
+  border: 2px solid ${colors.BORDER};
   align-self: end;
   display: flex;
   flex-direction: column;
   border-radius: 14px;
-  background-color: ${COLORS.front};
+  background-color: ${colors.FRONT};
   transition: all 0.3s;
   padding: 12px;
   gap: 8px;
@@ -44,18 +44,18 @@ export const Select = styled('button')`
   width: 154px;
   height: 62px;
   align-items: end;
-  background-color: ${COLORS.front};
+  background-color: ${colors.FRONT};
   border: none;
-  color: ${COLORS.firstFontHover};
+  color: ${colors.WHITE};
   cursor: pointer;
   transition: all 0.3s;
 
   &:hover {
-    border: 1px solid ${COLORS.firstFontHover};
+    border: 1px solid ${colors.WHITE};
     border-top-width: 0;
     border-left-width: 0;
     border-right-width: 0;
-    color: ${COLORS.firstFont};
+    color: ${colors.DARK_WHITE};
   }
 `;
 
@@ -75,7 +75,7 @@ export const CloseOptions = styled('button')`
   border: none;
   border-radius: 6px;
   background-image: url('/cross.png');
-  bacground-position: center;
+  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   transition: all 0.3s;

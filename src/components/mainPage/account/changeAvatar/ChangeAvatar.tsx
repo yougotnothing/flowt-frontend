@@ -4,15 +4,28 @@ import { useNavigate, generatePath } from "react-router-dom";
 import { api } from "../../../../api/axiosConfig";
 import { AccountContainer } from "../Account.styled";
 import { Account } from "../Account";
-import { Span } from "../../login-register/Login.register.styled";
-import { A, AContainer, GoBackContainer, GlobalContainer } from "../../MainPage.styled";
-import { ChangeAvatarContainer, Title, InputWrapper, Input, Label, NewAvatar, SetNewAvatarButton, ButtonContainer } from "./ChangeAvatar.styled";
-import {PageLoader} from "../../../loader/pageLoader/PageLoader";
+import {
+  A,
+  AContainer,
+  GoBackContainer,
+  GlobalContainer
+} from "../../MainPage.styled";
+import {
+  ChangeAvatarContainer,
+  Title,
+  InputWrapper,
+  Input,
+  Label,
+  NewAvatar,
+  SetNewAvatarButton,
+  ButtonContainer
+} from "./ChangeAvatar.styled";
+import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useContextValues } from "../../../../contexts/Context";
 
 export const ChangeAvatar: React.FC = () => {
   const[file, setFile] = useState<any>(null);
-  const { user } = useContextValues();
+  const { user, userAvatar } = useContextValues();
   const navigate = useNavigate();
 
   const handleChangedAvatar = async () => {
@@ -54,7 +67,7 @@ export const ChangeAvatar: React.FC = () => {
           </GoBackContainer>
           <ChangeAvatarContainer>
             <InputWrapper>
-              <Title>Change <Span>avatar</Span></Title>
+              <Title>Change avatar</Title>
                 <Input
                   type='file'
                   id="avatarInput"
@@ -63,23 +76,15 @@ export const ChangeAvatar: React.FC = () => {
                 />
                 {file ? (
                   <>
-                    <NewAvatar style={{
-                      backgroundImage: `url(${URL.createObjectURL(file)})`
-                    }} />
+                    <NewAvatar style={{backgroundImage: `url(${URL.createObjectURL(file)})`}} />
                     <ButtonContainer>
-                      <SetNewAvatarButton
-                        onClick={handleChangedAvatar}
-                      >
+                      <SetNewAvatarButton onClick={handleChangedAvatar}>
                         Set avatar
                       </SetNewAvatarButton>
                     </ButtonContainer>
                   </>
                 ) : (
-                  <>
-                    <NewAvatar style={{
-                      backgroundImage: 'url(/plus.jpg)'
-                    }} />
-                  </>
+                  <NewAvatar style={{backgroundImage: `url(${userAvatar})`}} />
                 )}
               <Label htmlFor="avatarInput">{file ? 'select another' : 'select avatar'}</Label>
             </InputWrapper>

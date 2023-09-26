@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLORS } from "../../../../consts/colors.const";
+import { colors } from "../../../../consts/colors.const";
 import { TITLE, INPUT, BUTTON, VALIDATION, GO_BACK_CONTAINER } from "../../../../consts/styles.const";
 
 export const ChangeEmailContainer = styled('div')`
@@ -9,7 +9,7 @@ export const ChangeEmailContainer = styled('div')`
   height: max-content;
   margin: 5em auto;
   padding: 36px;
-  background-color: ${COLORS.front};
+  background-color: ${colors.FRONT};
   border-radius: 18px;
 `;
 
@@ -43,4 +43,4 @@ export const ContentContainer = styled('div')`
 
 export const Error = styled('div')`${VALIDATION};`;
 
-export const GoBackContianer = styled('div')`${GO_BACK_CONTAINER};`;
+export const GoBackContainer = styled('div')`${GO_BACK_CONTAINER};`;

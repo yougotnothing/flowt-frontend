@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLORS } from "../../../../consts/colors.const";
+import { colors } from "../../../../consts/colors.const";
 import { TITLE, INPUT, VALIDATION, BUTTON } from "../../../../consts/styles.const";
 
 export const Container = styled('div')`
@@ -8,7 +8,7 @@ export const Container = styled('div')`
   align-items: center;
   padding: 3em;
   width: 324px;
-  background-color: ${COLORS.front};
+  background-color: ${colors.FRONT};
   gap: 26px;
   border-radius: 18px;
   align-self: center;

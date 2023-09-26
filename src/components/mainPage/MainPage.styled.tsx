@@ -1,16 +1,16 @@
 import styled from "styled-components";
-import { COLORS } from "../../consts/colors.const";
+import { colors } from "../../consts/colors.const";
 import { A_, A_CONTAINER, INPUT, BUTTON } from "../../consts/styles.const";
 
 export const Container = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${COLORS.background};
+  background-color: ${colors.BACKGROUND};
 `;
 
 export const Navbar = styled('div')`
-  background-color: ${COLORS.front};
+  background-color: ${colors.FRONT};
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -42,12 +42,12 @@ export const SearchButton = styled('button')`
   background-size: 20px;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: ${COLORS.secondary};
+  background-color: ${colors.SECONDARY};
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    background-color: ${COLORS.secondaryHover};
+    background-color: ${colors.SECONDARY_HOVER};
     transition: all 0.2s;
   }
 `;
@@ -71,18 +71,18 @@ export const Button = styled('button')`
   border: none;
   width: 98px;
   height: 38px;
-  color: ${COLORS.firstFont};
+  color: ${colors.DARK_WHITE};
   justify-content: center;
   align-self: flex-end;
 
   &:hover {
     transition: all 0.2s;
     cursor: pointer;
-    border: 1px solid white;
+    border: 1px solid ${colors.WHITE};
     border-top-width: 0;
     border-left-width: 0;
     border-right-width: 0;
-    color: ${COLORS.firstFontHover};
+    color: ${colors.WHITE};
   }
 
   .link {
@@ -90,12 +90,12 @@ export const Button = styled('button')`
     font-size: 18px;
     text-decoration: none;
     text-align: center;
-    color: ${COLORS.firstFont};
+    color: ${colors.DARK_WHITE};
     width: 100%;
     height: 100%;
 
     &:hover {
-      color: ${COLORS.firstFontHover};
+      color: ${colors.WHITE};
     }
   }
 `;
@@ -137,7 +137,7 @@ export const ButtonsContainer = styled('div')`
     border: none;
     width: 78px;
     height: 28px;
-    color: ${COLORS.firstFont};
+    color: ${colors.DARK_WHITE};
     justify-content: center;
     align-self: flex-end;
   
@@ -148,7 +148,7 @@ export const ButtonsContainer = styled('div')`
       border-top-width: 0;
       border-left-width: 0;
       border-right-width: 0;
-      color: ${COLORS.firstFontHover};
+      color: ${colors.DARK_WHITE};
     }
   }
 `;
@@ -169,11 +169,11 @@ export const UserButton = styled('button')`
   font-family: 'Raleway', sans-serif;
   font-size: 16px;
   font-weight: 400;
-  color: ${COLORS.firstFont};
+  color: ${colors.DARK_WHITE};
   transition: all 0.3s;
 
   &:hover {
-    color: ${COLORS.firstFontHover};
+    color: ${colors.WHITE};
   }
 `;
 
