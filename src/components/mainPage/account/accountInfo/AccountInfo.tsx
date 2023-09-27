@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { useNavigate, generatePath } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import { userRegionStore } from "../../../../store/toChangeRegion"
 
 import { A, AContainer } from "../../MainPage.styled";
 import { Account } from "../Account";
@@ -25,10 +24,13 @@ import {
 } from "../Account.styled";
 import { Playlist } from "../../playlist/Playlist";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { useContextValues } from "../../../../contexts/Context";
+import { useUserContext } from "../../../../contexts/UserContext";
+import { userUsernameStore } from "../../../../store/toChangeUsername";
+import { userRegionStore } from "../../../../store/toChangeRegion";
+import { userAvatarStore } from "../../../../store/toChangeAvatar";
 
 export const AccountInfo: React.FC = observer(() => {
-  const { userAvatar, user, followers, subscribes, userRegionStore, userUsernameStore } = useContextValues();
+  const { user, followers, subscribes } = useUserContext();
   const navigate = useNavigate();
 
   return (
@@ -39,11 +41,7 @@ export const AccountInfo: React.FC = observer(() => {
         <Title>Your info</Title>
         {user && followers && subscribes && (
           <UserContainer>
-            {user.username ? (
-              <UserAvatar style={{backgroundImage: `url(${userAvatar})`}} />
-            ) : (
-              <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />
-            )}
+            <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
             <UserInfo>
               <Username>{userUsernameStore.Username}</Username>
               <StatsContainer>
@@ -65,7 +63,7 @@ export const AccountInfo: React.FC = observer(() => {
             </UserInfo>
           </UserContainer>
         )}
-        {user && user.description && (
+        {user.description && (
           <>
             <DescriptionTitle>Your description</DescriptionTitle>
             <DescriptionContainer>

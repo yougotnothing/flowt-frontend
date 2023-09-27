@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { colors } from "../../../../consts/colors.const";
-import { TITLE, INPUT, VALIDATION, BUTTON } from "../../../../consts/styles.const";
+import { colors } from "../../../../constants/colors.const";
+import { TITLE, INPUT, VALIDATION, BUTTON } from "../../../../constants/styles.const";
 
 export const Container = styled('div')`
   display: flex;

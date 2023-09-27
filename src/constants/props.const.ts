@@ -12,6 +12,7 @@ export interface ProviderProps {
 
   userRegionStore?: any | null;
   userUsernameStore?: any | null;
+  userAvatarStore?: any | null;
 
   followers?: string | null;
   subscribes?: string | null;
@@ -21,6 +22,7 @@ export interface ProviderProps {
   songInfo?: string | null;
   userAvatar?: string | null;
 
+  setAvatarURL?: setStateAction<Blob | null>;
   setUserAvatar?: setStateAction<string | null>;
   setSongInfo?: setStateAction<string | null>;
   setSongURL?: setStateAction<string | null>;

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { observer } from "mobx-react-lite";
-import { useContextValues } from "../../../../contexts/Context";
+import { useUserContext } from "../../../../contexts/UserContext";
+import { userUsernameStore } from "../../../../store/toChangeUsername";
 import { useFormik } from "formik";
 import { changeUsernameSchema } from "../../../../validation/yup.config";
 import { AccountContainer } from "../Account.styled";
@@ -28,10 +29,10 @@ import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 export const ChangeUsername: React.FC = observer(() => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { user, userUsernameStore } = useContextValues();
+  const { user } = useUserContext();
 
   const formik = useFormik<{
-    username: ""
+    username: string
   }>({
     initialValues: {
       username: ""
@@ -45,6 +46,7 @@ export const ChangeUsername: React.FC = observer(() => {
       const response = await api.patch('/users/username', {
         newUsername: userUsernameStore.Username
       });
+
       setIsLoading(true);
       navigate(generatePath('/account/:id', { id: user.username }));
       if (response) {
@@ -59,7 +61,9 @@ export const ChangeUsername: React.FC = observer(() => {
   }
   
   useEffect(() => {
-    if(user) formik.setValues({ username: userUsernameStore.Username || "" });
+    if(user) {
+      formik.setValues({ username: userUsernameStore.Username || "" });
+    }
   }, [user]);
   
   return (

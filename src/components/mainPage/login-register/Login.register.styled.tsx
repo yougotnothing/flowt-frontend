@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { colors } from "../../../consts/colors.const";
-import { TITLE, BUTTON, INPUT, VALIDATION, NOT_REGISTERED, A_CONTAINER, A_ } from "../../../consts/styles.const";
+import { colors } from "../../../constants/colors.const";
+import { TITLE, BUTTON, INPUT, VALIDATION, NOT_REGISTERED, A_CONTAINER, A_ } from "../../../constants/styles.const";
 
 export const LoginHeader = styled('div')`
   ${TITLE};

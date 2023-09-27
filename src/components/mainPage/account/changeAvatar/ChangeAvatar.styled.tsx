@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { colors } from "../../../../consts/colors.const";
-import { BUTTON } from "../../../../consts/styles.const";
+import { colors } from "../../../../constants/colors.const";
+import { BUTTON } from "../../../../constants/styles.const";
 
 export const ChangeAvatarContainer = styled('div')`
   display: flex;

@@ -9,10 +9,10 @@ import {
   UserSettingsContainer,
 } from "./Account.styled";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
-import { useContextValues } from "../../../contexts/Context";
+import { useUserContext } from "../../../contexts/UserContext";
 
 export const Account: React.FC = () => {
-  const { user } = useContextValues();
+  const { user } = useUserContext();
   const navigate = useNavigate();
 
   return (

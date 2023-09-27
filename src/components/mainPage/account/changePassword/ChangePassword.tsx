@@ -19,13 +19,12 @@ import {
   Container
 } from "../../login-register/Login.register.styled";
 import { Loader } from "../../../loader/Loader";
-import { useContextValues } from "../../../../contexts/Context";
-
+import { useUserContext } from "../../../../contexts/UserContext";
 export const ChangePassword: React.FC = () => {
   const[errorMessage, setErrorMessage] = useState<any>('');
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const[isVerify, setIsVerify] = useState<boolean>(false);
-  const { user } = useContextValues();
+  const { user } = useUserContext();
   const navigate = useNavigate();
 
   const formik = useFormik<{

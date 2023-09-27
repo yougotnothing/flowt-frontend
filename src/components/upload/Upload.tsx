@@ -32,7 +32,7 @@ import { Account } from "../mainPage/account/Account";
 import { useFormik } from "formik";
 import { songNameSchema } from "../../validation/yup.config";
 import { Loader } from "../loader/Loader";
-import genresData from "../../consts/genres.json";
+import genresData from "../../json/genres.json";
 import { useContextValues } from "../../contexts/Context";
 
 export const Upload = () => {

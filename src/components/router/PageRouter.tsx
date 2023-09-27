@@ -21,16 +21,16 @@ import { ChangePassword } from "../mainPage/account/changePassword/ChangePasswor
 import { Playlist } from "../mainPage/playlist/Playlist";
 import { Upload } from "../upload/Upload";
 import { Player } from "../mainPage/player/Player";
-import { Context } from "../../contexts/Context";
+import { UserContext } from "../../contexts/UserContext";
 import { Notifications } from "../mainPage/notifications/Notifications";
 
 export const pageRouter = createBrowserRouter([
   {
     path: '/',
     element:
-      <Context>
+      <UserContext>
         <MainPage />
-      </Context>,
+      </UserContext>,
     children: [
       {
         path: '/home/',

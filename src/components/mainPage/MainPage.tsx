@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Link, Outlet, useNavigate, useLocation, generatePath } from "react-router-dom";
 
-import { Context } from "../../contexts/Context";
-
 import {
   Container,
   Navbar,
@@ -20,13 +18,15 @@ import { AlertSuccess, AlertWarning } from "./alert/Alert";
 import { Player } from "./player/Player";
 import { API_URL } from "../../api/axiosConfig";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
-import { useContextValues } from "../../contexts/Context";
+import { useUserContext, UserContext } from "../../contexts/UserContext"
+import { userAvatarStore } from "../../store/toChangeAvatar";
+import {observer} from "mobx-react-lite";
 
-export const MainPage: React.FC = () => {
+export const MainPage: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
   const[isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
-  const { userAvatar, user } = useContextValues();
+  const { user, userAvatar } = useUserContext();
   let location = useLocation();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
@@ -52,7 +52,7 @@ export const MainPage: React.FC = () => {
   }, []);
 
   return (
-    <Context>
+    <UserContext>
       <Container>
         {isVisible && successAlert && <AlertSuccess />}
         {isVisible && warningAlert && <AlertWarning />}
@@ -82,6 +82,6 @@ export const MainPage: React.FC = () => {
         </ContentContainer>
         <Player />
       </Container>
-    </Context>
+    </UserContext>
   );
-};
+});

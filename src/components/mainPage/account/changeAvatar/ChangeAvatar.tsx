@@ -1,6 +1,7 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
+import { observer } from "mobx-react-lite";
 import { api } from "../../../../api/axiosConfig";
 import { AccountContainer } from "../Account.styled";
 import { Account } from "../Account";
@@ -21,11 +22,13 @@ import {
   ButtonContainer
 } from "./ChangeAvatar.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { useContextValues } from "../../../../contexts/Context";
+import { useUserContext } from "../../../../contexts/UserContext";
+import { userAvatarStore } from "../../../../store/toChangeAvatar";
 
-export const ChangeAvatar: React.FC = () => {
-  const[file, setFile] = useState<any>(null);
-  const { user, userAvatar } = useContextValues();
+export const ChangeAvatar: React.FC = observer(() => {
+  const [isFileChosen, setIsFileChosen] = useState<boolean>(false);
+  const [file, setFile] = useState<Blob | any>(null);
+  const { user } = useUserContext();
   const navigate = useNavigate();
 
   const handleChangedAvatar = async () => {
@@ -40,16 +43,19 @@ export const ChangeAvatar: React.FC = () => {
         }
       });
 
+      userAvatarStore.setAvatar(URL.createObjectURL(file));
+
       navigate(generatePath('/account/:id', { id: user.username }));
-      window.location.reload();
     }catch(error: any) {
       console.log('an error occurred');
     }
   }
   
-  const isFileChosen = (event: any) => {
+  const handleFileChosen = (event: any) => {
     const chosenFile = event.target.files[0];
     setFile(chosenFile);
+    console.log(file);
+    setIsFileChosen(true);
   }
 
   return (
@@ -72,9 +78,9 @@ export const ChangeAvatar: React.FC = () => {
                   type='file'
                   id="avatarInput"
                   accept="image/*"
-                  onChange={(event: any) => isFileChosen(event)}
+                  onChange={(event: any) => handleFileChosen(event)}
                 />
-                {file ? (
+                {isFileChosen ? (
                   <>
                     <NewAvatar style={{backgroundImage: `url(${URL.createObjectURL(file)})`}} />
                     <ButtonContainer>
@@ -84,13 +90,13 @@ export const ChangeAvatar: React.FC = () => {
                     </ButtonContainer>
                   </>
                 ) : (
-                  <NewAvatar style={{backgroundImage: `url(${userAvatar})`}} />
+                  <NewAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
                 )}
-              <Label htmlFor="avatarInput">{file ? 'select another' : 'select avatar'}</Label>
+              <Label htmlFor="avatarInput">{isFileChosen ? 'select another' : 'select avatar'}</Label>
             </InputWrapper>
           </ChangeAvatarContainer>
         </GlobalContainer>
       )}
     </AccountContainer>
   )
-}
+});

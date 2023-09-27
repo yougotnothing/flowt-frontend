@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { colors } from "../../../../consts/colors.const";
-import { TITLE, INPUT, BUTTON, VALIDATION, GO_BACK_CONTAINER } from "../../../../consts/styles.const";
+import { colors } from "../../../../constants/colors.const";
+import { TITLE, INPUT, BUTTON, VALIDATION, GO_BACK_CONTAINER } from "../../../../constants/styles.const";
 
 export const ChangeEmailContainer = styled('div')`
   display: flex;

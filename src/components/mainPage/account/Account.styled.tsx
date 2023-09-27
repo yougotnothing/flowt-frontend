@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { colors } from "../../../consts/colors.const";
-import { TITLE } from "../../../consts/styles.const";
+import { colors } from "../../../constants/colors.const";
+import { TITLE } from "../../../constants/styles.const";
 
 export const AccountContainer = styled('div')`
   display: flex;

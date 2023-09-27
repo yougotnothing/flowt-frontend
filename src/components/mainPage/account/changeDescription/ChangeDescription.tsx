@@ -18,12 +18,11 @@ import {
 } from './ChangeDescription.styled';
 import { Span } from '../../login-register/Login.register.styled';
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { useContextValues } from "../../../../contexts/Context";
-
+import { useUserContext } from "../../../../contexts/UserContext";
 export const ChangeDescription: React.FC = () => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const[newDescription, setNewDescription] = useState<string | null>(null);
-  const { user } = useContextValues();
+  const { user } = useUserContext();
   const navigate = useNavigate();
   
   const formik = useFormik<{

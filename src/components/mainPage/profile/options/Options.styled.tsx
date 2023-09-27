@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
-import { colors } from "../../../../consts/colors.const";
+import { colors } from "../../../../constants/colors.const";
 
 const fadeOut = keyframes`
   from {

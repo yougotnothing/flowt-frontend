@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../../consts/colors.const";
+import { colors } from "../../../constants/colors.const";
 
 export const Spinner = styled('div')`
   width: 3em;

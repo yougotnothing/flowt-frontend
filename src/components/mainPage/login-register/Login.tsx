@@ -16,11 +16,13 @@ import {
 import { loginValidationSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/Loader";
 import { login } from "../../../api/axiosConfig";
+import { useUserContext } from "../../../contexts/UserContext";
 
 export const Login: React.FC = () => {
     const navigate = useNavigate();
     const[errorMessage, setErrorMessage] = useState(null);
     const[isLoading, setIsLoading] = useState(false);
+    const { setUser } = useUserContext();
 
     const formik = useFormik<{
       username: "",
@@ -89,7 +91,7 @@ export const Login: React.FC = () => {
           <RegisteredButton onClick={() => navigate("/verify/restore-password")}>
             Forgot password?
           </RegisteredButton>
-          <RegisteredButton>Not register?</RegisteredButton>
+          <RegisteredButton onClick={() => navigate('/register')} >Not register?</RegisteredButton>
         </HelpButtons>
       </LoginCard>
     );

@@ -10,12 +10,12 @@ import { Span } from "../../login-register/Login.register.styled";
 import { Loader } from "../../../loader/Loader";
 import { Account } from "../Account";
 import { AccountContainer } from "../Account.styled";
-import {PageLoader} from "../../../loader/pageLoader/PageLoader";
-import { useContextValues } from "../../../../contexts/Context";
+import { PageLoader } from "../../../loader/pageLoader/PageLoader";
+import { useUserContext } from "../../../../contexts/UserContext";
 
 export const ChangeEmail: React.FC = () => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
-  const { user } = useContextValues();
+  const { user } = useUserContext();
   const navigate = useNavigate();
 
   const formik = useFormik<{

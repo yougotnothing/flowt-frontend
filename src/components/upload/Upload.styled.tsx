@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { A_, BUTTON, TITLE, INPUT, VALIDATION } from "../../consts/styles.const";
-import { colors } from "../../consts/colors.const";
+import { A_, BUTTON, TITLE, INPUT, VALIDATION } from "../../constants/styles.const";
+import { colors } from "../../constants/colors.const";
 
 export const UploadContainer = styled('div')`
   display: flex;

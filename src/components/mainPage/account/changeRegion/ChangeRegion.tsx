@@ -3,7 +3,7 @@ import { useNavigate, generatePath } from "react-router-dom";
 
 import { observer } from "mobx-react-lite";
 import { userRegionStore } from "../../../../store/toChangeRegion"
-import regionData from "../../../../consts/countries.json"
+import regionData from "../../../../json/countries.json"
 import { api } from "../../../../api/axiosConfig";
 import { AccountContainer } from "../Account.styled";
 import { 
@@ -19,10 +19,10 @@ import {
 import { A, AContainer,GoBackContainer, GlobalContainer } from "../../MainPage.styled";
 import { Account } from "../Account";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { useContextValues } from "../../../../contexts/Context";
+import { useUserContext } from "../../../../contexts/UserContext";
 
 export const ChangeRegion: React.FC = observer(() => {
-  const { user } = useContextValues();
+  const { user } = useUserContext();
   const navigate = useNavigate();
   let counter: number = 0;
 

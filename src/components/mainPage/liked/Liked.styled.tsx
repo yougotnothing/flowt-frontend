@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import { BUTTON, TITLE  } from "../../../consts/styles.const";
-import { colors } from "../../../consts/colors.const";
+import { BUTTON, TITLE  } from "../../../constants/styles.const";
+import { colors } from "../../../constants/colors.const";
 
 export const LikedContainer = styled('div')`
   display: flex;

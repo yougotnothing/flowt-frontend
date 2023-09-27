@@ -1,9 +1,10 @@
 import React, { useContext, createContext, useState, useEffect, useLayoutEffect } from "react";
 
 import { api, API_URL } from "../api/axiosConfig";
-import { ProviderProps, UserDTO } from "../consts/props.const";
+import { ProviderProps, UserDTO } from "../constants/props.const";
 import { userRegionStore } from "../store/toChangeRegion";
 import { userUsernameStore } from "../store/toChangeUsername";
+import { userAvatarStore } from "../store/toChangeAvatar";
 
 const ContextValue = createContext<ProviderProps>({
   user: null,
@@ -15,7 +16,9 @@ const ContextValue = createContext<ProviderProps>({
   userAvatar: null,
   userRegionStore: null,
   userUsernameStore: null,
+  userAvatarStore: null,
   setUser: () => {},
+  setAvatarURL: () => {},
   setFollowers: () => {},
   setSubscribes: () => {},
   setSongInfo: () => {},
@@ -66,11 +69,15 @@ export const Context = ({ children }: any) => {
       if(user) {
         const response = await api.get(`/images/user/${user.username}`);
         if(response.status === 200) {
-          setUserAvatar(`${API_URL}/images/user/${user.username}`);
+          userAvatarStore.setAvatar(`${API_URL}/images/user/${user.username}`);
+          setUserAvatar(userAvatarStore.avatar);
+        }else {
+          userAvatarStore.setAvatar('/defaultAvatar.png');
+          setUserAvatar(userAvatarStore.avatar);
         }
       }
     }catch(error: any) {
-      setUserAvatar('/defaultAvatar.png');
+      console.log('error');
     }
   }
 
@@ -84,19 +91,12 @@ export const Context = ({ children }: any) => {
   }
 
   useLayoutEffect(() => {
-    getUser();
+    // getUser();
     if(localStorage.getItem('token')) {
       getSubscribes();
       getFollowers();
     }
   }, []);
-
-  useLayoutEffect(() => {
-    if(user) {
-      userRegionStore.setUserRegion(user.region);
-      userUsernameStore.setUsername(user.username);
-    }
-  }, [user]);
 
   useEffect(() => {
     const getSongURL = async (): Promise<void> => {
@@ -107,16 +107,30 @@ export const Context = ({ children }: any) => {
         console.log('song url =', songURL);
       }
     }
-    getUserAvatar();
     getSongURL();
+    getUserAvatar();
   }, [user]);
+
+  useEffect(() => {
+    if(userAvatarStore.avatar) {
+      setUserAvatar(userAvatarStore.avatar);
+    }
+  }, [userAvatarStore])
 
   const updateSongURL = (newSongURL: string) => {
     setSongURL(newSongURL);
   }
 
+  const updateAvatarURL = (newAvatarURL: Blob) => {
+    userAvatarStore.setAvatarURL(newAvatarURL);
+  }
+
   const updateSongName = (newSongName: string) => {
     setSongName(newSongName);
+  }
+
+  const updateUserAvatar = (newAvatar: string) => {
+    setUserAvatar(newAvatar);
   }
 
   return (
@@ -129,8 +143,11 @@ export const Context = ({ children }: any) => {
       songName,
       userRegionStore,
       userUsernameStore,
+      userAvatarStore,
+      setAvatarURL: updateAvatarURL,
       setSongURL: updateSongURL,
-      setSongName: updateSongName
+      setSongName: updateSongName,
+      setUserAvatar: updateUserAvatar
     }}>
       {children}
     </ContextValue.Provider>

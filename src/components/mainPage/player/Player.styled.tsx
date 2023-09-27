@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../../consts/colors.const";
+import { colors } from "../../../constants/colors.const";
 
 export const PlayerContainer = styled('div')`
   display: flex;

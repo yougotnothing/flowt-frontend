@@ -24,12 +24,14 @@ import {
 
 import { Options } from "./options/Options";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
-import { useContextValues } from "../../../contexts/Context";
+import { useUserContext } from "../../../contexts/UserContext";
+import { observer } from "mobx-react-lite";
+import { userAvatarStore } from "../../../store/toChangeAvatar";
 
-export const Profile: React.FC = () => {
+export const Profile: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { userAvatar, user, followers, subscribes } = useContextValues();
+  const { user, followers, subscribes } = useUserContext();
   let counter: number = 0;
 
   return (
@@ -41,7 +43,7 @@ export const Profile: React.FC = () => {
           {user && (
           <UserParams>
             {user.username ?
-              <UserAvatar style={{backgroundImage: `url(${userAvatar})`}} />
+              <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
                 :
               <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
             <ProfileTextContainer>
@@ -87,4 +89,4 @@ export const Profile: React.FC = () => {
       </LikedContainer>
     </UserContainer>
   );
-};  
+});
