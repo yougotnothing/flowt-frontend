@@ -19,10 +19,9 @@ import {
   LastListenContainer
 } from "./Home.styled";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
-import { useContextValues } from "../../../contexts/Context";
-
+import { useUserContext } from "../../../contexts/UserContext";
 export const Home = () => {
-  const { user, subscribes, followers } = useContextValues();
+  const { user, subscribes, followers } = useUserContext();
   let counter: number = 0;
 
   return (

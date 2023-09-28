@@ -20,6 +20,7 @@ import {
 } from "../../login-register/Login.register.styled";
 import { Loader } from "../../../loader/Loader";
 import { useUserContext } from "../../../../contexts/UserContext";
+
 export const ChangePassword: React.FC = () => {
   const[errorMessage, setErrorMessage] = useState<any>('');
   const[isLoading, setIsLoading] = useState<boolean>(false);

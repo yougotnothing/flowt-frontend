@@ -63,7 +63,8 @@ export const UserContext = ({ children }: any) => {
   };
 
   useLayoutEffect(() => {
-    getUser();
+    getUser()
+    console.log('fetching user');
   }, []);
 
   useEffect(() => {

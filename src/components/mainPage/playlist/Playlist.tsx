@@ -10,12 +10,14 @@ import {
   OpenPlaylistButton,
   OpenPlaylistContainer
 } from "./Playlist.styled";
-import { useContextValues } from "../../../contexts/Context";
+import { useSongContext } from "../../../contexts/SongContext";
+import { useUserContext } from "../../../contexts/UserContext";
 
 export const Playlist: React.FC = () => {
   const[songs, setSongs] = useState<any>(null);
   const[songAvatar, setSongAvatar] = useState<string | null>(null);
-  const { setSongURL, setSongName, songName, user } = useContextValues();
+  const { setSongURL, setSongName } = useSongContext();
+  const { user } = useUserContext();
   let counter: number = 0;
 
   const getUserSongs = async () => {
@@ -38,8 +40,8 @@ export const Playlist: React.FC = () => {
               <PlaylistText>{song.name}</PlaylistText>
             </TextContainer>
             <OpenPlaylistContainer>
-              <OpenPlaylistButton onClick={
-                () => {
+              <OpenPlaylistButton
+                onClick={() => {
                   setSongURL && setSongURL(`${API_URL}/songs/audio/${user.username}/${song.name}`);
                   setSongName && setSongName(song.name);
                 }}>

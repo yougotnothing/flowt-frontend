@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
-import { useContextValues } from "../../../contexts/Context";
+import { useUserContext } from "../../../contexts/UserContext";
+import { userAvatarStore } from "../../../store/toChangeAvatar";
+
 import {
   NoticesContainer,
   Container,
@@ -16,7 +18,7 @@ import {
 } from "./Notifications.styled";
 export const Notifications: React.FC = () => {
   const navigate = useNavigate();
-  const { user, userAvatar } = useContextValues();
+  const { user } = useUserContext();
 
   return (
     <Container>
@@ -27,7 +29,7 @@ export const Notifications: React.FC = () => {
           </ButtonsContainer>
           <NoticesContainer>
             <Notices>
-              <NoticeIcon style={{backgroundImage: `url(${userAvatar})`}} />
+              <NoticeIcon style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
               <NoticeTitle>Title</NoticeTitle>
             </Notices>
           </NoticesContainer>

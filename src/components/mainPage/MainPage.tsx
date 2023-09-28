@@ -20,13 +20,13 @@ import { API_URL } from "../../api/axiosConfig";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
 import { useUserContext, UserContext } from "../../contexts/UserContext"
 import { userAvatarStore } from "../../store/toChangeAvatar";
-import {observer} from "mobx-react-lite";
+import { observer } from "mobx-react-lite";
 
 export const MainPage: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
   const[isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
-  const { user, userAvatar } = useUserContext();
+  const { user } = useUserContext();
   let location = useLocation();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
@@ -66,7 +66,7 @@ export const MainPage: React.FC = observer(() => {
             <VerifyedUserContainer>
               <UserButton
                 onClick={() => navigate(generatePath('/profile/:id', {id: user.username}))}>
-                <UserAvatar style={{backgroundImage: `url(${userAvatar})`}}/>
+                <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}}/>
                 <UserNickname>{user.username}</UserNickname>
               </UserButton>
             </VerifyedUserContainer>

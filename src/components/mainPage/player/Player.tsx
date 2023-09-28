@@ -11,10 +11,12 @@ import {
 } from "./Player.styled";
 import 'react-h5-audio-player/lib/styles.css';
 import { api, API_URL } from "../../../api/axiosConfig";
-import { useContextValues } from "../../../contexts/Context";
+import { useUserContext } from "../../../contexts/UserContext";
+import { useSongContext } from "../../../contexts/SongContext";
 
 export const Player: React.FC = () => {
-  const { songURL, songName, user } = useContextValues();
+  const { songURL, songName } = useSongContext();
+  const { user } = useUserContext();
   const[track, setTrack] = useState<string[]>([]);
   const[trackIndex, setTrackIndex] = useState<number>(0);
 

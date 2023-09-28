@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { 
@@ -14,7 +14,7 @@ import {
 import { useFormik } from "formik";
 import { registrationValidationSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/Loader";
-import {api, registration} from "../../../api/axiosConfig";
+import { api, registration } from "../../../api/axiosConfig";
 
 export const Register: React.FC = () => { 
   const navigate = useNavigate();

@@ -70,8 +70,11 @@ export const SetAvatarLabel = styled('label')`
   }
 `;
 
-export const UploadButton = styled('a')`
+export const UploadButton = styled('button')`
   ${A_};
+  background-color: ${colors.FRONT};
+  width: 80px;
+  height: 35px;
   
   color: ${colors.WHITE};
   &:hover {

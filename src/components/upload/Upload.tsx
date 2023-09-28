@@ -33,15 +33,15 @@ import { useFormik } from "formik";
 import { songNameSchema } from "../../validation/yup.config";
 import { Loader } from "../loader/Loader";
 import genresData from "../../json/genres.json";
-import { useContextValues } from "../../contexts/Context";
+import { useUserContext } from "../../contexts/UserContext";
 
 export const Upload = () => {
   const[songGenre, setSongGenre] = useState<string | null>(null);
-  const[isLoading, setIsLoading] = useState<boolean>(false);
+  const[isLoading, setIsLoading] = useState(false);
   const[song, setSong] = useState<any | Blob>(null);
   const[avatar, setAvatar] = useState<any | Blob>(null);
   const navigate = useNavigate();
-  const { user } = useContextValues();
+  const { user } = useUserContext();
   let counter: number = 0;
 
   const formik = useFormik<{
@@ -65,32 +65,67 @@ export const Upload = () => {
   }
 
   const postSongInfo = async () => {
+
     try {
-      const date = new Date().toLocaleDateString('en-GB');
       setIsLoading(true);
-      const avatarData = new FormData();
-      const songData = new FormData();
-      songData.append('file', song);
-      avatarData.append('file', avatar);
+      const date = new Date().toLocaleDateString('en-GB');
 
-      await api.post('/songs', {name: formik.values.songName, issueYear: date, genre: songGenre});
-      await api.post(`/songs/avatar/${formik.values.songName}`, avatarData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+      const response = await api.post('/songs', {
+        name: formik.values.songName,
+        issueYear: date,
+        genre: songGenre
       });
 
-      await api.post(`/songs/audio/${formik.values.songName}`, songData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      navigate(generatePath('/account/:id', { id: user.username }))
+      if(response.status === 200) {
+        postSong();
+        postSongAvatar();
+      }
     }catch(error: any) {
-      console.log('an error occurred');
       setIsLoading(false);
+      console.log('response error');
     }
   }
+
+  const postSongAvatar = async () => {
+    try {
+      const avatarData = new FormData();
+      avatarData.append('file', avatar);
+
+      const response = await api.post(
+        `/songs/avatar/${formik.values.songName}`,
+        avatarData,
+        {
+          headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      if(response.status === 200) console.log('response is ok!');
+    }catch(error: any) {
+      console.log('response error');
+    }
+  }
+
+  const postSong = async () => {
+    try {
+      const songData = new FormData();
+      songData.append('file', song);
+
+      const response = await api.post(
+        `/songs/audio/${formik.values.songName}`,
+        songData,
+        {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      navigate(generatePath('/account/:id',))
+      if(response.status === 200) console.log('response is ok!');
+    }catch(error: any) {
+      console.log('response error');
+    }
+  }
+
 
   return (
     <>
@@ -151,7 +186,8 @@ export const Upload = () => {
                           key={++counter}
                           onClick={() => setSongGenre(genre)}
                         >
-                          {genre}</GenresItem>
+                          {genre}
+                        </GenresItem>
                       ))}
                     </Genres>
                   </AvatarAndGenre>
@@ -161,7 +197,10 @@ export const Upload = () => {
                 <Label htmlFor="uploadAudio">{song ? "Chose another" : "Chose song"}</Label>
                 <SubmitContainer>
                   <UploadButton
-                    onClick={() => postSongInfo()}>{isLoading ? <Loader /> : "submit" }</UploadButton>
+                    disabled={isLoading}
+                    onClick={postSongInfo}>
+                    {isLoading ? <Loader /> : "submit" }
+                  </UploadButton>
                 </SubmitContainer>
               </ButtonsContainer>
             </Container>
