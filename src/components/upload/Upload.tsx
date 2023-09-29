@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { useNavigate, generatePath} from "react-router-dom";
 import { api } from "../../api/axiosConfig";
@@ -28,7 +28,7 @@ import {
   SongInfoText,
   SetAvatarLabelContainer
 } from "./Upload.styled";
-import { Account } from "../mainPage/account/Account";
+import { AccountSettings } from "../mainPage/account/AccountSettings";
 import { useFormik } from "formik";
 import { songNameSchema } from "../../validation/yup.config";
 import { Loader } from "../loader/Loader";
@@ -45,7 +45,7 @@ export const Upload = () => {
   let counter: number = 0;
 
   const formik = useFormik<{
-    songName: ""
+    songName: string
   }>({
     initialValues: {
       songName: ""
@@ -64,25 +64,30 @@ export const Upload = () => {
     setAvatar(chosenAvatar);
   }
 
+  const postSong = async () => {
+    try {
+      setIsLoading(true);
+
+      await postSongInfo();
+      await postSongAudio();
+      await postSongAvatar();
+      navigate(generatePath('/account/:id', { id: user.username }));
+    }catch(error: any) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  }
+
   const postSongInfo = async () => {
 
     try {
-      setIsLoading(true);
       const date = new Date().toLocaleDateString('en-GB');
 
-      const response = await api.post('/songs', {
-        name: formik.values.songName,
-        issueYear: date,
-        genre: songGenre
-      });
+      await api.post('/songs', { name: formik.values.songName, issueYear: date, genre: songGenre });
 
-      if(response.status === 200) {
-        postSong();
-        postSongAvatar();
-      }
+      console.log('everything is ok!');
     }catch(error: any) {
-      setIsLoading(false);
-      console.log('response error');
+      console.log('response error:', error);
     }
   }
 
@@ -106,7 +111,7 @@ export const Upload = () => {
     }
   }
 
-  const postSong = async () => {
+  const postSongAudio = async () => {
     try {
       const songData = new FormData();
       songData.append('file', song);
@@ -126,13 +131,12 @@ export const Upload = () => {
     }
   }
 
-
   return (
     <>
       {!user && <PageLoader />}
       {user && (
         <>
-          <Account />
+          <AccountSettings />
           <UploadContainer>
             <Container>
               <Title>Upload song</Title>
@@ -155,8 +159,8 @@ export const Upload = () => {
                 />
                 {formik.errors.songName && formik.touched.songName && <Validation>{formik.errors.songName}</Validation>}
                 <SongInfoContainer>
-                  <SongInfoText>Genre: {songGenre}</SongInfoText>
                   <SongInfoText>Song name: {formik.values.songName}</SongInfoText>
+                  <SongInfoText>Genre: {songGenre}</SongInfoText>
                 </SongInfoContainer>
               </SongNameContainer>
                 <AvatarAndGenre>
@@ -198,7 +202,7 @@ export const Upload = () => {
                 <SubmitContainer>
                   <UploadButton
                     disabled={isLoading}
-                    onClick={postSongInfo}>
+                    onClick={() => postSong()}>
                     {isLoading ? <Loader /> : "submit" }
                   </UploadButton>
                 </SubmitContainer>

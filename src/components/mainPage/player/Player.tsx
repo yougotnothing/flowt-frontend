@@ -15,10 +15,10 @@ import { useUserContext } from "../../../contexts/UserContext";
 import { useSongContext } from "../../../contexts/SongContext";
 
 export const Player: React.FC = () => {
-  const { songURL, songName } = useSongContext();
-  const { user } = useUserContext();
   const[track, setTrack] = useState<string[]>([]);
   const[trackIndex, setTrackIndex] = useState<number>(0);
+  const { songURL, songName } = useSongContext();
+  const { user } = useUserContext();
 
   const getSongs = async (): Promise<void> => {
     try {

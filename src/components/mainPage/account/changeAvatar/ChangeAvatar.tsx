@@ -4,7 +4,7 @@ import { useNavigate, generatePath } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { api } from "../../../../api/axiosConfig";
 import { AccountContainer } from "../Account.styled";
-import { Account } from "../Account";
+import { AccountSettings } from "../AccountSettings";
 import {
   A,
   AContainer,
@@ -63,7 +63,7 @@ export const ChangeAvatar: React.FC = observer(() => {
       {!user && <PageLoader />}
       {user && (
         <GlobalContainer>
-          <Account />
+          <AccountSettings />
           <GoBackContainer>
             <AContainer>
               <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>

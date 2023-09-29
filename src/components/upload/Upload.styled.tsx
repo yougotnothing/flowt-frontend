@@ -134,7 +134,7 @@ export const SubmitContainer = styled('div')`
 
 export const Genres = styled('ul')`
   width: 246px;
-  max-height: 227px;
+  max-height: 240px;
   background-color: ${colors.VERY_DARK_BLUE};
   border: 2px solid ${colors.BORDER};
   border-radius: 8px;
@@ -144,6 +144,7 @@ export const Genres = styled('ul')`
   padding: 4px;
   transition: 0.3s;
   gap: 4px;
+  margin: 0;
 `;
 
 export const GenresItem = styled('li')`

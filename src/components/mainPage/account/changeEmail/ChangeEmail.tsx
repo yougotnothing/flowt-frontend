@@ -4,11 +4,23 @@ import { useNavigate, generatePath } from "react-router-dom";
 import { api } from "../../../../api/axiosConfig";
 import { changeEmailSchema } from "../../../../validation/yup.config";
 import { useFormik } from "formik";
-import { A, AContainer, GoBackContainer, GlobalContainer } from "../../MainPage.styled";
-import { ChangeEmailContainer, Input, Button, Header, ContentContainer, Error } from "./ChangeEmail.styled";
+import {
+  A,
+  AContainer,
+  GoBackContainer,
+  GlobalContainer
+} from "../../MainPage.styled";
+import {
+  ChangeEmailContainer,
+  Input,
+  Button,
+  Header,
+  ContentContainer,
+  Error
+} from "./ChangeEmail.styled";
 import { Span } from "../../login-register/Login.register.styled";
 import { Loader } from "../../../loader/Loader";
-import { Account } from "../Account";
+import { AccountSettings } from "../AccountSettings";
 import { AccountContainer } from "../Account.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
@@ -29,12 +41,10 @@ export const ChangeEmail: React.FC = () => {
   });
 
   useEffect(() => {
-    if(user) {
-      formik.setValues({
-        email: user.email || ""
-      });
-    }
-  }, []);
+    formik.setValues({
+      email: user.email || ""
+    });
+  }, [user]);
 
   const handleChangeEmail = async () => {
     setIsLoading(true);
@@ -57,7 +67,7 @@ export const ChangeEmail: React.FC = () => {
       {!user && <PageLoader />}
       {user && (
         <GlobalContainer>
-          <Account />
+          <AccountSettings />
           <GoBackContainer>
             <AContainer>
               <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>
@@ -76,7 +86,7 @@ export const ChangeEmail: React.FC = () => {
                 defaultValue={formik.values.email}
               />
               {EmailError}
-              <Button onClick={handleChangeEmail}>
+              <Button onClick={handleChangeEmail} disabled={isLoading}>
                 {isLoading ? <Loader /> : "Submit"}
               </Button>
             </ContentContainer>

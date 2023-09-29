@@ -23,7 +23,7 @@ import {
 import { api } from "../../../../api/axiosConfig";
 import { Loader } from "../../../loader/Loader";
 
-import { Account } from "../Account";
+import { AccountSettings } from "../AccountSettings";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 
 export const ChangeUsername: React.FC = observer(() => {
@@ -71,7 +71,7 @@ export const ChangeUsername: React.FC = observer(() => {
       {!user && <PageLoader />}
       {user && (
         <GlobalContainer>
-          <Account />
+          <AccountSettings />
           <GoBackContainer>
             <AContainer>
               <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>

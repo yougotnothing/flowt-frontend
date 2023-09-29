@@ -3,7 +3,7 @@ import { useNavigate, generatePath } from "react-router-dom";
 
 import { useFormik } from "formik";
 import { api } from "../../../../api/axiosConfig";
-import { Account } from "../Account";
+import { AccountSettings } from "../AccountSettings";
 import { AccountContainer } from "../Account.styled";
 import { restorePasswordSchema } from "../../../../validation/yup.config";
 import { Span } from "../../login-register/Login.register.styled";
@@ -29,7 +29,7 @@ export const ChangePassword: React.FC = () => {
   const navigate = useNavigate();
 
   const formik = useFormik<{
-    password: "",
+    password: string,
     confirmPassword: "",
     code: ""
   }>({
@@ -85,7 +85,7 @@ export const ChangePassword: React.FC = () => {
 
   return (
     <AccountContainer>
-      <Account />
+      <AccountSettings />
       <Container>
         {localStorage.getItem('token') ? (
           <AContainer>

@@ -25,10 +25,10 @@ export const Register: React.FC = () => {
   const[errorMessage, setErrorMessage] = useState<any>(null);
 
   const formik = useFormik<{
-    username: "";
-    email: "";
-    password: "";
-    confirmPassword: ""
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword: string
   }>({
     initialValues:{
       username: "",

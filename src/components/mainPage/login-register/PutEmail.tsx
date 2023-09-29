@@ -22,7 +22,7 @@ export const PutEmail: React.FC = () => {
   const navigate = useNavigate();
 
   const formik = useFormik<{
-    email: ""
+    email: string
   }>({
     initialValues: {
       email: ""

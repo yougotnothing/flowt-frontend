@@ -17,7 +17,7 @@ import {
 } from "./ChangeRegion.styled";
 
 import { A, AContainer,GoBackContainer, GlobalContainer } from "../../MainPage.styled";
-import { Account } from "../Account";
+import { AccountSettings } from "../AccountSettings";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
 
@@ -42,7 +42,7 @@ export const ChangeRegion: React.FC = observer(() => {
     {!user && <PageLoader />}
     {user && (
       <GlobalContainer>
-        <Account />
+        <AccountSettings />
           <GoBackContainer>
             <AContainer>
               <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>

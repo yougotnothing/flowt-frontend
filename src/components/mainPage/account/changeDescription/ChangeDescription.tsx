@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, generatePath } from 'react-router-dom';
 
 import { useFormik } from 'formik';
-import { Account } from '../Account';
+import { AccountSettings } from '../AccountSettings';
 import { changeDescriptionSchema } from '../../../../validation/yup.config';
 import { api } from '../../../../api/axiosConfig';
 import { Loader } from '../../../loader/Loader';
@@ -26,7 +26,7 @@ export const ChangeDescription: React.FC = () => {
   const navigate = useNavigate();
   
   const formik = useFormik<{
-    description: ""
+    description: string
   }>({
     initialValues: {
       description: ""
@@ -61,7 +61,7 @@ export const ChangeDescription: React.FC = () => {
   return (
     <AccountContainer>
       {!user && <PageLoader />}
-      {user && <Account />}
+      {user && <AccountSettings />}
       <Container>
         {user && (
           <GoBackContainer>

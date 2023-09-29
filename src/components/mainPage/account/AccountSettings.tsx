@@ -11,7 +11,7 @@ import {
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../contexts/UserContext";
 
-export const Account: React.FC = () => {
+export const AccountSettings: React.FC = () => {
   const { user } = useUserContext();
   const navigate = useNavigate();
 
@@ -21,32 +21,44 @@ export const Account: React.FC = () => {
       <Title>Account</Title>
       <UserSettings>
         <AContainer>
-          <A onClick={() => navigate(generatePath('/account/:id/change-avatar', { id: user.username }))}>
+          <A className='A'
+            onClick={
+            () => navigate(generatePath('/account/:id/change-avatar', { id: user.username }))}>
             Change avatar
           </A>
         </AContainer>
         <AContainer>
-          <A onClick={() => navigate(generatePath('/account/:id/change-username', { id: user.username }))}>
+          <A className='A'
+            onClick={
+            () => navigate(generatePath('/account/:id/change-username', { id: user.username }))}>
             Change username
           </A>
         </AContainer>
         <AContainer>
-          <A onClick={() => navigate(generatePath('/account/:id/change-password', { id: user.username }))}>
+          <A className='A'
+            onClick={
+            () => navigate(generatePath('/account/:id/change-password', { id: user.username }))}>
             Change password
           </A>
         </AContainer>
         <AContainer>
-          <A onClick={() => navigate(generatePath('/account/:id/change-region', { id: user.username }))}>
+          <A className='A'
+            onClick={
+            () => navigate(generatePath('/account/:id/change-region', { id: user.username }))}>
             Change region
           </A>
         </AContainer>
         <AContainer>
-          <A onClick={() => navigate(generatePath('/account/:id/change-description', { id: user.username }))}>
+          <A className='A'
+            onClick={
+            () => navigate(generatePath('/account/:id/change-description', { id: user.username }))}>
             Change description
           </A>
         </AContainer>
         <AContainer>
-          <A onClick={() => navigate(generatePath('/account/:id/change-email', { id: user.username }))}>
+          <A className='A'
+            onClick={
+            () => navigate(generatePath('/account/:id/change-email', { id: user.username }))}>
             Change email
           </A>
         </AContainer>

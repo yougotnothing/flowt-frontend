@@ -20,16 +20,16 @@ import {
 import { Loader } from "../../loader/Loader";
 import { useUserContext } from "../../../contexts/UserContext";
 export const RestorePassword: React.FC = () => {
-  const[errorMessage, setErrorMessage] = useState<any>('');
+  const[errorMessage, setErrorMessage] = useState<string | null>(null);
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const[isVerify, setIsVerify] = useState<boolean>(false);
   const { user } = useUserContext();
   const navigate = useNavigate();
 
   const formik = useFormik<{
-    password: "",
-    confirmPassword: "",
-    code: ""
+    password: string,
+    confirmPassword: string,
+    code: string
   }>({
     initialValues: {
       password: "",

@@ -6,8 +6,9 @@ export const UserContainer = styled('div')`
   flex-direction: column;
   padding: 20px;
   background-color: ${colors.BACKGROUND};
-  width: 100%;
+  width: 1200px;
   height: max-content;
+  margin: 0 auto;
 
   .link {
     display: block;
@@ -73,7 +74,7 @@ export const SwitchTheme = styled('button')`
 `;
 
 export const DescriptionContainer = styled('div')`
-  margin: 0 auto 0 18rem;
+  margin: 34px auto 34px 0;
   display: flex;
   flex-direction: column;
   background-color: ${colors.FRONT};
@@ -119,9 +120,9 @@ export const UserParams = styled('div')`
 `;
 
 export const ProfileTitle = styled('div')`
-  font-size: 18px;
+  font-size: 19px;
   font-family: 'Urbanist', 'Noto Color Emoji', sans-serif;
-  font-weight: 400;
+  font-weight: 500;
   color: ${colors.WHITE};
 `;
 
@@ -210,4 +211,12 @@ export const Description = styled('div')`
   font-weight: 700;
   color: ${colors.WHITE};
   margin: 12px auto auto 0;
+`;
+
+export const BorderContainer = styled('div')`
+  margin-top: 12px;
+  border: 1px solid ${colors.DARK_WHITE};
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
 `;

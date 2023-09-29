@@ -4,7 +4,7 @@ import { useNavigate, generatePath } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
 import { A, AContainer } from "../../MainPage.styled";
-import { Account } from "../Account";
+import { AccountSettings } from "../AccountSettings";
 import {
   Title,
   InfoContainer,
@@ -36,7 +36,7 @@ export const AccountInfo: React.FC = observer(() => {
   return (
     <AccountContainer>
       {!user && <PageLoader />}
-      <Account />
+      <AccountSettings />
       <InfoContainer>
         <Title>Your info</Title>
         {user && followers && subscribes && (

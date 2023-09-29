@@ -17,9 +17,9 @@ export const Verify = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-      localStorage.setItem('success', 'true');
+      localStorage.setItem('success', 'email  verified');
     } catch (e) {
-      localStorage.setItem('warning', 'true');
+      localStorage.setItem('warning', 'email already verified');
     }
   }
 

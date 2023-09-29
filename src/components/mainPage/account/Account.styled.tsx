@@ -42,6 +42,15 @@ export const AContainer = styled('div')`
     background-color: ${colors.VERY_DARK_BLUE};
     color: ${colors.SECONDARY_HOVER};
   }
+  
+  .A {
+    &:hover {
+      border: 1px solid ${colors.SECONDARY_HOVER};
+      border-top-width: 0;
+      border-left-width: 0;
+      border-right-width: 0;
+    }
+  }
 `;
 
 export const A = styled('a')`
@@ -52,13 +61,6 @@ export const A = styled('a')`
   font-weight: 600;
   font-size: 22px;
   transition: all 0.3s;
-  
-  &:hover {
-    border: 1px solid ${colors.SECONDARY_HOVER};
-    border-top-width: 0;
-    border-left-width: 0;
-    border-right-width: 0;
-  }
 `;
 
 export const InfoContainer = styled('div')`

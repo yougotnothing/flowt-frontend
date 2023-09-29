@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { API_URL } from "../../../api/axiosConfig";
-import { 
+import {
   UserContainer,
   Settings,
   UserAvatar,
@@ -19,7 +19,8 @@ import {
   LikedTrackIcon,
   Description,
   DescriptionContainer,
-  DescriptionTitle
+  DescriptionTitle,
+  BorderContainer
 } from "./Profile.styled";
 
 import { Options } from "./options/Options";
@@ -41,41 +42,42 @@ export const Profile: React.FC = observer(() => {
         <Settings onClick={() => setIsVisible(true) } />}
         <HeadContainer>
           {user && (
-          <UserParams>
-            {user.username ?
-              <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
-                :
-              <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
-            <ProfileTextContainer>
-              <ProfileTitle>Profile</ProfileTitle>
-              <UserNickname onClick={() =>
-                navigate(generatePath('/account/:id/change-username', { id: user.username }))
-              }>
-                {user.username}
-              </UserNickname>
-              <ProfileTitle>{user.region}</ProfileTitle>
-              <LinksContainer>
-                <FollowsSubscribes onClick={() =>
-                  navigate(generatePath('/profile/:id/followers', { id: user.username }))
+            <UserParams>
+              {user.username ?
+                <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
+                  :
+                <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
+              <ProfileTextContainer>
+                <ProfileTitle>Profile</ProfileTitle>
+                <UserNickname onClick={() =>
+                  navigate(generatePath('/account/:id/change-username', { id: user.username }))
                 }>
-                  Followers {followers.length}
-                </FollowsSubscribes>
-                <FollowsSubscribes onClick={() =>
-                  navigate(generatePath('/profile/:id/subscribes', { id: user.username }))
-                }>
-                  Subscribes {subscribes.length}
-                </FollowsSubscribes>
-              </LinksContainer>
-            </ProfileTextContainer>
-          </UserParams>
+                  {user.username}
+                </UserNickname>
+                <ProfileTitle>{user.region}</ProfileTitle>
+                <LinksContainer>
+                  <FollowsSubscribes onClick={() =>
+                    navigate(generatePath('/profile/:id/followers', { id: user.username }))
+                  }>
+                    Followers: {followers.length}
+                  </FollowsSubscribes>
+                  <FollowsSubscribes onClick={() =>
+                    navigate(generatePath('/profile/:id/subscribes', { id: user.username }))
+                  }>
+                    Subscribes: {subscribes.length}
+                  </FollowsSubscribes>
+                </LinksContainer>
+              </ProfileTextContainer>
+            </UserParams>
           )}
+        </HeadContainer>
+        <BorderContainer> </BorderContainer>
         <DescriptionContainer>
           <DescriptionTitle>Description</DescriptionTitle>
           <Description>{user.description}</Description>
         </DescriptionContainer>
-        </HeadContainer>
-      <LikedText>Favorite</LikedText>
-      <LikedContainer>
+        <LikedText>Favorite</LikedText>
+        <LikedContainer>
         {subscribes.map((subscribe: string) => (
           <LikedTrackContainer key={++counter}>
             {subscribe ?
@@ -83,8 +85,8 @@ export const Profile: React.FC = observer(() => {
               : 
               <LikedTrackIcon style={{backgroundImage: 'url(defaultAvatar.png)'}} />
             }
-          {subscribe}
-        </LikedTrackContainer>
+            {subscribe}
+          </LikedTrackContainer>
         ))}
       </LikedContainer>
     </UserContainer>
