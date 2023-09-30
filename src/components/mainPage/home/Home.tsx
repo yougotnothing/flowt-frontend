@@ -1,6 +1,5 @@
 import React from "react";
 
-import { API_URL } from "../../../api/axiosConfig";
 import {
   UserContainer,
   FavoriteContainer,
@@ -23,7 +22,7 @@ import { useUserContext } from "../../../contexts/UserContext";
 import { userAvatarStore } from "../../../store/toChangeAvatar";
 
 export const Home: React.FC = () => {
-  const { user, subscribes, followers } = useUserContext();
+  const { user, subscribes } = useUserContext();
   let counter: number = 0;
 
   return (

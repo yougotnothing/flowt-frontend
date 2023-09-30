@@ -31,11 +31,11 @@ export const SongContext = ({ children }: any) => {
     getSongURL();
   }, [user]);
 
-  const updateSongURL = (newSongURL: string) => {
+  const updateSongURL = (newSongURL: any) => {
     setSongURL(newSongURL);
   }
 
-  const updateSongName = (newSongName: string) => {
+  const updateSongName = (newSongName: any) => {
     setSongName(newSongName);
   }
 
