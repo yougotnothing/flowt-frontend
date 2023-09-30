@@ -12,7 +12,7 @@ export const Verify = () => {
 
   const verifyStatus = async () => {
     try {
-      await axios.get(`http://localhost:8080/verify?code=${verifyCode}`, {
+      await axios.get(`http://localhost:8080/verify/email?code=${verifyCode}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }

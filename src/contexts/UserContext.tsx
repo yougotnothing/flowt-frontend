@@ -1,11 +1,11 @@
-import React, {useEffect, useState, createContext, useContext, useLayoutEffect} from "react";
+import React, { useEffect, useState, createContext, useContext, useLayoutEffect } from "react";
 
 import { api, API_URL } from "../api/axiosConfig";
 import { UserProps } from "../types/props";
 import { UserDTO } from "../types/props";
 import { userAvatarStore } from "../store/toChangeAvatar";
-import {userRegionStore} from "../store/toChangeRegion";
-import {userUsernameStore} from "../store/toChangeUsername";
+import { userRegionStore } from "../store/toChangeRegion";
+import { userUsernameStore } from "../store/toChangeUsername";
 
 const UserCreateContext = createContext<UserProps>({
   user: null,
@@ -35,12 +35,25 @@ export const UserContext = ({ children }: any) => {
         const response = await api.get(`/images/user/${user.username}`);
         if(response.status === 200) {
           userAvatarStore.setAvatar(`${API_URL}/images/user/${user.username}`);
-        }else {
-          userAvatarStore.setAvatar('/defaultAvatar.png');
         }
       }
     }catch(error: any) {
-      console.log('error');
+      try{
+
+        const formData = new FormData();
+        userAvatarStore.setAvatar('/defaultAvatar.png');
+
+        formData.append('file', userAvatarStore.avatar);
+
+        await api.post('/users/avatar', formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
+      }catch(error: any) {
+        console.error(error.response.data);
+      }
     }
   }
 
@@ -62,7 +75,7 @@ export const UserContext = ({ children }: any) => {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     getUser()
     console.log('fetching user');
   }, []);

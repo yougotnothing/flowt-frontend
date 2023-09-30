@@ -20,7 +20,9 @@ import {
 } from "./Home.styled";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../contexts/UserContext";
-export const Home = () => {
+import { userAvatarStore } from "../../../store/toChangeAvatar";
+
+export const Home: React.FC = () => {
   const { user, subscribes, followers } = useUserContext();
   let counter: number = 0;
 
@@ -34,9 +36,7 @@ export const Home = () => {
           <UserContainer>
             {subscribes ? subscribes.map((subscribe: any) => (
               <Card key={++counter}>
-                <CardIcon style={{
-                  backgroundImage: `url(${API_URL}/images/user/${subscribe})`
-                }} />
+                <CardIcon style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
                 <CardHeader>{subscribe}</CardHeader>
               </Card>
             )) : null}
@@ -46,7 +46,7 @@ export const Home = () => {
             <Title>Recommendations</Title>
           <RecommendationsContainer>
             <RecommendationCard>
-              <RecommendationsIcon style={{backgroundImage: `url(${API_URL}/images/user/${user.username})`}} />
+              <RecommendationsIcon style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
               <RecTextContainer>
                 <RecommendationTitle>{user.username}</RecommendationTitle>
                 <RecommendationsHeader>{user.username}</RecommendationsHeader>

@@ -116,20 +116,37 @@ export const Upload = () => {
       const songData = new FormData();
       songData.append('file', song);
 
+      if (!songData.get('file')) {
+        setIsLoading(false);
+        console.log('No file selected');
+        return;
+      }else if(!song) {
+        setIsLoading(false);
+        return;
+      }
+
       const response = await api.post(
         `/songs/audio/${formik.values.songName}`,
         songData,
         {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         }
-      });
-      navigate(generatePath('/account/:id',))
-      if(response.status === 200) console.log('response is ok!');
-    }catch(error: any) {
-      console.log('response error');
+      );
+
+      if (response.status === 200) {
+        console.log('Response is ok!');
+        navigate(generatePath('/account/:id', { id: user.username }));
+      } else {
+        setIsLoading(false);
+        console.log('Unexpected response status:', response.status);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.error('Response error:', error);
     }
-  }
+  };
 
   return (
     <>
