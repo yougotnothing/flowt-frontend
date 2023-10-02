@@ -7,11 +7,11 @@ class UserRegionState {
     this.userRegion = initialRegion;
     makeObservable(this, {
       userRegion: observable,
-      setUserRegion: action
+      setRegion: action
     });
   }
 
-  setUserRegion(region: string | null) {
+  setRegion(region: string | null) {
     this.userRegion = region;
   }
 }

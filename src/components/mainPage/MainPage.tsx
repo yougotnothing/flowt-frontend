@@ -19,8 +19,8 @@ import { Player } from "./player/Player";
 import { API_URL } from "../../api/axiosConfig";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
 import { useUserContext, UserContext } from "../../contexts/UserContext"
-import { userAvatarStore } from "../../store/toChangeAvatar";
 import { observer } from "mobx-react-lite";
+import { userAvatarStore } from "../../store/toChangeAvatar";
 
 export const MainPage: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);

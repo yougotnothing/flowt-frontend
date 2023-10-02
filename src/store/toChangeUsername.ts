@@ -1,7 +1,7 @@
 import { observable, makeObservable, action } from "mobx";
 
 class UserUsernameStore {
-  Username: string | null | undefined;
+  Username: string | null;
 
   constructor(initialUsername: string | null) {
     this.Username = initialUsername;
@@ -11,7 +11,7 @@ class UserUsernameStore {
     });
 
   }
-  setUsername(newUsername: string | null | undefined) {
+  setUsername(newUsername: string | null) {
     this.Username = newUsername;
   }
 }

@@ -27,7 +27,7 @@ import { Options } from "./options/Options";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../contexts/UserContext";
 import { observer } from "mobx-react-lite";
-import { userAvatarStore } from "../../../store/toChangeAvatar";
+import { userStore } from "../../../store/toUserParams";
 
 export const Profile: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -44,7 +44,7 @@ export const Profile: React.FC = observer(() => {
           {user && (
             <UserParams>
               {user.username ?
-                <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
+                <UserAvatar style={{backgroundImage: `url(${userStore.avatar})`}} />
                   :
                 <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
               <ProfileTextContainer>

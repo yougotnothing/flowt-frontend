@@ -1,11 +1,11 @@
-import React, { useEffect, useState, createContext, useContext, useLayoutEffect } from "react";
+import React, { useEffect, createContext, useContext, useLayoutEffect, useState } from "react";
 
 import { api, API_URL } from "../api/axiosConfig";
-import { UserProps } from "../types/props";
-import { UserDTO } from "../types/props";
+import { UserDTO, UserProps } from "../types/props";
+import { observer } from "mobx-react-lite";
 import { userAvatarStore } from "../store/toChangeAvatar";
-import { userRegionStore } from "../store/toChangeRegion";
 import { userUsernameStore } from "../store/toChangeUsername";
+import { userRegionStore } from "../store/toChangeRegion";
 
 const UserCreateContext = createContext<UserProps>({
   user: null,
@@ -15,7 +15,7 @@ const UserCreateContext = createContext<UserProps>({
   setUserAvatar: () => {},
 });
 
-export const UserContext = ({ children }: any) => {
+export const UserContext = observer(({ children }: any) => {
   const[user, setUser] = useState<UserDTO | null>(null);
   const[followers, setFollowers] = useState<string | null>(null);
   const[subscribes, setSubscribes] = useState<string | null>(null);
@@ -50,7 +50,7 @@ export const UserContext = ({ children }: any) => {
             headers: {
               'Content-Type': 'multipart/form-data'
             }
-          })
+        })
       }catch(error: any) {
         console.error(error.response.data);
       }
@@ -90,7 +90,7 @@ export const UserContext = ({ children }: any) => {
 
   useLayoutEffect(() => {
     if(user) {
-      userRegionStore.setUserRegion(user.region);
+      userRegionStore.setRegion(user.region);
       userUsernameStore.setUsername(user.username);
     }
   }, [user]);
@@ -98,9 +98,9 @@ export const UserContext = ({ children }: any) => {
   return (
     <UserCreateContext.Provider
       value={{
-        user,
-        followers,
-        subscribes,
+        user: user,
+        followers: followers,
+        subscribes: subscribes,
         userAvatar: userAvatarStore.avatar,
         setUserAvatar: userAvatarStore.setAvatar,
       }}
@@ -108,6 +108,6 @@ export const UserContext = ({ children }: any) => {
       {children}
     </UserCreateContext.Provider>
   );
-};
+});
 
 export const useUserContext: any = () => useContext(UserCreateContext);

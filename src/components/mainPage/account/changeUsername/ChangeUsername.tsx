@@ -28,8 +28,8 @@ import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 
 export const ChangeUsername: React.FC = observer(() => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
   const { user } = useUserContext();
+  const navigate = useNavigate();
 
   const formik = useFormik<{
     username: string
@@ -62,7 +62,7 @@ export const ChangeUsername: React.FC = observer(() => {
   
   useEffect(() => {
     if(user) {
-      formik.setValues({ username: userUsernameStore.Username || "" });
+      formik.setValues({ username: user.username || "" });
     }
   }, [user]);
   

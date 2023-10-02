@@ -24,14 +24,13 @@ import {
 } from "../Account.styled";
 import { Playlist } from "../../playlist/Playlist";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { useUserContext } from "../../../../contexts/UserContext";
-import { userUsernameStore } from "../../../../store/toChangeUsername";
-import { userRegionStore } from "../../../../store/toChangeRegion";
-import { userAvatarStore } from "../../../../store/toChangeAvatar";
+import { userStore } from "../../../../store/toUserParams";
 
 export const AccountInfo: React.FC = observer(() => {
-  const { user, followers, subscribes } = useUserContext();
   const navigate = useNavigate();
+  const user = userStore.user;
+  const followers = userStore.followers;
+  const subscribes = userStore.subscribes;
 
   return (
     <AccountContainer>
@@ -41,12 +40,12 @@ export const AccountInfo: React.FC = observer(() => {
         <Title>Your info</Title>
         {user && followers && subscribes && (
           <UserContainer>
-            <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
+            <UserAvatar style={{backgroundImage: `url(${userStore.avatar})`}} />
             <UserInfo>
-              <Username>{userUsernameStore.Username}</Username>
+              <Username>{user.username}</Username>
               <StatsContainer>
                 <Email>{user.email}</Email>
-                <Region>{userRegionStore.userRegion}</Region>
+                <Region>{user.region}</Region>
               </StatsContainer>
               <ButtonsContainer>
                 <AContainer>
@@ -63,7 +62,7 @@ export const AccountInfo: React.FC = observer(() => {
             </UserInfo>
           </UserContainer>
         )}
-        {user.description && (
+        {user && user.description && (
           <>
             <DescriptionTitle>Your description</DescriptionTitle>
             <DescriptionContainer>
