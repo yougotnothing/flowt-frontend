@@ -31,6 +31,20 @@ export const InputWrapper = styled('div')`
   gap: 18px;
   background-color: ${colors.FRONT};
   border-radius: 18px;
+  
+  .cropperContainer {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    position: relative;
+    background-size: cover;
+    border-radius: 6px;
+    border-width: 0;
+  }
+  
+  .mediaContainer {
+    
+  }
 `;
 
 export const Label = styled('label')`

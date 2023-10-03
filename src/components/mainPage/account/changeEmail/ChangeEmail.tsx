@@ -24,14 +24,17 @@ import { AccountSettings } from "../AccountSettings";
 import { AccountContainer } from "../Account.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
+import { userEmailStore } from "../../../../store/toChangeEmail";
+import { observer } from "mobx-react-lite";
 
-export const ChangeEmail: React.FC = () => {
+export const ChangeEmail: React.FC = observer(() => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
+  const[backendError, setBackendError] = useState<string | null>(null);
   const { user } = useUserContext();
   const navigate = useNavigate();
 
   const formik = useFormik<{
-    email: ""
+    email: string
   }>({
     initialValues: {
       email: ""
@@ -42,25 +45,28 @@ export const ChangeEmail: React.FC = () => {
 
   useEffect(() => {
     formik.setValues({
-      email: user.email || ""
+      email: userEmailStore.email || ""
     });
   }, [user]);
 
   const handleChangeEmail = async () => {
     setIsLoading(true);
     try {
-      const response = await api.patch('/users/email', { newEmail: formik.values.email });
+      const response = await api.patch('/users/email', {
+        newEmail: formik.values.email
+      });
+
       if(response) {
         navigate(generatePath('/account/:id', { id: user.username }));
-        window.location.reload();
       }
     }catch(error: any) {
-      console.log('an error occurred');
+      setIsLoading(false);
+      setBackendError(error.response.data.message);
+      console.log(backendError);
     }
   }
 
-  const EmailError = formik.errors.email && formik.touched.email &&
-      <Error>{formik.errors.email}</Error>
+  const EmailError = formik.errors.email && formik.touched.email && <Error>{formik.errors.email}</Error>
 
   return (
     <AccountContainer>
@@ -81,12 +87,16 @@ export const ChangeEmail: React.FC = () => {
               <Input
                 name="email"
                 type="text"
-                onChange={formik.handleChange}
+                onChange={(e: any) => {
+                  formik.setFieldValue('email', e.target.value);
+                  userEmailStore.setEmail(e.target.value);
+                }}
                 onBlur={formik.handleBlur}
                 defaultValue={formik.values.email}
               />
-              {EmailError}
-              <Button onClick={handleChangeEmail} disabled={isLoading}>
+                {EmailError}
+                {backendError && <Error>{backendError}</Error>}
+              <Button onClick={() => handleChangeEmail()} disabled={isLoading}>
                 {isLoading ? <Loader /> : "Submit"}
               </Button>
             </ContentContainer>
@@ -95,4 +105,4 @@ export const ChangeEmail: React.FC = () => {
       )}
     </AccountContainer>
   )
-}
+});

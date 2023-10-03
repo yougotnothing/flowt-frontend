@@ -40,5 +40,5 @@ export const changeDescriptionSchema = Yup.object().shape({
 });
 
 export const changeEmailSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email")
+  email: Yup.string().email("Invalid email").required("Enter email")
 });

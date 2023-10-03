@@ -1,18 +1,18 @@
 import { observable, action, makeObservable } from "mobx";
 
 class UserRegionState {
-  userRegion: string | null;
+  region: string | null;
 
   constructor(initialRegion: string | null) {
-    this.userRegion = initialRegion;
+    this.region = initialRegion;
     makeObservable(this, {
-      userRegion: observable,
+      region: observable,
       setRegion: action
     });
   }
 
   setRegion(region: string | null) {
-    this.userRegion = region;
+    this.region = region;
   }
 }
 

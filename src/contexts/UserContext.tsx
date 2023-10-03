@@ -1,11 +1,11 @@
-import React, { useEffect, createContext, useContext, useLayoutEffect, useState } from "react";
+import React, { useEffect, createContext, useContext, useState } from "react";
 
 import { api, API_URL } from "../api/axiosConfig";
 import { UserDTO, UserProps } from "../types/props";
-import { observer } from "mobx-react-lite";
 import { userAvatarStore } from "../store/toChangeAvatar";
 import { userUsernameStore } from "../store/toChangeUsername";
 import { userRegionStore } from "../store/toChangeRegion";
+import { userEmailStore } from "../store/toChangeEmail";
 
 const UserCreateContext = createContext<UserProps>({
   user: null,
@@ -15,7 +15,7 @@ const UserCreateContext = createContext<UserProps>({
   setUserAvatar: () => {},
 });
 
-export const UserContext = observer(({ children }: any) => {
+export const UserContext = ({ children }: any) => {
   const[user, setUser] = useState<UserDTO | null>(null);
   const[followers, setFollowers] = useState<string | null>(null);
   const[subscribes, setSubscribes] = useState<string | null>(null);
@@ -76,8 +76,7 @@ export const UserContext = observer(({ children }: any) => {
   };
 
   useEffect(() => {
-    getUser()
-    console.log('fetching user');
+    getUser();
   }, []);
 
   useEffect(() => {
@@ -85,22 +84,18 @@ export const UserContext = observer(({ children }: any) => {
       getUserAvatar();
       getFollowers();
       getSubscribes();
-    }
-  }, [user]);
-
-  useLayoutEffect(() => {
-    if(user) {
-      userRegionStore.setRegion(user.region);
       userUsernameStore.setUsername(user.username);
+      userRegionStore.setRegion(user.region);
+      userEmailStore.setEmail(user.email);
     }
   }, [user]);
 
   return (
     <UserCreateContext.Provider
       value={{
-        user: user,
-        followers: followers,
-        subscribes: subscribes,
+        user,
+        followers,
+        subscribes,
         userAvatar: userAvatarStore.avatar,
         setUserAvatar: userAvatarStore.setAvatar,
       }}
@@ -108,6 +103,6 @@ export const UserContext = observer(({ children }: any) => {
       {children}
     </UserCreateContext.Provider>
   );
-});
+};
 
 export const useUserContext: any = () => useContext(UserCreateContext);

@@ -28,7 +28,10 @@ export const ChangeRegion: React.FC = observer(() => {
 
   const handleChangedRegion = async () => {
     try {
-      const response = await api.patch('/users/region', {newRegion: userRegionStore.userRegion});
+      const response = await api.patch('/users/region', {
+        newRegion: userRegionStore.region
+      });
+
       if(response) {
         navigate(generatePath('/account/:id', {id: user.username}));
       }
@@ -53,12 +56,12 @@ export const ChangeRegion: React.FC = observer(() => {
           <ChangeRegionContainer>
             <Container>
               <Title>Change region</Title>
-              {userRegionStore && <ChosenRegion>{userRegionStore.userRegion}</ChosenRegion>}
+              {userRegionStore && <ChosenRegion>{userRegionStore.region}</ChosenRegion>}
               <Droplist>
                 {regionData.map((region: string) => (
                   <DroplistItem
                     key={++counter}
-                    onClick={() => userRegionStore.setUserRegion(region)}
+                    onClick={() => userRegionStore.setRegion(region)}
                   >
                     {region}
                   </DroplistItem>

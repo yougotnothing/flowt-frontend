@@ -27,7 +27,8 @@ import { Options } from "./options/Options";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../contexts/UserContext";
 import { observer } from "mobx-react-lite";
-import { userStore } from "../../../store/toUserParams";
+import { userAvatarStore } from "../../../store/toChangeAvatar";
+import { userUsernameStore } from "../../../store/toChangeUsername";
 
 export const Profile: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -44,25 +45,25 @@ export const Profile: React.FC = observer(() => {
           {user && (
             <UserParams>
               {user.username ?
-                <UserAvatar style={{backgroundImage: `url(${userStore.avatar})`}} />
+                <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
                   :
                 <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
               <ProfileTextContainer>
                 <ProfileTitle>Profile</ProfileTitle>
                 <UserNickname onClick={() =>
-                  navigate(generatePath('/account/:id/change-username', { id: user.username }))
+                  navigate(generatePath('/account/:id/change-username', { id: userUsernameStore.Username }))
                 }>
                   {user.username}
                 </UserNickname>
                 <ProfileTitle>{user.region}</ProfileTitle>
                 <LinksContainer>
                   <FollowsSubscribes onClick={() =>
-                    navigate(generatePath('/profile/:id/followers', { id: user.username }))
+                    navigate(generatePath('/profile/:id/followers', { id: userUsernameStore.Username }))
                   }>
                     Followers: {followers.length}
                   </FollowsSubscribes>
                   <FollowsSubscribes onClick={() =>
-                    navigate(generatePath('/profile/:id/subscribes', { id: user.username }))
+                    navigate(generatePath('/profile/:id/subscribes', { id: userUsernameStore.Username }))
                   }>
                     Subscribes: {subscribes.length}
                   </FollowsSubscribes>

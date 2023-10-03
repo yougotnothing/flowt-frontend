@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useNavigate, generatePath } from "react-router-dom";
 import { observer } from "mobx-react-lite";
@@ -24,13 +24,15 @@ import {
 } from "../Account.styled";
 import { Playlist } from "../../playlist/Playlist";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { userStore } from "../../../../store/toUserParams";
+import { useUserContext } from "../../../../contexts/UserContext";
+import { userAvatarStore } from "../../../../store/toChangeAvatar";
+import { userUsernameStore } from "../../../../store/toChangeUsername";
+import { userRegionStore } from "../../../../store/toChangeRegion";
+import { userEmailStore } from "../../../../store/toChangeEmail";
 
 export const AccountInfo: React.FC = observer(() => {
+  const { user, followers, subscribes } = useUserContext();
   const navigate = useNavigate();
-  const user = userStore.user;
-  const followers = userStore.followers;
-  const subscribes = userStore.subscribes;
 
   return (
     <AccountContainer>
@@ -40,12 +42,13 @@ export const AccountInfo: React.FC = observer(() => {
         <Title>Your info</Title>
         {user && followers && subscribes && (
           <UserContainer>
-            <UserAvatar style={{backgroundImage: `url(${userStore.avatar})`}} />
+            <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}} >
+            </UserAvatar>
             <UserInfo>
-              <Username>{user.username}</Username>
+              <Username>{userUsernameStore.Username}</Username>
               <StatsContainer>
-                <Email>{user.email}</Email>
-                <Region>{user.region}</Region>
+                <Email>{userEmailStore.email}</Email>
+                <Region>{userRegionStore.region}</Region>
               </StatsContainer>
               <ButtonsContainer>
                 <AContainer>

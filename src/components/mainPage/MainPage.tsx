@@ -21,6 +21,7 @@ import { PageLoader } from "../loader/pageLoader/PageLoader";
 import { useUserContext, UserContext } from "../../contexts/UserContext"
 import { observer } from "mobx-react-lite";
 import { userAvatarStore } from "../../store/toChangeAvatar";
+import { userUsernameStore } from "../../store/toChangeUsername";
 
 export const MainPage: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -67,7 +68,7 @@ export const MainPage: React.FC = observer(() => {
               <UserButton
                 onClick={() => navigate(generatePath('/profile/:id', {id: user.username}))}>
                 <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}}/>
-                <UserNickname>{user.username}</UserNickname>
+                <UserNickname>{userUsernameStore.Username}</UserNickname>
               </UserButton>
             </VerifyedUserContainer>
             :

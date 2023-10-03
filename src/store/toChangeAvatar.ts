@@ -1,4 +1,4 @@
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable, action, runInAction, computed } from "mobx";
 
 class UserAvatarStore {
   avatar: any | null;
@@ -11,16 +11,23 @@ class UserAvatarStore {
       avatar: observable,
       avatarURL: observable,
       setAvatar: action,
-      setAvatarURL: action
+      setAvatarURL: action,
+      userAvatar: computed
     });
   }
 
   setAvatar(newAvatar: any) {
-    this.avatar = newAvatar;
+    runInAction(() => {
+      this.avatar = newAvatar;
+    });
   }
 
   setAvatarURL(URL: any | Blob) {
     this.avatarURL = URL;
+  }
+
+  get userAvatar() {
+    return this.avatar;
   }
 }
 

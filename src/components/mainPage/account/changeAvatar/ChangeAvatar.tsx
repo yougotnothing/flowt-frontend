@@ -24,18 +24,23 @@ import {
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
 import { userAvatarStore } from "../../../../store/toChangeAvatar";
+import { userUsernameStore } from "../../../../store/toChangeUsername";
+import Cropper from "react-easy-crop";
+import { getCroppedImg } from "../../../avatar/canvas";
 
 export const ChangeAvatar: React.FC = observer(() => {
-  const [isFileChosen, setIsFileChosen] = useState<boolean>(false);
-  const [file, setFile] = useState<Blob | any>(null);
+  const[isFileChosen, setIsFileChosen] = useState<boolean>(false);
+  const[file, setFile] = useState<Blob | any>(null);
+  const[crop, setCrop] = useState({ x: 0, y: 0 });
+  const[zoom, setZoom] = useState<number>(1.1);
+  const[croppedAvatarBlob, setCroppedAvatarBlob] = useState<any>(null);
   const { user } = useUserContext();
   const navigate = useNavigate();
 
   const handleChangedAvatar = async () => {
-    
     try {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', croppedAvatarBlob);
 
       await api.post('/users/avatar', formData, {
         headers: {
@@ -43,19 +48,36 @@ export const ChangeAvatar: React.FC = observer(() => {
         }
       });
 
-      userAvatarStore.setAvatar(URL.createObjectURL(file));
+      userAvatarStore.setAvatar(croppedAvatarBlob);
+      console.log(userAvatarStore.avatar);
 
-      navigate(generatePath('/account/:id', { id: user.username }));
+      navigate(generatePath('/account/:id', { id: userUsernameStore.Username }));
     }catch(error: any) {
       console.log('an error occurred');
     }
   }
+
+  useEffect(() => {
+    if(file) userAvatarStore.setAvatarURL(URL.createObjectURL(file));
+  }, [file]);
   
   const handleFileChosen = (event: any) => {
     const chosenFile = event.target.files[0];
     setFile(chosenFile);
-    console.log(file);
     setIsFileChosen(true);
+  }
+
+  const onCropComplete = async (croppedArea: any, croppedAreaPixels: any) => {
+    try {
+      const croppedImage = await getCroppedImg(
+        URL.createObjectURL(file),
+        croppedAreaPixels
+      );
+
+      setCroppedAvatarBlob(croppedImage);
+    }catch(error: any) {
+      console.log('an error occurred:', error);
+    }
   }
 
   return (
@@ -82,7 +104,35 @@ export const ChangeAvatar: React.FC = observer(() => {
                 />
                 {isFileChosen ? (
                   <>
-                    <NewAvatar style={{backgroundImage: `url(${URL.createObjectURL(file)})`}} />
+                    <Cropper
+                      style={{
+                        containerStyle: {
+                          borderRadius: '6px',
+                          display: 'flex',
+                          position: 'relative',
+                          width: '240px',
+                          height: '240px',
+                          backgroundSize: 'cover'
+                        },
+                        cropAreaStyle: {
+                          transition: '0.3s',
+                          borderRadius: '50%'
+                        }
+                      }}
+                      objectFit="cover"
+                      cropSize={{width: 240, height: 240}}
+                      image={userAvatarStore.avatarURL}
+                      crop={crop}
+                      zoom={zoom}
+                      maxZoom={1.7}
+                      minZoom={1}
+                      aspect={1}
+                      showGrid={false}
+                      onCropChange={setCrop}
+                      zoomSpeed={0.1}
+                      onCropComplete={onCropComplete}
+                      onZoomChange={setZoom}
+                    />
                     <ButtonContainer>
                       <SetNewAvatarButton onClick={handleChangedAvatar}>
                         Set avatar
