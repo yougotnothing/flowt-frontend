@@ -18,19 +18,18 @@ import { AlertSuccess, AlertWarning } from "./alert/Alert";
 import { Player } from "./player/Player";
 import { API_URL } from "../../api/axiosConfig";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
-import { useUserContext, UserContext } from "../../contexts/UserContext"
-import { observer } from "mobx-react-lite";
-import { userAvatarStore } from "../../store/toChangeAvatar";
+import { useUserContext } from "../../contexts/UserContext";
 import { userUsernameStore } from "../../store/toChangeUsername";
+import { userAvatarStore } from "../../store/toChangeAvatar";
 
-export const MainPage: React.FC = observer(() => {
+export const MainPage: React.FC = () => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
   const[isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
-  const { user } = useUserContext();
-  let location = useLocation();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
+  const { user } = useUserContext();
+  let location = useLocation();
 
   useEffect(() => {
     const currentUrl = location.pathname;
@@ -38,7 +37,8 @@ export const MainPage: React.FC = observer(() => {
     if(!currentUrl || currentUrl === '/') {
       navigate('/home');
     }
-    if (successAlert !== null || warningAlert !== null) {
+
+    if(successAlert !== null || warningAlert !== null) {
       setIsVisible(true);
       setTimeout(() => {
         localStorage.removeItem('success');
@@ -47,42 +47,38 @@ export const MainPage: React.FC = observer(() => {
       }, 3000);
     }
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
+    setIsLoading(false);
   }, []);
 
   return (
-    <UserContext>
-      <Container>
-        {isVisible && successAlert && <AlertSuccess />}
-        {isVisible && warningAlert && <AlertWarning />}
-        <Navbar>
-          <Logo onClick={() => navigate("/home")} />
-          <Form className="form" method="post" action={`${API_URL}`}>
-            <Search placeholder="search" />
-            <SearchButton onClick={() => navigate("/search")} />
-          </Form>
-          {user ?
-            <VerifyedUserContainer>
-              <UserButton
-                onClick={() => navigate(generatePath('/profile/:id', {id: user.username}))}>
-                <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}}/>
-                <UserNickname>{userUsernameStore.Username}</UserNickname>
-              </UserButton>
-            </VerifyedUserContainer>
-            :
-            <ButtonsContainer>
-              <Link to={`/login`} className="link">Login</Link>
-              <Link to={`/register`} className="link">Register</Link>
-            </ButtonsContainer>
-          }
-        </Navbar>
-        <ContentContainer>
-          {isLoading ? <PageLoader /> : <Outlet />}
-        </ContentContainer>
-        <Player />
-      </Container>
-    </UserContext>
+    <Container>
+      {isVisible && successAlert && <AlertSuccess />}
+      {isVisible && warningAlert && <AlertWarning />}
+      <Navbar>
+        <Logo onClick={() => navigate("/home")} />
+        <Form className="form" method="post" action={`${API_URL}`}>
+          <Search placeholder="search" />
+          <SearchButton onClick={() => navigate("/search")} />
+        </Form>
+        {user ?
+          <VerifyedUserContainer>
+            <UserButton
+              onClick={() => navigate(generatePath('/profile/:id', {id: user.username}))}>
+              <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}}/>
+              <UserNickname>{userUsernameStore.username}</UserNickname>
+            </UserButton>
+          </VerifyedUserContainer>
+          :
+          <ButtonsContainer>
+            <Link to={`/login`} className="link">Login</Link>
+            <Link to={`/register`} className="link">Register</Link>
+          </ButtonsContainer>
+        }
+      </Navbar>
+      <ContentContainer>
+        {isLoading ? <PageLoader /> : <Outlet />}
+      </ContentContainer>
+      <Player />
+    </Container>
   );
-});
+};

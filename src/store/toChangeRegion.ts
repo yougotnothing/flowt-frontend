@@ -1,10 +1,12 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action, makeObservable, runInAction } from "mobx";
+import { IRegion } from "../types/types";
 
 class UserRegionState {
-  region: string | null;
+  region: IRegion;
 
-  constructor(initialRegion: string | null) {
-    this.region = initialRegion;
+  constructor(initialValue: IRegion) {
+    this.region = initialValue;
+
     makeObservable(this, {
       region: observable,
       setRegion: action
@@ -12,7 +14,9 @@ class UserRegionState {
   }
 
   setRegion(region: string | null) {
-    this.region = region;
+    runInAction(() => {
+      this.region = region;
+    });
   }
 }
 

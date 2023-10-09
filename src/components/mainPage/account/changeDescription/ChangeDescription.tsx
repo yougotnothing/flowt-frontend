@@ -8,6 +8,7 @@ import { api } from '../../../../api/axiosConfig';
 import { Loader } from '../../../loader/Loader';
 import { A, AContainer, GoBackContainer } from '../../MainPage.styled';
 import { AccountContainer } from '../Account.styled';
+import { userDescriptionStore } from "../../../../store/toChangeDescription";
 import { 
   ChangeDescriptionContainer, 
   Input, 
@@ -19,9 +20,9 @@ import {
 import { Span } from '../../login-register/Login.register.styled';
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
+
 export const ChangeDescription: React.FC = () => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
-  const[newDescription, setNewDescription] = useState<string | null>(null);
   const { user } = useUserContext();
   const navigate = useNavigate();
   
@@ -37,12 +38,17 @@ export const ChangeDescription: React.FC = () => {
 
   const patchDescription = async () => {
     try {
-      await api.patch('/users/description', { newDescription: newDescription });
+      userDescriptionStore.setDescription(formik.values.description);
+
+      await api.patch('/users/description', {
+        newDescription: userDescriptionStore.description
+      });
+
       setIsLoading(true);
+
       navigate(generatePath('/account/:id', { id: user.username }));
-      window.location.reload();
     }catch(error: any) {
-      console.log('an error occured');
+      console.log('an error occurred:', error.response.data);
     }
   }
 
@@ -51,10 +57,8 @@ export const ChangeDescription: React.FC = () => {
   );
 
   useEffect(() => {
-    if(user){
-      formik.setValues({
-        description: user.description || ""
-      });
+    if(user) {
+      formik.setValues({ description: userDescriptionStore.description || "" });
     }
   }, [user]);
 
@@ -78,7 +82,6 @@ export const ChangeDescription: React.FC = () => {
             <Input
               name='description'
               onChange={(e: any) => {
-                setNewDescription(e.target.value);
                 formik.setFieldValue('description', e.target.value);
               }}
               onBlur={formik.handleBlur}

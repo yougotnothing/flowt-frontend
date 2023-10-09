@@ -1,4 +1,4 @@
-import { colors } from "./colors.const";
+  import { colors } from "./colors.const";
 
 export const TITLE = `
   font-family: 'Raleway', sans-serif;

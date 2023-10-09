@@ -22,19 +22,19 @@ export const getCroppedImg = async (imageSrc: any, pixelCrop: any) => {
 
       const timestamp = Date.now();
       let extension = "";
-      if (imageSrc.name) {
+      if(imageSrc.name) {
         extension = imageSrc.name.split('.').pop() || "";
-      } else if (imageSrc.type) {
+      }else if(imageSrc.type) {
         extension = imageSrc.type.split('/').pop() || "";
       }
 
-      if (!extension) {
+      if(!extension) {
         extension = "jpg";
       }
 
       canvas.toBlob(
         (blob) => {
-          if (!blob) {
+          if(!blob) {
             console.error("Canvas is empty");
             return;
           }

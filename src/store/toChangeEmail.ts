@@ -1,19 +1,23 @@
-import { observable, action, makeObservable } from "mobx";
+import { observable, action, makeObservable, runInAction } from "mobx";
+import { IEmail } from "../types/types";
 
 class UserEmailStore {
-  email: string | null;
+  email: IEmail;
 
-  constructor() {
-    this.email = null;
+  constructor(initialValue: IEmail) {
+    this.email = initialValue;
 
     makeObservable(this, {
       email: observable,
       setEmail: action
     });
   }
-  setEmail = (email: string | null) => {
-    this.email = email;
+
+  setEmail = (email: IEmail) => {
+    runInAction(() => {
+      this.email = email;
+    });
   }
 }
 
-export const userEmailStore = new UserEmailStore();
+export const userEmailStore = new UserEmailStore(null);

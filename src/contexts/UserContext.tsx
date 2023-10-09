@@ -1,21 +1,21 @@
-import React, { useEffect, createContext, useContext, useState } from "react";
+import React, { useEffect, createContext, useContext, useState, useLayoutEffect } from "react";
 
 import { api, API_URL } from "../api/axiosConfig";
 import { UserDTO, UserProps } from "../types/props";
-import { userAvatarStore } from "../store/toChangeAvatar";
 import { userUsernameStore } from "../store/toChangeUsername";
 import { userRegionStore } from "../store/toChangeRegion";
 import { userEmailStore } from "../store/toChangeEmail";
+import { userDescriptionStore } from "../store/toChangeDescription";
+import { observer } from "mobx-react-lite";
+import { userAvatarStore } from "../store/toChangeAvatar";
 
 const UserCreateContext = createContext<UserProps>({
   user: null,
-  userAvatar: null,
   followers: null,
   subscribes: null,
-  setUserAvatar: () => {},
 });
 
-export const UserContext = ({ children }: any) => {
+export const UserContext = observer(({ children }: any) => {
   const[user, setUser] = useState<UserDTO | null>(null);
   const[followers, setFollowers] = useState<string | null>(null);
   const[subscribes, setSubscribes] = useState<string | null>(null);
@@ -35,11 +35,12 @@ export const UserContext = ({ children }: any) => {
         const response = await api.get(`/images/user/${user.username}`);
         if(response.status === 200) {
           userAvatarStore.setAvatar(`${API_URL}/images/user/${user.username}`);
+          userAvatarStore.setAvatarURL(`${API_URL}/images/user/${user.username}`);
+          console.log(userAvatarStore.avatar);
         }
       }
-    }catch(error: any) {
+    }catch{
       try{
-
         const formData = new FormData();
         userAvatarStore.setAvatar('/defaultAvatar.png');
 
@@ -52,7 +53,7 @@ export const UserContext = ({ children }: any) => {
             }
         })
       }catch(error: any) {
-        console.error(error.response.data);
+        console.error(error);
       }
     }
   }
@@ -79,11 +80,12 @@ export const UserContext = ({ children }: any) => {
     getUser();
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if(user) {
       getUserAvatar();
       getFollowers();
       getSubscribes();
+      userDescriptionStore.setDescription(user.description);
       userUsernameStore.setUsername(user.username);
       userRegionStore.setRegion(user.region);
       userEmailStore.setEmail(user.email);
@@ -96,13 +98,11 @@ export const UserContext = ({ children }: any) => {
         user,
         followers,
         subscribes,
-        userAvatar: userAvatarStore.avatar,
-        setUserAvatar: userAvatarStore.setAvatar,
       }}
     >
       {children}
     </UserCreateContext.Provider>
   );
-};
+});
 
 export const useUserContext: any = () => useContext(UserCreateContext);

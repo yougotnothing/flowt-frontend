@@ -13,6 +13,7 @@ import {
   NoticeTitle,
   ContentContainer,
   NoticeIcon,
+  Title,
   NoticeDataContainer,
   NoticeDataTitle
 } from "./Notifications.styled";
@@ -22,6 +23,7 @@ export const Notifications: React.FC = () => {
 
   return (
     <Container>
+      <Title>Notifications</Title>
       {user &&
         <ContentContainer>
           <ButtonsContainer>

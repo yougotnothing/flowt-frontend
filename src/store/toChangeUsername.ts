@@ -1,18 +1,21 @@
-import { observable, makeObservable, action } from "mobx";
+import { observable, makeObservable, action, runInAction } from "mobx";
+import { IUsername } from "../types/types";
 
 class UserUsernameStore {
-  Username: string | null;
+  username: IUsername;
 
-  constructor(initialUsername: string | null) {
-    this.Username = initialUsername;
+  constructor(initialValue: IUsername) {
+    this.username = initialValue;
+
     makeObservable(this, {
-      Username: observable,
+      username: observable,
       setUsername: action
     });
-
   }
   setUsername(newUsername: string | null) {
-    this.Username = newUsername;
+    runInAction(() => {
+      this.username = newUsername;
+    });
   }
 }
 

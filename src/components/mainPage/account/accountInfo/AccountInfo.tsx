@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { useNavigate, generatePath } from "react-router-dom";
 import { observer } from "mobx-react-lite";
@@ -25,10 +25,11 @@ import {
 import { Playlist } from "../../playlist/Playlist";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
-import { userAvatarStore } from "../../../../store/toChangeAvatar";
-import { userUsernameStore } from "../../../../store/toChangeUsername";
-import { userRegionStore } from "../../../../store/toChangeRegion";
-import { userEmailStore } from "../../../../store/toChangeEmail";
+import { userUsernameStore as usernameStore } from "../../../../store/toChangeUsername";
+import { userAvatarStore as avatarStore } from "../../../../store/toChangeAvatar";
+import { userRegionStore as regionStore } from "../../../../store/toChangeRegion";
+import { userEmailStore as emailStore } from "../../../../store/toChangeEmail";
+import { userDescriptionStore as descriptionStore } from "../../../../store/toChangeDescription";
 
 export const AccountInfo: React.FC = observer(() => {
   const { user, followers, subscribes } = useUserContext();
@@ -42,13 +43,12 @@ export const AccountInfo: React.FC = observer(() => {
         <Title>Your info</Title>
         {user && followers && subscribes && (
           <UserContainer>
-            <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}} >
-            </UserAvatar>
+            <UserAvatar style={{backgroundImage: `url(${avatarStore.avatar})`}} />
             <UserInfo>
-              <Username>{userUsernameStore.Username}</Username>
+              <Username>{usernameStore.username}</Username>
               <StatsContainer>
-                <Email>{userEmailStore.email}</Email>
-                <Region>{userRegionStore.region}</Region>
+                <Email>{emailStore.email}</Email>
+                <Region>{regionStore.region}</Region>
               </StatsContainer>
               <ButtonsContainer>
                 <AContainer>
@@ -65,12 +65,14 @@ export const AccountInfo: React.FC = observer(() => {
             </UserInfo>
           </UserContainer>
         )}
-        {user && user.description && (
+        {user && (
           <>
             <DescriptionTitle>Your description</DescriptionTitle>
-            <DescriptionContainer>
-              <Description>{user.description}</Description>
-            </DescriptionContainer>
+            {descriptionStore.description && (
+              <DescriptionContainer>
+                <Description>{descriptionStore.description}</Description>
+              </DescriptionContainer>
+            )}
           </>
         )}
         {user &&

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { observer } from "mobx-react-lite";
-import { api } from "../../../../api/axiosConfig";
 import { AccountContainer } from "../Account.styled";
 import { AccountSettings } from "../AccountSettings";
 import {
@@ -23,7 +22,7 @@ import {
 } from "./ChangeAvatar.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
-import { userAvatarStore } from "../../../../store/toChangeAvatar";
+import { userAvatarStore as avatarStore } from "../../../../store/toChangeAvatar";
 import { userUsernameStore } from "../../../../store/toChangeUsername";
 import Cropper from "react-easy-crop";
 import { getCroppedImg } from "../../../avatar/canvas";
@@ -35,32 +34,29 @@ export const ChangeAvatar: React.FC = observer(() => {
   const[zoom, setZoom] = useState<number>(1.1);
   const[croppedAvatarBlob, setCroppedAvatarBlob] = useState<any>(null);
   const { user } = useUserContext();
+
   const navigate = useNavigate();
 
-  const handleChangedAvatar = async () => {
+  useEffect(() => {
+    avatarStore.setAvatarURL(user.avatar);
+  }, []);
+
+  useEffect(() => {
+    if(file) {
+      avatarStore.setAvatarURL(URL.createObjectURL(file));
+    }
+  }, [file]);
+
+  const handleChangeAvatar = async () => {
     try {
-      const formData = new FormData();
-      formData.append('file', croppedAvatarBlob);
-
-      await api.post('/users/avatar', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-
-      userAvatarStore.setAvatar(croppedAvatarBlob);
-      console.log(userAvatarStore.avatar);
-
-      navigate(generatePath('/account/:id', { id: userUsernameStore.Username }));
+      await fetch(croppedAvatarBlob);
+      avatarStore.setAvatar(URL.createObjectURL(croppedAvatarBlob));
+      navigate(generatePath('/account/:id', { id: userUsernameStore.username }));
     }catch(error: any) {
-      console.log('an error occurred');
+      console.log(error);
     }
   }
 
-  useEffect(() => {
-    if(file) userAvatarStore.setAvatarURL(URL.createObjectURL(file));
-  }, [file]);
-  
   const handleFileChosen = (event: any) => {
     const chosenFile = event.target.files[0];
     setFile(chosenFile);
@@ -121,7 +117,7 @@ export const ChangeAvatar: React.FC = observer(() => {
                       }}
                       objectFit="cover"
                       cropSize={{width: 240, height: 240}}
-                      image={userAvatarStore.avatarURL}
+                      image={avatarStore.avatarURL}
                       crop={crop}
                       zoom={zoom}
                       maxZoom={1.7}
@@ -134,13 +130,13 @@ export const ChangeAvatar: React.FC = observer(() => {
                       onZoomChange={setZoom}
                     />
                     <ButtonContainer>
-                      <SetNewAvatarButton onClick={handleChangedAvatar}>
+                      <SetNewAvatarButton onClick={handleChangeAvatar}>
                         Set avatar
                       </SetNewAvatarButton>
                     </ButtonContainer>
                   </>
                 ) : (
-                  <NewAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
+                  <NewAvatar style={{backgroundImage: `url(${avatarStore.avatar})`}} />
                 )}
               <Label htmlFor="avatarInput">{isFileChosen ? 'select another' : 'select avatar'}</Label>
             </InputWrapper>
@@ -148,5 +144,5 @@ export const ChangeAvatar: React.FC = observer(() => {
         </GlobalContainer>
       )}
     </AccountContainer>
-  )
+  );
 });

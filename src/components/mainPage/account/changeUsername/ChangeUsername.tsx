@@ -44,8 +44,10 @@ export const ChangeUsername: React.FC = observer(() => {
   const handleChangedUsername = async () => {
     try {
       const response = await api.patch('/users/username', {
-        newUsername: userUsernameStore.Username
+        newUsername: formik.values.username
       });
+
+      if(response.status === 200) userUsernameStore.setUsername(formik.values.username);
 
       setIsLoading(true);
       navigate(generatePath('/account/:id', { id: user.username }));
@@ -62,7 +64,7 @@ export const ChangeUsername: React.FC = observer(() => {
   
   useEffect(() => {
     if(user) {
-      formik.setValues({ username: user.username || "" });
+      formik.setValues({ username: userUsernameStore.username || "" });
     }
   }, [user]);
   
@@ -86,7 +88,6 @@ export const ChangeUsername: React.FC = observer(() => {
                 name="username"
                 onBlur={formik.handleBlur}
                 onChange={(e: any) => {
-                  userUsernameStore.setUsername(e.target.value);
                   formik.setFieldValue('username', e.target.value);
                 }}
                 defaultValue={formik.values.username}

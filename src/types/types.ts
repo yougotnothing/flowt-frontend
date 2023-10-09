@@ -1,5 +1,6 @@
-import React from "react";
-
-export type booleanState = (value: React.SetStateAction<boolean>) => void;
-export type nullState = (value: React.SetStateAction<null>) => void;
-export type stringState = (value: React.Dispatch<React.SetStateAction<string>>) => void;
+export type IAvatar = any;
+export type IAvatarURL = any;
+export type IUsername = string | null;
+export type IEmail = string | null;
+export type IDescription = string | null;
+export type IRegion = string | null;
