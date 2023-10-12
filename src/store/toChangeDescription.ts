@@ -3,8 +3,8 @@ import { IDescription } from "../types/types";
 class UserDescriptionStore {
   description: IDescription;
 
-  constructor(initialValue: IDescription) {
-    this.description = initialValue;
+  constructor() {
+    this.description = null;
 
     makeObservable(this, {
       description: observable,
@@ -19,4 +19,4 @@ class UserDescriptionStore {
   }
 }
 
-export const userDescriptionStore = new UserDescriptionStore(null);
+export const userDescriptionStore = new UserDescriptionStore();

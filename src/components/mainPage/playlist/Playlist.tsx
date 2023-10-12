@@ -12,16 +12,23 @@ import {
 } from "./Playlist.styled";
 import { useSongContext } from "../../../contexts/SongContext";
 import { useUserContext } from "../../../contexts/UserContext";
+import { userSongsStore as songs } from "../../../store/toSongs";
+import { ISongData } from "../../../types/types";
+import { observer } from "mobx-react-lite";
 
-export const Playlist: React.FC = () => {
-  const[songs, setSongs] = useState<string[] | null>(null);
-  const { setSongURL, setSongName } = useSongContext();
+export const Playlist: React.FC = observer(() => {
   const { user } = useUserContext();
   let counter: number = 0;
 
+
   const getUserSongs = async () => {
-    const response = await api.get(`/users/songs`);
-    setSongs(response.data.songs);
+    try {
+      const response = await api.get(`/users/songs`);
+      songs.getInfo(response.data.songs);
+      console.log(songs.container);
+    }catch(error: any) {
+      console.log(error);
+    }
   }
 
   useEffect(() => {
@@ -30,9 +37,9 @@ export const Playlist: React.FC = () => {
 
   return (
     <>
-      {user && songs ? songs.map((song: any) => {
+      {user ? songs.container.map((song: ISongData, index: number) => {
         return (
-          <PlaylistContainer key={++counter}>
+          <PlaylistContainer key={index}>
             <TitleImage style={{backgroundImage: `url(${API_URL}/images/song/${user.username}/${song.name})`}}/>
             <TextContainer>
               <PlaylistName>{user.username}</PlaylistName>
@@ -41,8 +48,7 @@ export const Playlist: React.FC = () => {
             <OpenPlaylistContainer>
               <OpenPlaylistButton
                 onClick={() => {
-                  setSongURL(`${API_URL}/songs/audio/${user.username}/${song.name}`);
-                  setSongName(song.name);
+                  songs.setSong(index, user.username);
                 }}>
                 Listen
               </OpenPlaylistButton>
@@ -52,4 +58,4 @@ export const Playlist: React.FC = () => {
       ) : null}
     </>
   );
-}
+});

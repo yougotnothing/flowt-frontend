@@ -1,6 +1,7 @@
 type setStateAction<T> = (value: any) => void;
 
 export interface ProviderProps {
+  song: string | null;
 
   followers?: string | null;
   subscribes?: string | null;

@@ -3,8 +3,10 @@ import React, { useContext, createContext, useState, useEffect } from "react";
 import { api } from "../api/axiosConfig";
 import { ProviderProps } from "../constants/props.const";
 import { useUserContext } from "./UserContext";
+import { userSongsStore as songsStore } from "../store/toSongs";
 
 const ContextValue = createContext<ProviderProps>({
+  song: null,
   songInfo: null,
   songURL: null,
   songName: null,
@@ -14,7 +16,8 @@ const ContextValue = createContext<ProviderProps>({
 });
 
 export const SongContext = ({ children }: any) => {
-  const[songInfo, setSongInfo] = useState<string | null>(null);
+  const[song, setSong] = useState<string | null>(null);
+  const[songInfo, setSongInfo] = useState<any>(null);
   const[songURL, setSongURL] = useState<string | null>(null);
   const[songName, setSongName] = useState<string | null>(null);
   const { user } = useUserContext();
@@ -23,12 +26,12 @@ export const SongContext = ({ children }: any) => {
     const getSongURL = async (): Promise<void> => {
       try {
         const response = await api.get('/users/songs');
-        setSongInfo(response.data.songs);
+        // songsStore.getInfo(response.data.songs);
       } catch (error: any) {
         console.log('song url =', songURL);
       }
     }
-    getSongURL();
+    // getSongURL();
   }, [user]);
 
   const updateSongURL = (newSongURL: any) => {
@@ -41,6 +44,7 @@ export const SongContext = ({ children }: any) => {
 
   return (
     <ContextValue.Provider value={{
+      song,
       songURL,
       songName,
       setSongURL: updateSongURL,

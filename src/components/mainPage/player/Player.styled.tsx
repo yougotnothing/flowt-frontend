@@ -5,16 +5,20 @@ export const PlayerContainer = styled('div')`
   display: flex;
   position: absolute;
   align-items: center;
+  -webkit-align-self: center;
   bottom: 12px;
-  width: 86vw;
+  width: max-content;
   
   .rhap_container {
     width: 820px;
-    margin-left: auto;
-    margin-right: auto;
     border-radius: 12px;
     background-color: ${colors.VERY_DARK_BLUE};
     box-shadow: 0 0 12px 1px ${colors.BORDER};
+  }
+  
+  .rhap_rewind-button,
+  .rhap_forward-button {
+    display: none;
   }
   
   .rhap_time,
@@ -85,7 +89,7 @@ export const SongPicture = styled('picture')`
 export const SongContainer = styled('div')`
   display: flex;
   flex-direction: row;
-  background-color: ${colors.GREY};
+  background-color: ${colors.DARK_BLUE};
   padding: 6px;
   width: max-content;
   gap: 12px;

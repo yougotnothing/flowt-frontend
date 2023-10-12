@@ -1,13 +1,13 @@
-import React, { useEffect, createContext, useContext, useState, useLayoutEffect } from "react";
+import React, { useEffect, createContext, useContext, useState } from "react";
 
 import { api, API_URL } from "../api/axiosConfig";
 import { UserDTO, UserProps } from "../types/props";
-import { userUsernameStore } from "../store/toChangeUsername";
-import { userRegionStore } from "../store/toChangeRegion";
-import { userEmailStore } from "../store/toChangeEmail";
-import { userDescriptionStore } from "../store/toChangeDescription";
+import { userEmailStore as emailStore } from "../store/toChangeEmail";
+import { userRegionStore as regionStore } from "../store/toChangeRegion";
+import { userAvatarStore as avatarStore } from "../store/toChangeAvatar";
+import { userUsernameStore as usernameStore } from "../store/toChangeUsername";
+import { userDescriptionStore as descriptionStore } from "../store/toChangeDescription";
 import { observer } from "mobx-react-lite";
-import { userAvatarStore } from "../store/toChangeAvatar";
 
 const UserCreateContext = createContext<UserProps>({
   user: null,
@@ -33,18 +33,16 @@ export const UserContext = observer(({ children }: any) => {
     try {
       if(user) {
         const response = await api.get(`/images/user/${user.username}`);
-        if(response.status === 200) {
-          userAvatarStore.setAvatar(`${API_URL}/images/user/${user.username}`);
-          userAvatarStore.setAvatarURL(`${API_URL}/images/user/${user.username}`);
-          console.log(userAvatarStore.avatar);
-        }
+        avatarStore.setAvatar(`${API_URL}/images/user/${user.username}`);
+        avatarStore.setAvatarURL(`${API_URL}/images/user/${user.username}`);
+        console.log(avatarStore.avatar);
       }
     }catch{
       try{
         const formData = new FormData();
-        userAvatarStore.setAvatar('/defaultAvatar.png');
+        avatarStore.setAvatar('/defaultAvatar.png');
 
-        formData.append('file', userAvatarStore.avatar);
+        formData.append('file', avatarStore.avatar);
 
         await api.post('/users/avatar', formData,
           {
@@ -80,15 +78,15 @@ export const UserContext = observer(({ children }: any) => {
     getUser();
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if(user) {
       getUserAvatar();
       getFollowers();
       getSubscribes();
-      userDescriptionStore.setDescription(user.description);
-      userUsernameStore.setUsername(user.username);
-      userRegionStore.setRegion(user.region);
-      userEmailStore.setEmail(user.email);
+      descriptionStore.setDescription(user.description);
+      usernameStore.setUsername(user.username);
+      regionStore.setRegion(user.region);
+      emailStore.setEmail(user.email);
     }
   }, [user]);
 
