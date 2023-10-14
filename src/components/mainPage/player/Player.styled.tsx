@@ -1,24 +1,24 @@
 import styled from "styled-components";
 import { colors } from "../../../constants/colors.const";
 
+interface ShuffleProps {
+  $isShuffled: boolean;
+}
+
 export const PlayerContainer = styled('div')`
   display: flex;
   position: absolute;
   align-items: center;
+  justify-content: center;
   -webkit-align-self: center;
   bottom: 12px;
   width: max-content;
-  
+
   .rhap_container {
     width: 820px;
     border-radius: 12px;
     background-color: ${colors.VERY_DARK_BLUE};
     box-shadow: 0 0 12px 1px ${colors.BORDER};
-  }
-  
-  .rhap_rewind-button,
-  .rhap_forward-button {
-    display: none;
   }
   
   .rhap_time,
@@ -42,16 +42,10 @@ export const PlayerContainer = styled('div')`
     flex: none;
     margin: auto 12px auto auto;
     width: 100px !important;
-  }
-  
-  .rhap_main-controls {
-    margin: auto 0 auto auto;
-  }
   
   .rhap_additional-controls {
     width: max-content !important;
     flex: none !important;
-    margin: auto auto auto 0;
   }
 
   .rhap_controls-section {
@@ -91,11 +85,10 @@ export const SongContainer = styled('div')`
   flex-direction: row;
   background-color: ${colors.DARK_BLUE};
   padding: 6px;
-  width: max-content;
+  width: 150px;
   gap: 12px;
   border-radius: 5px;
   align-self: start;
-  margin: auto auto auto 0;
 `;
 
 export const SongInfoContainer = styled('div')`
@@ -103,6 +96,7 @@ export const SongInfoContainer = styled('div')`
   flex-direction: column;
   align-items: start;
   gap: 8px;
+  margin-right: auto;
 `;
 
 export const SongTitle = styled('div')`
@@ -125,4 +119,19 @@ export const SongCreatorLink = styled('a')`
     border-left-width: 0;
     border-right-width: 0;
   }
+`;
+
+export const ShuffleButton = styled('button')`
+  cursor: pointer;
+  display: flex;
+  height: 24px;
+  width: 24px;
+  background-color: ${colors.VERY_DARK_BLUE};
+  border: none;
+  align-items: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  justify-content: center;
+  margin-left: calc(50% - 150px - 100px);
 `;

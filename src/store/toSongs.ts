@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from "mobx";
+import { action, makeObservable, observable, runInAction } from "mobx";
 
 import { ISongData, ISongParameters } from "../types/types";
 import { API_URL } from "../api/axiosConfig";
@@ -57,19 +57,20 @@ class UserSongsStore implements ISongParameters {
   }
 
   setSong(index: number, username: string) {
-    if (this.container && index >= 0 && index < this.container.length) {
-      const songInfo = this.container[index];
+    runInAction(() => {
+      if(this.container && index >= 0 && index < this.container.length) {
+        const songInfo = this.container[index];
 
-      this.setUrl(`${API_URL}/songs/audio/${username}/${songInfo.name}`);
-      this.setAvatar(`${API_URL}/images/song/${username}/${songInfo.name}`);
+        this.setUrl(`${API_URL}/songs/audio/${username}/${songInfo.name}`);
+        this.setAvatar(`${API_URL}/images/song/${username}/${songInfo.name}`);
 
-      this.issueYear = songInfo.issueYear;
-      this.listens = songInfo.listens;
-      this.genre = songInfo.genre;
-      this.setName(songInfo.name);
-      this.id = songInfo.songId;
-    }
+        this.issueYear = songInfo.issueYear;
+        this.listens = songInfo.listens;
+        this.genre = songInfo.genre;
+        this.setName(songInfo.name);
+        this.id = songInfo.songId;
+      }
+    });
   }
 }
-
 export const userSongsStore = new UserSongsStore();
