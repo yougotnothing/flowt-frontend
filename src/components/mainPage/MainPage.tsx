@@ -19,8 +19,8 @@ import { Player } from "./player/Player";
 import { API_URL } from "../../api/axiosConfig";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../contexts/UserContext";
-import { userUsernameStore } from "../../store/toChangeUsername";
-import { userAvatarStore } from "../../store/toChangeAvatar";
+import { userUsernameStore as usernameStore } from "../../store/toChangeUsername";
+import { userAvatarStore as avatarStore } from "../../store/toChangeAvatar";
 
 export const MainPage: React.FC = () => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -64,8 +64,8 @@ export const MainPage: React.FC = () => {
           <VerifyedUserContainer>
             <UserButton
               onClick={() => navigate(generatePath('/profile/:id', {id: user.username}))}>
-              <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}}/>
-              <UserNickname>{userUsernameStore.username}</UserNickname>
+              <UserAvatar style={{backgroundImage: `url(${avatarStore.avatar})`}}/>
+              <UserNickname>{usernameStore.username}</UserNickname>
             </UserButton>
           </VerifyedUserContainer>
           :

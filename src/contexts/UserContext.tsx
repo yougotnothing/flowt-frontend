@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useContext, useState } from "react";
+import React, { useEffect, createContext, useContext, useState, useLayoutEffect } from "react";
 
 import { api, API_URL } from "../api/axiosConfig";
 import { UserDTO, UserProps } from "../types/props";
@@ -78,7 +78,8 @@ export const UserContext = observer(({ children }: any) => {
     getUser();
   }, []);
 
-  useEffect(() => {
+
+  useLayoutEffect(() => {
     if(user) {
       getUserAvatar();
       getFollowers();

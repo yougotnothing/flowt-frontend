@@ -8,23 +8,27 @@ import {
   SongPicture,
   SongCreatorLink,
   SongInfoContainer,
-  ShuffleButton
+  ShuffleButton,
 } from "./Player.styled";
-import 'react-h5-audio-player/lib/styles.css';
+import "react-h5-audio-player/lib/styles.css";
 import { useUserContext } from "../../../contexts/UserContext";
 import { userSongsStore as song } from "../../../store/toSongs";
 import { observer } from "mobx-react-lite";
 
 export const Player: React.FC = observer(() => {
-  const[index, setIndex] = useState(0);
-  const[isShuffled, setIsShuffled] = useState<boolean>(false);
-  const SHUFFLE_ICON = isShuffled ? 'url(/shuffle-on.webp)' : 'url(/shuffle-off.webp)';
+  const [index, setIndex] = useState(0);
+  const [isShuffled, setIsShuffled] = useState<boolean>(false);
+  const SHUFFLE_ICON = isShuffled ? "url(/shuffle-on.webp)" : "url(/shuffle-off.webp)";
   const { user } = useUserContext();
 
   const handlePlayNext = useCallback(() => {
     if(isShuffled) {
       setIndex((prevIndex) => {
-        return Math.floor(Math.random() * song.container.length);
+        let randomIndex;
+        do {
+          randomIndex = Math.floor(Math.random() * song.container.length);
+        }while(prevIndex === randomIndex);
+          return randomIndex;
       });
     }else{
       setIndex((prevIndex) => {
@@ -35,19 +39,21 @@ export const Player: React.FC = observer(() => {
         }
       });
     }
-
-    console.log('click next');
-  }, [song.container, isShuffled]);
+  }, [isShuffled]);
 
   const handleShuffleClick = () => {
     setIsShuffled(!isShuffled);
     console.log(isShuffled);
-  }
+  };
 
   const handlePlayPrev = useCallback(() => {
     if(isShuffled) {
       setIndex((prevIndex) => {
-        return Math.floor(Math.random() * song.container.length);
+        let randomIndex;
+        do {
+          randomIndex = Math.floor(Math.random() * song.container.length);
+        }while(prevIndex === randomIndex);
+        return randomIndex;
       });
     }else{
       setIndex((prevIndex) => {
@@ -58,9 +64,7 @@ export const Player: React.FC = observer(() => {
         }
       });
     }
-
-    console.log('click prev');
-  }, [song.container, isShuffled]);
+  }, [isShuffled]);
 
   useEffect(() => {
     if(user) {
@@ -73,7 +77,7 @@ export const Player: React.FC = observer(() => {
       {user && song.url && (
         <PlayerContainer>
           <H5AudioPlayer
-            layout='stacked-reverse'
+            layout="stacked-reverse"
             volume={1}
             src={song.url}
             autoPlay={true}
@@ -85,16 +89,21 @@ export const Player: React.FC = observer(() => {
             onClickPrevious={handlePlayPrev}
             customControlsSection={[
               <SongContainer>
-                <SongPicture style={{backgroundImage: `url(${song.avatar})`}} />
+                <SongPicture
+                  style={{ backgroundImage: `url(${song.avatar})` }}
+                />
                 <SongInfoContainer>
                   <SongCreatorLink>{user.username}</SongCreatorLink>
                   <SongTitle>{song.name}</SongTitle>
                 </SongInfoContainer>
               </SongContainer>,
-              <ShuffleButton style={{backgroundImage: SHUFFLE_ICON}} onClick={handleShuffleClick} />,
-                RHAP_UI.MAIN_CONTROLS,
-                RHAP_UI.ADDITIONAL_CONTROLS,
-                RHAP_UI.VOLUME_CONTROLS
+              <ShuffleButton
+                style={{ backgroundImage: SHUFFLE_ICON }}
+                onClick={handleShuffleClick}
+              />,
+              RHAP_UI.MAIN_CONTROLS,
+              RHAP_UI.ADDITIONAL_CONTROLS,
+              RHAP_UI.VOLUME_CONTROLS,
             ]}
           />
         </PlayerContainer>
