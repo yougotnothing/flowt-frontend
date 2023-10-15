@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { useUserContext } from "../../../contexts/UserContext";
@@ -17,26 +17,44 @@ import {
   NoticeDataContainer,
   NoticeDataTitle
 } from "./Notifications.styled";
+import { api } from "../../../api/axiosConfig";
+import { INotice, NoticeProps } from "../../../types/props";
 export const Notifications: React.FC = () => {
+  const notifications: INotice[] = [];
   const navigate = useNavigate();
   const { user } = useUserContext();
+
+  const getNotifications = async () => {
+    try {
+      const response = await api.get('/users/notifications ');
+      notifications.push(response.data);
+    }catch(error: any) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getNotifications();
+  }, [user]);
 
   return (
     <Container>
       <Title>Notifications</Title>
-      {user &&
+      {user && (
         <ContentContainer>
           <ButtonsContainer>
             <Button>Button</Button>
           </ButtonsContainer>
           <NoticesContainer>
-            <Notices>
-              <NoticeIcon style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
-              <NoticeTitle>Title</NoticeTitle>
-            </Notices>
+            {notifications.map((notice: NoticeProps, index: number) => (
+              <Notices key={index}>
+                <NoticeIcon style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
+                <NoticeTitle>{notice.title}</NoticeTitle>
+              </Notices>
+            ))}
           </NoticesContainer>
         </ContentContainer>
-      }
+      )}
     </Container>
   );
 };

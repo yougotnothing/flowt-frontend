@@ -23,16 +23,14 @@ import { Upload } from "../upload/Upload";
 import { Player } from "../mainPage/player/Player";
 import { UserContext } from "../../contexts/UserContext";
 import { Notifications } from "../mainPage/notifications/Notifications";
-import { SongContext } from "../../contexts/SongContext";
+import { Songs } from "../songs/Songs";
 
 export const pageRouter = createBrowserRouter([
   {
     path: '/',
     element:
       <UserContext>
-        <SongContext>
-          <MainPage />
-        </SongContext>
+        <MainPage />
       </UserContext>,
     children: [
       {
@@ -118,6 +116,10 @@ export const pageRouter = createBrowserRouter([
       {
         path: '/notifications/:id',
         element: <Notifications />
+      },
+      {
+        path: '/songs/:id',
+        element: <Songs />
       }
     ]
   }

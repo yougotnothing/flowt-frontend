@@ -21,6 +21,7 @@ import { PageLoader } from "../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../contexts/UserContext";
 import { userUsernameStore as usernameStore } from "../../store/toChangeUsername";
 import { userAvatarStore as avatarStore } from "../../store/toChangeAvatar";
+import { userStore } from "../../store/toUser";
 
 export const MainPage: React.FC = () => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -32,7 +33,7 @@ export const MainPage: React.FC = () => {
   let location = useLocation();
 
   useEffect(() => {
-    const currentUrl = location.pathname;
+   const currentUrl = location.pathname;
 
     if(!currentUrl || currentUrl === '/') {
       navigate('/home');

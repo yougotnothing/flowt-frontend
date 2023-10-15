@@ -28,7 +28,7 @@ export const UserContext = observer(({ children }: any) => {
       console.log("an error occurred");
     }
   }
-
+  
   const getUserAvatar = async (): Promise<void> => {
     try {
       if(user) {

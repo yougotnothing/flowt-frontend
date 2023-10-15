@@ -4,6 +4,8 @@ export interface UserDTO {
   region: string | null;
   description: string | null;
   email: string | null;
+  followers: string[];
+  subscribes: string[];
 }
 
 export interface UserProps {
@@ -11,3 +13,10 @@ export interface UserProps {
   followers: string | null;
   subscribes: string | null;
 }
+
+export interface NoticeProps {
+  title: string;
+  message: string;
+}
+
+export type INotice = NoticeProps;

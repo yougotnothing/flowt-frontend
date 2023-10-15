@@ -22,7 +22,6 @@ import {
   AccountContainer,
   PlaylistContainer
 } from "../Account.styled";
-import { Playlist } from "../../playlist/Playlist";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
 import { userUsernameStore as usernameStore } from "../../../../store/toChangeUsername";
@@ -30,6 +29,7 @@ import { userAvatarStore as avatarStore } from "../../../../store/toChangeAvatar
 import { userRegionStore as regionStore } from "../../../../store/toChangeRegion";
 import { userEmailStore as emailStore } from "../../../../store/toChangeEmail";
 import { userDescriptionStore as descriptionStore } from "../../../../store/toChangeDescription";
+import { Songs } from "../../../songs/Songs";
 
 export const AccountInfo: React.FC = observer(() => {
   const { user, followers, subscribes } = useUserContext();
@@ -77,7 +77,7 @@ export const AccountInfo: React.FC = observer(() => {
         )}
         {user &&
           <PlaylistContainer>
-            <Playlist />
+            <Songs />
           </PlaylistContainer>
         }
       </InfoContainer>

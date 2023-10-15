@@ -56,7 +56,7 @@ class UserSongsStore implements ISongParameters {
     this.name = name;
   }
 
-  setSong(index: number, username: string) {
+  setSong(index: number, username: string | null) {
     runInAction(() => {
       if(this.container && index >= 0 && index < this.container.length) {
         const songInfo = this.container[index];
