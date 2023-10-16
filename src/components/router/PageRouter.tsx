@@ -23,7 +23,7 @@ import { Upload } from "../upload/Upload";
 import { Player } from "../mainPage/player/Player";
 import { UserContext } from "../../contexts/UserContext";
 import { Notifications } from "../mainPage/notifications/Notifications";
-import { Songs } from "../songs/Songs";
+import { Songs } from "../songs/smallsizeSongs/Songs";
 
 export const pageRouter = createBrowserRouter([
   {

@@ -74,7 +74,7 @@ export const SwitchTheme = styled('button')`
 `;
 
 export const DescriptionContainer = styled('div')`
-  margin: 34px auto 34px 0;
+  margin-top: 34px;
   display: flex;
   flex-direction: column;
   background-color: ${colors.FRONT};
@@ -82,8 +82,8 @@ export const DescriptionContainer = styled('div')`
   border-radius: 14px;
   gap: 16px;
   padding: 14px;
-  height: 14em;
-  width: 38em;
+  height: 218px;
+  width: 30em;
 `;
 
 export const DescriptionTitle = styled('div')`
@@ -219,4 +219,34 @@ export const BorderContainer = styled('div')`
   border-top-width: 0;
   border-left-width: 0;
   border-right-width: 0;
+`;
+
+export const FooterContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  width: 1200px;
+  gap: 36px;
+`;
+
+export const SongsTitle = styled('div')`
+  font-size: 26px;
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 900;
+  color: ${colors.SECONDARY};
+`;
+
+export const SongContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 660px;
+  gap: 12px;
+`;
+
+export const SongMainContainer = styled('div')`
+  margin-top: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 `;

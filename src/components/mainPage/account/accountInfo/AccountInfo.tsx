@@ -29,7 +29,8 @@ import { userAvatarStore as avatarStore } from "../../../../store/toChangeAvatar
 import { userRegionStore as regionStore } from "../../../../store/toChangeRegion";
 import { userEmailStore as emailStore } from "../../../../store/toChangeEmail";
 import { userDescriptionStore as descriptionStore } from "../../../../store/toChangeDescription";
-import { Songs } from "../../../songs/Songs";
+import { Songs } from "../../../songs/smallsizeSongs/Songs";
+import { FullsizeSongs } from "../../../songs/fullsizeSongs/FullsizeSongs";
 
 export const AccountInfo: React.FC = observer(() => {
   const { user, followers, subscribes } = useUserContext();

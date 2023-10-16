@@ -20,7 +20,11 @@ import {
   Description,
   DescriptionContainer,
   DescriptionTitle,
-  BorderContainer
+  BorderContainer,
+  FooterContainer,
+  SongContainer,
+  SongsTitle,
+  SongMainContainer
 } from "./Profile.styled";
 
 import { Options } from "./options/Options";
@@ -29,6 +33,7 @@ import { observer } from "mobx-react-lite";
 import { userAvatarStore } from "../../../store/toChangeAvatar";
 import { userUsernameStore } from "../../../store/toChangeUsername";
 import { useUserContext } from "../../../contexts/UserContext";
+import { Songs } from "../../songs/smallsizeSongs/Songs";
 
 export const Profile: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -73,10 +78,18 @@ export const Profile: React.FC = observer(() => {
               </UserParams>
             </HeadContainer>
             <BorderContainer> </BorderContainer>
-            <DescriptionContainer>
-              <DescriptionTitle>Description</DescriptionTitle>
-              <Description>{user.description}</Description>
-            </DescriptionContainer>
+            <FooterContainer>
+              <DescriptionContainer>
+                <DescriptionTitle>Description</DescriptionTitle>
+                <Description>{user.description}</Description>
+              </DescriptionContainer>
+              <SongMainContainer>
+                <SongsTitle>Songs</SongsTitle>
+                <SongContainer>
+                  <Songs />
+                </SongContainer>
+              </SongMainContainer>
+            </FooterContainer>
             <LikedText>Favorite</LikedText>
             <LikedContainer>
             {subscribes.map((subscribe: string) => (
