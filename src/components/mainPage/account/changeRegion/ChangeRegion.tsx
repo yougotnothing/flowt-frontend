@@ -20,15 +20,17 @@ import { A, AContainer,GoBackContainer, GlobalContainer } from "../../MainPage.s
 import { AccountSettings } from "../AccountSettings";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
+import { URLS } from "../../../../constants/urls.const";
 
 export const ChangeRegion: React.FC = observer(() => {
   const { user } = useUserContext();
   const navigate = useNavigate();
+  const url = new URLS();
   let counter: number = 0;
 
   const handleChangedRegion = async () => {
     try {
-      const response = await api.patch('/users/region', {
+      const response = await api.patch(url.region, {
         newRegion: userRegionStore.region
       });
 

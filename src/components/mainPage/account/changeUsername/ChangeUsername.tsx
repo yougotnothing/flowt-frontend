@@ -25,11 +25,13 @@ import { Loader } from "../../../loader/Loader";
 
 import { AccountSettings } from "../AccountSettings";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
+import { URLS } from "../../../../constants/urls.const";
 
 export const ChangeUsername: React.FC = observer(() => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const { user } = useUserContext();
   const navigate = useNavigate();
+  const url = new URLS();
 
   const formik = useFormik<{
     username: string
@@ -43,15 +45,15 @@ export const ChangeUsername: React.FC = observer(() => {
 
   const handleChangedUsername = async () => {
     try {
-      const response = await api.patch('/users/username', {
+      const response = await api.patch(url.username, {
         newUsername: formik.values.username
       });
 
-      if(response.status === 200) userUsernameStore.setUsername(formik.values.username);
+      if(response) userUsernameStore.setUsername(formik.values.username);
 
       setIsLoading(true);
       navigate(generatePath('/account/:id', { id: user.username }));
-      if (response) {
+      if(response) {
         const token = response.data.token;
         console.log(token);
         localStorage.setItem('token', token);

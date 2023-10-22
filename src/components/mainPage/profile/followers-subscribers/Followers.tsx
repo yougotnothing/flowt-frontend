@@ -7,18 +7,14 @@ import {
   Card,
   Container
 } from "./Followers.styled";
+import { URLS } from "../../../../constants/urls.const";
+import { useUserContext } from "../../../../contexts/UserContext";
 
 export const Followers: React.FC = () => {
-  const[followers, setFollowers] = useState<any>([]);
   const navigate = useNavigate();
   let counter: number = 0;
-
-  const getFollowers = async () => {
-    const response = await api.get('/users/followers');
-    setFollowers(response.data.followers);
-  }
-
-  useEffect(() => { getFollowers(); }, []);
+  const url = new URLS();
+  const { followers } = useUserContext();
 
   return(
     <Container>

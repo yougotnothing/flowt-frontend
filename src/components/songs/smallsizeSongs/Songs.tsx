@@ -16,20 +16,22 @@ import {
   LikeSongButton
 } from "./Songs.styled";
 import { userSongsStore as songs } from "../../../store/toSongs";
-import { useUserContext } from "../../../contexts/UserContext";
 import { ISongData } from "../../../types/types";
 import { api, API_URL } from "../../../api/axiosConfig";
+import { URLS } from "../../../constants/urls.const";
+import { useUserContext } from "../../../contexts/UserContext";
 
 export const Songs: React.FC = observer(() => {
   const[isLiked, setIsLiked] = useState<boolean[]>(
     Array(songs.container.length).fill(false)
   );
-  const { user } = useUserContext();
   const navigate = useNavigate();
+  const url = new URLS();
+  const { user } = useUserContext();
 
   const getSong = async () => {
     try {
-      const response = await api.get(`/users/songs`);
+      const response = await api.get(url.songs);
       songs.getInfo(response.data.songs);
       console.log(songs.container);
     }catch(error: any) {
@@ -37,17 +39,17 @@ export const Songs: React.FC = observer(() => {
     }
   }
 
-  const handleLikedSong = async (SONG_NAME: string | null, USERNAME: string | null, index: number) => {
+  const handleLikedSong = async (song_name: string | null, username: string | null, index: number) => {
     try {
       if(!isLiked[index]) {
-        await api.post( `/liked/${USERNAME}/${SONG_NAME}`);
+        await api.post( `/liked/${username}/${song_name}`);
         setIsLiked((prevState) => {
           const updatedStates = [...prevState];
           updatedStates[index] = true;
           return updatedStates;
         });
       }else{
-        await api.delete(`/liked/${USERNAME}/${SONG_NAME}`);
+        await api.delete(`/liked/${username}/${song_name}`);
         setIsLiked((prevState) => {
           const updatedStates = [...prevState];
           updatedStates[index] = false;
@@ -65,7 +67,7 @@ export const Songs: React.FC = observer(() => {
 
   return (
     <>
-      {user ? songs.container.map((song: ISongData, index: number) => (
+      {user.username ? songs.container.map((song: ISongData, index: number) => (
         <SongContainer key={index}>
           <SongImage style={{backgroundImage: `url(${API_URL}/images/song/${user.username}/${song.name})`}}>
             <SongButton onClick={() => songs.setSong(index, user.username)} />

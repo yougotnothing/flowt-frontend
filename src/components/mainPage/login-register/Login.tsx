@@ -49,7 +49,7 @@ export const Login: React.FC = () => {
       window.location.reload();
     }catch(error: any) {
       setIsLoading(false);
-      setErrorMessage(error.response.data.message);
+      setErrorMessage(error);
     }
   }
 

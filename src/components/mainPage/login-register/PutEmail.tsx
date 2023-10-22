@@ -15,11 +15,13 @@ import {
   ValidationSpan,
   InputContainer
 } from "./Login.register.styled";
+import { URLS } from "../../../constants/urls.const";
 
 export const PutEmail: React.FC = () => {
-  const[validationError, setValidationError] = useState('');
+  const[validationError, setValidationError] = useState<string | null>(null);
   const[isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const url = new URLS();
 
   const formik = useFormik<{
     email: string
@@ -34,9 +36,9 @@ export const PutEmail: React.FC = () => {
   const handlePutEmail = async () => {
     setIsLoading(true);
     try {
-      await api.post('/verify/restore-password', { email: formik.values.email });
+      await api.post(url.restore_pass, { email: formik.values.email });
       localStorage.setItem('email', formik.values.email);
-      setTimeout(() => navigate('/verify/restore-password'), 300);
+      setTimeout(() => navigate(url.put_email), 300);
     }catch(e) {
       setValidationError('Email invalid');
       setIsLoading(false);

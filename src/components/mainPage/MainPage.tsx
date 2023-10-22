@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { Form, Link, Outlet, useNavigate, useLocation, generatePath } from "react-router-dom";
 
 import {
@@ -16,21 +16,23 @@ import {
 } from "./MainPage.styled";
 import { AlertSuccess, AlertWarning } from "./alert/Alert";
 import { Player } from "./player/Player";
-import { API_URL } from "../../api/axiosConfig";
+import { api, API_URL } from "../../api/axiosConfig";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../contexts/UserContext";
-import { userUsernameStore as usernameStore } from "../../store/toChangeUsername";
 import { userAvatarStore as avatarStore } from "../../store/toChangeAvatar";
-import { userStore } from "../../store/toUser";
+import { observer } from "mobx-react-lite";
+import { URLS } from "../../constants/urls.const";
 
-export const MainPage: React.FC = () => {
+export const MainPage: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
   const[isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
-  const { user } = useUserContext();
   let location = useLocation();
+  const url = new URLS();
+  const { user } = useUserContext();
+
 
   useEffect(() => {
    const currentUrl = location.pathname;
@@ -65,8 +67,8 @@ export const MainPage: React.FC = () => {
           <VerifyedUserContainer>
             <UserButton
               onClick={() => navigate(generatePath('/profile/:id', {id: user.username}))}>
-              <UserAvatar style={{backgroundImage: `url(${avatarStore.avatar})`}}/>
-              <UserNickname>{usernameStore.username}</UserNickname>
+              <UserAvatar style={{ backgroundImage: `url(${avatarStore.avatar})` }}/>
+              <UserNickname>{user.username}</UserNickname>
             </UserButton>
           </VerifyedUserContainer>
           :
@@ -82,4 +84,4 @@ export const MainPage: React.FC = () => {
       <Player />
     </Container>
   );
-};
+});

@@ -10,20 +10,19 @@ import {
   OpenPlaylistButton,
   OpenPlaylistContainer
 } from "./Playlist.styled";
-import { useSongContext } from "../../../contexts/SongContext";
 import { useUserContext } from "../../../contexts/UserContext";
 import { userSongsStore as songs } from "../../../store/toSongs";
 import { ISongData } from "../../../types/types";
 import { observer } from "mobx-react-lite";
+import { URLS } from "../../../constants/urls.const";
 
 export const Playlist: React.FC = observer(() => {
   const { user } = useUserContext();
-  let counter: number = 0;
-
+  const url = new URLS();
 
   const getUserSongs = async () => {
     try {
-      const response = await api.get(`/users/songs`);
+      const response = await api.get(url.songs);
       songs.getInfo(response.data.songs);
       console.log(songs.container);
     }catch(error: any) {

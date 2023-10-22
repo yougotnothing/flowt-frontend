@@ -6,7 +6,6 @@ import { api } from "../../../../api/axiosConfig";
 import { AccountSettings } from "../AccountSettings";
 import { AccountContainer } from "../Account.styled";
 import { restorePasswordSchema } from "../../../../validation/yup.config";
-import { Span } from "../../login-register/Login.register.styled";
 import {
   LoginInput,
   LoginButton, 
@@ -20,6 +19,7 @@ import {
 } from "../../login-register/Login.register.styled";
 import { Loader } from "../../../loader/Loader";
 import { useUserContext } from "../../../../contexts/UserContext";
+import { URLS } from "../../../../constants/urls.const";
 
 export const ChangePassword: React.FC = () => {
   const[errorMessage, setErrorMessage] = useState<any>('');
@@ -27,6 +27,7 @@ export const ChangePassword: React.FC = () => {
   const[isVerify, setIsVerify] = useState<boolean>(false);
   const { user } = useUserContext();
   const navigate = useNavigate();
+  const url = new URLS();
 
   const formik = useFormik<{
     password: string,
@@ -46,12 +47,12 @@ export const ChangePassword: React.FC = () => {
     try{
       setIsLoading(true);
       if(localStorage.getItem('email') === null) {
-        await api.post('/users/change-password', {
+        await api.post(url.change_password, {
           newPassword: formik.values.password,
           code: formik.values.code
         });
       }else{
-        await api.post('/users/restore-password', {
+        await api.post(url.restore_pass, {
           email: localStorage.getItem('email'),
           newPassword: formik.values.password,
           code: formik.values.code
@@ -123,10 +124,7 @@ export const ChangePassword: React.FC = () => {
           {codeError}
           <ValidationSpan>{errorMessage}</ValidationSpan>
           </InputContainer>
-          <LoginButton
-            onClick={() => handleChangePassword()}
-            disabled={isLoading}
-            >
+          <LoginButton onClick={handleChangePassword} disabled={isLoading}>
             {isLoading ? <Loader /> : "Send code"}
           </LoginButton>
         </LoginCard>

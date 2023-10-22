@@ -26,12 +26,14 @@ import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
 import { userEmailStore } from "../../../../store/toChangeEmail";
 import { observer } from "mobx-react-lite";
+import { URLS } from "../../../../constants/urls.const";
 
 export const ChangeEmail: React.FC = observer(() => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const[backendError, setBackendError] = useState<string | null>(null);
   const { user } = useUserContext();
   const navigate = useNavigate();
+  const url = new URLS();
 
   const formik = useFormik<{
     email: string
@@ -52,7 +54,7 @@ export const ChangeEmail: React.FC = observer(() => {
   const handleChangeEmail = async () => {
     setIsLoading(true);
     try {
-      const response = await api.patch('/users/email', {
+      const response = await api.patch(url.email, {
         newEmail: formik.values.email
       });
 

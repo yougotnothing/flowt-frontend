@@ -26,6 +26,8 @@ import { userAvatarStore as avatarStore } from "../../../../store/toChangeAvatar
 import { userUsernameStore } from "../../../../store/toChangeUsername";
 import Cropper from "react-easy-crop";
 import { getCroppedImg } from "../../../avatar/canvas";
+import { api } from "../../../../api/axiosConfig";
+import { URLS } from "../../../../constants/urls.const";
 
 export const ChangeAvatar: React.FC = observer(() => {
   const[isFileChosen, setIsFileChosen] = useState<boolean>(false);
@@ -34,6 +36,7 @@ export const ChangeAvatar: React.FC = observer(() => {
   const[zoom, setZoom] = useState<number>(1.1);
   const[croppedAvatarBlob, setCroppedAvatarBlob] = useState<any>(null);
   const { user } = useUserContext();
+  const url = new URLS();
 
   const navigate = useNavigate();
 
@@ -49,7 +52,14 @@ export const ChangeAvatar: React.FC = observer(() => {
 
   const handleChangeAvatar = async () => {
     try {
-      await fetch(croppedAvatarBlob);
+      const formData = new FormData();
+
+      formData.append('file', croppedAvatarBlob)
+      await api.post('/users/avatar', formData, {
+        headers: {
+          'Content-type': 'image/jpeg'
+        }
+      });
       avatarStore.setAvatar(URL.createObjectURL(croppedAvatarBlob));
       navigate(generatePath('/account/:id', { id: userUsernameStore.username }));
     }catch(error: any) {

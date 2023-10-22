@@ -89,9 +89,7 @@ export const Player: React.FC = observer(() => {
             onClickPrevious={handlePlayPrev}
             customControlsSection={[
               <SongContainer>
-                <SongPicture
-                  style={{ backgroundImage: `url(${song.avatar})` }}
-                />
+                <SongPicture style={{backgroundImage: `url(${song.avatar})`}}/>
                 <SongInfoContainer>
                   <SongCreatorLink>{user.username}</SongCreatorLink>
                   <SongTitle>{song.name}</SongTitle>

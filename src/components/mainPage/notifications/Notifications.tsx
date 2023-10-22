@@ -17,25 +17,14 @@ import {
   NoticeDataContainer,
   NoticeDataTitle
 } from "./Notifications.styled";
-import { api } from "../../../api/axiosConfig";
-import { INotice, NoticeProps } from "../../../types/props";
-export const Notifications: React.FC = () => {
-  const notifications: INotice[] = [];
+import { URLS } from "../../../constants/urls.const";
+import { notificationsStore as notices } from "../../../store/toNotifications";
+import { observer } from "mobx-react-lite";
+
+export const Notifications: React.FC = observer(() => {
   const navigate = useNavigate();
+  const url = new URLS();
   const { user } = useUserContext();
-
-  const getNotifications = async () => {
-    try {
-      const response = await api.get('/users/notifications ');
-      notifications.push(response.data);
-    }catch(error: any) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    getNotifications();
-  }, [user]);
 
   return (
     <Container>
@@ -46,15 +35,15 @@ export const Notifications: React.FC = () => {
             <Button>Button</Button>
           </ButtonsContainer>
           <NoticesContainer>
-            {notifications.map((notice: NoticeProps, index: number) => (
+            {notices.container.map((notice, index) => (
               <Notices key={index}>
                 <NoticeIcon style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
-                <NoticeTitle>{notice.title}</NoticeTitle>
+                <NoticeTitle>{notice.message}</NoticeTitle>
               </Notices>
             ))}
           </NoticesContainer>
         </ContentContainer>
       )}
     </Container>
-  );
-};
+  )
+});

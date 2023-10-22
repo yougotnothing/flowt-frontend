@@ -20,11 +20,13 @@ import {
 import { Span } from '../../login-register/Login.register.styled';
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
+import { URLS } from "../../../../constants/urls.const";
 
 export const ChangeDescription: React.FC = () => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const { user } = useUserContext();
   const navigate = useNavigate();
+  const url = new URLS();
   
   const formik = useFormik<{
     description: string
@@ -40,7 +42,7 @@ export const ChangeDescription: React.FC = () => {
     try {
       userDescriptionStore.setDescription(formik.values.description);
 
-      await api.patch('/users/description', {
+      await api.patch(url.description, {
         newDescription: userDescriptionStore.description
       });
 

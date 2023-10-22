@@ -6,8 +6,8 @@ class UserAvatarStore {
   avatar: IAvatar;
   avatarURL: IAvatarURL;
 
-  constructor(initialValue: null) {
-    this.avatar = initialValue;
+  constructor() {
+    this.avatar = '';
     this.avatarURL = '';
 
     makeObservable(this, {
@@ -31,4 +31,4 @@ class UserAvatarStore {
   }
 }
 
-export const userAvatarStore = new UserAvatarStore(null);
+export const userAvatarStore = new UserAvatarStore();

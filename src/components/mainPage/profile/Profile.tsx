@@ -30,8 +30,8 @@ import {
 import { Options } from "./options/Options";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
 import { observer } from "mobx-react-lite";
-import { userAvatarStore } from "../../../store/toChangeAvatar";
-import { userUsernameStore } from "../../../store/toChangeUsername";
+import { userAvatarStore as avatarStore } from "../../../store/toChangeAvatar";
+import { userUsernameStore as usernameStore } from "../../../store/toChangeUsername";
 import { useUserContext } from "../../../contexts/UserContext";
 import { Songs } from "../../songs/smallsizeSongs/Songs";
 
@@ -51,25 +51,25 @@ export const Profile: React.FC = observer(() => {
             <HeadContainer>
               <UserParams>
                 {user.username ?
-                  <UserAvatar style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
+                  <UserAvatar style={{backgroundImage: `url(${avatarStore.avatar})`}} />
                     :
                   <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
                 <ProfileTextContainer>
                   <ProfileTitle>Profile</ProfileTitle>
                   <UserNickname onClick={() =>
-                    navigate(generatePath('/account/:id/change-username', { id: userUsernameStore.username }))
+                    navigate(generatePath('/account/:id/change-username', { id: usernameStore.username }))
                   }>
                     {user.username}
                   </UserNickname>
                   <ProfileTitle>{user.region}</ProfileTitle>
                   <LinksContainer>
                     <FollowsSubscribes onClick={() =>
-                      navigate(generatePath('/profile/:id/followers', { id: userUsernameStore.username }))
+                      navigate(generatePath('/profile/:id/followers', { id: usernameStore.username }))
                     }>
                       Followers: {followers.length}
                     </FollowsSubscribes>
                     <FollowsSubscribes onClick={() =>
-                      navigate(generatePath('/profile/:id/subscribes', { id: userUsernameStore.username }))
+                      navigate(generatePath('/profile/:id/subscribes', { id: usernameStore.username }))
                     }>
                       Subscribes: {subscribes.length}
                     </FollowsSubscribes>

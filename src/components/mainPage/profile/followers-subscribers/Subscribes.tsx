@@ -1,34 +1,26 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
 import { api, API_URL } from "../../../../api/axiosConfig";
 import { Container, Avatar, Card, Header, PageHeader } from "./Followers.styled";
+import { URLS } from "../../../../constants/urls.const";
+import { useUserContext } from "../../../../contexts/UserContext";
 
 export const Subscribers: React.FC = () => {
   const navigate = useNavigate();
-  const[subscribes, setSubscribes] = useState<any>([]);
   let counter: number = 0;
-
-  const getSubscribes = async () => {
-    const response = await api.get('/users/subscribes');
-    setSubscribes(response.data.subscribes);
-  }
-
-  useEffect(() => {
-    getSubscribes();
-  }, []);
+  const url = new URLS();
+  const { subscribes } = useUserContext();
 
   return(
-      <Container>
+    <Container>
       <PageHeader>Subscribes</PageHeader>
-        {subscribes.map((subscribe: any) => (
-          <Card key={++counter}>
-            <Avatar style={{
-              backgroundImage: `url(${API_URL}/images/user/${subscribe})`
-            }} />
-            <Header>{subscribe}</Header>
-          </Card>
-        ))}
-      </Container>
+      {subscribes.map((subscribe: any) => (
+        <Card key={++counter}>
+          <Avatar style={{backgroundImage: `url(${API_URL}/images/user/${subscribe})`}} />
+          <Header>{subscribe}</Header>
+        </Card>
+      ))}
+    </Container>
   )
 }

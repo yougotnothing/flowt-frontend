@@ -20,21 +20,22 @@ import {
   Email,
   StatsContainer,
   AccountContainer,
-  PlaylistContainer
+  PlaylistContainer,
 } from "../Account.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
+import { userDescriptionStore as descriptionStore } from "../../../../store/toChangeDescription";
 import { userUsernameStore as usernameStore } from "../../../../store/toChangeUsername";
 import { userAvatarStore as avatarStore } from "../../../../store/toChangeAvatar";
 import { userRegionStore as regionStore } from "../../../../store/toChangeRegion";
 import { userEmailStore as emailStore } from "../../../../store/toChangeEmail";
-import { userDescriptionStore as descriptionStore } from "../../../../store/toChangeDescription";
-import { Songs } from "../../../songs/smallsizeSongs/Songs";
 import { FullsizeSongs } from "../../../songs/fullsizeSongs/FullsizeSongs";
+import { URLS } from "../../../../constants/urls.const";
 
 export const AccountInfo: React.FC = observer(() => {
-  const { user, followers, subscribes } = useUserContext();
   const navigate = useNavigate();
+  const url = new URLS();
+  const { user, followers, subscribes } = useUserContext();
 
   return (
     <AccountContainer>
@@ -44,21 +45,23 @@ export const AccountInfo: React.FC = observer(() => {
         <Title>Your info</Title>
         {user && followers && subscribes && (
           <UserContainer>
-            <UserAvatar style={{backgroundImage: `url(${avatarStore.avatar})`}} />
+            <UserAvatar style={{ backgroundImage: `url(${avatarStore.avatar})` }}/>
             <UserInfo>
-              <Username>{usernameStore.username}</Username>
+              <Username>{user.username}</Username>
               <StatsContainer>
                 <Email>{emailStore.email}</Email>
                 <Region>{regionStore.region}</Region>
               </StatsContainer>
               <ButtonsContainer>
                 <AContainer>
-                  <A onClick={() => navigate(generatePath('/profile/:id/followers', { id: user.username }))}>
+                  <A
+                    onClick={() => navigate(generatePath("/profile/:id/followers", {id: user.username}))}>
                     followers: {followers.length}
                   </A>
                 </AContainer>
                 <AContainer>
-                  <A onClick={() => navigate(generatePath('/profile/:id/subscribes', { id: user.username }))}>
+                  <A
+                    onClick={() => navigate(generatePath("/profile/:id/subscribes", {id: user.username,}))}>
                     subscribes: {subscribes.length}
                   </A>
                 </AContainer>
@@ -66,7 +69,7 @@ export const AccountInfo: React.FC = observer(() => {
             </UserInfo>
           </UserContainer>
         )}
-        {user && (
+        {user && user.description && (
           <>
             <DescriptionTitle>Your description</DescriptionTitle>
             {descriptionStore.description && (
@@ -76,11 +79,11 @@ export const AccountInfo: React.FC = observer(() => {
             )}
           </>
         )}
-        {user &&
+        {user && (
           <PlaylistContainer>
-            <Songs />
+            <FullsizeSongs />
           </PlaylistContainer>
-        }
+        )}
       </InfoContainer>
     </AccountContainer>
   );
