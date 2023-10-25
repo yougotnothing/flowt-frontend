@@ -18,7 +18,7 @@ import { ISongData } from "../../../types/types";
 import { api, API_URL } from "../../../api/axiosConfig";
 import { URLS } from "../../../constants/urls.const";
 import { observer } from "mobx-react-lite";
-import { useNavigate } from "react-router-dom";
+import { generatePath, useNavigate } from "react-router-dom";
 
 export const FullsizeSongs: React.FC = observer(() => {
   const[isLiked, setIsLiked] = useState<boolean[]>(
@@ -32,7 +32,6 @@ export const FullsizeSongs: React.FC = observer(() => {
     try {
       const response = await api.get(url.songs);
       songs.getInfo(response.data.songs);
-      console.log(songs.container);
     }catch(error: any) {
       console.log(error);
     }
@@ -70,8 +69,12 @@ export const FullsizeSongs: React.FC = observer(() => {
         <Container key={index}>
           <SongAvatar style={{backgroundImage: `url(${API_URL}/images/song/${user.username}/${song.name})`}} />
           <DataContainer>
-            <UserName>{user.username}</UserName>
-            <DataInfo>{song.name}</DataInfo>
+            <UserName onClick={() => navigate(generatePath('/profile/:id', {id: user.username}))}>
+              {user.username}
+            </UserName>
+            <DataInfo onClick={() => navigate(generatePath('/song/:id', {id: song.name}))}>
+              {song.name}
+            </DataInfo>
             <StatsContainer>
               <StatsInfoContainer>
                 <StatsIcon style={{backgroundImage: 'url(/play.png)'}} />

@@ -34,6 +34,7 @@ export interface INotificationsProps {
   id: number | null;
   message: string | null;
   type: string | null;
+  isOpen: boolean;
 }
 
 export type INotice = INotificationsProps;

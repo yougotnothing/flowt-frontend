@@ -8,12 +8,16 @@ import { useUserContext } from "../../../../contexts/UserContext";
 
 export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
   const[isVisible, setIsVisible] = useState<boolean>(prop);
+  const [isOpen, setIsOpen] = useState(prop);
   const navigate = useNavigate();
   const { user } = useUserContext();
 
+  useEffect(() => {
+    setIsOpen(!isVisible);
+  }, [isVisible, isOpen]);
+
   return (
     <>
-      {isVisible ? (
         <OptionsContainer $isVisible={isVisible}>
           <CloseOptions onClick={() => setIsVisible(false)} />
           <Select onClick={() => navigate(generatePath('/account/:id', {id: user.username}))}>
@@ -42,9 +46,7 @@ export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
             <SelectText>Logout</SelectText>
           </Select>
         </OptionsContainer>
-      ) : (
-        <Settings onClick={() => setIsVisible(true)} />
-      )}
+      {!isVisible ? <Settings $isVisible={isOpen} onClick={() => setIsVisible(true)}/> : null}
     </>
   )
 }

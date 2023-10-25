@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { useUserContext } from "../../../contexts/UserContext";
 import { userAvatarStore } from "../../../store/toChangeAvatar";
+import noticeData from "../../../json/notice.json";
 
 import {
   NoticesContainer,
   Container,
-  ButtonsContainer,
-  Button,
   Notices,
   NoticeTitle,
   ContentContainer,
   NoticeIcon,
   Title,
-  NoticeDataContainer,
-  NoticeDataTitle
+  NoticeNav,
+  SortButton,
+  ReadIcon,
+  SortButtonContainer, Droplist, DroplistItem
 } from "./Notifications.styled";
 import { URLS } from "../../../constants/urls.const";
 import { notificationsStore as notices } from "../../../store/toNotifications";
 import { observer } from "mobx-react-lite";
+import { Droplist_ } from "./Droplist";
 
 export const Notifications: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -31,19 +33,21 @@ export const Notifications: React.FC = observer(() => {
       <Title>Notifications</Title>
       {user && (
         <ContentContainer>
-          <ButtonsContainer>
-            <Button>Button</Button>
-          </ButtonsContainer>
+          <NoticeNav>
+            <SortButtonContainer>
+              <ReadIcon />
+              <SortButton>All</SortButton>
+            </SortButtonContainer>
+            <SortButtonContainer>
+              <ReadIcon />
+              <SortButton>Read</SortButton>
+            </SortButtonContainer>
+          </NoticeNav>
           <NoticesContainer>
-            {notices.container.map((notice, index) => (
-              <Notices key={index}>
-                <NoticeIcon style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
-                <NoticeTitle>{notice.message}</NoticeTitle>
-              </Notices>
-            ))}
+            <Droplist_ $isOpen={false} />
           </NoticesContainer>
         </ContentContainer>
       )}
     </Container>
-  )
+  );
 });

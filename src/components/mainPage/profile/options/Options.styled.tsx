@@ -35,9 +35,8 @@ export const OptionsContainer = styled('div')<OptionsProps>`
   transition: all 0.3s;
   padding: 12px;
   gap: 8px;
-  opacity: ${($isVisible) => ($isVisible ? '1' : '0')};
-  animation: ${($isVisible) =>
-    ($isVisible ? css`${fadeIn} 0.3s ease` : css`${fadeOut} 0.3s ease`)};
+  opacity: ${props => props.$isVisible ? '1' : '0'};
+  animation: ${props => props.$isVisible ? css`${fadeIn} 0.3s ease` : css`${fadeOut} 0.3s ease`};
 `;
 
 export const Select = styled('button')`

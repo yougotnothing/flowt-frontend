@@ -33,7 +33,6 @@ export const Songs: React.FC = observer(() => {
     try {
       const response = await api.get(url.songs);
       songs.getInfo(response.data.songs);
-      console.log(songs.container);
     }catch(error: any) {
       console.log(error);
     }

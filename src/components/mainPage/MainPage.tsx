@@ -4,15 +4,16 @@ import { Form, Link, Outlet, useNavigate, useLocation, generatePath } from "reac
 import {
   Container,
   Navbar,
-  Search, 
-  SearchButton, 
+  Search,
+  SearchButton,
   ContentContainer,
   Logo,
-  ButtonsContainer, 
+  ButtonsContainer,
   VerifyedUserContainer,
   UserButton,
   UserAvatar,
-  UserNickname
+  UserNickname,
+  NavContainer
 } from "./MainPage.styled";
 import { AlertSuccess, AlertWarning } from "./alert/Alert";
 import { Player } from "./player/Player";
@@ -22,7 +23,6 @@ import { useUserContext } from "../../contexts/UserContext";
 import { userAvatarStore as avatarStore } from "../../store/toChangeAvatar";
 import { observer } from "mobx-react-lite";
 import { URLS } from "../../constants/urls.const";
-
 export const MainPage: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
   const[isLoading, setIsLoading] = useState<boolean>(true);
@@ -32,7 +32,6 @@ export const MainPage: React.FC = observer(() => {
   let location = useLocation();
   const url = new URLS();
   const { user } = useUserContext();
-
 
   useEffect(() => {
    const currentUrl = location.pathname;
@@ -58,25 +57,27 @@ export const MainPage: React.FC = observer(() => {
       {isVisible && successAlert && <AlertSuccess />}
       {isVisible && warningAlert && <AlertWarning />}
       <Navbar>
-        <Logo onClick={() => navigate("/home")} />
-        <Form className="form" method="post" action={`${API_URL}`}>
-          <Search placeholder="search" />
-          <SearchButton onClick={() => navigate("/search")} />
-        </Form>
-        {user ?
-          <VerifyedUserContainer>
-            <UserButton
-              onClick={() => navigate(generatePath('/profile/:id', {id: user.username}))}>
-              <UserAvatar style={{ backgroundImage: `url(${avatarStore.avatar})` }}/>
-              <UserNickname>{user.username}</UserNickname>
-            </UserButton>
-          </VerifyedUserContainer>
-          :
-          <ButtonsContainer>
-            <Link to={`/login`} className="link">Login</Link>
-            <Link to={`/register`} className="link">Register</Link>
-          </ButtonsContainer>
-        }
+        <NavContainer>
+          <Logo onClick={() => navigate("/home")} />
+          <Form className="form" method="post" action={`${API_URL}`}>
+            <Search placeholder="search" />
+            <SearchButton onClick={() => navigate("/search")} />
+          </Form>
+          {user ?
+            <VerifyedUserContainer>
+              <UserButton
+                onClick={() => navigate(generatePath('/profile/:id', {id: user.username}))}>
+                <UserAvatar style={{ backgroundImage: `url(${avatarStore.avatar})` }}/>
+                <UserNickname>{user.username}</UserNickname>
+              </UserButton>
+            </VerifyedUserContainer>
+            :
+            <ButtonsContainer>
+              <Link to={`/login`} className="link">Login</Link>
+              <Link to={`/register`} className="link">Register</Link>
+            </ButtonsContainer>
+          }
+        </NavContainer>
       </Navbar>
       <ContentContainer>
         {isLoading ? <PageLoader /> : <Outlet />}

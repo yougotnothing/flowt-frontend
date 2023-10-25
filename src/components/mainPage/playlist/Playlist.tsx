@@ -46,9 +46,7 @@ export const Playlist: React.FC = observer(() => {
             </TextContainer>
             <OpenPlaylistContainer>
               <OpenPlaylistButton
-                onClick={() => {
-                  songs.setSong(index, user.username);
-                }}>
+                onClick={() => songs.setSong(index, user.username)}>
                 Listen
               </OpenPlaylistButton>
             </OpenPlaylistContainer>

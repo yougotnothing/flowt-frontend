@@ -67,7 +67,7 @@ export const Button = styled('button')`
   font-family: 'Urbanist', sans-serif;
   font-weight: 300;
   background: none;
-  background-color: none;
+  background-color: transparent;
   border: none;
   width: 98px;
   height: 38px;
@@ -106,7 +106,6 @@ export const Logo = styled('button')`
   background: none;
   border: none;
   color: white;
-  margin: auto;
   background-image: url('/flowt.png');
   background-size: 100%;
   cursor: pointer;
@@ -121,7 +120,6 @@ export const Logo = styled('button')`
 
 export const ButtonsContainer = styled('div')`
   display: flex;
-  margin: auto;
   text-align: center;
   justify-content: center;
   gap: 20px;
@@ -155,13 +153,13 @@ export const ButtonsContainer = styled('div')`
 
 export const VerifyedUserContainer = styled('div')`
   display: flex;
-  margin: auto;
   gap: 40px;
 `;
 
 export const UserButton = styled('button')`
   display: flex;
   flex-direction: row;
+  align-items: center;
   background: none;
   border: none;
   cursor: pointer;
@@ -206,4 +204,12 @@ export const GlobalContainer = styled('div')`
   display: flex;
   flex-direction: column;
   width: 100%;
+`;
+
+export const NavContainer = styled('div')`
+  width: 1200px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
 `;

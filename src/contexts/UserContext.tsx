@@ -1,7 +1,7 @@
 import React, { useEffect, createContext, useContext, useState, useLayoutEffect } from "react";
 
 import { api, API_URL } from "../api/axiosConfig";
-import { INotificationsProps, UserDTO, UserProps } from "../types/props";
+import { UserDTO, UserProps } from "../types/props";
 import { userEmailStore as emailStore } from "../store/toChangeEmail";
 import { userRegionStore as regionStore } from "../store/toChangeRegion";
 import { userAvatarStore as avatarStore } from "../store/toChangeAvatar";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { API_URL } from "../../../api/axiosConfig";
@@ -37,15 +37,20 @@ import { Songs } from "../../songs/smallsizeSongs/Songs";
 
 export const Profile: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
   const { user, followers, subscribes } = useUserContext();
   let counter: number = 0;
+
+  useEffect(() => {
+    setIsOpen(!isVisible);
+  }, [isVisible, isOpen]);
 
   return (
     <UserContainer>
       {!user && <PageLoader />}
       {isVisible ? <Options $isVisible={isVisible} /> :
-        <Settings onClick={() => setIsVisible(true) } />}
+        <Settings $isVisible={isOpen} onClick={() => setIsVisible(true) } />}
           {user && followers && subscribes && (
             <>
             <HeadContainer>

@@ -1,5 +1,24 @@
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 import { colors } from "../../../constants/colors.const";
+import { OptionsProps } from "./options/Options.styled";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+`;
 
 export const UserContainer = styled('div')`
   display: flex;
@@ -25,11 +44,13 @@ export const UserContainer = styled('div')`
   }
 `;
 
-export const Settings = styled('button')`
+export const Settings = styled('button')<OptionsProps>`
+  display: ${props => props.$isVisible ? 'flex' : 'none'};
   position: absolute;
   align-self: end;
   width: 38px;
   height: 38px;
+  animation: ${props => props.$isVisible ? css`${fadeIn} 0.3s ease` : css`${fadeOut} 0.3s ease`};
   background-image: url('/settings.png');
   background-position: center;
   background-repeat: no-repeat;
