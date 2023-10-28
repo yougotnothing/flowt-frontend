@@ -25,6 +25,7 @@ export const Songs: React.FC = observer(() => {
   const[isLiked, setIsLiked] = useState<boolean[]>(
     Array(songs.container.length).fill(false)
   );
+  const [songImage, setSongImage] = useState<string>('');
   const navigate = useNavigate();
   const url = new URLS();
   const { user } = useUserContext();
@@ -66,9 +67,9 @@ export const Songs: React.FC = observer(() => {
 
   return (
     <>
-      {user.username ? songs.container.map((song: ISongData, index: number) => (
+      {user.username ? songs.container.map((song, index) => (
         <SongContainer key={index}>
-          <SongImage style={{backgroundImage: `url(${API_URL}/images/song/${user.username}/${song.name})`}}>
+          <SongImage style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/song/${user.username}/${song.name}`)})`}}>
             <SongButton onClick={() => songs.setSong(index, user.username)} />
           </SongImage>
           <SongData>

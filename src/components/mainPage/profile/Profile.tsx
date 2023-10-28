@@ -84,19 +84,19 @@ export const Profile: React.FC = observer(() => {
             </HeadContainer>
             <BorderContainer> </BorderContainer>
             <FooterContainer>
-              <DescriptionContainer>
-                <DescriptionTitle>Description</DescriptionTitle>
-                <Description>{user.description}</Description>
-              </DescriptionContainer>
-              <SongMainContainer>
-                <SongsTitle>Songs</SongsTitle>
-                <SongContainer>
-                  <Songs />
-                </SongContainer>
-              </SongMainContainer>
-            </FooterContainer>
-            <LikedText>Favorite</LikedText>
-            <LikedContainer>
+            <DescriptionContainer>
+              <DescriptionTitle>Description</DescriptionTitle>
+              <Description>{user.description}</Description>
+            </DescriptionContainer>
+            <SongMainContainer>
+              <SongsTitle>Songs</SongsTitle>
+              <SongContainer>
+                <Songs />
+              </SongContainer>
+            </SongMainContainer>
+          </FooterContainer>
+          <LikedText>Favorite</LikedText>
+          <LikedContainer>
             {subscribes.map((subscribe: string) => (
               <LikedTrackContainer key={++counter}>
                 {subscribe ?

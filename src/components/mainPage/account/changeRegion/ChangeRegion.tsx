@@ -3,7 +3,6 @@ import { useNavigate, generatePath } from "react-router-dom";
 
 import { observer } from "mobx-react-lite";
 import { userRegionStore } from "../../../../store/toChangeRegion"
-import regionData from "../../../../json/countries.json"
 import { api } from "../../../../api/axiosConfig";
 import { AccountContainer } from "../Account.styled";
 import { 
@@ -15,7 +14,7 @@ import {
   DroplistItem, 
   ChosenRegion
 } from "./ChangeRegion.styled";
-
+import { regions } from "../../../../constants/regions";
 import { A, AContainer,GoBackContainer, GlobalContainer } from "../../MainPage.styled";
 import { AccountSettings } from "../AccountSettings";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
@@ -26,7 +25,6 @@ export const ChangeRegion: React.FC = observer(() => {
   const { user } = useUserContext();
   const navigate = useNavigate();
   const url = new URLS();
-  let counter: number = 0;
 
   const handleChangedRegion = async () => {
     try {
@@ -60,9 +58,9 @@ export const ChangeRegion: React.FC = observer(() => {
               <Title>Change region</Title>
               {userRegionStore && <ChosenRegion>{userRegionStore.region}</ChosenRegion>}
               <Droplist>
-                {regionData.map((region: string) => (
+                {regions.map((region, index) => (
                   <DroplistItem
-                    key={++counter}
+                    key={index}
                     onClick={() => userRegionStore.setRegion(region)}
                   >
                     {region}

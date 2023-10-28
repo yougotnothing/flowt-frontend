@@ -42,3 +42,7 @@ export const changeDescriptionSchema = Yup.object().shape({
 export const changeEmailSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Enter email")
 });
+
+export const searchSchema = Yup.object().shape({
+  search: Yup.string().max(45, "input too long")
+});

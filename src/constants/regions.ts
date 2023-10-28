@@ -1,4 +1,4 @@
-[
+export const regions: string[] = [
   "🇦🇫 Afghanistan",
   "🇦🇱 Albania",
   "🇦🇶 Antarctica",

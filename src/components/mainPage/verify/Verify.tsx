@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Loader } from "../../loader/Loader";
+import { API_URL } from "../../../api/axiosConfig";
 
 export const Verify = () => {
   const[searchParams] = useSearchParams();
@@ -11,7 +12,8 @@ export const Verify = () => {
 
   const verifyStatus = async () => {
     try {
-      await axios.get(`/verify/email?code=${verifyCode}`, {
+      await axios.get(`${API_URL}/verify/email`, {
+        params: { code: verifyCode },
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -25,6 +27,7 @@ export const Verify = () => {
   useEffect(() => {
     verifyStatus();
     navigate('/home');
+    console.log(verifyCode);
   }, []);
   
   return (

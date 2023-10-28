@@ -67,7 +67,7 @@ export const FullsizeSongs: React.FC = observer(() => {
     <>
       {songs.container.map((song: ISongData, index: number) => (
         <Container key={index}>
-          <SongAvatar style={{backgroundImage: `url(${API_URL}/images/song/${user.username}/${song.name})`}} />
+          <SongAvatar style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/song/${user.username}/${song.name}`)})`}} />
           <DataContainer>
             <UserName onClick={() => navigate(generatePath('/profile/:id', {id: user.username}))}>
               {user.username}
@@ -86,7 +86,7 @@ export const FullsizeSongs: React.FC = observer(() => {
               </StatsInfoContainer>
             </StatsContainer>
           </DataContainer>
-          <ListenButton onClick={() => songs.setSong(index, song.name)} />
+          <ListenButton onClick={() => songs.setSong(index, user.username)} />
         </Container>
       ))}
     </>
