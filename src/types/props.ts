@@ -38,3 +38,18 @@ export interface INotificationsProps {
 }
 
 export type INotice = INotificationsProps;
+
+export interface IUserSearch {
+  username: string,
+  email: string,
+  region: string,
+  description: string
+}
+
+export interface ISongsSearch {
+  genre: string,
+  issueYear: string,
+  listens: number,
+  name: string,
+  songId: number
+}

@@ -24,11 +24,11 @@ import {
 } from "../Account.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
-import { userDescriptionStore as descriptionStore } from "../../../../store/toChangeDescription";
-import { userUsernameStore as usernameStore } from "../../../../store/toChangeUsername";
-import { userAvatarStore as avatarStore } from "../../../../store/toChangeAvatar";
-import { userRegionStore as regionStore } from "../../../../store/toChangeRegion";
-import { userEmailStore as emailStore } from "../../../../store/toChangeEmail";
+import { userDescriptionStore as descriptionStore } from "../../../../stores/toChangeDescription";
+import { userUsernameStore as usernameStore } from "../../../../stores/toChangeUsername";
+import { userAvatarStore as avatarStore } from "../../../../stores/toChangeAvatar";
+import { userRegionStore as regionStore } from "../../../../stores/toChangeRegion";
+import { userEmailStore as emailStore } from "../../../../stores/toChangeEmail";
 import { FullsizeSongs } from "../../../songs/fullsizeSongs/FullsizeSongs";
 import { URLS } from "../../../../constants/urls.const";
 

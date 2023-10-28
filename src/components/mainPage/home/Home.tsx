@@ -18,7 +18,7 @@ import {
   LastListenContainer
 } from "./Home.styled";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
-import { userAvatarStore } from "../../../store/toChangeAvatar";
+import { userAvatarStore } from "../../../stores/toChangeAvatar";
 import { observer } from "mobx-react-lite";
 import { useUserContext } from "../../../contexts/UserContext";
 import { api } from "../../../api/axiosConfig";

@@ -30,8 +30,8 @@ import {
 import { Options } from "./options/Options";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
 import { observer } from "mobx-react-lite";
-import { userAvatarStore as avatarStore } from "../../../store/toChangeAvatar";
-import { userUsernameStore as usernameStore } from "../../../store/toChangeUsername";
+import { userAvatarStore as avatarStore } from "../../../stores/toChangeAvatar";
+import { userUsernameStore as usernameStore } from "../../../stores/toChangeUsername";
 import { useUserContext } from "../../../contexts/UserContext";
 import { Songs } from "../../songs/smallsizeSongs/Songs";
 

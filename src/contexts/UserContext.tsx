@@ -2,14 +2,14 @@ import React, { useEffect, createContext, useContext, useState, useLayoutEffect 
 
 import { api, API_URL } from "../api/axiosConfig";
 import { UserDTO, UserProps } from "../types/props";
-import { userEmailStore as emailStore } from "../store/toChangeEmail";
-import { userRegionStore as regionStore } from "../store/toChangeRegion";
-import { userAvatarStore as avatarStore } from "../store/toChangeAvatar";
-import { userUsernameStore as usernameStore } from "../store/toChangeUsername";
-import { userDescriptionStore as descriptionStore } from "../store/toChangeDescription";
+import { userEmailStore as emailStore } from "../stores/toChangeEmail";
+import { userRegionStore as regionStore } from "../stores/toChangeRegion";
+import { userAvatarStore as avatarStore } from "../stores/toChangeAvatar";
+import { userUsernameStore as usernameStore } from "../stores/toChangeUsername";
+import { userDescriptionStore as descriptionStore } from "../stores/toChangeDescription";
 import { observer } from "mobx-react-lite";
 import { URLS } from "../constants/urls.const";
-import { notificationsStore as notices } from "../store/toNotifications";
+import { notificationsStore as notices } from "../stores/toNotifications";
 
 const UserCreateContext = createContext<UserProps>({
   user: null,

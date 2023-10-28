@@ -11,7 +11,7 @@ import {
   OpenPlaylistContainer
 } from "./Playlist.styled";
 import { useUserContext } from "../../../contexts/UserContext";
-import { userSongsStore as songs } from "../../../store/toSongs";
+import { userSongsStore as songs } from "../../../stores/toSongs";
 import { ISongData } from "../../../types/types";
 import { observer } from "mobx-react-lite";
 import { URLS } from "../../../constants/urls.const";

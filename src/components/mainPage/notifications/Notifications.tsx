@@ -2,7 +2,7 @@ import React, { useEffect, useState, Fragment } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { useUserContext } from "../../../contexts/UserContext";
-import { userAvatarStore } from "../../../store/toChangeAvatar";
+import { userAvatarStore } from "../../../stores/toChangeAvatar";
 import noticeData from "../../../json/notice.json";
 
 import {
@@ -19,7 +19,7 @@ import {
   SortButtonContainer, Droplist, DroplistItem
 } from "./Notifications.styled";
 import { URLS } from "../../../constants/urls.const";
-import { notificationsStore as notices } from "../../../store/toNotifications";
+import { notificationsStore as notices } from "../../../stores/toNotifications";
 import { observer } from "mobx-react-lite";
 import { Droplist_ } from "./Droplist";
 

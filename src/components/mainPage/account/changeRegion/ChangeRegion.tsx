@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { observer } from "mobx-react-lite";
-import { userRegionStore } from "../../../../store/toChangeRegion"
+import { userRegionStore } from "../../../../stores/toChangeRegion"
 import { api } from "../../../../api/axiosConfig";
 import { AccountContainer } from "../Account.styled";
 import { 

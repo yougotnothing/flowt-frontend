@@ -22,8 +22,8 @@ import {
 } from "./ChangeAvatar.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
-import { userAvatarStore as avatarStore } from "../../../../store/toChangeAvatar";
-import { userUsernameStore } from "../../../../store/toChangeUsername";
+import { userAvatarStore as avatarStore } from "../../../../stores/toChangeAvatar";
+import { userUsernameStore } from "../../../../stores/toChangeUsername";
 import Cropper from "react-easy-crop";
 import { getCroppedImg } from "../../../avatar/canvas";
 import { api } from "../../../../api/axiosConfig";

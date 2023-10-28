@@ -24,7 +24,7 @@ import { AccountSettings } from "../AccountSettings";
 import { AccountContainer } from "../Account.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
-import { userEmailStore } from "../../../../store/toChangeEmail";
+import { userEmailStore } from "../../../../stores/toChangeEmail";
 import { observer } from "mobx-react-lite";
 import { URLS } from "../../../../constants/urls.const";
 

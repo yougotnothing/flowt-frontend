@@ -19,12 +19,13 @@ import { AlertSuccess, AlertWarning } from "./alert/Alert";
 import { Player } from "./player/Player";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../contexts/UserContext";
-import { userAvatarStore as avatarStore } from "../../store/toChangeAvatar";
+import { userAvatarStore as avatarStore } from "../../stores/toChangeAvatar";
 import { observer } from "mobx-react-lite";
 import { URLS } from "../../constants/urls.const";
 import { useFormik } from "formik";
 import { searchSchema } from "../../validation/yup.config";
 import { api } from "../../api/axiosConfig";
+import { searchStore as search } from "../../stores/toSearch";
 
 export const MainPage: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -65,25 +66,9 @@ export const MainPage: React.FC = observer(() => {
     onSubmit: () => {}
   });
 
-  const searchAll = async () => {
-    try {
-      await api.post('/search/songs', {
-        substring: formik.values.search
-      });
-      await api.post('/search/users', {
-        substring: formik.values.search
-      });
-      await api.post('/search/playlists', {
-        substring: formik.values.search
-      });
-    }catch(error: any) {
-      console.log(error);
-    }
-  }
-
   const handleSearch = (event: any) => {
     if(event.key === 'Enter') {
-      searchAll();
+      search.all(formik.values.search);
       navigate('/search');
     }else{
       return;
@@ -98,9 +83,14 @@ export const MainPage: React.FC = observer(() => {
         <NavContainer>
           <Logo onClick={() => navigate('/home')} />
           <div className='form'>
-            <Search onKeyDown={handleSearch} placeholder="search" onChange={formik.handleChange} />
+            <Search
+              onKeyDown={handleSearch}
+              name="search"
+              placeholder="search"
+              onChange={formik.handleChange}
+            />
             <SearchButton onClick={() => {
-              searchAll();
+              search.all(formik.values.search);
               navigate('/search');
             }} />
           </div>

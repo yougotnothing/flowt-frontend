@@ -3,7 +3,7 @@ import { useNavigate, generatePath } from "react-router-dom";
 
 import { observer } from "mobx-react-lite";
 import { useUserContext } from "../../../../contexts/UserContext";
-import { userUsernameStore } from "../../../../store/toChangeUsername";
+import { userUsernameStore } from "../../../../stores/toChangeUsername";
 import { useFormik } from "formik";
 import { changeUsernameSchema } from "../../../../validation/yup.config";
 import { AccountContainer } from "../Account.styled";

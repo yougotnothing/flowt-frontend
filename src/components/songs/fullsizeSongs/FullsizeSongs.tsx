@@ -13,7 +13,7 @@ import {
   StatsContainer
 } from "./FullsizeSongs.styled";
 import { useUserContext } from "../../../contexts/UserContext";
-import { userSongsStore as songs } from "../../../store/toSongs";
+import { userSongsStore as songs } from "../../../stores/toSongs";
 import { ISongData } from "../../../types/types";
 import { api, API_URL } from "../../../api/axiosConfig";
 import { URLS } from "../../../constants/urls.const";
