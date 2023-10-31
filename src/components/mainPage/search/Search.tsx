@@ -22,7 +22,7 @@ import { observer } from "mobx-react-lite";
 export const Search: React.FC = observer(() => {
   const [params, setParams] = useState<string>('All');
   const navigate = useNavigate();
-  const {user} = useUserContext();
+  const { user } = useUserContext();
 
   return (
     <Container>
@@ -32,6 +32,7 @@ export const Search: React.FC = observer(() => {
           {filters.map((filter, index) => (
             <SearchFilterButton
               key={index}
+              onClick={async () => await search.get(filter)}
             >
               {filter}
             </SearchFilterButton>
@@ -42,7 +43,7 @@ export const Search: React.FC = observer(() => {
         {search.songs.map((song, index) => (
           <Card key={index}>
             <CardIcon
-              style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/song/${user.username}/${song.name}`)})`}}/>
+              style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/song/${user.username}/${song.name}`)})`}} />
             <CardInfoContainer>
               <CardInfo>{user.username}</CardInfo>
               <CardInfo>{song.name}</CardInfo>
@@ -57,7 +58,15 @@ export const Search: React.FC = observer(() => {
             </CardInfoContainer>
           </Card>
         ))}
+        {search.playlists.map((playlist, index) => (
+          <Card key={index}>
+            <CardIcon />
+            <CardInfoContainer>
+              <CardInfo>{playlist.name}</CardInfo>
+            </CardInfoContainer>
+          </Card>
+        ))}
       </ContentContainer>
     </Container>
   )
-})
+});

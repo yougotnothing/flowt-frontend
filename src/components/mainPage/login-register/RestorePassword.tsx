@@ -64,10 +64,8 @@ export const RestorePassword: React.FC = () => {
         setIsLoading(false);
       }
     }catch(error: any) {
-      if(error) {
-        setErrorMessage("Incorrect restore code");
-        setIsVerify(false);
-      }
+      setErrorMessage(error.response.data.message);
+      setIsVerify(false);
     }
   }
 

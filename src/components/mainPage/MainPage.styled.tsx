@@ -6,6 +6,7 @@ export const Container = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: auto;
   background-color: ${colors.BACKGROUND};
 `;
 
@@ -212,4 +213,64 @@ export const NavContainer = styled('div')`
   display: flex;
   flex-direction: row;
   margin: auto;
+`;
+
+export interface IDroplistProp {
+  $isOpen: boolean;
+}
+
+export const Droplist = styled('div')<IDroplistProp>`
+  display: ${props => props.$isOpen ? 'flex' : 'none'};
+  width: 320px;
+  position: absolute;
+  margin-top: 5em;
+  align-self: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: ${colors.FRONT};
+  border: 1px solid ${colors.GREY};
+  border-radius: 12px;
+  padding: 6px;
+  max-height: 146px;
+  overflow-y: auto;
+  gap: 4px;
+  cursor: pointer;
+  
+  &::-webkit-scrollbar {
+    opacity: 0;
+  }
+`;
+
+export const Item = styled('button')`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid ${colors.BORDER};
+  border-radius: 8px;
+  background-color: ${colors.FRONT};
+  width: 320px;
+  height: max-content;
+`;
+
+export const ItemIcon = styled('picture')`
+  width: 84px;
+  height: 84px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+`;
+
+export const ItemInfo = styled('button')`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-around;
+  padding: 4px;
+`;
+
+export const Text = styled('div')`
+  font-family: 'Urbanist', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: ${colors.WHITE};
 `;

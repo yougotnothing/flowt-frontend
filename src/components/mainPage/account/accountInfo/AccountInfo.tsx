@@ -47,7 +47,7 @@ export const AccountInfo: React.FC = observer(() => {
           <UserContainer>
             <UserAvatar style={{ backgroundImage: `url(${avatarStore.avatar})` }}/>
             <UserInfo>
-              <Username>{user.username}</Username>
+              <Username>{usernameStore.username}</Username>
               <StatsContainer>
                 <Email>{emailStore.email}</Email>
                 <Region>{regionStore.region}</Region>

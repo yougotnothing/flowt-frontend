@@ -17,12 +17,12 @@ import { Loader } from "../../loader/Loader";
 import { api, registration } from "../../../api/axiosConfig";
 
 export const Register: React.FC = () => { 
-  const navigate = useNavigate();
   const[isLoading, setIsLoading] = useState(false);
   const[usernameError, setUsernameError] = useState(false);
   const[emailError, setEmailError] = useState(false);
   const[passwordError, setPasswordError] = useState(false);
   const[errorMessage, setErrorMessage] = useState<any>(null);
+  const navigate = useNavigate();
 
   const formik = useFormik<{
     username: string;
@@ -40,6 +40,8 @@ export const Register: React.FC = () => {
     onSubmit: () => {}
   });
   const field = formik.values;
+  const errors = formik.errors;
+  const touched = formik.touched;
 
   async function handleRegister() {
     const registerDto: any = {
@@ -88,9 +90,7 @@ export const Register: React.FC = () => {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
-          { formik.errors.username && formik.touched.username ? (
-             <ValidationSpan>{formik.errors.username}</ValidationSpan>
-           ) : null }
+          {errors.username && touched.username ? <ValidationSpan>{errors.username}</ValidationSpan> : null}
           { errorMessage && usernameError && <ValidationSpan>{errorMessage}</ValidationSpan> }
           <LoginInput
             name="email"
@@ -98,9 +98,7 @@ export const Register: React.FC = () => {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
-          { formik.errors.email && formik.touched.email ? (
-             <ValidationSpan>{formik.errors.email}</ValidationSpan>
-           ) : null }
+          {errors.email && touched.email ? <ValidationSpan>{errors.email}</ValidationSpan> : null}
           { errorMessage && emailError && <ValidationSpan>{errorMessage}</ValidationSpan> }
           <LoginInput
             name="password"
@@ -109,9 +107,7 @@ export const Register: React.FC = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          { formik.errors.password && formik.touched.password ? (
-             <ValidationSpan>{formik.errors.password}</ValidationSpan>
-           ) : null }
+          {errors.password && touched.password ? <ValidationSpan>{errors.password}</ValidationSpan> : null}
           { errorMessage && passwordError && <ValidationSpan>{errorMessage}</ValidationSpan> }
           <LoginInput
             name="confirmPassword"
@@ -120,9 +116,7 @@ export const Register: React.FC = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {formik.errors.confirmPassword && formik.touched.password ? (
-            <ValidationSpan>{formik.errors.confirmPassword}</ValidationSpan>
-          ) : null}
+          {errors.confirmPassword && touched.password ? <ValidationSpan>{errors.confirmPassword}</ValidationSpan> : null}
         </InputContainer>
         <LoginButton
           onClick={() => handleRegister()}

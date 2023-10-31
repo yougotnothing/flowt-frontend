@@ -20,6 +20,7 @@ import { ISongData } from "../../../types/types";
 import { api, API_URL } from "../../../api/axiosConfig";
 import { URLS } from "../../../constants/urls.const";
 import { useUserContext } from "../../../contexts/UserContext";
+import { searchStore as search } from "../../../stores/toSearch";
 
 export const Songs: React.FC = observer(() => {
   const[isLiked, setIsLiked] = useState<boolean[]>(

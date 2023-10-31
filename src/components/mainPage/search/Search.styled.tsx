@@ -77,20 +77,21 @@ export const SearchFilterButton = styled('button')`
 export const Card = styled('div')`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   border: 1px solid ${colors.WHITE};
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
   width: 670px;
-  height: 74px;
+  height: 146px;
   padding: 4px;
 `;
 
 export const CardIcon = styled('picture')`
-  width: 66px;
-  height: 66px;
+  width: 126px;
+  height: 126px;
+  border-radius: 8px;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

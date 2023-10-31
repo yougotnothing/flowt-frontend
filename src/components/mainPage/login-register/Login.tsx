@@ -20,6 +20,7 @@ import { login } from "../../../api/axiosConfig";
 export const Login: React.FC = () => {
   const navigate = useNavigate();
   const[errorMessage, setErrorMessage] = useState<string | null>(null);
+  const[isError, setIsError] = useState<boolean>(false);
   const[isLoading, setIsLoading] = useState<boolean>(false);
 
   const formik = useFormik<{
@@ -34,6 +35,8 @@ export const Login: React.FC = () => {
     onSubmit: () => {}
   });
   const field = formik.values;
+  const touched = formik.touched;
+  const errors = formik.errors;
 
   async function handleLogin() {
     const loginDto: { username: string, password: string } = {
@@ -42,6 +45,7 @@ export const Login: React.FC = () => {
     }
 
     try {
+      setIsError(false);
       setIsLoading(true);
       setErrorMessage(null);
       await login(loginDto);
@@ -49,7 +53,8 @@ export const Login: React.FC = () => {
       window.location.reload();
     }catch(error: any) {
       setIsLoading(false);
-      setErrorMessage(error);
+      setIsError(true);
+      setErrorMessage(error.response.data.message);
     }
   }
 
@@ -64,9 +69,7 @@ export const Login: React.FC = () => {
         onBlur={formik.handleBlur}
         onChange={formik.handleChange}
       />
-      {formik.errors.username && formik.touched.username ? (
-        <ValidationSpan>{formik.errors.username}</ValidationSpan>
-      ) : null}
+      {errors.username && touched.username ? <ValidationSpan>{errors.username}</ValidationSpan> : null}
       <LoginInput
         name="password"
         type="password"
@@ -74,13 +77,11 @@ export const Login: React.FC = () => {
         onBlur={formik.handleBlur}
         onChange={formik.handleChange}
       />
-      {formik.errors.password && formik.touched.password ? (
-        <ValidationSpan>{formik.errors.password}</ValidationSpan>
-      ) : null}
-        { errorMessage && <ValidationSpan>{errorMessage}</ValidationSpan> }
+      {errors.password && touched.password ? <ValidationSpan>{errors.password}</ValidationSpan> : null}
+      {errorMessage && <ValidationSpan>{errorMessage}</ValidationSpan>}
       </InputContainer>
       <LoginButton
-        onClick={handleLogin}
+        onClick={async () => await handleLogin()}
         disabled={isLoading}
       >
         { isLoading ? <Loader /> : "Login" }

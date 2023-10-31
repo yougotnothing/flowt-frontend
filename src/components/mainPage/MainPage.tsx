@@ -13,7 +13,11 @@ import {
   UserButton,
   UserAvatar,
   UserNickname,
-  NavContainer
+  NavContainer,
+  Droplist,
+  Item,
+  ItemIcon,
+  Text
 } from "./MainPage.styled";
 import { AlertSuccess, AlertWarning } from "./alert/Alert";
 import { Player } from "./player/Player";
@@ -24,12 +28,13 @@ import { observer } from "mobx-react-lite";
 import { URLS } from "../../constants/urls.const";
 import { useFormik } from "formik";
 import { searchSchema } from "../../validation/yup.config";
-import { api } from "../../api/axiosConfig";
+import { api, API_URL } from "../../api/axiosConfig";
 import { searchStore as search } from "../../stores/toSearch";
 
 export const MainPage: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
   const[isLoading, setIsLoading] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
@@ -67,9 +72,10 @@ export const MainPage: React.FC = observer(() => {
   });
 
   const handleSearch = (event: any) => {
-    if(event.key === 'Enter') {
-      search.all(formik.values.search);
+    if(event.key === 'Enter' && search.input.length > 0) {
+      search.all();
       navigate('/search');
+      setIsOpen(false);
     }else{
       return;
     }
@@ -87,11 +93,26 @@ export const MainPage: React.FC = observer(() => {
               onKeyDown={handleSearch}
               name="search"
               placeholder="search"
-              onChange={formik.handleChange}
+              onChange={async (e: any) => {
+                if(e.target.value && location.pathname === '/home') {
+                  search.setInput(e.target.value);
+                  await search.all();
+                  setIsOpen(true);
+                }else if(!e.target.value) {
+                  setIsOpen(false);
+                }
+                if(location.pathname !== '/home') {
+                  setIsOpen(false);
+                }
+              }}
             />
-            <SearchButton onClick={() => {
-              search.all(formik.values.search);
-              navigate('/search');
+            <SearchButton onClick={async () => {
+              if(search.input.length > 0 || search.input !== '') {
+                await search.all();
+                navigate('/search');
+              }else{
+                return;
+              }
             }} />
           </div>
           {user ?
@@ -110,6 +131,21 @@ export const MainPage: React.FC = observer(() => {
           }
         </NavContainer>
       </Navbar>
+      <Droplist $isOpen={isOpen}>
+        {search.songs.map((song, index) => (
+          <Item key={index}>
+            <ItemIcon style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/songs/${user.username}/${song.name}`)})`}} />
+            <Text>{user.username}</Text>
+            <Text>{song.name}</Text>
+          </Item>
+        ))}
+        {search.users.map((searchUser, index) => (
+          <Item key={index}>
+            <ItemIcon style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/user/${searchUser.username}`)})`}} />
+            <Text>{searchUser.username}</Text>
+          </Item>
+        ))}
+      </Droplist>
       <ContentContainer>
         {isLoading ? <PageLoader /> : <Outlet />}
       </ContentContainer>
