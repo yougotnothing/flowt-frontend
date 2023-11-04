@@ -2,30 +2,38 @@ import { makeObservable, observable, action, runInAction } from "mobx";
 import { ISongsSearch, IUserSearch } from "../types/props";
 import { api } from "../api/axiosConfig";
 import { userSongsStore } from "./toSongs";
+import { ok } from "assert";
 
 class SearchStore {
   users: IUserSearch[] | [];
   songs: ISongsSearch[] | [];
   playlists: any[];
   input: string;
+  message: string | null;
+  isOpen: boolean;
 
   constructor() {
     this.users = [];
     this.songs = [];
     this.playlists = [];
     this.input = '';
+    this.message = null;
+    this.isOpen = false;
 
     makeObservable(this, {
       users: observable,
       songs: observable,
       playlists: observable,
       input: observable,
+      message: observable,
+      isOpen: observable,
       setUsers: action,
       setSongs: action,
       setPlaylists: action,
       all: action,
       setInput: action,
-      get: action
+      get: action,
+      setIsOpen: action
     });
   }
 
@@ -35,14 +43,27 @@ class SearchStore {
     });
   }
 
+  setIsOpen(arg: boolean) {
+    runInAction(() => {
+      this.isOpen = arg;
+    });
+  }
+
   async setUsers() {
     try {
       const response = await api.post('/search/users', {
         substring: this.input
       });
-      runInAction(() => {
-        this.users = response.data.users;
-      });
+
+      if(response) {
+        runInAction(() => {
+          this.users = response.data.users;
+
+          if(this.users.length === 0) {
+            this.message = `Can't find data by ${this.input}`;
+          }
+        });
+      }
       console.log(response.data.users);
     }catch(error: any) {
        console.log(error);
@@ -54,9 +75,14 @@ class SearchStore {
       const response = await api.post('/search/songs', {
         substring: this.input
       });
+
       runInAction(() => {
         this.songs = response.data.songs;
-      })
+
+        if(this.songs.length === 0) {
+          this.message = `Can't find data by ${this.input}`;
+        }
+      });
       console.log(response.data.songs);
     }catch(error: any) {
       console.log(error);
@@ -64,7 +90,19 @@ class SearchStore {
   }
 
   async get(param: string) {
-    if(param === "All") await this.all();
+    if(param === "All") {
+      await this.all();
+    }
+    if(this.songs.length > 0 && this.users.length > 0) {
+      runInAction(() => {
+        this.message = null;
+        this.isOpen = true;
+      });
+    }else{
+      runInAction(() => {
+        this.message = `Can't find data by ${this.input}`;
+      });
+    }
 
     try {
       runInAction(() => {
@@ -94,6 +132,7 @@ class SearchStore {
       const response = await api.post('/search/playlists', {
         substring: this.input
       });
+
       runInAction(() => {
         this.playlists = response.data.playlists;
       });
@@ -108,6 +147,17 @@ class SearchStore {
       await this.setPlaylists();
       await this.setSongs();
       await this.setUsers();
+
+      if(this.songs.length > 0 || this.users.length > 0) {
+        runInAction(() => {
+          this.message = null;
+          this.isOpen = true;
+        });
+      }else{
+        runInAction(() => {
+          this.message = `Can't find data by ${this.input}`;
+        });
+      }
     }catch(error: any) {
       console.log(error);
     }

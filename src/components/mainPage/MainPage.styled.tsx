@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { colors } from "../../constants/colors.const";
-import { A_, A_CONTAINER, INPUT, BUTTON } from "../../constants/styles.const";
+import { A_, A_CONTAINER, INPUT } from "../../constants/styles.const";
 
 export const Container = styled('div')`
   display: flex;
@@ -221,56 +221,129 @@ export interface IDroplistProp {
 
 export const Droplist = styled('div')<IDroplistProp>`
   display: ${props => props.$isOpen ? 'flex' : 'none'};
-  width: 320px;
   position: absolute;
   margin-top: 5em;
   align-self: center;
   align-items: center;
   flex-direction: column;
-  background-color: ${colors.FRONT};
-  border: 1px solid ${colors.GREY};
+  background-color: ${colors.DARK_BLUE};
+  box-shadow: 0 0 12px 1px ${colors.BORDER};
+  border: 2px solid ${colors.BORDER};
   border-radius: 12px;
   padding: 6px;
   max-height: 146px;
   overflow-y: auto;
   gap: 4px;
-  cursor: pointer;
   
   &::-webkit-scrollbar {
     opacity: 0;
   }
 `;
 
-export const Item = styled('button')`
+export const Item = styled('div')`
   display: flex;
   flex-direction: row;
   align-items: center;
-  border: 1px solid ${colors.BORDER};
-  border-radius: 8px;
-  background-color: ${colors.FRONT};
+  border: 1px solid ${colors.DARK_WHITE};
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+  padding: 4px;
+  background-color: ${colors.DARK_BLUE};
   width: 320px;
   height: max-content;
+  gap: 4px;
 `;
 
 export const ItemIcon = styled('picture')`
   width: 84px;
   height: 84px;
+  border-radius: 6px;
   background-size: cover;
-  background-repeat: no-repeat;
   background-position: center;
+  background-repeat: no-repeat;
 `;
 
-export const ItemInfo = styled('button')`
+export const ItemInfo = styled('div')`
   display: flex;
+  width: 120px;
+  height: 66px;
   flex-direction: column;
   align-items: start;
   justify-content: space-around;
   padding: 4px;
+  border: 1px solid ${colors.DARK_WHITE};
+  background-color: ${colors.VERY_DARK_BLUE};
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 0;
 `;
 
-export const Text = styled('div')`
+export const Text = styled('span')`
   font-family: 'Urbanist', sans-serif;
   font-size: 16px;
+  font-weight: 400;
+  color: ${colors.DARK_WHITE};
+`;
+
+export const StatsContainer = styled('div')`
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const ListensIcon = styled('picture')`
+  width: 16px;
+  height: 16px;
+  background-image: url("/play.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+`;
+
+export const StateContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  width: 60px;
+  height: 16px;
+  gap: 4px;
+`;
+
+export const LikesIcon = styled('picture')`
+  width: 16px;
+  height: 16px;
+  background-image: url("/like.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+`;
+
+export const BigText = styled('div')`
+  font-family: 'Urbanist', sans-serif;
+  font-size: 18px;
   font-weight: 600;
   color: ${colors.WHITE};
+`;
+
+export const ItemButton = styled('button')`
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  text-align: center;
+  font-family: 'Urbanist', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: ${colors.WHITE};
+  margin: auto 0 auto auto;
+  cursor: pointer;
+  transition: 0.3s;
+  
+  &:hover {
+    border-color: ${colors.AQUAMARINE};
+    box-shadow: 0 0 8px 2px ${colors.AQUAMARINE};
+    background-color: ${colors.AQUAMARINE};
+  }
 `;

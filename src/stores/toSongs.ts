@@ -58,13 +58,20 @@ class UserSongsStore implements ISongParameters {
     this.name = name;
   }
 
+  setSearchSong(username: string, songName: string) {
+    runInAction(() => {
+      this.setUrl(encodeURI(`${API_URL}/songs/audio/${username}/${songName}`));
+      this.setAvatar(encodeURI(`${API_URL}/images/song/${username}/${songName}`));
+    });
+  }
+
   setSong(index: number, username: string | null) {
     runInAction(() => {
       if(this.container && index >= 0 && index < this.container.length) {
         const songInfo = this.container[index];
 
-        this.setUrl(`${API_URL}/songs/audio/${username}/${songInfo.name}`);
-        this.setAvatar(`${API_URL}/images/song/${username}/${songInfo.name}`);
+        this.setUrl(encodeURI(`${API_URL}/songs/audio/${username}/${songInfo.name}`));
+        this.setAvatar(encodeURI(`${API_URL}/images/song/${username}/${songInfo.name}`));
 
         this.issueYear = songInfo.issueYear;
         this.listens = songInfo.listens;

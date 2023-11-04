@@ -1,6 +1,5 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import { IAvatar, IAvatarURL } from "../types/types";
-import { api } from "../api/axiosConfig";
 
 class UserAvatarStore {
   avatar: IAvatar;

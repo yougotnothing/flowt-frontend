@@ -40,7 +40,7 @@ export const Search: React.FC = observer(() => {
         </SearchFilters>
       </FiltersContainer>
       <ContentContainer>
-        {search.songs.map((song, index) => (
+        {search.songs && search.songs.map((song, index) => (
           <Card key={index}>
             <CardIcon
               style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/song/${user.username}/${song.name}`)})`}} />
@@ -50,7 +50,7 @@ export const Search: React.FC = observer(() => {
             </CardInfoContainer>
           </Card>
         ))}
-        {search.users.map((searchUser, index) => (
+        {search.users && search.users.map((searchUser, index) => (
           <Card key={index}>
             <CardIcon style={{backgroundImage: `url(${userAvatarStore.avatar})`}}/>
             <CardInfoContainer>
@@ -58,7 +58,7 @@ export const Search: React.FC = observer(() => {
             </CardInfoContainer>
           </Card>
         ))}
-        {search.playlists.map((playlist, index) => (
+        {search.playlists && search.playlists.map((playlist, index) => (
           <Card key={index}>
             <CardIcon />
             <CardInfoContainer>

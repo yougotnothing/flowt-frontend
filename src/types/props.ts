@@ -47,6 +47,7 @@ export interface IUserSearch {
 }
 
 export interface ISongsSearch {
+  author: string,
   genre: string,
   issueYear: string,
   listens: number,
