@@ -13,20 +13,17 @@ import {
   UserButton,
   UserAvatar,
   UserNickname,
-  NavContainer,
-  Droplist,
-  Item,
-  ItemIcon,
-  Text, ItemInfo, ListensIcon, StatsContainer, LikesIcon, StateContainer
+  NavContainer
 } from "./MainPage.styled";
 import { AlertSuccess, AlertWarning } from "./alert/Alert";
 import { Player } from "./player/Player";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../contexts/UserContext";
-import { userAvatarStore as avatarStore } from "../../stores/toChangeAvatar";
+import { userAvatarStore, userAvatarStore as avatarStore } from "../../stores/toChangeAvatar";
 import { observer } from "mobx-react-lite";
 import { searchStore as search } from "../../stores/toSearch";
 import { SearchItems } from "./search/SearchItems";
+import { searchUsersStore } from "../../stores/toSearchUsers";
 
 export const MainPage: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -106,7 +103,11 @@ export const MainPage: React.FC = observer(() => {
           {user ?
             <VerifyedUserContainer>
               <UserButton
-                onClick={() => navigate(generatePath('/profile/:id', {id: user.username}))}>
+                onClick={() => {
+                  searchUsersStore.setUser(user);
+                  searchUsersStore.setAvatar(userAvatarStore.avatar);
+                  navigate(generatePath('/profile/:id', {id: user.username}))
+                }}>
                 <UserAvatar style={{ backgroundImage: `url(${avatarStore.avatar})` }}/>
                 <UserNickname>{user.username}</UserNickname>
               </UserButton>
@@ -126,4 +127,4 @@ export const MainPage: React.FC = observer(() => {
       <Player />
     </Container>
   );
-});
+ });

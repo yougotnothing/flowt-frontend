@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import {
   Droplist,
@@ -15,11 +15,10 @@ import {
 import { observer } from "mobx-react-lite";
 import { searchStore as search } from "../../../stores/toSearch";
 import { API_URL } from "../../../api/axiosConfig";
-import { useUserContext } from "../../../contexts/UserContext";
 import { generatePath, useNavigate } from "react-router-dom";
 import { userSongsStore as songs } from "../../../stores/toSongs";
-export const SearchItems = observer(() => {
-  const { user } = useUserContext();
+import { searchUsersStore } from "../../../stores/toSearchUsers";
+export const SearchItems: React.FC = observer(() => {
   const ref = useRef<any>(null);
   const navigate = useNavigate();
 
@@ -73,7 +72,11 @@ export const SearchItems = observer(() => {
             <BigText>{searchUser.username}</BigText>
             <Text>{searchUser.region}</Text>
           </ItemInfo>
-          <ItemButton onClick={() => navigate(generatePath('/profile/:id', { id: searchUser.username }))}>
+          <ItemButton onClick={() => {
+            searchUsersStore.setUser(searchUser);
+            searchUsersStore.setAvatar(`${API_URL}/images/user/avatar/${searchUser.username}`);
+            navigate(generatePath('/profile/:id', {id: searchUser.username}));
+          }}>
             See more
           </ItemButton>
         </Item>

@@ -1,8 +1,6 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import { ISongsSearch, IUserSearch } from "../types/props";
 import { api } from "../api/axiosConfig";
-import { userSongsStore } from "./toSongs";
-import { ok } from "assert";
 
 class SearchStore {
   users: IUserSearch[] | [];

@@ -30,10 +30,10 @@ import {
 import { Options } from "./options/Options";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
 import { observer } from "mobx-react-lite";
-import { userAvatarStore as avatarStore } from "../../../stores/toChangeAvatar";
 import { userUsernameStore as usernameStore } from "../../../stores/toChangeUsername";
 import { useUserContext } from "../../../contexts/UserContext";
 import { Songs } from "../../songs/smallsizeSongs/Songs";
+import { searchUsersStore as searchUsers } from "../../../stores/toSearchUsers";
 
 export const Profile: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -50,13 +50,13 @@ export const Profile: React.FC = observer(() => {
     <UserContainer>
       {!user && <PageLoader />}
       {isVisible ? <Options $isVisible={isVisible} /> :
-        <Settings $isVisible={isOpen} onClick={() => setIsVisible(true) } />}
+        <Settings $isVisible={isOpen} onClick={() => setIsVisible(true)} />}
           {user && followers && subscribes && (
             <>
             <HeadContainer>
               <UserParams>
                 {user.username ?
-                  <UserAvatar style={{backgroundImage: `url(${avatarStore.avatar})`}} />
+                  <UserAvatar style={{backgroundImage: `url(${searchUsers.avatar})`}} />
                     :
                   <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
                 <ProfileTextContainer>
@@ -64,9 +64,9 @@ export const Profile: React.FC = observer(() => {
                   <UserNickname onClick={() =>
                     navigate(generatePath('/account/:id/change-username', { id: usernameStore.username }))
                   }>
-                    {user.username}
+                    {searchUsers.username}
                   </UserNickname>
-                  <ProfileTitle>{user.region}</ProfileTitle>
+                  <ProfileTitle>{searchUsers.region}</ProfileTitle>
                   <LinksContainer>
                     <FollowsSubscribes onClick={() =>
                       navigate(generatePath('/profile/:id/followers', { id: usernameStore.username }))
@@ -86,7 +86,7 @@ export const Profile: React.FC = observer(() => {
             <FooterContainer>
             <DescriptionContainer>
               <DescriptionTitle>Description</DescriptionTitle>
-              <Description>{user.description}</Description>
+              <Description>{searchUsers.description}</Description>
             </DescriptionContainer>
             <SongMainContainer>
               <SongsTitle>Songs</SongsTitle>

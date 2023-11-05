@@ -1,7 +1,7 @@
 import { action, makeObservable, observable, runInAction } from "mobx";
 
 import { ISongData, ISongParameters } from "../types/types";
-import { api, API_URL } from "../api/axiosConfig";
+import { API_URL } from "../api/axiosConfig";
 
 class UserSongsStore implements ISongParameters {
   id: number | null;
@@ -45,23 +45,23 @@ class UserSongsStore implements ISongParameters {
   }
 
   setUrl(URL: string) {
-    this.url = URL;
-  }
-
-  setAvatar(src: string) {
-    runInAction(() => {
-      this.avatar = src;
-    });
+    this.url = encodeURI(URL);
   }
 
   setName(name: string | null) {
     this.name = name;
   }
 
+  setAvatar(src: string) {
+    runInAction(() => {
+      this.avatar = encodeURI(src);
+    });
+  }
+
   setSearchSong(username: string, songName: string) {
     runInAction(() => {
-      this.setUrl(encodeURI(`${API_URL}/songs/audio/${username}/${songName}`));
-      this.setAvatar(encodeURI(`${API_URL}/images/song/${username}/${songName}`));
+      this.setUrl(`${API_URL}/songs/audio/${username}/${songName}`);
+      this.setAvatar(`${API_URL}/images/song/${username}/${songName}`);
     });
   }
 

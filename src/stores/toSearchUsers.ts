@@ -1,0 +1,64 @@
+import { observable, action, runInAction, makeObservable } from "mobx";
+import { IUserSearch, UserDTO } from "../types/props";
+import { API_URL } from "../api/axiosConfig";
+
+class SearchUsersStore {
+  username: string | null;
+  region: string | null;
+  description: string | null;
+  email: string | null;
+  avatar: any;
+  followers: string[] | [];
+  subscribes: string[] | [];
+
+  constructor() {
+    this.username = null;
+    this.region = null;
+    this.description = null;
+    this.email = null;
+    this.avatar = null;
+    this.followers = [];
+    this.subscribes = [];
+
+    makeObservable(this, {
+      username: observable,
+      region: observable,
+      description: observable,
+      email: observable,
+      avatar: observable,
+      setUser: action,
+      setAvatar: action,
+      setFollowers: action,
+      setSubscribes: action
+    });
+  }
+
+  setAvatar(src: any) {
+    runInAction(() => {
+      this.avatar = src;
+    });
+  }
+
+  setFollowers(followers: string[]) {
+    runInAction(() => {
+      this.followers = followers;
+    });
+  }
+
+  setSubscribes(subscribes: string[]) {
+    runInAction(() => {
+      this.subscribes = subscribes;
+    });
+  }
+
+  setUser(data: UserDTO | IUserSearch) {
+    runInAction(() => {
+      this.username = data.username;
+      this.region = data.region;
+      this.description = data.description;
+      this.email = data.email;
+    });
+  }
+}
+
+export const searchUsersStore = new SearchUsersStore();
