@@ -43,7 +43,8 @@ export interface IUserSearch {
   username: string,
   email: string,
   region: string,
-  description: string
+  description: string,
+  avatar: string,
 }
 
 export interface ISongsSearch {

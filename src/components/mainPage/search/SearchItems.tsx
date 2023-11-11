@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
   Droplist,
@@ -14,11 +14,13 @@ import {
 } from "../MainPage.styled";
 import { observer } from "mobx-react-lite";
 import { searchStore as search } from "../../../stores/toSearch";
-import { API_URL } from "../../../api/axiosConfig";
+import { api, API_URL } from "../../../api/axiosConfig";
 import { generatePath, useNavigate } from "react-router-dom";
 import { userSongsStore as songs } from "../../../stores/toSongs";
 import { searchUsersStore } from "../../../stores/toSearchUsers";
+
 export const SearchItems: React.FC = observer(() => {
+  const[isDefault, setIsDefault] = useState<boolean>(false);
   const ref = useRef<any>(null);
   const navigate = useNavigate();
 
@@ -39,6 +41,10 @@ export const SearchItems: React.FC = observer(() => {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, []);
+
+  useEffect(() => {
+    console.log(search.users);
+  }, [search.users]);
 
   return (
     <Droplist $isOpen={search.isOpen} ref={ref}>
@@ -65,22 +71,23 @@ export const SearchItems: React.FC = observer(() => {
           }}>Listen</ItemButton>
         </Item>
       ))}
-      {search.users.map((searchUser, index) => (
-        <Item key={index}>
-          <ItemIcon style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/user/avatar/${searchUser.username}`)})`}}/>
-          <ItemInfo>
-            <BigText>{searchUser.username}</BigText>
-            <Text>{searchUser.region}</Text>
-          </ItemInfo>
-          <ItemButton onClick={() => {
-            searchUsersStore.setUser(searchUser);
-            searchUsersStore.setAvatar(`${API_URL}/images/user/avatar/${searchUser.username}`);
-            navigate(generatePath('/profile/:id', {id: searchUser.username}));
-          }}>
-            See more
-          </ItemButton>
-        </Item>
-      ))}
+      {search.users.map((searchUser, index) => {
+        return (
+          <Item key={index}>
+            <ItemIcon src={'/defaultAvatar.png'}/>
+            <ItemInfo>
+              <BigText>{searchUser.username}</BigText>
+              <Text>{searchUser.region}</Text>
+            </ItemInfo>
+            <ItemButton onClick={() => {
+              searchUsersStore.setUser(searchUser);
+              searchUsersStore.setAvatar(searchUser.avatar);
+              navigate(generatePath('/profile/:id', { id: searchUser.username }));
+            }}>
+              See more
+            </ItemButton>
+          </Item>
+        )})}
       {search.users.length === 0 && search.songs.length === 0 && <Text>{search.message}</Text>}
     </Droplist>
   )

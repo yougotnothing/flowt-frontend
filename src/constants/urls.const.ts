@@ -1,21 +1,4 @@
-import { API_URL } from "../api/axiosConfig";
 import { IUrlProps } from "../types/props";
-
-export const USER_AVATAR_URL = (n: string | null) => `/images/user/avatar/${n}`;
-export const SUBSCRIBES_URL = '/users/subscribes';
-export const FOLLOWERS_URL = '/users/followers';
-export const SONG_URL = '/users/songs';
-export const SONG_AUDIO_URL = (s: string | null, u: string | null) => `${API_URL}/songs/audio/${u}/${s}`;
-export const SONG_AVATAR_URL = (s: string | null, u: string | null) => `${API_URL}/images/song/${u}/${s}`;
-export const DESCRIPTION_URL = '/users/description';
-export const EMAIL_URL = '/users/email';
-export const CHANGE_PASSWORD_URL = '/users/change-password';
-export const REGION_URL = '/users/region';
-export const USERNAME_URL = '/users/username';
-export const PUT_EMAIL_URL = '/verify/restore-password';
-export const RESTORE_PASSWORD_URL = '/users/restore-password';
-export const NOTIFICATIONS_URL = '/users/notifications';
-export const VERIFY_STATUS_URL = (v: string | null) => `/verify/email?code=${v}`;
 
 export class URLS implements IUrlProps {
   authenticated: string;

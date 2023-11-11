@@ -70,8 +70,8 @@ class UserSongsStore implements ISongParameters {
       if(this.container && index >= 0 && index < this.container.length) {
         const songInfo = this.container[index];
 
-        this.setUrl(encodeURI(`${API_URL}/songs/audio/${username}/${songInfo.name}`));
-        this.setAvatar(encodeURI(`${API_URL}/images/song/${username}/${songInfo.name}`));
+        this.setUrl(`${API_URL}/songs/audio/${username}/${songInfo.name}`);
+        this.setAvatar(`${API_URL}/images/song/${username}/${songInfo.name}`);
 
         this.issueYear = songInfo.issueYear;
         this.listens = songInfo.listens;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
-import { API_URL } from "../../../api/axiosConfig";
+import { api, API_URL } from "../../../api/axiosConfig";
 import {
   UserContainer,
   Settings,
@@ -24,7 +24,7 @@ import {
   FooterContainer,
   SongContainer,
   SongsTitle,
-  SongMainContainer
+  SongMainContainer, SubscribeButton
 } from "./Profile.styled";
 
 import { Options } from "./options/Options";
@@ -37,7 +37,8 @@ import { searchUsersStore as searchUsers } from "../../../stores/toSearchUsers";
 
 export const Profile: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState(true);
+  const[isOpen, setIsOpen] = useState(true);
+  const[isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
   const navigate = useNavigate();
   const { user, followers, subscribes } = useUserContext();
   let counter: number = 0;
@@ -46,44 +47,70 @@ export const Profile: React.FC = observer(() => {
     setIsOpen(!isVisible);
   }, [isVisible, isOpen]);
 
+  useEffect(() => {
+    if(user && user.username !== searchUsers.username) {
+      setIsCurrentUser(true);
+    }else{
+      setIsCurrentUser(false);
+    }
+  }, [searchUsers.username]);
+
+  const handleSubscribe = async () => {
+    try {
+      if(user && user.username !== searchUsers.username) {
+        const response = await api.post(`/users/subscribe/${searchUsers.username}`);
+
+        if(response.status === 200) {
+          console.log(`successfully subscribed to ${searchUsers.username}`);
+        }
+      }
+    }catch(error: any) {
+      console.log(error);
+    }
+  }
+
   return (
     <UserContainer>
       {!user && <PageLoader />}
-      {isVisible ? <Options $isVisible={isVisible} /> :
-        <Settings $isVisible={isOpen} onClick={() => setIsVisible(true)} />}
-          {user && followers && subscribes && (
-            <>
-            <HeadContainer>
-              <UserParams>
-                {user.username ?
-                  <UserAvatar style={{backgroundImage: `url(${searchUsers.avatar})`}} />
-                    :
-                  <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
-                <ProfileTextContainer>
-                  <ProfileTitle>Profile</ProfileTitle>
-                  <UserNickname onClick={() =>
-                    navigate(generatePath('/account/:id/change-username', { id: usernameStore.username }))
+        {isVisible
+          ? <Options $isVisible={isVisible} />
+          : <Settings $isVisible={isOpen} onClick={() => setIsVisible(true)} />
+        }
+        {user && followers && subscribes && (
+          <>
+          <HeadContainer>
+            <UserParams>
+              {user.username 
+                ? <UserAvatar style={{backgroundImage: `url(${searchUsers.avatar})`}} />
+                : <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
+              <ProfileTextContainer>
+                <ProfileTitle>Profile</ProfileTitle>
+                <UserNickname onClick={() =>
+                  navigate(generatePath('/account/:id/change-username', { id: usernameStore.username }))
+                }>
+                  {searchUsers.username}
+                </UserNickname>
+                <ProfileTitle>{searchUsers.region}</ProfileTitle>
+                <LinksContainer>
+                  <FollowsSubscribes onClick={() =>
+                    navigate(generatePath('/profile/:id/followers', { id: usernameStore.username }))
                   }>
-                    {searchUsers.username}
-                  </UserNickname>
-                  <ProfileTitle>{searchUsers.region}</ProfileTitle>
-                  <LinksContainer>
-                    <FollowsSubscribes onClick={() =>
-                      navigate(generatePath('/profile/:id/followers', { id: usernameStore.username }))
-                    }>
-                      Followers: {followers.length}
-                    </FollowsSubscribes>
-                    <FollowsSubscribes onClick={() =>
-                      navigate(generatePath('/profile/:id/subscribes', { id: usernameStore.username }))
-                    }>
-                      Subscribes: {subscribes.length}
-                    </FollowsSubscribes>
-                  </LinksContainer>
-                </ProfileTextContainer>
-              </UserParams>
-            </HeadContainer>
-            <BorderContainer> </BorderContainer>
-            <FooterContainer>
+                    Followers: {followers.length}
+                  </FollowsSubscribes>
+                  <FollowsSubscribes onClick={() =>
+                    navigate(generatePath('/profile/:id/subscribes', { id: usernameStore.username }))
+                  }>
+                    Subscribes: {subscribes.length}
+                  </FollowsSubscribes>
+                </LinksContainer>
+              </ProfileTextContainer>
+              <SubscribeButton $isVisible={isCurrentUser} onClick={handleSubscribe}>
+                subscribe
+              </SubscribeButton>
+            </UserParams>
+          </HeadContainer>
+          <BorderContainer> </BorderContainer>
+          <FooterContainer>
             <DescriptionContainer>
               <DescriptionTitle>Description</DescriptionTitle>
               <Description>{searchUsers.description}</Description>

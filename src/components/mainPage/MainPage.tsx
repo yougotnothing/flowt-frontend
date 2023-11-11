@@ -9,7 +9,7 @@ import {
   ContentContainer,
   Logo,
   ButtonsContainer,
-  VerifyedUserContainer,
+  VerifiedUserContainer,
   UserButton,
   UserAvatar,
   UserNickname,
@@ -36,6 +36,7 @@ export const MainPage: React.FC = observer(() => {
 
   useEffect(() => {
    const currentUrl = location.pathname;
+   console.log(searchUsersStore.avatar);
 
     if(!currentUrl || currentUrl === '/') navigate('/home');
 
@@ -51,8 +52,8 @@ export const MainPage: React.FC = observer(() => {
     setIsLoading(false);
   }, []);
 
-  const handleSearch = async (event: any) => {
-    if(event.key === 'Enter' && search.input.length > 0 && search.songs.length > 0 && search.users.length > 0) {
+  const handleSearch = async (key: any) => {
+    if(key.key === 'Enter' || key.code === 'Enter' && search.input.length > 0 && search.songs.length > 0 && search.users.length > 0) {
       await search.all();
       navigate('/search');
       search.setIsOpen(false);
@@ -63,7 +64,7 @@ export const MainPage: React.FC = observer(() => {
 
   const handleChange = async (e: any) => {
     if(e.target.value && location.pathname !== '/search') {
-      search.setInput(e.target.value);
+      search.setInput(e.target.value.trim());
       await search.all();
       search.setIsOpen(true);
     }
@@ -96,12 +97,13 @@ export const MainPage: React.FC = observer(() => {
               onKeyDown={handleSearch}
               name="search"
               placeholder="search"
+              type="text"
               onChange={handleChange}
             />
             <SearchButton onClick={handleSearchButton} />
           </div>
           {user ?
-            <VerifyedUserContainer>
+            <VerifiedUserContainer>
               <UserButton
                 onClick={() => {
                   searchUsersStore.setUser(user);
@@ -111,7 +113,7 @@ export const MainPage: React.FC = observer(() => {
                 <UserAvatar style={{ backgroundImage: `url(${avatarStore.avatar})` }}/>
                 <UserNickname>{user.username}</UserNickname>
               </UserButton>
-            </VerifyedUserContainer>
+            </VerifiedUserContainer>
             :
             <ButtonsContainer>
               <Link to={`/login`} className="link">Login</Link>

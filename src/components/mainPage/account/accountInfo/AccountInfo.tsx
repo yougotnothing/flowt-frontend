@@ -21,6 +21,7 @@ import {
   StatsContainer,
   AccountContainer,
   PlaylistContainer,
+  UserInfoContainer
 } from "../Account.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
@@ -79,11 +80,11 @@ export const AccountInfo: React.FC = observer(() => {
             )}
           </>
         )}
-        {user && (
-          <PlaylistContainer>
-            <FullsizeSongs />
-          </PlaylistContainer>
-        )}
+          {user && (
+            <PlaylistContainer>
+              <FullsizeSongs />
+            </PlaylistContainer>
+          )}
       </InfoContainer>
     </AccountContainer>
   );

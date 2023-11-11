@@ -1,6 +1,5 @@
 import { observable, action, runInAction, makeObservable } from "mobx";
 import { IUserSearch, UserDTO } from "../types/props";
-import { API_URL } from "../api/axiosConfig";
 
 class SearchUsersStore {
   username: string | null;

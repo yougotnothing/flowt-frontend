@@ -6,16 +6,18 @@ export const AccountContainer = styled('div')`
   display: flex;
   flex-direction: row;
   width: 100%;
+  position: relative;
   gap: 10em;
-  height: calc(99vh - 75px - 64px);
 `;
 
-export const Title = styled('div')`${TITLE};`;
+export const Title = styled('div')`
+  ${TITLE};
+`;
 
 export const UserSettingsContainer = styled('div')`
   display: flex;
   flex-direction: column;
-  position: absolute;
+  position: fixed;
   gap: 24px;
 `;
 
@@ -29,7 +31,6 @@ export const UserSettings = styled('div')`
   width: 260px;
   gap: 38px;
   padding: 21px;
-  border: 2px solid ${colors.BORDER};
 `;
 
 export const AContainer = styled('div')`
@@ -61,21 +62,23 @@ export const A = styled('a')`
   }
 `;
 
+export const UserInfoContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin: 0 auto;
+`;
+
 export const InfoContainer = styled('div')`
-  overflow-y: scroll;
   align-self: center;
-  scrollbar-width: none;
+  height: max-content;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
   gap: 24px;
-  padding: 4px;
+  padding: 0 4px 4px 4px;
   text-align: start;
-  height: 100%;
-  
-  &::-webkit-scrollbar {
-    opacity: 0;
-  }
 `;
 
 export const UserContainer = styled('div')`
@@ -88,15 +91,12 @@ export const UserContainer = styled('div')`
   padding: 36px;
   border-radius: 18px;
   max-height: 400px;
-  border: 2px solid ${colors.BORDER};
-  box-shadow: 0px 0px 3px 1px ${colors.BORDER};
   background: linear-gradient(135deg, ${colors.DARK_BLUE} 0% , ${colors.AQUAMARINE} 60%, ${colors.SECONDARY_HOVER} 120%);
 `;
 
 export const UserAvatar = styled('picture')`
   width: 286px;
   height: 286px;
-  background: none;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -141,9 +141,7 @@ export const DescriptionContainer = styled('div')`
   align-items: start;
   padding: 12px;
   gap: 24px;
-  border: 2px solid ${colors.BORDER};
-  border-radius: 12px;
-  background-color: ${colors.FRONT};
+  border-bottom: 1px solid ${colors.SECONDARY};
 `;
 
 export const Description = styled('div')`
@@ -184,6 +182,6 @@ export const Container = styled('div')`
 export const PlaylistContainer = styled('div')`
   display: flex;
   flex-direction: column;
-  margin-bottom: 120px;
+  margin-bottom: 26px;
   gap: 24px;
 `;

@@ -1,6 +1,6 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import { ISongsSearch, IUserSearch } from "../types/props";
-import { api } from "../api/axiosConfig";
+import { api, API_URL } from "../api/axiosConfig";
 
 class SearchStore {
   users: IUserSearch[] | [];
@@ -31,7 +31,14 @@ class SearchStore {
       all: action,
       setInput: action,
       get: action,
-      setIsOpen: action
+      setIsOpen: action,
+      setMessage: action
+    });
+  }
+
+  setMessage(message: string | null) {
+    runInAction(() => {
+      this.message = message;
     });
   }
 
@@ -54,16 +61,18 @@ class SearchStore {
       });
 
       if(response) {
-        runInAction(() => {
-          this.users = response.data.users;
-
-          if(this.users.length === 0) {
-            this.message = `Can't find data by ${this.input}`;
-          }
-        });
+        if (this.users.length === 0) {
+          this.setMessage(`Can't find data by ${this.input}`);
+        }
       }
-      console.log(response.data.users);
-    }catch(error: any) {
+      runInAction(() => {
+        this.users = response.data.users;
+      });
+
+        if(this.users.length === 0) {
+          this.setMessage(`Can't find data by ${this.input}`);
+        }
+      }catch(error: any) {
        console.log(error);
     }
   }
@@ -81,7 +90,6 @@ class SearchStore {
           this.message = `Can't find data by ${this.input}`;
         }
       });
-      console.log(response.data.songs);
     }catch(error: any) {
       console.log(error);
     }
@@ -134,7 +142,6 @@ class SearchStore {
       runInAction(() => {
         this.playlists = response.data.playlists;
       });
-      console.log(response.data.playlists);
     }catch(error: any) {
       console.log(error);
     }

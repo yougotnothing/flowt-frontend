@@ -6,7 +6,6 @@ export const Container = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: auto;
   background-color: ${colors.BACKGROUND};
 `;
 
@@ -15,9 +14,11 @@ export const Navbar = styled('div')`
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 80px;
-  border-radius: 0px 0px 20px 20px;
+  height: 64px;
+  border-radius: 0 0 20px 20px;
   width: 96vw;
+  position: fixed;
+  z-index: 1000;
 
   .form {
     display: flex;
@@ -54,11 +55,10 @@ export const SearchButton = styled('button')`
 `;
 
 export const ContentContainer = styled('div')`
-  padding-top: 3%;
+  padding-top: 7em;
   display: flex;
   flex-direction: row;
   width: 96%;
-  max-height: 78%;
   align-self: center;
   gap: 6%;
 `;
@@ -67,7 +67,6 @@ export const Button = styled('button')`
   margin: auto;
   font-family: 'Urbanist', sans-serif;
   font-weight: 300;
-  background: none;
   background-color: transparent;
   border: none;
   width: 98px;
@@ -102,11 +101,11 @@ export const Button = styled('button')`
 `;
 
 export const Logo = styled('button')`
-  height: 60px;
-  width: 164px;
-  background: none;
+  align-self: center;
+  height: 50px;
+  width: 134px;
   border: none;
-  color: white;
+  background-color: transparent;
   background-image: url('/flowt.png');
   background-size: 100%;
   cursor: pointer;
@@ -131,8 +130,7 @@ export const ButtonsContainer = styled('div')`
     font-size: 18px;
     font-family: 'Urbanist', sans-serif;
     font-weight: 300;
-    background: none;
-    background-color: none;
+    background-color: transparent;
     border: none;
     width: 78px;
     height: 28px;
@@ -152,12 +150,13 @@ export const ButtonsContainer = styled('div')`
   }
 `;
 
-export const VerifyedUserContainer = styled('div')`
+export const VerifiedUserContainer = styled('div')`
   display: flex;
   gap: 40px;
 `;
 
 export const UserButton = styled('button')`
+  align-self: center;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -166,7 +165,7 @@ export const UserButton = styled('button')`
   cursor: pointer;
   gap: 20px;
   font-family: 'Raleway', sans-serif;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 400;
   color: ${colors.DARK_WHITE};
   transition: all 0.3s;
@@ -178,8 +177,8 @@ export const UserButton = styled('button')`
 
 export const UserAvatar = styled('picture')`
   border-radius: 50%;
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -221,7 +220,8 @@ export interface IDroplistProp {
 
 export const Droplist = styled('div')<IDroplistProp>`
   display: ${props => props.$isOpen ? 'flex' : 'none'};
-  position: absolute;
+  position: fixed;
+  z-index: 1000;
   margin-top: 5em;
   align-self: center;
   align-items: center;
@@ -255,7 +255,7 @@ export const Item = styled('div')`
   gap: 4px;
 `;
 
-export const ItemIcon = styled('picture')`
+export const ItemIcon = styled('img')`
   width: 84px;
   height: 84px;
   border-radius: 6px;
@@ -280,7 +280,7 @@ export const ItemInfo = styled('div')`
 `;
 
 export const Text = styled('span')`
-  font-family: 'Urbanist', sans-serif;
+  font-family: 'Urbanist', 'Noto Color Emoji', sans-serif;
   font-size: 16px;
   font-weight: 400;
   color: ${colors.DARK_WHITE};

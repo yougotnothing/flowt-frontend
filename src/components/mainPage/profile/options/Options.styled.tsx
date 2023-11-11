@@ -27,8 +27,8 @@ export const OptionsContainer = styled('div')<OptionsProps>`
   width: 280px;
   position: absolute;
   border: 2px solid ${colors.BORDER};
-  align-self: end;
-  display: flex;
+  place-self: end;
+  display: ${props => props.$isVisible ? 'flex' : 'none'};
   flex-direction: column;
   border-radius: 14px;
   background-color: ${colors.FRONT};

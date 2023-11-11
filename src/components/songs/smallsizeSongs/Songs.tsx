@@ -16,24 +16,19 @@ import {
   LikeSongButton
 } from "./Songs.styled";
 import { userSongsStore as songs } from "../../../stores/toSongs";
-import { ISongData } from "../../../types/types";
 import { api, API_URL } from "../../../api/axiosConfig";
-import { URLS } from "../../../constants/urls.const";
 import { useUserContext } from "../../../contexts/UserContext";
-import { searchStore as search } from "../../../stores/toSearch";
 
 export const Songs: React.FC = observer(() => {
   const[isLiked, setIsLiked] = useState<boolean[]>(
     Array(songs.container.length).fill(false)
   );
-  const [songImage, setSongImage] = useState<string>('');
   const navigate = useNavigate();
-  const url = new URLS();
   const { user } = useUserContext();
 
   const getSong = async () => {
     try {
-      const response = await api.get(url.songs);
+      const response = await api.get('/users/songs');
       songs.getInfo(response.data.songs);
     }catch(error: any) {
       console.log(error);
@@ -71,7 +66,7 @@ export const Songs: React.FC = observer(() => {
       {user.username ? songs.container.map((song, index) => (
         <SongContainer key={index}>
           <SongImage style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/song/${user.username}/${song.name}`)})`}}>
-            <SongButton onClick={() => songs.setSong(index, user.username)} />
+            <SongButton onClick={() => songs.setSong(index, encodeURI(user.username))} />
           </SongImage>
           <SongData>
             <SongTitle

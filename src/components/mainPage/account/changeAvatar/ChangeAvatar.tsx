@@ -37,7 +37,6 @@ export const ChangeAvatar: React.FC = observer(() => {
   const[croppedAvatarBlob, setCroppedAvatarBlob] = useState<any>(null);
   const { user } = useUserContext();
   const url = new URLS();
-
   const navigate = useNavigate();
 
   useEffect(() => {

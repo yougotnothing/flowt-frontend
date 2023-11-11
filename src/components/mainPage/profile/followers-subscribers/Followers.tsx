@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, API_URL } from "../../../../api/axiosConfig";
 
@@ -9,8 +9,9 @@ import {
 } from "./Followers.styled";
 import { URLS } from "../../../../constants/urls.const";
 import { useUserContext } from "../../../../contexts/UserContext";
+import { observer } from "mobx-react-lite";
 
-export const Followers: React.FC = () => {
+export const Followers: React.FC = observer(() => {
   const navigate = useNavigate();
   let counter: number = 0;
   const url = new URLS();
@@ -28,4 +29,4 @@ export const Followers: React.FC = () => {
       ))}
     </Container>
   )
-}
+});

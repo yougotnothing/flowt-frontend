@@ -24,7 +24,6 @@ export const SongData = styled('div')`
   border-radius: 4px;
   width: 140px;
   align-items: start;
-  border: 1px solid ${colors.BORDER};
 `;
 
 export const SongImage = styled('picture')`

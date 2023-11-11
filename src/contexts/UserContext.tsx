@@ -7,7 +7,7 @@ import { userRegionStore as regionStore } from "../stores/toChangeRegion";
 import { userAvatarStore as avatarStore } from "../stores/toChangeAvatar";
 import { userUsernameStore as usernameStore } from "../stores/toChangeUsername";
 import { userDescriptionStore as descriptionStore } from "../stores/toChangeDescription";
-import { searchUsersStore, searchUsersStore as searchUsers } from "../stores/toSearchUsers";
+import { searchUsersStore as searchUsers } from "../stores/toSearchUsers";
 import { observer } from "mobx-react-lite";
 import { URLS } from "../constants/urls.const";
 import { notificationsStore as notices } from "../stores/toNotifications";
@@ -29,36 +29,22 @@ export const UserContext = observer(({ children }: any) => {
       const response = await api.get(url.authenticated);
       setUser(response.data);
     }catch(error: any) {
-      console.log("an error occurred");
+      console.error(error);
     }
   }
-  
+
   const getUserAvatar = async (): Promise<void> => {
     try {
       if(user) {
-        const response = await api.get(`/images/user/avatar/${user.username}`);
+        await api.get(`/images/user/avatar/${user.username}`);
         avatarStore.setAvatar(`${API_URL}/images/user/avatar/${user.username}`);
         avatarStore.setAvatarURL(`${API_URL}/images/user/avatar/${user.username}`);
         searchUsers.setAvatar(`${API_URL}/images/user/avatar/${user.username}`);
         console.log(avatarStore.avatar);
       }
     }catch{
-      try{
-        const formData = new FormData();
-        avatarStore.setAvatar('/defaultAvatar.png');
-        searchUsers.setAvatar('/defaultAvatar.png');
-
-        formData.append('file', avatarStore.avatar);
-
-        await api.post(url.user_avatar,
-          formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        });
-      }catch(error: any) {
-        console.error(error);
-      }
+      avatarStore.setAvatar('/defaultAvatar.png');
+      searchUsers.setAvatar('/defaultAvatar.png');
     }
   }
 
@@ -84,13 +70,12 @@ export const UserContext = observer(({ children }: any) => {
     getUser();
   }, []);
 
-
   useLayoutEffect(() => {
     if(user) {
       getUserAvatar();
       getFollowers();
       getSubscribes();
-      searchUsersStore.setUser(user);
+      searchUsers.setUser(user);
       descriptionStore.setDescription(user.description);
       usernameStore.setUsername(user.username);
       regionStore.setRegion(user.region);

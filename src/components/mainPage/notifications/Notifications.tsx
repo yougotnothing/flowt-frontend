@@ -2,8 +2,6 @@ import React, { useEffect, useState, Fragment } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { useUserContext } from "../../../contexts/UserContext";
-import { userAvatarStore } from "../../../stores/toChangeAvatar";
-import noticeData from "../../../json/notice.json";
 
 import {
   NoticesContainer,
@@ -16,7 +14,7 @@ import {
   NoticeNav,
   SortButton,
   ReadIcon,
-  SortButtonContainer, Droplist, DroplistItem
+  SortButtonContainer
 } from "./Notifications.styled";
 import { URLS } from "../../../constants/urls.const";
 import { notificationsStore as notices } from "../../../stores/toNotifications";
@@ -44,7 +42,7 @@ export const Notifications: React.FC = observer(() => {
             </SortButtonContainer>
           </NoticeNav>
           <NoticesContainer>
-            <Droplist_ $isOpen={false} />
+            {notices.container.length > 0 ? <Droplist_ $isOpen={false}/> : <NoticeTitle>You have no notifications.</NoticeTitle>}
           </NoticesContainer>
         </ContentContainer>
       )}

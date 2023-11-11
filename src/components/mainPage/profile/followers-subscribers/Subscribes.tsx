@@ -5,8 +5,9 @@ import { api, API_URL } from "../../../../api/axiosConfig";
 import { Container, Avatar, Card, Header, PageHeader } from "./Followers.styled";
 import { URLS } from "../../../../constants/urls.const";
 import { useUserContext } from "../../../../contexts/UserContext";
+import { observer } from "mobx-react-lite";
 
-export const Subscribers: React.FC = () => {
+export const Subscribers: React.FC = observer(() => {
   const navigate = useNavigate();
   let counter: number = 0;
   const url = new URLS();
@@ -23,4 +24,4 @@ export const Subscribers: React.FC = () => {
       ))}
     </Container>
   )
-}
+});

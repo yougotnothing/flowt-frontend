@@ -78,7 +78,7 @@ export const Player: React.FC = observer(() => {
         <PlayerContainer>
           <H5AudioPlayer
             layout="stacked-reverse"
-            volume={1}
+            volume={0.5}
             src={song.url}
             autoPlay={true}
             showSkipControls={true}
@@ -89,9 +89,11 @@ export const Player: React.FC = observer(() => {
             onClickPrevious={handlePlayPrev}
             customControlsSection={[
               <SongContainer>
-                <SongPicture style={{backgroundImage: `url(${song.avatar})`}}/>
+                <SongPicture style={{ backgroundImage: `url(${song.avatar})` }}/>
                 <SongInfoContainer>
-                  <SongCreatorLink>{user.username}</SongCreatorLink>
+                  <div>
+                    <SongCreatorLink>{user.username}</SongCreatorLink>
+                  </div>
                   <SongTitle>{song.name}</SongTitle>
                 </SongInfoContainer>
               </SongContainer>,

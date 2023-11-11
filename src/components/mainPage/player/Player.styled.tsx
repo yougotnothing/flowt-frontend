@@ -7,7 +7,8 @@ interface ShuffleProps {
 
 export const PlayerContainer = styled('div')`
   display: flex;
-  position: absolute;
+  position: fixed;
+  z-index: 1000;
   align-items: center;
   justify-content: center;
   -webkit-align-self: center;
@@ -111,6 +112,7 @@ export const SongCreatorLink = styled('a')`
   font-weight: 400;
   font-size: 14px;
   color: ${colors.DARK_WHITE};
+  cursor: pointer;
   
   &:hover {
     color: ${colors.SECONDARY};

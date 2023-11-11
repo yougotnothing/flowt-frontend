@@ -1,6 +1,7 @@
 import styled, { keyframes, css } from "styled-components";
 import { colors } from "../../../constants/colors.const";
 import { OptionsProps } from "./options/Options.styled";
+import { BUTTON } from "../../../constants/styles.const";
 
 const fadeIn = keyframes`
   from {
@@ -28,6 +29,7 @@ export const UserContainer = styled('div')`
   width: 1200px;
   height: max-content;
   margin: 0 auto;
+  position: relative;
 
   .link {
     display: block;
@@ -46,10 +48,10 @@ export const UserContainer = styled('div')`
 
 export const Settings = styled('button')<OptionsProps>`
   display: ${props => props.$isVisible ? 'flex' : 'none'};
-  position: absolute;
-  align-self: end;
   width: 38px;
   height: 38px;
+  position: absolute;
+  align-self: end;
   animation: ${props => props.$isVisible ? css`${fadeIn} 0.3s ease` : css`${fadeOut} 0.3s ease`};
   background-image: url('/settings.png');
   background-position: center;
@@ -57,7 +59,7 @@ export const Settings = styled('button')<OptionsProps>`
   background-size: 46px;
   border: none;
   background-color: ${colors.BACKGROUND};
-  transition: all 0.5s;
+  transition: 0.5s;
   transform: rotate(180deg);
   cursor: pointer;
 
@@ -270,4 +272,19 @@ export const SongMainContainer = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 12px;
+`;
+
+export interface ISubscribeProp {
+  $isVisible: boolean;
+}
+
+export const SubscribeButton = styled('button')<ISubscribeProp>`
+  ${BUTTON};
+  
+  display: ${props => props.$isVisible ? 'flex' : 'none'};
+  align-self: center;
+  justify-items: end;
+  margin: auto 0 auto auto;
+  width: 146px;
+  height: 32px;
 `;
