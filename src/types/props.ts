@@ -4,6 +4,7 @@ export interface UserDTO {
   region: string | null;
   description: string | null;
   email: string | null;
+  userHaveAvatar: boolean | null;
   followers: string[] | null;
   subscribes: string[] | null;
 }
@@ -40,11 +41,12 @@ export interface INotificationsProps {
 export type INotice = INotificationsProps;
 
 export interface IUserSearch {
-  username: string,
-  email: string,
-  region: string,
-  description: string,
-  avatar: string,
+  username: string;
+  email: string;
+  region: string;
+  description: string;
+  userHaveAvatar: boolean;
+  avatar: string;
 }
 
 export interface ISongsSearch {

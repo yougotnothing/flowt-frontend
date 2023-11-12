@@ -13,7 +13,7 @@ export const Navbar = styled('div')`
   background-color: ${colors.FRONT};
   display: flex;
   flex-direction: row;
-  align-items: center;
+  justify-content: space-between;
   height: 64px;
   border-radius: 0 0 20px 20px;
   width: 96vw;
@@ -186,6 +186,10 @@ export const UserAvatar = styled('picture')`
 
 export const UserNickname = styled('div')`
   margin: auto;
+  width: 100px;
+  overflow: hidden;
+  text-align: start;
+  text-overflow: ellipsis;
 `;
 
 export const GoBackContainer = styled('div')`

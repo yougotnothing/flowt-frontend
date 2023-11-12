@@ -6,6 +6,7 @@ class SearchUsersStore {
   region: string | null;
   description: string | null;
   email: string | null;
+  userHaveAvatar: boolean | null;
   avatar: any;
   followers: string[] | [];
   subscribes: string[] | [];
@@ -15,6 +16,7 @@ class SearchUsersStore {
     this.region = null;
     this.description = null;
     this.email = null;
+    this.userHaveAvatar = null;
     this.avatar = null;
     this.followers = [];
     this.subscribes = [];
@@ -25,6 +27,7 @@ class SearchUsersStore {
       description: observable,
       email: observable,
       avatar: observable,
+      userHaveAvatar: observable,
       setUser: action,
       setAvatar: action,
       setFollowers: action,
@@ -56,6 +59,7 @@ class SearchUsersStore {
       this.region = data.region;
       this.description = data.description;
       this.email = data.email;
+      this.userHaveAvatar = data.userHaveAvatar;
     });
   }
 }

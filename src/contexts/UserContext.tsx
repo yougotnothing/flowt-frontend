@@ -26,8 +26,9 @@ export const UserContext = observer(({ children }: any) => {
 
   const getUser = async (): Promise<void> => {
     try {
-      const response = await api.get(url.authenticated);
+      const response = await api.get('/users/authenticated');
       setUser(response.data);
+      console.log(response.data);
     }catch(error: any) {
       console.error(error);
     }

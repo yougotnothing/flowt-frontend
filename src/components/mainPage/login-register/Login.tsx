@@ -16,6 +16,7 @@ import {
 import { loginValidationSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/Loader";
 import { login } from "../../../api/axiosConfig";
+import { GOOGLE_AUTH_URL } from "../../../constants/urls.const";
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -87,6 +88,7 @@ export const Login: React.FC = () => {
         { isLoading ? <Loader /> : "Login" }
       </LoginButton>
       <HelpButtons>
+        <a href={GOOGLE_AUTH_URL}>GOOGLE!</a>
         <RegisteredButton onClick={() => navigate("/verify/restore-password")}>
           Forgot password?
         </RegisteredButton>

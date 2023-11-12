@@ -24,6 +24,7 @@ import { Player } from "../mainPage/player/Player";
 import { UserContext } from "../../contexts/UserContext";
 import { Notifications } from "../mainPage/notifications/Notifications";
 import { Songs } from "../songs/smallsizeSongs/Songs";
+import { GoogleAuth } from "../OAuth2/GoogleAuth";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -120,6 +121,10 @@ export const pageRouter = createBrowserRouter([
       {
         path: '/songs/:id',
         element: <Songs />
+      },
+      {
+        path: '/oauth/google/login',
+        element: <GoogleAuth />
       }
     ]
   }

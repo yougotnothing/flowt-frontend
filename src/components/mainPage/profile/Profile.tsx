@@ -80,7 +80,7 @@ export const Profile: React.FC = observer(() => {
           <>
           <HeadContainer>
             <UserParams>
-              {user.username 
+              {user.userHaveAvatar
                 ? <UserAvatar style={{backgroundImage: `url(${searchUsers.avatar})`}} />
                 : <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
               <ProfileTextContainer>

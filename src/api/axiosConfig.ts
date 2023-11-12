@@ -59,7 +59,7 @@ export const registration = async (registerDto: any) => {
 
 export const login = async (loginDto: any) => {
   const response = await api.post('/auth/login', {
-    username: loginDto.username,
+    login: loginDto.username,
     password: loginDto.password
   });
   console.log(response.data);

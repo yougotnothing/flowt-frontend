@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Link, Outlet, useNavigate, useLocation, generatePath } from "react-router-dom";
 import {
@@ -19,7 +19,7 @@ import { AlertSuccess, AlertWarning } from "./alert/Alert";
 import { Player } from "./player/Player";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../contexts/UserContext";
-import { userAvatarStore, userAvatarStore as avatarStore } from "../../stores/toChangeAvatar";
+import { userAvatarStore as avatarStore } from "../../stores/toChangeAvatar";
 import { observer } from "mobx-react-lite";
 import { searchStore as search } from "../../stores/toSearch";
 import { SearchItems } from "./search/SearchItems";
@@ -53,7 +53,7 @@ export const MainPage: React.FC = observer(() => {
   }, []);
 
   const handleSearch = async (key: any) => {
-    if(key.key === 'Enter' || key.code === 'Enter' && search.input.length > 0 && search.songs.length > 0 && search.users.length > 0) {
+    if((key.key === 'Enter' || key.code === 'Enter') && search.input.length > 0 && search.songs.length > 0 && search.users.length > 0) {
       await search.all();
       navigate('/search');
       search.setIsOpen(false);
@@ -107,17 +107,19 @@ export const MainPage: React.FC = observer(() => {
               <UserButton
                 onClick={() => {
                   searchUsersStore.setUser(user);
-                  searchUsersStore.setAvatar(userAvatarStore.avatar);
-                  navigate(generatePath('/profile/:id', {id: user.username}))
+                  searchUsersStore.setAvatar(avatarStore.avatar);
+                  navigate(generatePath('/profile/:id', { id: user.username }));
                 }}>
-                <UserAvatar style={{ backgroundImage: `url(${avatarStore.avatar})` }}/>
+                {user.userHaveAvatar
+                  ? <UserAvatar style={{backgroundImage: `url(${avatarStore.avatar})`}}/>
+                  : <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
                 <UserNickname>{user.username}</UserNickname>
               </UserButton>
             </VerifiedUserContainer>
             :
             <ButtonsContainer>
-              <Link to={`/login`} className="link">Login</Link>
-              <Link to={`/register`} className="link">Register</Link>
+              <Link to="/login" className="link">Login</Link>
+              <Link to="/register" className="link">Register</Link>
             </ButtonsContainer>
           }
         </NavContainer>
@@ -129,4 +131,4 @@ export const MainPage: React.FC = observer(() => {
       <Player />
     </Container>
   );
- });
+});

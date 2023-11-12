@@ -20,11 +20,11 @@ export const Header = styled('div')`
 `;
 
 export const ContentContainer = styled('div')`
-  margin-top: 5em;
   display: flex;
-  width: 700px;
+  width: 760px;
   align-items: center;
   flex-direction: column;
+  margin:  5em auto 0 auto;
   padding: 8px;
   gap: 6px;
   max-height: 780px;
@@ -38,6 +38,7 @@ export const FiltersContainer = styled('div')`
   margin-top: 5em;
   display: flex;
   flex-direction: column;
+  position: fixed;
   gap: 18px;
   width: max-content;
   height: max-content;
@@ -48,14 +49,16 @@ export const SearchFilters = styled('div')`
   flex-direction: column;
   gap: 6px;
   background-color: ${colors.FRONT};
-  border: 1px solid ${colors.BORDER};
+  border: 2px solid ${colors.BORDER};
+  border-radius: 8px;
+  padding: 4px;
 `;
 
 export const SearchFilterButton = styled('button')`
   color: ${colors.WHITE};
   background-color: transparent;
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 19px;
+  font-weight: 600;
   font-family: 'Urbanist', sans-serif;
   border-style: solid;
   border-top-width: 0;
@@ -88,10 +91,10 @@ export const Card = styled('div')`
   padding: 4px;
 `;
 
-export const CardIcon = styled('picture')`
+export const CardIcon = styled('picture')<ICardType>`
   width: 126px;
   height: 126px;
-  border-radius: 8px;
+  border-radius: ${props => props.$type === 'user' ? '50%' : '8px'};
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -102,15 +105,21 @@ export const CardInfoContainer = styled('div')`
   flex-direction: column;
   justify-content: space-between;
   align-items: start;
-  width: 160px;
+  width: 120px;
   height: 66px;
 `;
 
+export interface ICardType {
+  $type: 'user' | 'song';
+}
 export const CardInfo = styled('button')`
   background-color: transparent;
   color: ${colors.WHITE};
   font-size: 18px;
   font-weight: 600;
+  width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-family: 'Urbanist', sans-serif;
   border: none;
   cursor: pointer;

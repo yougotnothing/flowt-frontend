@@ -43,6 +43,7 @@ export const Search: React.FC = observer(() => {
         {search.songs && search.songs.map((song, index) => (
           <Card key={index}>
             <CardIcon
+              $type='song'
               style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/song/${user.username}/${song.name}`)})`}} />
             <CardInfoContainer>
               <CardInfo>{user.username}</CardInfo>
@@ -52,7 +53,7 @@ export const Search: React.FC = observer(() => {
         ))}
         {search.users && search.users.map((searchUser, index) => (
           <Card key={index}>
-            <CardIcon style={{backgroundImage: `url(${userAvatarStore.avatar})`}}/>
+            <CardIcon $type='user' style={{backgroundImage: `url(${userAvatarStore.avatar})`}}/>
             <CardInfoContainer>
               <CardInfo>{searchUser.username}</CardInfo>
             </CardInfoContainer>
@@ -60,7 +61,7 @@ export const Search: React.FC = observer(() => {
         ))}
         {search.playlists && search.playlists.map((playlist, index) => (
           <Card key={index}>
-            <CardIcon />
+            <CardIcon $type='song' />
             <CardInfoContainer>
               <CardInfo>{playlist.name}</CardInfo>
             </CardInfoContainer>
