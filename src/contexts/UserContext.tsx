@@ -1,7 +1,7 @@
 import React, { useEffect, createContext, useContext, useState, useLayoutEffect } from "react";
 
 import { api, API_URL } from "../api/axiosConfig";
-import { UserDTO, UserProps } from "../types/props";
+import { IUserProps, UserDTO, UserProps } from "../types/props";
 import { userEmailStore as emailStore } from "../stores/toChangeEmail";
 import { userRegionStore as regionStore } from "../stores/toChangeRegion";
 import { userAvatarStore as avatarStore } from "../stores/toChangeAvatar";
@@ -11,6 +11,7 @@ import { searchUsersStore as searchUsers } from "../stores/toSearchUsers";
 import { observer } from "mobx-react-lite";
 import { URLS } from "../constants/urls.const";
 import { notificationsStore as notices } from "../stores/toNotifications";
+import { subscribesStore } from "../stores/toSubscribes";
 
 const UserCreateContext = createContext<UserProps>({
   user: null,
@@ -20,15 +21,14 @@ const UserCreateContext = createContext<UserProps>({
 
 export const UserContext = observer(({ children }: any) => {
   const[user, setUser] = useState<UserDTO | null>(null);
-  const[followers, setFollowers] = useState<string | null>(null);
-  const[subscribes, setSubscribes] = useState<string | null>(null);
+  const[followers, setFollowers] = useState<IUserProps[] | null>(null);
+  const[subscribes, setSubscribes] = useState<IUserProps[] | null>(null);
   const url = new URLS();
 
   const getUser = async (): Promise<void> => {
     try {
       const response = await api.get('/users/authenticated');
       setUser(response.data);
-      console.log(response.data);
     }catch(error: any) {
       console.error(error);
     }
@@ -36,16 +36,18 @@ export const UserContext = observer(({ children }: any) => {
 
   const getUserAvatar = async (): Promise<void> => {
     try {
-      if(user) {
+      if(user && user.userHaveAvatar) {
         await api.get(`/images/user/avatar/${user.username}`);
         avatarStore.setAvatar(`${API_URL}/images/user/avatar/${user.username}`);
         avatarStore.setAvatarURL(`${API_URL}/images/user/avatar/${user.username}`);
         searchUsers.setAvatar(`${API_URL}/images/user/avatar/${user.username}`);
         console.log(avatarStore.avatar);
+      }else{
+        avatarStore.setAvatar('/defaultAvatar.png');
+        searchUsers.setAvatar('/defaultAvatar.png');
       }
-    }catch{
-      avatarStore.setAvatar('/defaultAvatar.png');
-      searchUsers.setAvatar('/defaultAvatar.png');
+    }catch(error: any){
+      console.error(error);
     }
   }
 
@@ -70,6 +72,10 @@ export const UserContext = observer(({ children }: any) => {
   useEffect(() => {
     getUser();
   }, []);
+
+  useEffect(() => {
+    subscribesStore.getData(subscribes);
+  }, [subscribes])
 
   useLayoutEffect(() => {
     if(user) {

@@ -23,6 +23,7 @@ export const Navbar = styled('div')`
   .form {
     display: flex;
     flex-direction: row;
+    align-items: center;
     margin: auto;
     gap: 20px;
   }
@@ -259,10 +260,14 @@ export const Item = styled('div')`
   gap: 4px;
 `;
 
-export const ItemIcon = styled('img')`
+export interface IIconProps {
+  $type: 'user' | 'song' | 'playlist'
+}
+
+export const ItemIcon = styled('img')<IIconProps>`
   width: 84px;
   height: 84px;
-  border-radius: 6px;
+  border-radius: ${(props) => (props.$type === 'user' ? '50%' : props.$type === 'song' ? '8px' : '8px')};
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

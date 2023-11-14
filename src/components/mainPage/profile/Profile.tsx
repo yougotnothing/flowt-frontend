@@ -34,6 +34,8 @@ import { userUsernameStore as usernameStore } from "../../../stores/toChangeUser
 import { useUserContext } from "../../../contexts/UserContext";
 import { Songs } from "../../songs/smallsizeSongs/Songs";
 import { searchUsersStore as searchUsers } from "../../../stores/toSearchUsers";
+import { Playlist } from "../playlist/small/Playlist";
+import { IUserProps } from "../../../types/props";
 
 export const Profile: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -41,7 +43,6 @@ export const Profile: React.FC = observer(() => {
   const[isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
   const navigate = useNavigate();
   const { user, followers, subscribes } = useUserContext();
-  let counter: number = 0;
 
   useEffect(() => {
     setIsOpen(!isVisible);
@@ -77,10 +78,10 @@ export const Profile: React.FC = observer(() => {
           : <Settings $isVisible={isOpen} onClick={() => setIsVisible(true)} />
         }
         {user && followers && subscribes && (
-          <>
+        <>
           <HeadContainer>
             <UserParams>
-              {user.userHaveAvatar
+              {searchUsers.userHaveAvatar
                 ? <UserAvatar style={{backgroundImage: `url(${searchUsers.avatar})`}} />
                 : <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
               <ProfileTextContainer>
@@ -121,17 +122,18 @@ export const Profile: React.FC = observer(() => {
                 <Songs />
               </SongContainer>
             </SongMainContainer>
+            <Playlist />
           </FooterContainer>
           <LikedText>Favorite</LikedText>
           <LikedContainer>
-            {subscribes.map((subscribe: string) => (
-              <LikedTrackContainer key={++counter}>
-                {subscribe ?
-                  <LikedTrackIcon style={{backgroundImage: `url(${API_URL}/images/user/${subscribe})`}} />
+            {subscribes.map((subscribe: IUserProps, index: number) => (
+              <LikedTrackContainer key={index}>
+                {subscribe.userHaveAvatar ?
+                  <LikedTrackIcon style={{backgroundImage: `url(${API_URL}/images/user/avatar/${subscribe.username})`}} />
                   :
-                  <LikedTrackIcon style={{backgroundImage: 'url(defaultAvatar.png)'}} />
+                  <LikedTrackIcon style={{backgroundImage: 'url(/defaultAvatar.png)'}} />
                 }
-                {subscribe}
+                {subscribe.username}
               </LikedTrackContainer>
             ))}
           </LikedContainer>

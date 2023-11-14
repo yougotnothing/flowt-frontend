@@ -16,10 +16,10 @@ export const Subscribers: React.FC = observer(() => {
   return(
     <Container>
       <PageHeader>Subscribes</PageHeader>
-      {subscribes.map((subscribe: any) => (
+      {subscribes && subscribes.map((subscribe: any) => (
         <Card key={++counter}>
-          <Avatar style={{backgroundImage: `url(${API_URL}/images/user/${subscribe})`}} />
-          <Header>{subscribe}</Header>
+          <Avatar style={{backgroundImage: `url(/defaultAvatar.png)`}} />
+          <Header>{subscribe.username}</Header>
         </Card>
       ))}
     </Container>

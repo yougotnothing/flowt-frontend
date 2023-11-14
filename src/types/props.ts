@@ -6,13 +6,21 @@ export interface UserDTO {
   email: string | null;
   userHaveAvatar: boolean | null;
   followers: string[] | null;
-  subscribes: string[] | null;
+  subscribes: any[] | null;
+}
+
+export interface IUserProps {
+  username: string | null;
+  region: string | null;
+  description: string | null;
+  email: string | null;
+  userHaveAvatar: boolean | null;
 }
 
 export interface UserProps {
   user: UserDTO | null;
-  followers: string | null;
-  subscribes: string | null;
+  followers: IUserProps[] | null;
+  subscribes: IUserProps[] | null;
 }
 export interface IUrlProps {
   authenticated: string;
@@ -56,4 +64,8 @@ export interface ISongsSearch {
   listens: number,
   name: string,
   songId: number
+}
+
+export interface IPlaylistProps {
+  playlist: ISongsSearch[];
 }

@@ -11,6 +11,7 @@ export interface ISongData {
   issueYear: string | null;
   genre: string | null;
   listens: number | null;
+  creator: string | null;
 }
 
 export interface ISongParameters {

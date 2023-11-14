@@ -10,6 +10,7 @@ import {
 import { URLS } from "../../../../constants/urls.const";
 import { useUserContext } from "../../../../contexts/UserContext";
 import { observer } from "mobx-react-lite";
+import { IUserProps } from "../../../../types/props";
 
 export const Followers: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -19,12 +20,9 @@ export const Followers: React.FC = observer(() => {
 
   return(
     <Container>
-      {followers.map((follower: any) => (
-        <Card key={++counter}>
-          <Avatar style={{
-            backgroundImage: `url(${API_URL}/images/user/${follower.username})`
-            }}
-          />
+      {followers.map((follower: IUserProps, index: number) => (
+        <Card key={index}>
+          <Avatar style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/user/${follower.username}`)})`}}/>
         </Card>
       ))}
     </Container>

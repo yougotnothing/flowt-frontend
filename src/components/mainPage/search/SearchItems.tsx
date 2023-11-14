@@ -50,7 +50,7 @@ export const SearchItems: React.FC = observer(() => {
     <Droplist $isOpen={search.isOpen} ref={ref}>
       {search.songs.map((song, index) => (
         <Item key={index}>
-          <ItemIcon style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/song/${song.author}/${song.name}`)})`}} />
+          <ItemIcon $type="song" style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/song/${song.author}/${song.name}`)})`}} />
           <ItemInfo>
             <Text>{song.author}</Text>
             <BigText>{song.name}</BigText>
@@ -74,7 +74,12 @@ export const SearchItems: React.FC = observer(() => {
       {search.users.map((searchUser, index) => {
         return (
           <Item key={index}>
-            <ItemIcon src={'/defaultAvatar.png'}/>
+            <ItemIcon 
+              $type="user"
+              src={searchUser.userHaveAvatar
+              ? encodeURI(`${API_URL}/images/user/avatar/${searchUser.username}`) 
+              : '/defaultAvatar.png'}
+            />
             <ItemInfo>
               <BigText>{searchUser.username}</BigText>
               <Text>{searchUser.region}</Text>

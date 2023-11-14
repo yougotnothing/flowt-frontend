@@ -185,3 +185,16 @@ export const PlaylistContainer = styled('div')`
   margin-bottom: 26px;
   gap: 24px;
 `;
+
+export const NavigationContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  border-bottom: 1px solid ${colors.WHITE};
+  gap: 8px;
+`;
+
+export const NavigationButton = styled.button`
+  background-color: transparent;
+  color: ${colors.WHITE};
+`;
