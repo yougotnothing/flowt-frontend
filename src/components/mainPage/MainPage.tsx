@@ -19,11 +19,11 @@ import { AlertSuccess, AlertWarning } from "./alert/Alert";
 import { Player } from "./player/Player";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../contexts/UserContext";
-import { userAvatarStore as avatarStore } from "../../stores/toChangeAvatar";
+import { userAvatarStore as avatarStore } from "../../stores/toChangeAvatar.mobx";
 import { observer } from "mobx-react-lite";
-import { searchStore as search } from "../../stores/toSearch";
+import { searchStore as search } from "../../stores/toSearch.mobx";
 import { SearchItems } from "./search/SearchItems";
-import { searchUsersStore } from "../../stores/toSearchUsers";
+import { searchUsersStore } from "../../stores/toSearchUsers.mobx";
 
 export const MainPage: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -77,7 +77,7 @@ export const MainPage: React.FC = observer(() => {
   }
 
   const handleSearchButton = async () => {
-    if(search.input.length > 0 && search.songs.length > 0 || search.users.length > 0) {
+    if((search.input.length > 0 && search.songs.length > 0) || search.users.length > 0) {
       await search.all();
       navigate('/search');
     }else{

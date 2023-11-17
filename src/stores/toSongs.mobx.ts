@@ -11,6 +11,13 @@ class UserSongsStore implements ISongParameters {
   listens: number | null;
   avatar: string | null;
   url: any;
+  playlistId: number | null;
+  playlistName: string | null;
+  playlistIssueYear: string | null;
+  playlistGenre: string | null;
+  playlistListens: number | null;
+  playlistAvatar: string | null;
+  playlistUrl: any;
   container: ISongData[];
 
   constructor() {
@@ -22,6 +29,12 @@ class UserSongsStore implements ISongParameters {
     this.issueYear = null;
     this.genre = null;
     this.container = [];
+    this.playlistAvatar = null;
+    this.playlistId = null;
+    this.playlistGenre = null;
+    this.playlistListens = null;
+    this.playlistIssueYear = null;
+    this.playlistName = null;
 
     makeObservable(this, {
       container: observable,
@@ -32,6 +45,12 @@ class UserSongsStore implements ISongParameters {
       genre: observable,
       url: observable,
       avatar: observable,
+      playlistAvatar: observable,
+      playlistId: observable,
+      playlistGenre: observable,
+      playlistListens: observable,
+      playlistIssueYear: observable,
+      playlistName: observable,
       setUrl: action,
       setAvatar: action,
       getInfo: action,
@@ -65,9 +84,16 @@ class UserSongsStore implements ISongParameters {
     });
   }
 
+  setAvatarAndUrl(username: string, songName: string) {
+    runInAction(() => {
+      this.playlistUrl = `${API_URL}/songs/audio/${username}/${songName}`;
+      this.playlistAvatar = `${API_URL}/images/song/${username}/${songName}`;
+    });
+  }
+
   setSong(index: number, username: string | null) {
     runInAction(() => {
-      if(this.container && index >= 0 && index < this.container.length) {
+      if (this.container && index >= 0 && index < this.container.length) {
         const songInfo = this.container[index];
 
         this.setUrl(`${API_URL}/songs/audio/${username}/${songInfo.name}`);

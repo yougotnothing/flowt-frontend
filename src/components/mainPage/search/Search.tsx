@@ -13,9 +13,9 @@ import {
   CardIcon,
   CardInfoContainer, CardInfo
 } from "./Search.styled";
-import { userAvatarStore } from "../../../stores/toChangeAvatar";
+import { userAvatarStore } from "../../../stores/toChangeAvatar.mobx";
 import filters from "../../../json/filters.json";
-import { searchStore as search } from "../../../stores/toSearch";
+import { searchStore as search } from "../../../stores/toSearch.mobx";
 import { useUserContext } from "../../../contexts/UserContext";
 import { observer } from "mobx-react-lite";
 

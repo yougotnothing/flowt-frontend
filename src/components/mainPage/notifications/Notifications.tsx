@@ -17,7 +17,7 @@ import {
   SortButtonContainer
 } from "./Notifications.styled";
 import { URLS } from "../../../constants/urls.const";
-import { notificationsStore as notices } from "../../../stores/toNotifications";
+import { notificationsStore as notices } from "../../../stores/toNotifications.mobx";
 import { observer } from "mobx-react-lite";
 import { Droplist_ } from "./Droplist";
 

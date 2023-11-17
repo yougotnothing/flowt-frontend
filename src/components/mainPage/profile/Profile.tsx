@@ -30,10 +30,10 @@ import {
 import { Options } from "./options/Options";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
 import { observer } from "mobx-react-lite";
-import { userUsernameStore as usernameStore } from "../../../stores/toChangeUsername";
+import { userUsernameStore as usernameStore } from "../../../stores/toChangeUsername.mobx";
 import { useUserContext } from "../../../contexts/UserContext";
 import { Songs } from "../../songs/smallsizeSongs/Songs";
-import { searchUsersStore as searchUsers } from "../../../stores/toSearchUsers";
+import { searchUsersStore as searchUsers } from "../../../stores/toSearchUsers.mobx";
 import { Playlist } from "../playlist/small/Playlist";
 import { IUserProps } from "../../../types/props";
 

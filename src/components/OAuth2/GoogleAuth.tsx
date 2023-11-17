@@ -17,6 +17,7 @@ export const GoogleAuth: React.FC = () => {
         const token = response.data.token;
         localStorage.setItem('token', token);
         navigate('/home');
+        window.location.reload();
       }
     }catch(error: any) {
       console.error(error);

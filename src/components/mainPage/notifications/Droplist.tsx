@@ -2,8 +2,8 @@ import React, { useEffect, useState, Fragment } from "react";
 
 import { Droplist, DroplistItem, IDroplist, NoticeIcon, Notices, NoticeTitle } from "./Notifications.styled";
 import noticesData from "../../../json/notice.json";
-import { notificationsStore as notices } from "../../../stores/toNotifications";
-import { userAvatarStore } from "../../../stores/toChangeAvatar";
+import { notificationsStore as notices } from "../../../stores/toNotifications.mobx";
+import { userAvatarStore } from "../../../stores/toChangeAvatar.mobx";
 import { api } from "../../../api/axiosConfig";
 import { INotice } from "../../../types/props";
 

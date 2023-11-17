@@ -26,8 +26,8 @@ export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
         <Select onClick={() => navigate(generatePath('/:id/songs/liked', {id: user.username}))}>
           <SelectText>Liked</SelectText>
         </Select>
-        <Select onClick={() => navigate(generatePath('/:id/playlists', {id: user.username}))}>
-          <SelectText>Playlists</SelectText>
+        <Select onClick={() => navigate(generatePath('/:id/playlists/create-playlist', {id: user.username}))}>
+          <SelectText>Create playlist</SelectText>
         </Select>
         <Select onClick={() => navigate(generatePath('/:id/songs/upload', {id: user.username}))}>
           <SelectText>Upload</SelectText>
@@ -37,9 +37,6 @@ export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
         </Select>
         <Select onClick={() => navigate(generatePath('/notifications/:id', {id: user.username}))}>
           <SelectText>Notifications</SelectText>
-        </Select>
-        <Select onClick={() => navigate(generatePath('/playlists/:id', {id: user.username}))}>
-          <SelectText>Playlists</SelectText>
         </Select>
         <Select onClick={() => {
           localStorage.removeItem('token');

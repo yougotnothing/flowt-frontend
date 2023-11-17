@@ -12,7 +12,7 @@ import {
 } from "./Player.styled";
 import "react-h5-audio-player/lib/styles.css";
 import { useUserContext } from "../../../contexts/UserContext";
-import { userSongsStore as song } from "../../../stores/toSongs";
+import { userSongsStore as song } from "../../../stores/toSongs.mobx";
 import { observer } from "mobx-react-lite";
 
 export const Player: React.FC = observer(() => {

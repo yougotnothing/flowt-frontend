@@ -2,16 +2,16 @@ import React, { useEffect, createContext, useContext, useState, useLayoutEffect 
 
 import { api, API_URL } from "../api/axiosConfig";
 import { IUserProps, UserDTO, UserProps } from "../types/props";
-import { userEmailStore as emailStore } from "../stores/toChangeEmail";
-import { userRegionStore as regionStore } from "../stores/toChangeRegion";
-import { userAvatarStore as avatarStore } from "../stores/toChangeAvatar";
-import { userUsernameStore as usernameStore } from "../stores/toChangeUsername";
-import { userDescriptionStore as descriptionStore } from "../stores/toChangeDescription";
-import { searchUsersStore as searchUsers } from "../stores/toSearchUsers";
+import { userEmailStore as emailStore } from "../stores/toChangeEmail.mobx";
+import { userRegionStore as regionStore } from "../stores/toChangeRegion.mobx";
+import { userAvatarStore as avatarStore } from "../stores/toChangeAvatar.mobx";
+import { userUsernameStore as usernameStore } from "../stores/toChangeUsername.mobx";
+import { userDescriptionStore as descriptionStore } from "../stores/toChangeDescription.mobx";
+import { searchUsersStore as searchUsers } from "../stores/toSearchUsers.mobx";
 import { observer } from "mobx-react-lite";
 import { URLS } from "../constants/urls.const";
-import { notificationsStore as notices } from "../stores/toNotifications";
-import { subscribesStore } from "../stores/toSubscribes";
+import { notificationsStore as notices } from "../stores/toNotifications.mobx";
+import { subscribesStore } from "../stores/toSubscribes.mobx";
 
 const UserCreateContext = createContext<UserProps>({
   user: null,

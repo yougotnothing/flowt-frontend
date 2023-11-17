@@ -8,7 +8,7 @@ import { api } from '../../../../api/axiosConfig';
 import { Loader } from '../../../loader/Loader';
 import { A, AContainer, GoBackContainer } from '../../MainPage.styled';
 import { AccountContainer } from '../Account.styled';
-import { userDescriptionStore } from "../../../../stores/toChangeDescription";
+import { userDescriptionStore } from "../../../../stores/toChangeDescription.mobx";
 import { 
   ChangeDescriptionContainer, 
   Input, 

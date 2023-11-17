@@ -25,11 +25,11 @@ import {
 } from "../Account.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
-import { userDescriptionStore as descriptionStore } from "../../../../stores/toChangeDescription";
-import { userUsernameStore as usernameStore } from "../../../../stores/toChangeUsername";
-import { userAvatarStore as avatarStore } from "../../../../stores/toChangeAvatar";
-import { userRegionStore as regionStore } from "../../../../stores/toChangeRegion";
-import { userEmailStore as emailStore } from "../../../../stores/toChangeEmail";
+import { userDescriptionStore as descriptionStore } from "../../../../stores/toChangeDescription.mobx";
+import { userUsernameStore as usernameStore } from "../../../../stores/toChangeUsername.mobx";
+import { userAvatarStore as avatarStore } from "../../../../stores/toChangeAvatar.mobx";
+import { userRegionStore as regionStore } from "../../../../stores/toChangeRegion.mobx";
+import { userEmailStore as emailStore } from "../../../../stores/toChangeEmail.mobx";
 import { FullsizeSongs } from "../../../songs/fullsizeSongs/FullsizeSongs";
 import { URLS } from "../../../../constants/urls.const";
 
@@ -50,7 +50,7 @@ export const AccountInfo: React.FC = observer(() => {
             <UserInfo>
               <Username>{usernameStore.username}</Username>
               <StatsContainer>
-                <Email>{emailStore.email}</Email>
+                <Email>{emailStore.email && emailStore.email.trim()}</Email>
                 <Region>{regionStore.region}</Region>
               </StatsContainer>
               <ButtonsContainer>

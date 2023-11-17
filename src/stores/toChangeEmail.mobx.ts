@@ -15,7 +15,7 @@ class UserEmailStore {
 
   setEmail = (email: IEmail) => {
     runInAction(() => {
-      this.email = email;
+      if(email) this.email = email.trim();
     });
   }
 }

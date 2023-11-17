@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import {
   Droplist,
@@ -13,14 +13,13 @@ import {
   BigText, ItemButton
 } from "../MainPage.styled";
 import { observer } from "mobx-react-lite";
-import { searchStore as search } from "../../../stores/toSearch";
-import { api, API_URL } from "../../../api/axiosConfig";
+import { searchStore as search } from "../../../stores/toSearch.mobx";
+import { API_URL } from "../../../api/axiosConfig";
 import { generatePath, useNavigate } from "react-router-dom";
-import { userSongsStore as songs } from "../../../stores/toSongs";
-import { searchUsersStore } from "../../../stores/toSearchUsers";
+import { userSongsStore as songs } from "../../../stores/toSongs.mobx";
+import { searchUsersStore } from "../../../stores/toSearchUsers.mobx";
 
 export const SearchItems: React.FC = observer(() => {
-  const[isDefault, setIsDefault] = useState<boolean>(false);
   const ref = useRef<any>(null);
   const navigate = useNavigate();
 
@@ -41,10 +40,6 @@ export const SearchItems: React.FC = observer(() => {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, []);
-
-  useEffect(() => {
-    console.log(search.users);
-  }, [search.users]);
 
   return (
     <Droplist $isOpen={search.isOpen} ref={ref}>

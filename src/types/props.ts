@@ -66,6 +66,23 @@ export interface ISongsSearch {
   songId: number
 }
 
+export interface ISongPlaylist {
+  author: string,
+  genre: string,
+  issueYear: string,
+  listens: number,
+  name: string,
+  songId: number,
+}
+
+export interface IPlaylist {
+  name: string;
+  username: string;
+  id: number;
+  isPrivate: boolean;
+  songs: ISongPlaylist[];
+}
+
 export interface IPlaylistProps {
-  playlist: ISongsSearch[];
+  playlist: IPlaylist[];
 }

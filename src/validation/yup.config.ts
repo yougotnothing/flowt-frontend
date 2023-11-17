@@ -46,3 +46,8 @@ export const changeEmailSchema = Yup.object().shape({
 export const searchSchema = Yup.object().shape({
   search: Yup.string().max(45, "input too long")
 });
+
+export const playlistSchema = Yup.object().shape({
+  name: Yup.string().max(20, "Name too long."),
+  descirption: Yup.string().max(36, "Description too long")
+});

@@ -1,11 +1,11 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
-import { ISongsSearch, IUserSearch } from "../types/props";
-import { api, API_URL } from "../api/axiosConfig";
+import { IPlaylist, ISongPlaylist, IUserSearch } from "../types/props";
+import { api } from "../api/axiosConfig";
 
 class SearchStore {
   users: IUserSearch[] | [];
-  songs: ISongsSearch[] | [];
-  playlists: any[];
+  songs: ISongPlaylist[] | [];
+  playlists: IPlaylist[];
   input: string;
   message: string | null;
   isOpen: boolean;
@@ -138,6 +138,7 @@ class SearchStore {
       const response = await api.post('/search/playlists', {
         substring: this.input
       });
+      console.log(response.data);
 
       runInAction(() => {
         this.playlists = response.data.playlists;

@@ -103,7 +103,7 @@ export const pageRouter = createBrowserRouter([
         element: <ChangePassword />
       },
       {
-        path: '/:id/playlists',
+        path: '/:id/playlists/create-playlist',
         element: <Playlist />
       },
       {

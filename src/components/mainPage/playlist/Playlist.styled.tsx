@@ -35,8 +35,8 @@ export const PlaylistContainer = styled('div')`
   gap: 18px;
   background-image: linear-gradient(${colors.BORDER} -30%, ${colors.DARK_BLUE} 100%);
   border-radius: 14px;
-  padding: 8px;
-  width: 100%;
+  padding: 16px;
+  width: 1168px;
 `;
 
 export const CreatePlaylist = styled('button')`
@@ -53,6 +53,7 @@ export const Navbar = styled('div')`
   background-color: ${colors.FRONT};
   border: 1px solid ${colors.BORDER};
   border-radius: 8px;
+  width: 1190px;
   padding: 4px;
 `;
 
@@ -79,8 +80,8 @@ export const NavItemContainer = styled('div')`
 
 export const PlaylistIcon = styled('label')<IIconProps>`
   position: relative;
-  width: 246px;
-  height: 246px;
+  width: 300px;
+  height: 300px;
   border-radius: 6px;
   background-image: url(${props => props.$avatar});
   background-size: ${p => p.$isApply ? 'cover' : '64px'};
@@ -106,7 +107,7 @@ export const PlaylistIcon = styled('label')<IIconProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 24px;
     border-radius: 6px;
     font-weight: 600;
     font-family: 'Urbanist', sans-serif;
@@ -127,7 +128,40 @@ export const InfoContainer = styled('div')`
   display: flex;
   align-items: start;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-around;
+`;
+
+export const PrivacySettings = styled('span')`
+  display: flex;
+  flex-direction: row;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
+  color: ${colors.WHITE};
+`;
+
+export const IsPrivateField = styled('button')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 32px;
+  width: 80px;
+  font-family: 'Urbanist', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: ${colors.SECONDARY};
+  border: 1px solid ${colors.SECONDARY};
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+  background-color: transparent;
+  transition: 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    color: ${colors.SECONDARY_HOVER};
+    border-color: ${colors.SECONDARY_HOVER};
+  }
 `;
 
 export const PlaylistInfo = styled('input')<IPlaylistProps>`
@@ -141,6 +175,11 @@ export const PlaylistInfo = styled('input')<IPlaylistProps>`
   font-weight: ${p => p.$type === 'username' ? '400' : p.$type === 'description' ? '600' : '800'};
   font-size: ${p => p.$type === 'name' ? '32px' : p.$type === 'username' ? '18px' : '16px'};
   color: ${p => p.$type !== 'name' ? colors.DARK_WHITE : colors.WHITE};
+
+  &:placeholder {
+    content: ${p => p.$type === 'name' ? 'Name' : 'Description'};
+    opacity: 1;
+  }
 `;
 
 export const CreatorName = styled('div')`
@@ -151,6 +190,7 @@ export const CreatorName = styled('div')`
 `;
 
 export const InputContainer = styled('div')`
+  position: relative;
   display: flex;
   flex-direction: row;
   align-self: end;
@@ -168,6 +208,21 @@ export const SearchSongs = styled('input')`
   background-color: ${colors.DARK_BLUE};
   border: 1px solid ${colors.BORDER};
   border-radius: 6px 0 0 6px;
+  transition: 0.3s;
+  border-right-width: 0;
+
+  &:focus {
+    + .addSongs {
+      border-color: ${colors.SECONDARY};
+      background-color: ${colors.SECONDARY};
+      
+      &:hover {
+        background-color: ${colors.BORDER};
+        border-color: ${colors.BORDER};
+      }
+    }
+    border-color: ${colors.SECONDARY};
+  }
 `;
 
 export const AddSongs = styled('button')`
@@ -186,10 +241,16 @@ export const AddSongs = styled('button')`
   border-left-width: 0;
   border-radius: 0 6px 6px 0;
   cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: ${colors.SECONDARY};
+    border-color: ${colors.SECONDARY};
+  }
 `;
 
 export const SearchSongsContainer = styled('div')`
-  width: 100%;
+  width: 1176px;
   display: flex;
   align-self: center;
   position: relative;
@@ -212,14 +273,19 @@ export const SearchSongsNav = styled('div')`
 `;
 
 export const Song = styled('div')`
+  border: none;
+  background-color: transparent;
+  position: relative;
   display: flex;
-  width: 100%;
+  width: 98%;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 6px;
   border-radius: 6px;
   transition: 0.3s;
+  cursor: pointer;
+  z-index: 998;
   
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
@@ -228,9 +294,21 @@ export const Song = styled('div')`
 
 export const SongContainer = styled('div')`
   display: flex;
+  text-align: start;
   flex-direction: column;
-  align-items: center;
-  width: 1200px;
+  width: 100%;
+`;
+
+export const SongContainerText = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  border-bottom: 1px solid ${colors.BORDER};
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  color: ${colors.WHITE};
 `;
 
 export const SongIcon = styled('picture')`
@@ -253,7 +331,6 @@ export const SongInfo = styled('button')`
   transition: 0.3s;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-wrap: none;
   max-width: 142px;
   
   &:hover {
@@ -274,13 +351,13 @@ export const SongStatsContainer = styled('div')`
   flex-direction: row;
   align-items: center;
   gap: 12px;
+  z-index: 1000;
 `;
 
 export const SongMainInfo = styled('div')`
   display: flex;
   width: 142px;
   padding: 4px;
-  background-color: ${colors.VERY_DARK_BLUE};
   border-left: 1px solid ${colors.BORDER};
   border-radius: 0 6px 6px 0;
   flex-direction: column;
@@ -288,3 +365,8 @@ export const SongMainInfo = styled('div')`
   gap: 6px;
 `;
 
+export const AddSong = styled('button')`
+  ${BUTTON};
+  width: 80px;
+  height: 34px;
+`;

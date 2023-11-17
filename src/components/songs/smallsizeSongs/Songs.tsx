@@ -15,7 +15,7 @@ import {
   StatsTitle,
   LikeSongButton
 } from "./Songs.styled";
-import { userSongsStore as songs } from "../../../stores/toSongs";
+import { userSongsStore as songs } from "../../../stores/toSongs.mobx";
 import { api, API_URL } from "../../../api/axiosConfig";
 import { useUserContext } from "../../../contexts/UserContext";
 

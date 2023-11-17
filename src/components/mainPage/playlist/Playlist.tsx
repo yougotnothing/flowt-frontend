@@ -13,34 +13,87 @@ import {
   SearchSongsContainer,
   SearchSongsNav,
   InputContainer,
-  Navbar,
   NavItem,
-  CreatePlaylist, NavItemContainer, Song, SongIcon, SongStats, SongInfo, SongStatsContainer, SongContainer, SongMainInfo
+  Navbar,
+  CreatePlaylist,
+  NavItemContainer,
+  IsPrivateField,
+  PrivacySettings
 } from "./Playlist.styled";
 import { observer } from "mobx-react-lite";
-import { userUsernameStore } from "../../../stores/toChangeUsername";
-import { playlistsStore as playlist } from "../../../stores/toPlaylists";
-import { searchStore as search } from "../../../stores/toSearch";
+import { userUsernameStore } from "../../../stores/toChangeUsername.mobx";
+import { playlistsStore as playlist } from "../../../stores/toPlaylists.mobx";
 import settings from "../../../json/playlistSettings.json";
-import { API_URL } from "../../../api/axiosConfig";
+import { useFormik } from "formik";
+import { playlistSchema } from "../../../validation/yup.config";
+import { useLocation } from "react-router-dom";
+import {
+  handleCreatePlaylist,
+  handlePostAvatar,
+} from "./functions";
+import { PlaylistItems } from "./playlistItems";
 
 export const Playlist: React.FC = observer(() => {
   const[isApply, setIsApply] = useState<boolean>(false);
   const[isNull, setIsNull] = useState<boolean>(true);
+  const[isPrivate, setIsPrivate] = useState<boolean>(false);
   const[param, setParam] = useState<string>("All");
+  const location = useLocation();
+
+  const formik = useFormik<{
+    name: string,
+    description: string
+  }>({
+    initialValues: {
+      name: "",
+      description: ""
+    },
+    validationSchema: playlistSchema,
+    onSubmit: () => {}
+  });
 
   const handleSetAvatar = (e: any) => {
     const file = e.target.files[0];
     const image = URL.createObjectURL(file);
-    playlist.setAvatar(image);
+    playlist.setAvatarURL(image);
+    playlist.setAvatar(file);
     setIsApply(true);
   }
+
+  useEffect(() => {
+    if(location.pathname !== '/:id/playlists') {
+      playlist.setAvatarURL(null);
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     playlist.search('All');
   }, []);
 
-  return (
+  const createPlaylist = async () => {
+    try {
+      await handleCreatePlaylist(formik.values.name, isPrivate);
+      await handlePostAvatar(playlist.avatar, formik.values.name);
+      await playlist.addSongs();
+    }catch(error: any) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    if(formik.values.name && playlist.avatar) {
+      playlist.addSongs();
+      return;
+    }
+  }, [formik.values.name]);
+
+  useEffect(() => {
+    if(formik.values.name && isApply) {
+      setIsNull(false);
+    }    
+  }, [formik.values.name, isApply]);
+
+   return (
     <Container>
       <PlaylistContainer>
         <Input
@@ -49,21 +102,32 @@ export const Playlist: React.FC = observer(() => {
           accept="image/*"
           onChange={handleSetAvatar}
         />
-        <PlaylistIcon $avatar={playlist.avatar} htmlFor="avatar" $isApply={isApply} />
+        <PlaylistIcon $avatar={playlist.avatarURL || '/plus.png'} htmlFor="avatar" $isApply={isApply} />
         <InfoContainer>
           <CreatorName>{userUsernameStore.username}</CreatorName>
           <PlaylistInfo
             $isNull={isNull}
             placeholder="Name"
+            onChange={formik.handleChange}
+            name="name"
             $type="name"
           />
           <PlaylistInfo
             $isNull={isNull}
+            onChange={formik.handleChange}
             placeholder="Description"
             $type="description"
           />
+          <PrivacySettings>
+            Privacy settings:
+            <IsPrivateField onClick={() => setIsPrivate(!isPrivate)}>
+              {isPrivate ? 'Private' : 'Public'}
+            </IsPrivateField>
+          </PrivacySettings>
         </InfoContainer>
-        <CreatePlaylist>Create</CreatePlaylist>
+        <CreatePlaylist disabled={isNull} onClick={createPlaylist}>
+          Create
+        </CreatePlaylist>
       </PlaylistContainer>
       <SearchSongsContainer>
         <SearchSongsNav>
@@ -76,29 +140,10 @@ export const Playlist: React.FC = observer(() => {
           </NavItemContainer>
           <InputContainer>
             <SearchSongs placeholder="Search" />
-            <AddSongs />
+            <AddSongs className="addSongs" />
           </InputContainer>
         </SearchSongsNav>
-        <SongContainer>
-          {playlist.songs.map((song, index) => (
-            <Song key={index}>
-              <SongStatsContainer>
-                <SongStats>{++index}</SongStats>
-                <SongIcon style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/song/${song.author}/${song.name}`)})`}}/>
-                <SongMainInfo>
-                  <SongInfo>{song.author}</SongInfo>
-                  <SongInfo>{song.name}</SongInfo>
-                </SongMainInfo>
-              </SongStatsContainer>
-              <SongInfo>{song.genre}</SongInfo>
-              <SongStatsContainer>
-                <SongStats>listens: {song.listens}</SongStats>
-                <SongStats>liked</SongStats>
-
-              </SongStatsContainer>
-            </Song>
-          ))}
-        </SongContainer>
+        <PlaylistItems />
       </SearchSongsContainer>
     </Container>
   );

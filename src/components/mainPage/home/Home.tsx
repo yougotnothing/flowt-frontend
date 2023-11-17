@@ -18,11 +18,11 @@ import {
   LastListenContainer
 } from "./Home.styled";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
-import { userAvatarStore } from "../../../stores/toChangeAvatar";
+import { userAvatarStore } from "../../../stores/toChangeAvatar.mobx";
 import { observer } from "mobx-react-lite";
 import { useUserContext } from "../../../contexts/UserContext";
 import { api, API_URL } from "../../../api/axiosConfig";
-import { subscribesStore } from "../../../stores/toSubscribes";
+import { subscribesStore } from "../../../stores/toSubscribes.mobx";
 import { IUserProps } from "../../../types/props";
 
 export const Home: React.FC = observer(() => {
