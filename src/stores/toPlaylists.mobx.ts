@@ -143,7 +143,7 @@ class PlaylistsStore {
     try {
       const response = await api.get('/users/playlists');
       console.log(response.data);      
-      this.setSelf(response.data.playlists);   
+      this.setSelf(response.data.playlists);
     }catch(error: any) {
       console.error(error);
     }

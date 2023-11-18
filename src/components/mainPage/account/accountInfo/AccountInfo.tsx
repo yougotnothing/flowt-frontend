@@ -21,8 +21,14 @@ import {
   StatsContainer,
   AccountContainer,
   PlaylistContainer,
-  UserInfoContainer
 } from "../Account.styled";
+import {
+  Container,
+  PlaylistIcon,
+  PlaylistButton,
+  PlaylistInfo,
+  PlaylistInfoContainer
+} from "../../playlist/large/Playlist.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { useUserContext } from "../../../../contexts/UserContext";
 import { userDescriptionStore as descriptionStore } from "../../../../stores/toChangeDescription.mobx";
@@ -31,12 +37,17 @@ import { userAvatarStore as avatarStore } from "../../../../stores/toChangeAvata
 import { userRegionStore as regionStore } from "../../../../stores/toChangeRegion.mobx";
 import { userEmailStore as emailStore } from "../../../../stores/toChangeEmail.mobx";
 import { FullsizeSongs } from "../../../songs/fullsizeSongs/FullsizeSongs";
-import { URLS } from "../../../../constants/urls.const";
+import { playlistsStore as playlists } from "../../../../stores/toPlaylists.mobx";
+import { editPlaylistStore as editPlaylist } from "../../../../stores/toEditPlaylist.mobx";
 
 export const AccountInfo: React.FC = observer(() => {
   const navigate = useNavigate();
-  const url = new URLS();
   const { user, followers, subscribes } = useUserContext();
+
+  useEffect(() => {
+    playlists.getPlaylists();
+    editPlaylist.setEditing(false);
+  }, []);
 
   return (
     <AccountContainer>
@@ -80,11 +91,32 @@ export const AccountInfo: React.FC = observer(() => {
             )}
           </>
         )}
-          {user && (
-            <PlaylistContainer>
-              <FullsizeSongs />
-            </PlaylistContainer>
-          )}
+        {user && (
+          <PlaylistContainer>
+            <FullsizeSongs />
+          </PlaylistContainer>
+        )}
+        {playlists.self.map((item, index) => (
+          <Container $isEditing={editPlaylist.isEditing} key={index}>
+            <PlaylistIcon
+              $isEditing={editPlaylist.isEditing} 
+              $username={usernameStore.username} 
+              $name={item.name}
+            />
+            <PlaylistInfoContainer>
+              <PlaylistInfo $type="name">{item.name}</PlaylistInfo>
+              <PlaylistInfo $type="username">{usernameStore.username}</PlaylistInfo>
+            </PlaylistInfoContainer>
+            <PlaylistButton onClick={() => {
+              navigate(generatePath('/:u/playlist/:n/edit-playlist', {
+                u: usernameStore.username,
+                n: item.name
+              }));
+              editPlaylist.setEditing(true);
+              editPlaylist.setData(item.name, usernameStore.username);
+            }}>Open</PlaylistButton>
+          </Container>
+        ))}
       </InfoContainer>
     </AccountContainer>
   );

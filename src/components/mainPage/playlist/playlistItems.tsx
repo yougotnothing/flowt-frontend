@@ -1,21 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { observer } from "mobx-react-lite";
 import { playlistsStore as playlist } from "../../../stores/toPlaylists.mobx";
 import { AddSong, Song, SongContainer, SongContainerText, SongIcon, SongInfo, SongMainInfo, SongStats, SongStatsContainer } from "./Playlist.styled";
 import { API_URL } from "../../../api/axiosConfig";
-import { useUserContext } from "../../../contexts/UserContext";
 
 export const PlaylistItems: React.FC = observer(() => {
-  const { user } = useUserContext();
-
-  useEffect(() => {
-    if(playlist.playlist === 'Create') {
-      playlist.search('All');
-    }else if(playlist.playlist === 'Browse') {
-      playlist.getPlaylists();
-    }
-  }, [playlist.playlist]);
 
   return (
     <>

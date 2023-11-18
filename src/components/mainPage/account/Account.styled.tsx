@@ -182,7 +182,7 @@ export const Container = styled('div')`
 export const PlaylistContainer = styled('div')`
   display: flex;
   flex-direction: column;
-  margin-bottom: 26px;
+  margin: 26px 0;
   gap: 24px;
 `;
 
@@ -194,7 +194,7 @@ export const NavigationContainer = styled('div')`
   gap: 8px;
 `;
 
-export const NavigationButton = styled.button`
+export const NavigationButton = styled('button')`
   background-color: transparent;
   color: ${colors.WHITE};
 `;

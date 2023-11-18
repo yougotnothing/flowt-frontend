@@ -36,6 +36,7 @@ import { Songs } from "../../songs/smallsizeSongs/Songs";
 import { searchUsersStore as searchUsers } from "../../../stores/toSearchUsers.mobx";
 import { Playlist } from "../playlist/small/Playlist";
 import { IUserProps } from "../../../types/props";
+import { playlistsStore } from "../../../stores/toPlaylists.mobx";
 
 export const Profile: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -43,6 +44,10 @@ export const Profile: React.FC = observer(() => {
   const[isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
   const navigate = useNavigate();
   const { user, followers, subscribes } = useUserContext();
+
+  useEffect(() => {
+    playlistsStore.getPlaylists();
+  }, []);
 
   useEffect(() => {
     setIsOpen(!isVisible);
@@ -122,7 +127,6 @@ export const Profile: React.FC = observer(() => {
                 <Songs />
               </SongContainer>
             </SongMainContainer>
-            <Playlist />
           </FooterContainer>
           <LikedText>Favorite</LikedText>
           <LikedContainer>

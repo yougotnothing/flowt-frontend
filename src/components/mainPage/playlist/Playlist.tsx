@@ -14,7 +14,6 @@ import {
   SearchSongsNav,
   InputContainer,
   NavItem,
-  Navbar,
   CreatePlaylist,
   NavItemContainer,
   IsPrivateField,

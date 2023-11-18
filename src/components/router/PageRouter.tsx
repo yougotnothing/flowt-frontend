@@ -25,6 +25,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { Notifications } from "../mainPage/notifications/Notifications";
 import { Songs } from "../songs/smallsizeSongs/Songs";
 import { GoogleAuth } from "../OAuth2/GoogleAuth";
+import { EditPlaylist } from "../mainPage/playlist/editPlaylist/EditPlaylist";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -125,6 +126,10 @@ export const pageRouter = createBrowserRouter([
       {
         path: '/oauth/google/login',
         element: <GoogleAuth />
+      },
+      {
+        path: '/:u/playlist/:n/edit-playlist',
+        element: <EditPlaylist />
       }
     ]
   }

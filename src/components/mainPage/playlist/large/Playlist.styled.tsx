@@ -1,11 +1,78 @@
 import styled from "styled-components";
 import { colors } from "../../../../constants/colors.const";
+import { API_URL } from "../../../../api/axiosConfig";
+import { BUTTON } from "../../../../constants/styles.const";
 
-export const Container = styled('div')`
+interface IPlaylistIconProps {
+  $name: string | null;
+  $username: string | null;
+}
+
+interface IPlaylistContainerProps {
+  $isEditing: boolean;
+}
+
+interface IPlaylistInfoProps {
+  $type: 'name' | 'username';
+}
+
+export const Container = styled('div')<IPlaylistContainerProps>`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   gap: 8px;
-  background-color: linear-gradient(90deg, ${colors.SECONDARY} 0%, transparent 100%);
+  padding: 8px;
+  width: ${props => props.$isEditing ? '100%' : '800px'};
+  background-image: linear-gradient(90deg, ${colors.BORDER} -50%, transparent 100%);
   border-radius: 8px;
+  border: 2px solid ${colors.BORDER};
+`;
+
+export const PlaylistIcon = styled('picture')<IPlaylistIconProps & IPlaylistContainerProps>`
+  width: ${props => props.$isEditing ? '320px' : '220px'};
+  height: ${props => props.$isEditing ? '320px' : '220px'};
+  border-radius: 6px;
+  background-image: ${props => `url(${API_URL}/images/playlist/${props.$username}/${props.$name})`};
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+`;
+
+export const PlaylistInfoContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  border-left: 1px solid ${colors.BORDER};
+  border-radius: 0 6px 6px 0;
+  height: 160px;
+  width: 240px;
+  justify-content: center;
+  background-color: rgba(62, 113, 115, 0.3);
+`;
+
+export const PlaylistInfo = styled('button')<IPlaylistInfoProps>`
+  background-color: transparent;
+  color: ${colors.WHITE};
+  font-size: ${props => props.$type === 'name' ? '28px' : '22px'};
+  font-weight: ${props => props.$type === 'name' ? '800' : '600'};
+  font-family: ${props => props.$type === 'name' ? 'Raleway' : 'Urbanist'}, sans-serif;
+  border: none;
+  width: 100%;
+  text-align: start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: ${colors.SECONDARY};
+  }
+`;
+
+export const PlaylistButton = styled('button')`
+  ${BUTTON};
+
+  margin: auto 24px auto auto;
+  width: 140px;
+  height: 34px;
 `;
