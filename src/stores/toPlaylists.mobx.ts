@@ -41,7 +41,8 @@ class PlaylistsStore {
       addSong: action,
       addSongs: action,
       removeSong: action,
-      changePage: action
+      changePage: action,
+      setInput: action
     });
   }
 
@@ -100,6 +101,12 @@ class PlaylistsStore {
     }
   }
 
+  setInput(value: string) {
+    runInAction(() => {
+      this.input = value;
+    });
+  }
+
   setAvatar(avatar: any | Blob) {
     runInAction(() => {
       this.avatar = avatar;
@@ -133,7 +140,7 @@ class PlaylistsStore {
   async addSong(song: ISongPlaylist) {
     try {
       await api.post(`/playlists/${this.input}/${song.author}/${song.name}`);
-      console.log(`Song: ${song.name}, removed successfully`);
+      console.log(`Song: ${song.name}, added successfully`);
     }catch(error: any) {
       console.error(error);
     }

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { generatePath, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 
 import {
@@ -15,14 +15,30 @@ import {
 } from "./Login.register.styled";
 import { loginValidationSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/Loader";
-import { login } from "../../../api/axiosConfig";
-import { GOOGLE_AUTH_URL } from "../../../constants/urls.const";
+import { api, login } from "../../../api/axiosConfig";
+import { FacebookButton, GoogleButton } from "../../OAuth2/OAuthButtons";
+import { OAuthButtonsContainer } from "../../OAuth2/OAuthButtons.styled";
+import { useUserContext } from "../../../contexts/UserContext";
+import { observer } from "mobx-react-lite";
+import { OAuth } from "../../../stores/toOAuthButtons.mobx";
+import { userAvatarStore } from "../../../stores/toChangeAvatar.mobx";
 
-export const Login: React.FC = () => {
+export const Login: React.FC = observer(() => {
   const navigate = useNavigate();
+  const { user } = useUserContext();
   const[errorMessage, setErrorMessage] = useState<string | null>(null);
   const[isError, setIsError] = useState<boolean>(false);
   const[isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    OAuth.setWhereUsing('Sign in');
+  }, []);
+
+  useEffect(() => {
+    if(user) {
+      navigate('/home');
+    }
+  }, [user]);
 
   const formik = useFormik<{
     username: string,
@@ -58,6 +74,20 @@ export const Login: React.FC = () => {
       setErrorMessage(error.response.data.message);
     }
   }
+  
+  const postOAuthUserAvatar = async () => {
+    if(OAuth.backendData?.imageUrl) {
+      try {
+        const response = await api.post('/users/avatar/url', {
+          imageUrl: OAuth.backendData.imageUrl
+        });
+        userAvatarStore.setAvatarURL(OAuth.backendData.imageUrl);
+        userAvatarStore.setAvatar(OAuth.backendData.imageUrl);
+      }catch(error: any) {
+        console.error(error);
+      }
+    }
+  }
 
   return (
     <LoginCard>
@@ -82,13 +112,19 @@ export const Login: React.FC = () => {
       {errorMessage && <ValidationSpan>{errorMessage}</ValidationSpan>}
       </InputContainer>
       <LoginButton
-        onClick={async () => await handleLogin()}
+        onClick={async () => {
+          await handleLogin();
+          await postOAuthUserAvatar();
+        }}
         disabled={isLoading}
       >
         { isLoading ? <Loader /> : "Login" }
       </LoginButton>
+      <OAuthButtonsContainer>
+        <GoogleButton />
+        <FacebookButton />
+      </OAuthButtonsContainer>
       <HelpButtons>
-        <a href={GOOGLE_AUTH_URL}>GOOGLE!</a>
         <RegisteredButton onClick={() => navigate("/verify/restore-password")}>
           Forgot password?
         </RegisteredButton>
@@ -96,4 +132,4 @@ export const Login: React.FC = () => {
       </HelpButtons>
     </LoginCard>
   );
-};
+});

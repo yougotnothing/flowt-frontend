@@ -34,3 +34,4 @@ export class URLS implements IUrlProps {
 
 
 export const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=http://localhost:3000/oauth/google/login&response_type=code&scope=email`;
+export const FACEBOOK_AUTH_URL = `https://www.facebook.com/v18.0/dialog/oauth?response_type=token&client_id=${process.env.REACT_APP_FACEBOOK_CLIENT_ID}&redirect_uri=http://localhost:3000/oauth/facebook/login&auth_type=rerequest&scope=email%2Cpublic_profile`;

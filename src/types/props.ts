@@ -3,6 +3,7 @@ export interface UserDTO {
   username: string | null;
   region: string | null;
   description: string | null;
+  avatar: string | null;
   email: string | null;
   userHaveAvatar: boolean | null;
   followers: string[] | null;

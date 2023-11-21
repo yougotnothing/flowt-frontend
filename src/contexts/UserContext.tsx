@@ -37,7 +37,6 @@ export const UserContext = observer(({ children }: any) => {
   const getUserAvatar = async (): Promise<void> => {
     try {
       if(user && user.userHaveAvatar) {
-        await api.get(`/images/user/avatar/${user.username}`);
         avatarStore.setAvatar(`${API_URL}/images/user/avatar/${user.username}`);
         avatarStore.setAvatarURL(`${API_URL}/images/user/avatar/${user.username}`);
         searchUsers.setAvatar(`${API_URL}/images/user/avatar/${user.username}`);

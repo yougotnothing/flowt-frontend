@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { 
@@ -15,15 +15,20 @@ import { useFormik } from "formik";
 import { registrationValidationSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/Loader";
 import { api, registration } from "../../../api/axiosConfig";
+import { OAuthButtonsContainer } from "../../OAuth2/OAuthButtons.styled";
+import { FacebookButton, GoogleButton } from "../../OAuth2/OAuthButtons";
+import { observer } from "mobx-react-lite";
+import { OAuth } from "../../../stores/toOAuthButtons.mobx";
+import { userAvatarStore } from "../../../stores/toChangeAvatar.mobx";
 
-export const Register: React.FC = () => { 
+export const Register: React.FC = observer(() => { 
   const[isLoading, setIsLoading] = useState(false);
   const[usernameError, setUsernameError] = useState(false);
   const[emailError, setEmailError] = useState(false);
   const[passwordError, setPasswordError] = useState(false);
   const[errorMessage, setErrorMessage] = useState<any>(null);
   const navigate = useNavigate();
-
+  
   const formik = useFormik<{
     username: string;
     email: string;
@@ -39,6 +44,15 @@ export const Register: React.FC = () => {
     validationSchema: registrationValidationSchema,
     onSubmit: () => {}
   });
+
+  useEffect(() => {
+    OAuth.setWhereUsing('Sign up');
+
+    if(OAuth.backendData) {
+      formik.setFieldValue("email", OAuth.backendData.email);
+    }
+  }, [OAuth.backendData]);
+
   const field = formik.values;
   const errors = formik.errors;
   const touched = formik.touched;
@@ -57,7 +71,7 @@ export const Register: React.FC = () => {
       await registration(registerDto);
       navigate("/login");
       setErrorMessage(null);
-    } catch (error: any) {
+    }catch(error: any) {
       const field = error.response.data.field;
 
       setIsLoading(false);
@@ -80,51 +94,58 @@ export const Register: React.FC = () => {
     }
   }
 
-    return (
-      <LoginCard>
-        <LoginHeader>Welcome<Span>!</Span></LoginHeader>
-        <InputContainer>
-          <LoginInput
-            name="username" 
-            placeholder="username"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-          />
-          {errors.username && touched.username ? <ValidationSpan>{errors.username}</ValidationSpan> : null}
-          { errorMessage && usernameError && <ValidationSpan>{errorMessage}</ValidationSpan> }
-          <LoginInput
-            name="email"
-            placeholder="email"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-          />
-          {errors.email && touched.email ? <ValidationSpan>{errors.email}</ValidationSpan> : null}
-          { errorMessage && emailError && <ValidationSpan>{errorMessage}</ValidationSpan> }
-          <LoginInput
-            name="password"
-            type="password"
-            placeholder="password"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {errors.password && touched.password ? <ValidationSpan>{errors.password}</ValidationSpan> : null}
-          { errorMessage && passwordError && <ValidationSpan>{errorMessage}</ValidationSpan> }
-          <LoginInput
-            name="confirmPassword"
-            type="password"
-            placeholder="confirm password"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {errors.confirmPassword && touched.password ? <ValidationSpan>{errors.confirmPassword}</ValidationSpan> : null}
-        </InputContainer>
-        <LoginButton
-          onClick={() => handleRegister()}
-          disabled={isLoading}
-        >
-          { isLoading ? <Loader /> : "register" }
-        </LoginButton>
-        <RegisteredButton>Registered?</RegisteredButton>
-      </LoginCard>
-    );
-};
+  return (
+    <LoginCard>
+      <LoginHeader>Welcome<Span>!</Span></LoginHeader>
+      <InputContainer>
+        <LoginInput
+          name="username" 
+          placeholder="username"
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+        />
+        {errors.username && touched.username ? <ValidationSpan>{errors.username}</ValidationSpan> : null}
+        { errorMessage && usernameError && <ValidationSpan>{errorMessage}</ValidationSpan> }
+        <LoginInput
+          name="email"
+          placeholder="email"
+          defaultValue={field.email}
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+        />
+        {errors.email && touched.email ? <ValidationSpan>{errors.email}</ValidationSpan> : null}
+        { errorMessage && emailError && <ValidationSpan>{errorMessage}</ValidationSpan> }
+        <LoginInput
+          name="password"
+          type="password"
+          placeholder="password"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+        {errors.password && touched.password ? <ValidationSpan>{errors.password}</ValidationSpan> : null}
+        { errorMessage && passwordError && <ValidationSpan>{errorMessage}</ValidationSpan> }
+        <LoginInput
+          name="confirmPassword"
+          type="password"
+          placeholder="confirm password"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
+        {errors.confirmPassword && touched.password ? <ValidationSpan>{errors.confirmPassword}</ValidationSpan> : null}
+      </InputContainer>
+      <LoginButton
+        onClick={() => {
+          handleRegister();
+        }}
+        disabled={isLoading}
+      >
+        { isLoading ? <Loader /> : "register" }
+      </LoginButton>
+      <OAuthButtonsContainer>
+        <GoogleButton />
+        <FacebookButton />
+      </OAuthButtonsContainer>
+      <RegisteredButton>Registered?</RegisteredButton>
+    </LoginCard>
+  );
+});

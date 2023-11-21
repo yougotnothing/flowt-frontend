@@ -39,6 +39,7 @@ import { userEmailStore as emailStore } from "../../../../stores/toChangeEmail.m
 import { FullsizeSongs } from "../../../songs/fullsizeSongs/FullsizeSongs";
 import { playlistsStore as playlists } from "../../../../stores/toPlaylists.mobx";
 import { editPlaylistStore as editPlaylist } from "../../../../stores/toEditPlaylist.mobx";
+import { searchUsersStore } from "../../../../stores/toSearchUsers.mobx";
 
 export const AccountInfo: React.FC = observer(() => {
   const navigate = useNavigate();
@@ -48,6 +49,21 @@ export const AccountInfo: React.FC = observer(() => {
     playlists.getPlaylists();
     editPlaylist.setEditing(false);
   }, []);
+
+  const handleRedirectToEditPlalist = (name: string | null, username: string | null) => {
+    if(username && name) {
+      editPlaylist.setEditing(true);
+      editPlaylist.setData(name, username);
+
+      sessionStorage.setItem('name', name);
+      sessionStorage.setItem('username', username);
+      
+      navigate(generatePath('/:u/playlist/:n/edit-playlist', {
+        u: username,
+        n: name
+      }));
+    }
+  }
 
   return (
     <AccountContainer>
@@ -107,14 +123,9 @@ export const AccountInfo: React.FC = observer(() => {
               <PlaylistInfo $type="name">{item.name}</PlaylistInfo>
               <PlaylistInfo $type="username">{usernameStore.username}</PlaylistInfo>
             </PlaylistInfoContainer>
-            <PlaylistButton onClick={() => {
-              navigate(generatePath('/:u/playlist/:n/edit-playlist', {
-                u: usernameStore.username,
-                n: item.name
-              }));
-              editPlaylist.setEditing(true);
-              editPlaylist.setData(item.name, usernameStore.username);
-            }}>Open</PlaylistButton>
+            <PlaylistButton onClick={() => handleRedirectToEditPlalist(item.name, usernameStore.username)}>
+              Open
+            </PlaylistButton>
           </Container>
         ))}
       </InfoContainer>

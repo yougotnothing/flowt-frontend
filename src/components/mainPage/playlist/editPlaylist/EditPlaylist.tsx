@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { observer } from "mobx-react-lite";
 import {
@@ -22,13 +22,29 @@ import { userUsernameStore as usernameStore } from "../../../../stores/toChangeU
 import { PlaylistItems } from "../playlistItems";
 import { editPlaylistStore as editPlaylist } from "../../../../stores/toEditPlaylist.mobx";
 import settings from "../../../../json/playlistSettings.json";
+import { playlistsStore as playlist } from "../../../../stores/toPlaylists.mobx";
 
 export const EditPlaylist: React.FC = observer(() => {
 
+  useEffect(() => {
+    playlist.search('All');
+    editPlaylist.setEditing(true);
+    
+    const playlistName = sessionStorage.getItem('name');
+    const playlistUsername = sessionStorage.getItem('username');
+
+    if(playlistName) playlist.setInput(playlistName);
+    editPlaylist.setData(playlistName, playlistUsername);
+  }, []);
+
   return (
     <Container>
-      <PlaylistContainer $isEditing>
-        <Icon $isEditing $username={editPlaylist.username} $name={editPlaylist.name} />
+      <PlaylistContainer $isEditing={editPlaylist.isEditing}>
+        <Icon
+          $isEditing={editPlaylist.isEditing}
+          $username={editPlaylist.username}
+          $name={editPlaylist.name}
+        />
         <PlaylistInfoContainer>
           <Info $type="name">{editPlaylist.name}</Info>
           <Info $type="username">{usernameStore.username}</Info>

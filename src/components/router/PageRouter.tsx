@@ -26,6 +26,7 @@ import { Notifications } from "../mainPage/notifications/Notifications";
 import { Songs } from "../songs/smallsizeSongs/Songs";
 import { GoogleAuth } from "../OAuth2/GoogleAuth";
 import { EditPlaylist } from "../mainPage/playlist/editPlaylist/EditPlaylist";
+import { FacebookAuth } from "../OAuth2/FacebookAuth";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -126,6 +127,10 @@ export const pageRouter = createBrowserRouter([
       {
         path: '/oauth/google/login',
         element: <GoogleAuth />
+      },
+      {
+        path: '/oauth/facebook/login',
+        element: <FacebookAuth />
       },
       {
         path: '/:u/playlist/:n/edit-playlist',

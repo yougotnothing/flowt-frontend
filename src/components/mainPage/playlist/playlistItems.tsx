@@ -27,7 +27,10 @@ export const PlaylistItems: React.FC = observer(() => {
               <SongStats>listens: {song.listens}</SongStats>
               <SongStats>liked</SongStats>
             </SongStatsContainer>
-            <AddSong onClick={() => playlist.removeAdded(song)}>
+            <AddSong onClick={() => {
+              playlist.removeAdded(song);
+              playlist.removeSong(song);
+            }}>
               Remove
             </AddSong>
           </Song>
@@ -52,7 +55,10 @@ export const PlaylistItems: React.FC = observer(() => {
                 <SongStats>listens: {song.listens}</SongStats>
                 <SongStats>liked</SongStats>
               </SongStatsContainer>
-              <AddSong onClick={() => playlist.setAdded(song)}>
+              <AddSong onClick={() => {
+                playlist.addSong(song);
+                playlist.setAdded(song);
+              }}>
                 Add
               </AddSong>
             </Song>

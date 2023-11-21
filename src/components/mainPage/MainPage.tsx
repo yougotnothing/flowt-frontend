@@ -34,6 +34,12 @@ export const MainPage: React.FC = observer(() => {
   let location = useLocation();
   const { user } = useUserContext();
 
+  // useEffect(() => {
+  //   if(!user) {
+  //     navigate('login');
+  //   }
+  // }, [user]);
+
   useEffect(() => {
    const currentUrl = location.pathname;
    console.log(searchUsersStore.avatar);
@@ -111,7 +117,7 @@ export const MainPage: React.FC = observer(() => {
                   navigate(generatePath('/profile/:id', { id: user.username }));
                 }}>
                 {user.userHaveAvatar
-                  ? <UserAvatar style={{backgroundImage: `url(${avatarStore.avatar})`}}/>
+                  ? <UserAvatar style={{backgroundImage: `url(${user.avatar})`}}/>
                   : <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
                 <UserNickname>{user.username}</UserNickname>
               </UserButton>
