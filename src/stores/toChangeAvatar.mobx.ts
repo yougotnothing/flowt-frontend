@@ -17,7 +17,7 @@ class UserAvatarStore {
     });
   }
 
-  setAvatar(newAvatar: string) {
+  setAvatar(newAvatar: string | null) {
     runInAction(() => {
       this.avatar = newAvatar;
     });

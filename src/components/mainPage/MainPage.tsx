@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 
 import { Link, Outlet, useNavigate, useLocation, generatePath } from "react-router-dom";
 import {
@@ -24,6 +24,7 @@ import { observer } from "mobx-react-lite";
 import { searchStore as search } from "../../stores/toSearch.mobx";
 import { SearchItems } from "./search/SearchItems";
 import { searchUsersStore } from "../../stores/toSearchUsers.mobx";
+import { api } from "../../api/axiosConfig";
 
 export const MainPage: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -31,18 +32,14 @@ export const MainPage: React.FC = observer(() => {
   const navigate = useNavigate();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
+  const googleUserAvatar: any = localStorage.getItem('Google image');
   let location = useLocation();
   const { user } = useUserContext();
-
-  // useEffect(() => {
-  //   if(!user) {
-  //     navigate('login');
-  //   }
-  // }, [user]);
 
   useEffect(() => {
    const currentUrl = location.pathname;
    console.log(searchUsersStore.avatar);
+   console.log(googleUserAvatar);
 
     if(!currentUrl || currentUrl === '/') navigate('/home');
 
@@ -116,9 +113,7 @@ export const MainPage: React.FC = observer(() => {
                   searchUsersStore.setAvatar(avatarStore.avatar);
                   navigate(generatePath('/profile/:id', { id: user.username }));
                 }}>
-                {user.userHaveAvatar
-                  ? <UserAvatar style={{backgroundImage: `url(${user.avatar})`}}/>
-                  : <UserAvatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />}
+                  <UserAvatar style={{backgroundImage: `url(${avatarStore.avatar})`}} />
                 <UserNickname>{user.username}</UserNickname>
               </UserButton>
             </VerifiedUserContainer>

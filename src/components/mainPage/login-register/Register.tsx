@@ -94,6 +94,21 @@ export const Register: React.FC = observer(() => {
     }
   }
 
+  const postOAuthUserAvatar = async () => {
+    if(OAuth.backendData) {
+      try {
+        const response = await api.post('/users/avatar/url', {
+          imageUrl: OAuth.backendData.imageUrl
+        });
+        console.log(response.data);
+        userAvatarStore.setAvatarURL(OAuth.backendData.imageUrl);
+        userAvatarStore.setAvatar(OAuth.backendData.imageUrl);
+      }catch(error: any) {
+        console.error(error);
+      }
+    }
+  }
+
   return (
     <LoginCard>
       <LoginHeader>Welcome<Span>!</Span></LoginHeader>
@@ -134,8 +149,9 @@ export const Register: React.FC = observer(() => {
         {errors.confirmPassword && touched.password ? <ValidationSpan>{errors.confirmPassword}</ValidationSpan> : null}
       </InputContainer>
       <LoginButton
-        onClick={() => {
-          handleRegister();
+        onClick={async () => {
+          await handleRegister();
+          await postOAuthUserAvatar();
         }}
         disabled={isLoading}
       >

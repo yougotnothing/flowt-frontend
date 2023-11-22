@@ -71,9 +71,7 @@ export const SearchItems: React.FC = observer(() => {
           <Item key={index}>
             <ItemIcon 
               $type="user"
-              src={searchUser.userHaveAvatar
-              ? encodeURI(`${API_URL}/images/user/avatar/${searchUser.username}`) 
-              : '/defaultAvatar.png'}
+              src={searchUser.avatar}
             />
             <ItemInfo>
               <BigText>{searchUser.username}</BigText>

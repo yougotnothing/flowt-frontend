@@ -23,27 +23,46 @@ export const UserContext = observer(({ children }: any) => {
   const[user, setUser] = useState<UserDTO | null>(null);
   const[followers, setFollowers] = useState<IUserProps[] | null>(null);
   const[subscribes, setSubscribes] = useState<IUserProps[] | null>(null);
+  const googleUserAvatar = localStorage.getItem('Google image');
   const url = new URLS();
 
-  const getUser = async (): Promise<void> => {
+  const postOAuthUserAvatar = async () => {
     try {
-      const response = await api.get('/users/authenticated');
-      setUser(response.data);
+      const response = await api.post('/users/avatar/url', {
+        imageUrl: googleUserAvatar
+      });
+      console.log(response.data);
+      avatarStore.setAvatarURL(googleUserAvatar);
+      if(googleUserAvatar) avatarStore.setAvatar(googleUserAvatar);
     }catch(error: any) {
       console.error(error);
     }
   }
 
-  const getUserAvatar = async (): Promise<void> => {
+  const getUser = async (): Promise<void> => {
     try {
-      if(user && user.userHaveAvatar) {
-        avatarStore.setAvatar(`${API_URL}/images/user/avatar/${user.username}`);
-        avatarStore.setAvatarURL(`${API_URL}/images/user/avatar/${user.username}`);
-        searchUsers.setAvatar(`${API_URL}/images/user/avatar/${user.username}`);
+      const response = await api.get('/users/authenticated');
+      setUser(response.data);
+      console.log(response.data);
+    }catch(error: any) {
+      console.error(error);
+    }
+  }
+
+  const getUserAvatar = async () => {
+    try {
+      if(user && googleUserAvatar) {
+        await postOAuthUserAvatar();
+        localStorage.clear();
         console.log(avatarStore.avatar);
-      }else{
+      }else if(user?.userHaveAvatar === false && !googleUserAvatar){
         avatarStore.setAvatar('/defaultAvatar.png');
         searchUsers.setAvatar('/defaultAvatar.png');
+      }
+      if(user) {
+        avatarStore.setAvatar(user.avatar);
+        avatarStore.setAvatarURL(user.avatar);
+        searchUsers.setAvatar(user.avatar);
       }
     }catch(error: any){
       console.error(error);

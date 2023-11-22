@@ -31,6 +31,22 @@ export const Login: React.FC = observer(() => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    if(!user && window.location.pathname === '/login') {
+      return;
+    }else if(!user && window.location.pathname === '/register') {
+      return;
+    }else{
+      navigate('/login');
+    }
+  }, [user, window.location.pathname]);
+
+  useEffect(() => {
+    if(OAuth.backendData?.imageUrl) {
+      localStorage.setItem('Google image', OAuth.backendData.imageUrl);
+    }
+  }, []);
+
+  useEffect(() => {
     OAuth.setWhereUsing('Sign in');
   }, []);
 
@@ -66,26 +82,12 @@ export const Login: React.FC = observer(() => {
       setIsLoading(true);
       setErrorMessage(null);
       await login(loginDto);
-      navigate('/home');
       window.location.reload();
+      navigate('/home');
     }catch(error: any) {
       setIsLoading(false);
       setIsError(true);
       setErrorMessage(error.response.data.message);
-    }
-  }
-  
-  const postOAuthUserAvatar = async () => {
-    if(OAuth.backendData?.imageUrl) {
-      try {
-        const response = await api.post('/users/avatar/url', {
-          imageUrl: OAuth.backendData.imageUrl
-        });
-        userAvatarStore.setAvatarURL(OAuth.backendData.imageUrl);
-        userAvatarStore.setAvatar(OAuth.backendData.imageUrl);
-      }catch(error: any) {
-        console.error(error);
-      }
     }
   }
 
@@ -114,7 +116,6 @@ export const Login: React.FC = observer(() => {
       <LoginButton
         onClick={async () => {
           await handleLogin();
-          await postOAuthUserAvatar();
         }}
         disabled={isLoading}
       >

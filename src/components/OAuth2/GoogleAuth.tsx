@@ -5,6 +5,7 @@ import { api } from "../../api/axiosConfig";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
 import { OAuth } from "../../stores/toOAuthButtons.mobx";
 import { observer } from "mobx-react-lite";
+import { userAvatarStore } from "../../stores/toChangeAvatar.mobx";
 
 export const GoogleAuth = observer(() => {
   const[searchParams] = useSearchParams();
@@ -23,8 +24,12 @@ export const GoogleAuth = observer(() => {
         window.location.reload();
       }
     }catch(error: any) {
-      OAuth.setOAuthData(error.response.data);
-      console.log(OAuth.backendData);
+      if(error.response.status === 409) {
+        OAuth.setOAuthData(error.response.data);
+        userAvatarStore.setAvatar(error.response.data.imageUrl);
+        userAvatarStore.setAvatarURL(error.response.data.imageUrl);
+        console.log(OAuth.backendData);
+      }
       console.error(error);
     }
   }

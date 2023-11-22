@@ -2,11 +2,11 @@ import { makeObservable, observable, action, runInAction } from "mobx";
 
 class OAuthStore {
   whereUsing: 'Sign in' | 'Sign up';
-  backendData: { email: string, imageUrl: string } | null;
+  backendData: { email: string, imageUrl: string };
 
   constructor() {
     this.whereUsing = 'Sign in';
-    this.backendData = null;
+    this.backendData = { email: '', imageUrl: '' };
 
     makeObservable(this, {
       whereUsing: observable,
