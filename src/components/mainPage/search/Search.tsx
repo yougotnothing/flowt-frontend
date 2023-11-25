@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { FC } from "react";
 
-import { api, API_URL } from "../../../api/axiosConfig";
-import { generatePath, useNavigate } from "react-router-dom";
+import { API_URL } from "../../../api/axiosConfig";
 import {
   Container,
   ContentContainer,
@@ -11,7 +10,8 @@ import {
   SearchFilters,
   Card,
   CardIcon,
-  CardInfoContainer, CardInfo
+  CardInfoContainer,
+  CardInfo
 } from "./Search.styled";
 import { userAvatarStore } from "../../../stores/toChangeAvatar.mobx";
 import filters from "../../../json/filters.json";
@@ -19,9 +19,7 @@ import { searchStore as search } from "../../../stores/toSearch.mobx";
 import { useUserContext } from "../../../contexts/UserContext";
 import { observer } from "mobx-react-lite";
 
-export const Search: React.FC = observer(() => {
-  const [params, setParams] = useState<string>('All');
-  const navigate = useNavigate();
+export const Search: FC = observer(() => {
   const { user } = useUserContext();
 
   return (
@@ -63,6 +61,7 @@ export const Search: React.FC = observer(() => {
           <Card key={index}>
             <CardIcon $type='song' />
             <CardInfoContainer>
+              <CardInfo>{playlist.username}</CardInfo>
               <CardInfo>{playlist.name}</CardInfo>
             </CardInfoContainer>
           </Card>

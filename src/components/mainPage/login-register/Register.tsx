@@ -19,7 +19,6 @@ import { OAuthButtonsContainer } from "../../OAuth2/OAuthButtons.styled";
 import { FacebookButton, GoogleButton } from "../../OAuth2/OAuthButtons";
 import { observer } from "mobx-react-lite";
 import { OAuth } from "../../../stores/toOAuthButtons.mobx";
-import { userAvatarStore } from "../../../stores/toChangeAvatar.mobx";
 
 export const Register: React.FC = observer(() => { 
   const[isLoading, setIsLoading] = useState(false);
@@ -94,21 +93,6 @@ export const Register: React.FC = observer(() => {
     }
   }
 
-  const postOAuthUserAvatar = async () => {
-    if(OAuth.backendData) {
-      try {
-        const response = await api.post('/users/avatar/url', {
-          imageUrl: OAuth.backendData.imageUrl
-        });
-        console.log(response.data);
-        userAvatarStore.setAvatarURL(OAuth.backendData.imageUrl);
-        userAvatarStore.setAvatar(OAuth.backendData.imageUrl);
-      }catch(error: any) {
-        console.error(error);
-      }
-    }
-  }
-
   return (
     <LoginCard>
       <LoginHeader>Welcome<Span>!</Span></LoginHeader>
@@ -149,10 +133,7 @@ export const Register: React.FC = observer(() => {
         {errors.confirmPassword && touched.password ? <ValidationSpan>{errors.confirmPassword}</ValidationSpan> : null}
       </InputContainer>
       <LoginButton
-        onClick={async () => {
-          await handleRegister();
-          await postOAuthUserAvatar();
-        }}
+        onClick={async () => await handleRegister()}
         disabled={isLoading}
       >
         { isLoading ? <Loader /> : "register" }

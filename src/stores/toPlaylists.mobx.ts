@@ -1,6 +1,7 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import { IPlaylist, IPlaylistProps, ISongPlaylist } from "../types/props";
 import { api } from "../api/axiosConfig";
+import { ISongData } from "../types/types";
 
 class PlaylistsStore {
   self: IPlaylist[];
@@ -10,6 +11,7 @@ class PlaylistsStore {
   avatar: any;
   avatarURL: any;
   input: string;
+  name: string | null;
   playlist: 'Create' | 'Browse';
 
   constructor() {
@@ -19,11 +21,14 @@ class PlaylistsStore {
     this.added = [];
     this.avatar = null;
     this.avatarURL = null;
+    this.name = null;
     this.input = '';
+
     this.playlist = 'Create';
 
     makeObservable(this, {
       self: observable,
+      name: observable,
       playlist: observable,
       added: observable,
       songs: observable,
@@ -102,9 +107,8 @@ class PlaylistsStore {
   }
 
   setInput(value: string) {
-    runInAction(() => {
       this.input = value;
-    });
+      this.name = value;
   }
 
   setAvatar(avatar: any | Blob) {
@@ -128,10 +132,10 @@ class PlaylistsStore {
 
   async addSongs() {
     try {
-      for(let index = 0; index<= this.added.length; index++) {
-        await api.post(`/playlists/${this.input}/${this.added[index].author}/${this.added[index].name}`);
-        console.log(`Song: ${this.added[index].name} added successfully`);
-      }
+      await api.post(`/playlists/${this.name}`, {
+        songs: this.added
+      });
+      console.log('songs added');
     }catch(error: any) {
       console.error(error);
     }
@@ -139,7 +143,7 @@ class PlaylistsStore {
 
   async addSong(song: ISongPlaylist) {
     try {
-      await api.post(`/playlists/${this.input}/${song.author}/${song.name}`);
+      await api.post(`/playlists/${this.name}/${song.author}/${song.name}`);
       console.log(`Song: ${song.name}, added successfully`);
     }catch(error: any) {
       console.error(error);

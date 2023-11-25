@@ -30,7 +30,7 @@ import {
   handleCreatePlaylist,
   handlePostAvatar,
 } from "./functions";
-import { PlaylistItems } from "./playlistItems";
+import { PlaylistItems } from "./Playlist-Items";
 
 export const Playlist: React.FC = observer(() => {
   const[isApply, setIsApply] = useState<boolean>(false);
@@ -107,7 +107,10 @@ export const Playlist: React.FC = observer(() => {
           <PlaylistInfo
             $isNull={isNull}
             placeholder="Name"
-            onChange={formik.handleChange}
+            onChange={(e: any) => {
+              formik.handleChange(e);
+              playlist.setInput(e.target.value);
+            }}
             name="name"
             $type="name"
           />

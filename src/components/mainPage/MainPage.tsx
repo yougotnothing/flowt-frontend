@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Link, Outlet, useNavigate, useLocation, generatePath } from "react-router-dom";
 import {
@@ -32,14 +32,40 @@ export const MainPage: React.FC = observer(() => {
   const navigate = useNavigate();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
-  const googleUserAvatar: any = localStorage.getItem('Google image');
+  const googleUserAvatar = localStorage.getItem('image');
   let location = useLocation();
   const { user } = useUserContext();
+
+  const postOAuthAvatar = async () => {
+    try {
+      const response = await api.post('/users/avatar/url', {
+        imageUrl: googleUserAvatar
+      });
+
+      if(response.status === 200) {
+        avatarStore.setAvatar(googleUserAvatar);
+        avatarStore.setAvatarURL(googleUserAvatar);
+      }
+      }catch(error: any) {
+      console.error(error.response.data.message);
+    }
+  }
+
+  useEffect(() => {
+    if(user) {
+      postOAuthAvatar();
+    }
+  }, [user, googleUserAvatar]);
 
   useEffect(() => {
    const currentUrl = location.pathname;
    console.log(searchUsersStore.avatar);
    console.log(googleUserAvatar);
+
+   if(googleUserAvatar) {
+    avatarStore.setAvatar(googleUserAvatar);
+    avatarStore.setAvatarURL(googleUserAvatar);
+   }
 
     if(!currentUrl || currentUrl === '/') navigate('/home');
 

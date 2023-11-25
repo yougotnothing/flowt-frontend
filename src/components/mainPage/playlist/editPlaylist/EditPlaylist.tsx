@@ -19,7 +19,7 @@ import {
   PlaylistIcon as Icon
 } from "../large/Playlist.styled";
 import { userUsernameStore as usernameStore } from "../../../../stores/toChangeUsername.mobx";
-import { PlaylistItems } from "../playlistItems";
+import { PlaylistItems } from "../Playlist-Items";
 import { editPlaylistStore as editPlaylist } from "../../../../stores/toEditPlaylist.mobx";
 import settings from "../../../../json/playlistSettings.json";
 import { playlistsStore as playlist } from "../../../../stores/toPlaylists.mobx";

@@ -1,6 +1,6 @@
-import React, { useEffect, createContext, useContext, useState, useLayoutEffect } from "react";
+import { useEffect, createContext, useContext, useState, useLayoutEffect } from "react";
 
-import { api, API_URL } from "../api/axiosConfig";
+import { api } from "../api/axiosConfig";
 import { IUserProps, UserDTO, UserProps } from "../types/props";
 import { userEmailStore as emailStore } from "../stores/toChangeEmail.mobx";
 import { userRegionStore as regionStore } from "../stores/toChangeRegion.mobx";
@@ -23,26 +23,14 @@ export const UserContext = observer(({ children }: any) => {
   const[user, setUser] = useState<UserDTO | null>(null);
   const[followers, setFollowers] = useState<IUserProps[] | null>(null);
   const[subscribes, setSubscribes] = useState<IUserProps[] | null>(null);
-  const googleUserAvatar = localStorage.getItem('Google image');
   const url = new URLS();
-
-  const postOAuthUserAvatar = async () => {
-    try {
-      const response = await api.post('/users/avatar/url', {
-        imageUrl: googleUserAvatar
-      });
-      console.log(response.data);
-      avatarStore.setAvatarURL(googleUserAvatar);
-      if(googleUserAvatar) avatarStore.setAvatar(googleUserAvatar);
-    }catch(error: any) {
-      console.error(error);
-    }
-  }
+  const googleAvatarUrl = localStorage.getItem('image');
 
   const getUser = async (): Promise<void> => {
     try {
       const response = await api.get('/users/authenticated');
       setUser(response.data);
+
       console.log(response.data);
     }catch(error: any) {
       console.error(error);
@@ -50,22 +38,16 @@ export const UserContext = observer(({ children }: any) => {
   }
 
   const getUserAvatar = async () => {
-    try {
-      if(user && googleUserAvatar) {
-        await postOAuthUserAvatar();
-        localStorage.clear();
-        console.log(avatarStore.avatar);
-      }else if(user?.userHaveAvatar === false && !googleUserAvatar){
-        avatarStore.setAvatar('/defaultAvatar.png');
-        searchUsers.setAvatar('/defaultAvatar.png');
-      }
-      if(user) {
+    if(user) {
+      if(user.userHaveAvatar) {
         avatarStore.setAvatar(user.avatar);
         avatarStore.setAvatarURL(user.avatar);
         searchUsers.setAvatar(user.avatar);
+      }else{
+        avatarStore.setAvatar('/defaultAvatar.png');
+        avatarStore.setAvatarURL('/defaultAvatar.png');
+        searchUsers.setAvatar('/defaultAvatar.png');
       }
-    }catch(error: any){
-      console.error(error);
     }
   }
 
@@ -93,7 +75,7 @@ export const UserContext = observer(({ children }: any) => {
 
   useEffect(() => {
     subscribesStore.getData(subscribes);
-  }, [subscribes])
+  }, [subscribes]);
 
   useLayoutEffect(() => {
     if(user) {

@@ -1,12 +1,17 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 
+interface IBackendData {
+  email: string | null;
+  imageUrl: string | null;
+}
+
 class OAuthStore {
   whereUsing: 'Sign in' | 'Sign up';
-  backendData: { email: string, imageUrl: string };
+  backendData: IBackendData;
 
   constructor() {
     this.whereUsing = 'Sign in';
-    this.backendData = { email: '', imageUrl: '' };
+    this.backendData = { email: null, imageUrl: null };
 
     makeObservable(this, {
       whereUsing: observable,
@@ -16,7 +21,7 @@ class OAuthStore {
     });
   }
 
-  setOAuthData(data: { email: string, imageUrl: string }) {
+  setOAuthData(data: IBackendData) {
     runInAction(() => {
       this.backendData = data;
     });

@@ -86,7 +86,24 @@ export const SearchItems: React.FC = observer(() => {
             </ItemButton>
           </Item>
         )})}
-      {search.users.length === 0 && search.songs.length === 0 && <Text>{search.message}</Text>}
+      {search.users.length === 0 && search.songs.length === 0 && search.playlists.length === 0 && <Text>{search.message}</Text>}
+      {search.playlists.map((playlist, index) => (
+        <Item key={index}>
+          <ItemIcon 
+            $type="song"
+            src={`${API_URL}/images/playlist/${playlist.username}/${playlist.name}`}
+          />
+          <ItemInfo>
+            <BigText>{playlist.username}</BigText>
+            <Text>{playlist.name}</Text>
+          </ItemInfo>
+          <ItemButton onClick={() => {
+            navigate(generatePath('/profile/:id', { id: playlist.name }));
+          }}>
+            See more
+          </ItemButton>
+        </Item>
+      ))}
     </Droplist>
   )
 });

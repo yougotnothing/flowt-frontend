@@ -58,6 +58,7 @@ export const PlaylistItems: React.FC = observer(() => {
               <AddSong onClick={() => {
                 playlist.addSong(song);
                 playlist.setAdded(song);
+                playlist.addSong(song)
               }}>
                 Add
               </AddSong>

@@ -8,9 +8,10 @@ export const handleCreatePlaylist = async (name: string, isPrivate: boolean) => 
       isPrivate: isPrivate
     });
     if(response.status === 200) {
+      console.log(response.data.name, response.data.isPrivate);
       playlistsStore.setSelf(response.data);
+      console.log('Playlist created successfuly!');
     }
-    console.log('Playlist created successfuly!');
   }catch(error: any) {
     console.error(error);
   }
