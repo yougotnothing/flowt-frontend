@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { OptionsContainer, Select, SelectText, CloseOptions } from "./Options.styled";
@@ -24,13 +24,13 @@ export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
           <SelectText>Account</SelectText>
         </Select>
         <Select onClick={() => navigate(generatePath('/:id/songs/liked', {id: user.username}))}>
-          <SelectText>Liked</SelectText>
+          <SelectText>Liked songs</SelectText>
         </Select>
         <Select onClick={() => navigate(generatePath('/:id/playlists/create-playlist', {id: user.username}))}>
           <SelectText>Create playlist</SelectText>
         </Select>
         <Select onClick={() => navigate(generatePath('/:id/songs/upload', {id: user.username}))}>
-          <SelectText>Upload</SelectText>
+          <SelectText>Upload song</SelectText>
         </Select>
         <Select onClick={() => navigate(generatePath('/account/:id/settings', {id: user.username}))}>
           <SelectText>Settings</SelectText>
@@ -46,7 +46,7 @@ export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
           <SelectText>Logout</SelectText>
         </Select>
       </OptionsContainer>
-      {!isVisible ? <Settings $isVisible={isOpen} onClick={() => setIsVisible(true)}/> : null}
+      {!isVisible ? <Settings $isVisible={isOpen} onClick={() => setIsVisible(true)} /> : null}
     </>
   )
 }

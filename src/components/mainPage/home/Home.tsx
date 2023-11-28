@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 
 import {
   UserContainer,
@@ -22,7 +22,7 @@ import { observer } from "mobx-react-lite";
 import { useUserContext } from "../../../contexts/UserContext";
 import { IUserProps } from "../../../types/props";
 
-export const Home: React.FC = observer(() => {
+export const Home: FC = observer(() => {
   const { user, subscribes } = useUserContext();
 
   return (

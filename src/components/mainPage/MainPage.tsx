@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 
 import { Link, Outlet, useNavigate, useLocation, generatePath } from "react-router-dom";
 import {
@@ -38,34 +38,31 @@ export const MainPage: React.FC = observer(() => {
 
   const postOAuthAvatar = async () => {
     try {
-      const response = await api.post('/users/avatar/url', {
+      await api.post('/users/avatar/url', {
         imageUrl: googleUserAvatar
       });
 
-      if(response.status === 200) {
-        avatarStore.setAvatar(googleUserAvatar);
-        avatarStore.setAvatarURL(googleUserAvatar);
-      }
+      avatarStore.setAvatar(googleUserAvatar);
+      avatarStore.setAvatarURL(googleUserAvatar);
+      searchUsersStore.setAvatar(googleUserAvatar);
+      localStorage.removeItem('image');
+
+      console.log(googleUserAvatar);
       }catch(error: any) {
       console.error(error.response.data.message);
     }
   }
 
   useEffect(() => {
-    if(user) {
+    if(user && !user.userHaveAvatar && googleUserAvatar) {
       postOAuthAvatar();
     }
-  }, [user, googleUserAvatar]);
+  }, [user]);
 
   useEffect(() => {
    const currentUrl = location.pathname;
    console.log(searchUsersStore.avatar);
    console.log(googleUserAvatar);
-
-   if(googleUserAvatar) {
-    avatarStore.setAvatar(googleUserAvatar);
-    avatarStore.setAvatarURL(googleUserAvatar);
-   }
 
     if(!currentUrl || currentUrl === '/') navigate('/home');
 
@@ -82,7 +79,12 @@ export const MainPage: React.FC = observer(() => {
   }, []);
 
   const handleSearch = async (key: any) => {
-    if((key.key === 'Enter' || key.code === 'Enter') && search.input.length > 0 && search.songs.length > 0 && search.users.length > 0) {
+    const inputLength = search.input.length;
+    const songsLength = search.songs.length;
+    const usersLength = search.users.length;
+    const isKeyEnter = (key.key === 'Enter' || key.code === 'Enter');
+
+    if(isKeyEnter && inputLength > 0 && songsLength > 0 && usersLength > 0) {
       await search.all();
       navigate('/search');
       search.setIsOpen(false);

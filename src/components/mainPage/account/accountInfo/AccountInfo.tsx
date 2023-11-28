@@ -97,7 +97,7 @@ export const AccountInfo: React.FC = observer(() => {
             </UserInfo>
           </UserContainer>
         )}
-        {user && user.description && (
+        {user && descriptionStore.description && (
           <>
             <DescriptionTitle>Your description</DescriptionTitle>
             {descriptionStore.description && (

@@ -29,7 +29,7 @@ export const GoogleAuth: FC = observer(() => {
         OAuth.setOAuthData(error.response.data);
         console.log(OAuth.backendData);
       }else{
-        console.error(error);
+        console.error(error.response.data);
       }
     }
   }
