@@ -104,11 +104,13 @@ export const Button = styled('button')`
 export const Logo = styled('button')`
   align-self: center;
   height: 50px;
-  width: 134px;
+  width: 168px;
   border: none;
   background-color: transparent;
   background-image: url('/flowt.png');
-  background-size: 100%;
+  background-position: center;
+  background-size: 134px;
+  background-repeat: no-repeat;
   cursor: pointer;
 
   .logoLink {
@@ -237,6 +239,7 @@ export const Droplist = styled('div')<IDroplistProp>`
   border-radius: 12px;
   padding: 6px;
   max-height: 146px;
+  width: 360px;
   overflow-y: auto;
   gap: 4px;
   
@@ -255,7 +258,7 @@ export const Item = styled('div')`
   border-right-width: 0;
   padding: 4px;
   background-color: ${colors.DARK_BLUE};
-  width: 320px;
+  width: 350px;
   height: max-content;
   gap: 4px;
 `;

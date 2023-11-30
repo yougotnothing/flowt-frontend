@@ -97,16 +97,14 @@ export const AccountInfo: React.FC = observer(() => {
             </UserInfo>
           </UserContainer>
         )}
-        {user && descriptionStore.description && (
-          <>
-            <DescriptionTitle>Your description</DescriptionTitle>
-            {descriptionStore.description && (
-              <DescriptionContainer>
-                <Description>{descriptionStore.description}</Description>
-              </DescriptionContainer>
-            )}
-          </>
-        )}
+        <DescriptionTitle>Your description</DescriptionTitle>
+        <DescriptionContainer>
+          {user && descriptionStore.description ? (
+            <Description>{descriptionStore.description}</Description>
+          ) :
+            <Description>No description</Description>
+          }
+        </DescriptionContainer>
         {user && (
           <PlaylistContainer>
             <FullsizeSongs />

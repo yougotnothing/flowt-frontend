@@ -54,6 +54,12 @@ export const ChangeDescription: React.FC = () => {
     }
   }
 
+  const handlePatchDescription = async (key: any) => {
+    if(key.key === 'Enter') {
+      await patchDescription();
+    }
+  }
+
   const descriptionError = formik.errors.description && formik.touched.description && (
     <Error>{formik.errors.description}</Error>
   );
@@ -88,6 +94,7 @@ export const ChangeDescription: React.FC = () => {
               }}
               onBlur={formik.handleBlur}
               defaultValue={formik.values.description}
+              onKeyDown={handlePatchDescription}
             />
             {descriptionError}
             <Button onClick={patchDescription}>

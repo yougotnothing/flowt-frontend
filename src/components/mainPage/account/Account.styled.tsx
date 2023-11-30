@@ -137,6 +137,7 @@ export const Region = styled('div')`
 export const DescriptionContainer = styled('div')`
   display: flex;
   width: 66em;
+  min-height: 46px;
   flex-direction: column;
   align-items: start;
   padding: 12px;

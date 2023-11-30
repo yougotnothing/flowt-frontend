@@ -46,18 +46,19 @@ export const MainPage: React.FC = observer(() => {
       avatarStore.setAvatarURL(googleUserAvatar);
       searchUsersStore.setAvatar(googleUserAvatar);
       localStorage.removeItem('image');
+      localStorage.removeItem('Google image');
 
       console.log(googleUserAvatar);
-      }catch(error: any) {
+    }catch(error: any) {
       console.error(error.response.data.message);
     }
   }
 
   useEffect(() => {
-    if(user && !user.userHaveAvatar && googleUserAvatar) {
+    if(googleUserAvatar) {
       postOAuthAvatar();
     }
-  }, [user]);
+  }, [googleUserAvatar]);
 
   useEffect(() => {
    const currentUrl = location.pathname;
