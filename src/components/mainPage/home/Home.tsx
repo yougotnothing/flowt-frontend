@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 import {
   UserContainer,
@@ -32,11 +32,7 @@ export const Home: FC = observer(() => {
         <UserContainer>
           {subscribes && subscribes.map((subscribe: IUserProps, index: number) => (
             <Card key={index}>
-              {subscribe.userHaveAvatar ?
-                <CardIcon style={{backgroundImage: `url(${userAvatarStore.avatar})`}}/>
-                :
-                <CardIcon style={{backgroundImage: 'url(/defaultAvatar.png)'}}/>
-              }
+              <CardIcon $userHaveAvatar={subscribe.userHaveAvatar} $avatar={subscribe.avatar} />
               <CardHeader>{subscribe.username}</CardHeader>
             </Card>
           ))}

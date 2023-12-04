@@ -41,6 +41,10 @@ export const SearchItems: React.FC = observer(() => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(search.users);
+  }, []);
+
   return (
     <Droplist $isOpen={search.isOpen} ref={ref}>
       {search.songs.map((song, index) => (
@@ -61,8 +65,8 @@ export const SearchItems: React.FC = observer(() => {
             </StatsContainer>
           </ItemInfo>
           <ItemButton onClick={() => {
-            songs.setName(song.name);
-            songs.setSearchSong(song.author, song.name);
+            navigate('/search');
+            search.setIsOpen(false);
           }}>Listen</ItemButton>
         </Item>
       ))}
@@ -91,19 +95,20 @@ export const SearchItems: React.FC = observer(() => {
         <Item key={index}>
           <ItemIcon 
             $type="song"
-            src={`${API_URL}/images/playlist/${playlist.username}/${playlist.name}`}
+            src={`${API_URL}/images/playlist/${playlist.author}/${playlist.name}`}
           />
           <ItemInfo>
-            <BigText>{playlist.username}</BigText>
+            <BigText>{playlist.author}</BigText>
             <Text>{playlist.name}</Text>
           </ItemInfo>
           <ItemButton onClick={() => {
-            navigate(generatePath('/profile/:id', { id: playlist.name }));
+            navigate(generatePath('/playlist/:id', { id: playlist.name }));
           }}>
             See more
           </ItemButton>
         </Item>
       ))}
+      
     </Droplist>
   )
 });

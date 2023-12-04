@@ -4,6 +4,8 @@ import { A_, A_CONTAINER, INPUT } from "../../constants/styles.const";
 
 export const Container = styled('div')`
   display: flex;
+  position: relative;
+  z-index: 1000;
   flex-direction: column;
   align-items: center;
   background-color: ${colors.BACKGROUND};
@@ -177,6 +179,10 @@ export const UserButton = styled('button')`
     color: ${colors.WHITE};
   }
 `;
+
+interface IUserAvatar {
+  $image: string;
+}
 
 export const UserAvatar = styled('picture')`
   border-radius: 50%;

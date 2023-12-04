@@ -24,12 +24,31 @@ export const UserContext = observer(({ children }: any) => {
   const[followers, setFollowers] = useState<IUserProps[] | null>(null);
   const[subscribes, setSubscribes] = useState<IUserProps[] | null>(null);
   const url = new URLS();
-  const googleAvatarUrl = localStorage.getItem('image');
+  const googleAvatar = localStorage.getItem('image');
+
+  const postGoogleAvatar = async () => {
+    try {
+      await api.post('/users/avatar/url', {
+        imageUrl: googleAvatar
+      });
+
+      avatarStore.setAvatar(googleAvatar);
+      avatarStore.setAvatarURL(googleAvatar);
+    }catch(error: any) {
+      console.log(error.response.data.message);
+    }
+  }
 
   const getUser = async (): Promise<void> => {
     try {
       const response = await api.get('/users/authenticated');
       setUser(response.data);
+
+      if(user) {
+        avatarStore.setAvatar(user.avatar);
+        avatarStore.setAvatarURL(user.avatar);
+        console.log(avatarStore.avatar);
+      }
 
       console.log(response.data);
     }catch(error: any) {
@@ -79,7 +98,12 @@ export const UserContext = observer(({ children }: any) => {
 
   useLayoutEffect(() => {
     if(user) {
-      getUserAvatar();
+      if(!user.userHaveAvatar && googleAvatar) {
+        postGoogleAvatar();
+        localStorage.removeItem('image');
+      }else{
+        getUserAvatar();
+      }
       getFollowers();
       getSubscribes();
       searchUsers.setUser(user);

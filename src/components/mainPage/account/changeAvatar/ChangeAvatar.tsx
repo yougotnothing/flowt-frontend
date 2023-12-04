@@ -36,7 +36,7 @@ export const ChangeAvatar: React.FC = observer(() => {
   const[zoom, setZoom] = useState<number>(1.1);
   const[croppedAvatarBlob, setCroppedAvatarBlob] = useState<any>(null);
   const { user } = useUserContext();
-  const url = new URLS();
+  const googleAvatar = localStorage.getItem('image');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,6 +60,10 @@ export const ChangeAvatar: React.FC = observer(() => {
         }
       });
       avatarStore.setAvatar(URL.createObjectURL(croppedAvatarBlob));
+
+      if(googleAvatar) {
+        localStorage.removeItem('image');
+      }
       navigate(generatePath('/account/:id', { id: userUsernameStore.username }));
     }catch(error: any) {
       console.log(error);

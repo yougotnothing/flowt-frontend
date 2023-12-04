@@ -56,9 +56,7 @@ export const PlaylistItems: React.FC = observer(() => {
                 <SongStats>liked</SongStats>
               </SongStatsContainer>
               <AddSong onClick={() => {
-                playlist.addSong(song);
                 playlist.setAdded(song);
-                playlist.addSong(song)
               }}>
                 Add
               </AddSong>
@@ -70,7 +68,7 @@ export const PlaylistItems: React.FC = observer(() => {
         <Song key={index}>
           <SongStatsContainer>
             <SongStats>{index + 1}</SongStats>
-            <SongIcon style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/playlist/${item.username}/${item.name}`)})`}} />
+            <SongIcon style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/playlist/${item.author}/${item.name}`)})`}} />
             <SongMainInfo>
               <SongInfo>{item.name}</SongInfo>
             </SongMainInfo>

@@ -1,6 +1,12 @@
 import { Alert, AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/alert";
 import { useDisclosure, CloseButton } from "@chakra-ui/react";
 
+export const Alert_: React.FC = () => {
+  return (
+    <></>
+  )
+}
+
 export const AlertSuccess: React.FC = () => {
   const successAlert = localStorage.getItem('success');
 

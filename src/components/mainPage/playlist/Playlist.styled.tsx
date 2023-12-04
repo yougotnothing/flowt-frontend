@@ -286,6 +286,7 @@ export const Song = styled('div')`
   transition: 0.3s;
   cursor: pointer;
   z-index: 998;
+  margin-bottom: 4px;
   
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
@@ -308,6 +309,7 @@ export const SongContainerText = styled('div')`
   font-family: 'Urbanist', sans-serif;
   font-weight: 600;
   font-size: 24px;
+  margin-bottom: 4px;
   color: ${colors.WHITE};
 `;
 
@@ -331,7 +333,7 @@ export const SongInfo = styled('button')`
   transition: 0.3s;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 142px;
+  max-width: 100%;
   
   &:hover {
     color: ${colors.SECONDARY};
@@ -356,7 +358,11 @@ export const SongStatsContainer = styled('div')`
 
 export const SongMainInfo = styled('div')`
   display: flex;
-  width: 142px;
+  width: 202px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  height: 44px;
   padding: 4px;
   border-left: 1px solid ${colors.BORDER};
   border-radius: 0 6px 6px 0;

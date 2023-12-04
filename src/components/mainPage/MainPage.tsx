@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Link, Outlet, useNavigate, useLocation, generatePath } from "react-router-dom";
 import {
@@ -24,7 +24,7 @@ import { observer } from "mobx-react-lite";
 import { searchStore as search } from "../../stores/toSearch.mobx";
 import { SearchItems } from "./search/SearchItems";
 import { searchUsersStore } from "../../stores/toSearchUsers.mobx";
-import { api } from "../../api/axiosConfig";
+import { Modal } from "../modal/Modal";
 
 export const MainPage: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -32,38 +32,11 @@ export const MainPage: React.FC = observer(() => {
   const navigate = useNavigate();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
-  const googleUserAvatar = localStorage.getItem('image');
   let location = useLocation();
   const { user } = useUserContext();
 
-  const postOAuthAvatar = async () => {
-    try {
-      await api.post('/users/avatar/url', {
-        imageUrl: googleUserAvatar
-      });
-
-      avatarStore.setAvatar(googleUserAvatar);
-      avatarStore.setAvatarURL(googleUserAvatar);
-      searchUsersStore.setAvatar(googleUserAvatar);
-      localStorage.removeItem('image');
-      localStorage.removeItem('Google image');
-
-      console.log(googleUserAvatar);
-    }catch(error: any) {
-      console.error(error.response.data.message);
-    }
-  }
-
   useEffect(() => {
-    if(googleUserAvatar) {
-      postOAuthAvatar();
-    }
-  }, [googleUserAvatar]);
-
-  useEffect(() => {
-   const currentUrl = location.pathname;
-   console.log(searchUsersStore.avatar);
-   console.log(googleUserAvatar);
+    const currentUrl = location.pathname;
 
     if(!currentUrl || currentUrl === '/') navigate('/home');
 
@@ -109,7 +82,8 @@ export const MainPage: React.FC = observer(() => {
   }
 
   const handleSearchButton = async () => {
-    if((search.input.length > 0 && search.songs.length > 0) || search.users.length > 0) {
+    const isDataNull = (search.songs.length > 0  || search.users.length > 0 || search.playlists.length > 0);
+    if(search.input.length > 0 && isDataNull) {
       await search.all();
       navigate('/search');
     }else{
@@ -119,6 +93,7 @@ export const MainPage: React.FC = observer(() => {
 
   return (
     <Container>
+      <Modal />
       {isVisible && successAlert && <AlertSuccess />}
       {isVisible && warningAlert && <AlertWarning />}
       <Navbar>
@@ -142,7 +117,7 @@ export const MainPage: React.FC = observer(() => {
                   searchUsersStore.setAvatar(avatarStore.avatar);
                   navigate(generatePath('/profile/:id', { id: user.username }));
                 }}>
-                  <UserAvatar style={{backgroundImage: `url(${avatarStore.avatar})`}} />
+                <UserAvatar style={{backgroundImage: `url(${avatarStore.avatar})`}} />
                 <UserNickname>{user.username}</UserNickname>
               </UserButton>
             </VerifiedUserContainer>

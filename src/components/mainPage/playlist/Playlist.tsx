@@ -26,11 +26,9 @@ import settings from "../../../json/playlistSettings.json";
 import { useFormik } from "formik";
 import { playlistSchema } from "../../../validation/yup.config";
 import { useLocation } from "react-router-dom";
-import {
-  handleCreatePlaylist,
-  handlePostAvatar,
-} from "./functions";
+import { handlePostAvatar } from "./functions";
 import { PlaylistItems } from "./Playlist-Items";
+import { api } from "../../../api/axiosConfig";
 
 export const Playlist: React.FC = observer(() => {
   const[isApply, setIsApply] = useState<boolean>(false);
@@ -38,6 +36,22 @@ export const Playlist: React.FC = observer(() => {
   const[isPrivate, setIsPrivate] = useState<boolean>(false);
   const[param, setParam] = useState<string>("All");
   const location = useLocation();
+
+  const handleCreatePlaylist = async () => {
+    try {
+      const response = await api.post('/playlists', {
+        name: formik.values.name,
+        isPrivate: isPrivate
+      });
+      if(response.status === 200) {
+        console.log(response.data.name, response.data.isPrivate);
+        playlist.setSelf(response.data);
+        console.log('Playlist created successfuly!');
+      }
+    }catch(error: any) {
+      console.error(error);
+    }
+  }
 
   const formik = useFormik<{
     name: string,
@@ -51,6 +65,12 @@ export const Playlist: React.FC = observer(() => {
     onSubmit: () => {}
   });
 
+  useEffect(() => {
+    if(formik.values.name && playlist.isHaveAvatar) {
+      setIsNull(false);
+    }
+  }, [formik.values.name, playlist.isHaveAvatar]);
+  
   const handleSetAvatar = (e: any) => {
     const file = e.target.files[0];
     const image = URL.createObjectURL(file);
@@ -71,26 +91,14 @@ export const Playlist: React.FC = observer(() => {
 
   const createPlaylist = async () => {
     try {
-      await handleCreatePlaylist(formik.values.name, isPrivate);
-      await handlePostAvatar(playlist.avatar, formik.values.name);
-      await playlist.addSongs();
+      if(isNull === false) {
+        await handlePostAvatar(playlist.avatar, formik.values.name);
+        await playlist.addSongs(formik.values.name);
+      }
     }catch(error: any) {
       console.error(error);
     }
   }
-
-  useEffect(() => {
-    if(formik.values.name && playlist.avatar) {
-      playlist.addSongs();
-      return;
-    }
-  }, [formik.values.name]);
-
-  useEffect(() => {
-    if(formik.values.name && isApply) {
-      setIsNull(false);
-    }    
-  }, [formik.values.name, isApply]);
 
    return (
     <Container>
@@ -127,7 +135,13 @@ export const Playlist: React.FC = observer(() => {
             </IsPrivateField>
           </PrivacySettings>
         </InfoContainer>
-        <CreatePlaylist disabled={isNull} onClick={createPlaylist}>
+        <CreatePlaylist
+          disabled={isNull} 
+          onClick={() => {
+            handleCreatePlaylist();
+            createPlaylist();
+          }}
+        >
           Create
         </CreatePlaylist>
       </PlaylistContainer>

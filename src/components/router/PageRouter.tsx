@@ -27,6 +27,7 @@ import { Songs } from "../songs/smallsizeSongs/Songs";
 import { GoogleAuth } from "../OAuth2/GoogleAuth";
 import { EditPlaylist } from "../mainPage/playlist/editPlaylist/EditPlaylist";
 import { FacebookAuth } from "../OAuth2/FacebookAuth";
+import { Playlist as BrowsePlaylist } from "../mainPage/playlist/large/Playlist";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -135,6 +136,10 @@ export const pageRouter = createBrowserRouter([
       {
         path: '/:u/playlist/:n/edit-playlist',
         element: <EditPlaylist />
+      },
+      {
+        path: '/playlist/:id',
+        element: <BrowsePlaylist />
       }
     ]
   }

@@ -1,7 +1,6 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import { IPlaylist, IPlaylistProps, ISongPlaylist } from "../types/props";
 import { api } from "../api/axiosConfig";
-import { ISongData } from "../types/types";
 
 class PlaylistsStore {
   self: IPlaylist[];
@@ -11,8 +10,10 @@ class PlaylistsStore {
   avatar: any;
   avatarURL: any;
   input: string;
-  name: string | null;
+  name: string;
   playlist: 'Create' | 'Browse';
+  isHaveAvatar: boolean;
+  songData: ISongPlaylist | null;
 
   constructor() {
     this.self = [];
@@ -21,10 +22,11 @@ class PlaylistsStore {
     this.added = [];
     this.avatar = null;
     this.avatarURL = null;
-    this.name = null;
+    this.name = '';
     this.input = '';
-
     this.playlist = 'Create';
+    this.isHaveAvatar = false;
+    this.songData = null;
 
     makeObservable(this, {
       self: observable,
@@ -36,6 +38,8 @@ class PlaylistsStore {
       liked: observable,
       avatar: observable,
       avatarURL: observable,
+      isHaveAvatar: observable,
+      songData: observable,
       setAvatar: action,
       setLiked: action,
       setSelf: action,
@@ -47,8 +51,18 @@ class PlaylistsStore {
       addSongs: action,
       removeSong: action,
       changePage: action,
-      setInput: action
+      setInput: action,
+      setName: action,
+      setSongData: action
     });
+  }
+
+  setSongData(data: ISongPlaylist) {
+    this.songData = data;
+  }
+
+  setName(name: string) {
+    this.name = name;
   }
 
   changePage(page: 'Create' | 'Browse') {
@@ -107,14 +121,17 @@ class PlaylistsStore {
   }
 
   setInput(value: string) {
+    runInAction(() => {
       this.input = value;
       this.name = value;
+    });
   }
 
   setAvatar(avatar: any | Blob) {
     runInAction(() => {
       this.avatar = avatar;
       this.avatarURL = URL.createObjectURL(avatar);
+      this.isHaveAvatar = true;
     });
   }
 
@@ -130,9 +147,9 @@ class PlaylistsStore {
     });
   }
 
-  async addSongs() {
+  async addSongs(name: string) {
     try {
-      await api.post(`/playlists/${this.name}`, {
+      await api.post(`/playlists/${name}`, {
         songs: this.added
       });
       console.log('songs added');
@@ -141,10 +158,10 @@ class PlaylistsStore {
     }
   }
 
-  async addSong(song: ISongPlaylist) {
+  async addSong(name: string) {
     try {
-      await api.post(`/playlists/${this.name}/${song.author}/${song.name}`);
-      console.log(`Song: ${song.name}, added successfully`);
+      await api.post(encodeURI(`/playlists/${name}/${this.songData?.author}/${this.songData?.name}`));
+      console.log(`Song: ${this.songData?.name}, added successfully`);
     }catch(error: any) {
       console.error(error);
     }

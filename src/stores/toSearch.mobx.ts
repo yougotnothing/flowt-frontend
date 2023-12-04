@@ -68,6 +68,7 @@ class SearchStore {
       runInAction(() => {
         this.users = response.data.users;
       });
+      console.log(this.users);
 
         if(this.users.length === 0) {
           this.setMessage(`Can't find data by ${this.input}`);
@@ -99,7 +100,7 @@ class SearchStore {
     if(param === "All") {
       await this.all();
     }
-    if(this.songs.length > 0 && this.users.length > 0) {
+    if(this.songs.length > 0 && this.users.length > 0 && this.playlists.length > 0) {
       runInAction(() => {
         this.message = null;
         this.isOpen = true;

@@ -19,7 +19,6 @@ export const Playlist: React.FC = observer(() => {
           <PlaylistImage $name={item.name} $username={searchUsersStore.username} />
           <InfoContainer>
             <Info $type="playlist name">{item.name}</Info>
-            <Info $type="username">{item.username}</Info>
           </InfoContainer>
         </Container>
       ))}

@@ -1,4 +1,3 @@
-
 export interface UserDTO {
   username: string | null;
   region: string | null;
@@ -6,6 +5,7 @@ export interface UserDTO {
   avatar: string | null;
   email: string | null;
   userHaveAvatar: boolean | null;
+  emailVerifyed: boolean | null;
   followers: string[] | null;
   subscribes: any[] | null;
 }
@@ -16,6 +16,8 @@ export interface IUserProps {
   description: string | null;
   email: string | null;
   userHaveAvatar: boolean | null;
+  avatar: string | null;
+  emailVerifyed: boolean | null;
 }
 
 export interface UserProps {
@@ -23,6 +25,7 @@ export interface UserProps {
   followers: IUserProps[] | null;
   subscribes: IUserProps[] | null;
 }
+
 export interface IUrlProps {
   authenticated: string;
   subscribes: string;
@@ -78,8 +81,9 @@ export interface ISongPlaylist {
 
 export interface IPlaylist {
   name: string;
+  author: string;
   username: string;
-  id: number;
+  playlistId: number;
   isPrivate: boolean;
   songs: ISongPlaylist[];
 }

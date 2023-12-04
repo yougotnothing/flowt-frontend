@@ -9,7 +9,7 @@ interface IPlaylistIconProps {
 }
 
 interface IPlaylistContainerProps {
-  $isEditing: boolean;
+  $isEditing?: boolean;
 }
 
 interface IPlaylistInfoProps {
@@ -22,8 +22,8 @@ export const Container = styled('div')<IPlaylistContainerProps>`
   align-items: center;
   gap: 8px;
   padding: 8px;
-  width: ${props => props.$isEditing ? '100%' : '800px'};
-  background-image: linear-gradient(90deg, ${colors.BORDER} -50%, transparent 100%);
+  width: ${props => props.$isEditing ? '1180px' : '80%'};
+  background-color: ${colors.FRONT};
   border-radius: 8px;
   border: 2px solid ${colors.BORDER};
 `;
@@ -47,7 +47,7 @@ export const PlaylistInfoContainer = styled('div')`
   height: 160px;
   width: 240px;
   justify-content: center;
-  background-color: rgba(62, 113, 115, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
 `;
 
 export const PlaylistInfo = styled('button')<IPlaylistInfoProps>`

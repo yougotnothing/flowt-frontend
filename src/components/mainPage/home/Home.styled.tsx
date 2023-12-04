@@ -41,9 +41,15 @@ export const Card = styled('button')`
   }
 `;
 
-export const CardIcon = styled('picture')`
+interface ICardIcon {
+  $userHaveAvatar: boolean | null;
+  $avatar: string | null;
+}
+
+export const CardIcon = styled('picture')<ICardIcon>`
   width: 56px;
   height: 56px;
+  background-image: ${props => props.$userHaveAvatar ? `url(${props.$avatar})` : 'url(/defaultAvatar.png)'};
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

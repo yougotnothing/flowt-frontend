@@ -11,7 +11,6 @@ export const PlayerContainer = styled('div')`
   z-index: 1000;
   align-items: center;
   justify-content: center;
-  -webkit-align-self: center;
   bottom: 12px;
   width: max-content;
 
@@ -43,6 +42,7 @@ export const PlayerContainer = styled('div')`
     flex: none;
     margin: auto 12px auto auto;
     width: 100px !important;
+  }
   
   .rhap_additional-controls {
     width: max-content !important;
@@ -102,6 +102,10 @@ export const SongInfoContainer = styled('div')`
 
 export const SongTitle = styled('div')`
   font-family: 'Urbanist', sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80px;
+  height: 16px;
   font-weight: 600;
   font-size: 16px;
   color: ${colors.WHITE};

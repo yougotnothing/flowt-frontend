@@ -39,6 +39,11 @@ export const SongTitle = styled('button')`
   font-family: 'Urbanist', sans-serif;
   font-weight: 400;
   font-size: 18px;
+  height: 20px;
+  width: 134px;
+  overflow: hidden;
+  text-align: start;
+  text-overflow: ellipsis;
   background-color: ${colors.DARK_BLUE};
   color: ${colors.WHITE};
   border: none;
