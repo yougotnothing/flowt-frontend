@@ -23,6 +23,9 @@ export const SongData = styled('div')`
   padding: 2px;
   border-radius: 4px;
   width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   align-items: start;
 `;
 
@@ -39,13 +42,13 @@ export const SongTitle = styled('button')`
   font-family: 'Urbanist', sans-serif;
   font-weight: 400;
   font-size: 18px;
-  height: 20px;
-  width: 134px;
-  overflow: hidden;
   text-align: start;
-  text-overflow: ellipsis;
   background-color: ${colors.DARK_BLUE};
   color: ${colors.WHITE};
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   border: none;
   cursor: pointer;
   transition: 0.3s;

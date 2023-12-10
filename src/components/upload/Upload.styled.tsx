@@ -96,7 +96,6 @@ export const SongAvatar = styled('picture')`
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 14px;
-  align-self: start;
 `;
 
 export const Validation = styled('div')`

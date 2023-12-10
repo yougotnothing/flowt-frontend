@@ -21,13 +21,12 @@ import {
   ButtonContainer
 } from "./ChangeAvatar.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { useUserContext } from "../../../../contexts/UserContext";
 import { userAvatarStore as avatarStore } from "../../../../stores/toChangeAvatar.mobx";
 import { userUsernameStore } from "../../../../stores/toChangeUsername.mobx";
 import Cropper from "react-easy-crop";
 import { getCroppedImg } from "../../../avatar/canvas";
 import { api } from "../../../../api/axiosConfig";
-import { URLS } from "../../../../constants/urls.const";
+import { user } from "../../../../stores/toUser.mobx";
 
 export const ChangeAvatar: React.FC = observer(() => {
   const[isFileChosen, setIsFileChosen] = useState<boolean>(false);
@@ -35,7 +34,6 @@ export const ChangeAvatar: React.FC = observer(() => {
   const[crop, setCrop] = useState({ x: 0, y: 0 });
   const[zoom, setZoom] = useState<number>(1.1);
   const[croppedAvatarBlob, setCroppedAvatarBlob] = useState<any>(null);
-  const { user } = useUserContext();
   const googleAvatar = localStorage.getItem('image');
   const navigate = useNavigate();
 
@@ -64,7 +62,7 @@ export const ChangeAvatar: React.FC = observer(() => {
       if(googleAvatar) {
         localStorage.removeItem('image');
       }
-      navigate(generatePath('/account/:id', { id: userUsernameStore.username }));
+      navigate(generatePath('/account/:id', { id: user.username }));
     }catch(error: any) {
       console.log(error);
     }
@@ -91,8 +89,8 @@ export const ChangeAvatar: React.FC = observer(() => {
 
   return (
     <AccountContainer>
-      {!user && <PageLoader />}
-      {user && (
+      {!user.isUserAuthenticated && <PageLoader />}
+      {user.isUserAuthenticated && (
         <GlobalContainer>
           <AccountSettings />
           <GoBackContainer>
@@ -149,7 +147,7 @@ export const ChangeAvatar: React.FC = observer(() => {
                     </ButtonContainer>
                   </>
                 ) : (
-                  <NewAvatar style={{backgroundImage: `url(${avatarStore.avatar})`}} />
+                  <NewAvatar style={{backgroundImage: `url(${user.avatar})`}} />
                 )}
               <Label htmlFor="avatarInput">{isFileChosen ? 'select another' : 'select avatar'}</Label>
             </InputWrapper>

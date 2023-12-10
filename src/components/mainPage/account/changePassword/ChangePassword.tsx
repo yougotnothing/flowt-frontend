@@ -18,14 +18,12 @@ import {
   Container
 } from "../../login-register/Login.register.styled";
 import { Loader } from "../../../loader/Loader";
-import { useUserContext } from "../../../../contexts/UserContext";
 import { URLS } from "../../../../constants/urls.const";
-
+import { user } from "../../../../stores/toUser.mobx";
 export const ChangePassword: React.FC = () => {
   const[errorMessage, setErrorMessage] = useState<any>('');
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const[isVerify, setIsVerify] = useState<boolean>(false);
-  const { user } = useUserContext();
   const navigate = useNavigate();
   const url = new URLS();
 

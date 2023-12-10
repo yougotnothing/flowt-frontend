@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { observer } from "mobx-react-lite";
-import { useUserContext } from "../../../../contexts/UserContext";
 import { userUsernameStore } from "../../../../stores/toChangeUsername.mobx";
 import { useFormik } from "formik";
 import { changeUsernameSchema } from "../../../../validation/yup.config";
@@ -20,18 +19,14 @@ import {
   Header,
   ChangeUsernameContainer
 } from "./ChangeUsername.styled";
-import { api } from "../../../../api/axiosConfig";
 import { Loader } from "../../../loader/Loader";
-
+import { user } from "../../../../stores/toUser.mobx";
 import { AccountSettings } from "../AccountSettings";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { URLS } from "../../../../constants/urls.const";
 
 export const ChangeUsername: React.FC = observer(() => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
-  const { user } = useUserContext();
   const navigate = useNavigate();
-  const url = new URLS();
 
   const formik = useFormik<{
     username: string
@@ -43,37 +38,27 @@ export const ChangeUsername: React.FC = observer(() => {
     onSubmit: () => {}
   });
 
-  const handleChangedUsername = async () => {
+  const handleChangedUsername = async (e: any) => {
     try {
-      const response = await api.patch(url.username, {
-        newUsername: formik.values.username
-      });
-
-      if(response) userUsernameStore.setUsername(formik.values.username);
-
-      setIsLoading(true);
-      navigate(generatePath('/account/:id', { id: user.username }));
-      if(response) {
-        const token = response.data.token;
-        console.log(token);
-        localStorage.setItem('token', token);
+      if(e.target.value !== user.username && (e.key === 'Enter' || e.code === 'Enter')) {
+        await user.changeUsername(formik.values.username, navigate, setIsLoading);
+        await user.setUser();
       }
     }catch(error: any) {
-      setIsLoading(false);
-      console.log('an error occurred');
+      console.error(error);
     }
   }
   
   useEffect(() => {
-    if(user) {
-      formik.setValues({ username: userUsernameStore.username || "" });
+    if(user.isUserAuthenticated) {
+      formik.setValues({ username: user.username || "" });
     }
-  }, [user]);
+  }, [user.isUserAuthenticated]);
   
   return (
     <AccountContainer>
-      {!user && <PageLoader />}
-      {user && (
+      {!user.isUserAuthenticated && <PageLoader />}
+      {user.isUserAuthenticated && (
         <GlobalContainer>
           <AccountSettings />
           <GoBackContainer>
@@ -87,6 +72,7 @@ export const ChangeUsername: React.FC = observer(() => {
             <Container>
               <Header>Change username</Header>
               <Input
+                onKeyDown={(e: any) => handleChangedUsername(e)}
                 name="username"
                 onBlur={formik.handleBlur}
                 onChange={(e: any) => {
@@ -94,7 +80,7 @@ export const ChangeUsername: React.FC = observer(() => {
                 }}
                 defaultValue={formik.values.username}
                 />
-              <Button onClick={() => handleChangedUsername()}>{isLoading ? <Loader /> : 'Apply'}</Button>
+              <Button onClick={(e: any) => handleChangedUsername(e)}>{isLoading ? <Loader /> : 'Apply'}</Button>
             </Container>
           </ChangeUsernameContainer>
         </GlobalContainer>

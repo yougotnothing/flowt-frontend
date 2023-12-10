@@ -4,13 +4,12 @@ import { useNavigate, generatePath } from "react-router-dom";
 import { OptionsContainer, Select, SelectText, CloseOptions } from "./Options.styled";
 import { Settings } from "../Profile.styled";
 import { OptionsProps } from "./Options.styled";
-import { useUserContext } from "../../../../contexts/UserContext";
+import { user } from "../../../../stores/toUser.mobx";
 
 export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
   const[isVisible, setIsVisible] = useState<boolean>(prop);
   const[isOpen, setIsOpen] = useState(prop);
   const navigate = useNavigate();
-  const { user } = useUserContext();
 
   useEffect(() => {
     setIsOpen(!isVisible);
@@ -41,7 +40,7 @@ export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
         <Select onClick={() => {
           localStorage.removeItem('token');
           navigate('/home');
-          window.location.reload();
+          user.logout();
         }}>
           <SelectText>Logout</SelectText>
         </Select>

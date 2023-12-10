@@ -46,6 +46,11 @@ export const DataInfo = styled('button')`
   border: none;
   cursor: pointer;
   transition: 0.3s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  text-align: start;
   
   &:hover {
     color: ${colors.SECONDARY_HOVER};
@@ -58,6 +63,11 @@ export const UserName = styled('button')`
   font-weight: 400;
   color: ${colors.DARK_WHITE};
   background-color: ${colors.DARK_BLUE};
+  width: 100%;
+  text-align: start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   border: none;
   cursor: pointer;
   transition: 0.3s;

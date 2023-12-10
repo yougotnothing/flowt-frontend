@@ -97,38 +97,40 @@ class SearchStore {
   }
 
   async get(param: string) {
-    if(param === "All") {
-      await this.all();
-    }
-    if(this.songs.length > 0 && this.users.length > 0 && this.playlists.length > 0) {
-      runInAction(() => {
-        this.message = null;
-        this.isOpen = true;
-      });
-    }else{
-      runInAction(() => {
-        this.message = `Can't find data by ${this.input}`;
-      });
-    }
-
     try {
-      runInAction(() => {
-        if(param === "Songs") {
-          this.setSongs();
-          this.playlists = [];
-          this.users = [];
-        }
-        if(param === "Playlists") {
-          this.setPlaylists();
-          this.songs = [];
-          this.users = [];
-        }
-        if(param === "Authors") {
-          this.setUsers();
-          this.songs = [];
-          this.playlists = [];
+      runInAction(async () => {
+        switch(param) {
+          case "All":
+            await this.all();
+            break;
+          case "Songs":
+            await this.setSongs();
+            this.playlists = [];
+            this.users = [];
+            break;
+          case "Playlists":
+            await this.setPlaylists();
+            this.songs = [];
+            this.users = [];
+            break;
+          case "Authors":
+            await this.setUsers();
+            this.songs = [];
+            this.playlists = [];
+            break;
         }
       });
+
+      if(this.songs.length > 0 && this.users.length > 0 && this.playlists.length > 0) {
+        runInAction(() => {
+          this.message = null;
+          this.isOpen = true;
+        });
+      }else{
+        runInAction(() => {
+          this.message = `Can't find data by ${this.input}`;
+        });
+      }
     }catch(error: any) {
       console.log(error);
     }

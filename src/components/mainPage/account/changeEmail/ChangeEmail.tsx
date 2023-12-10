@@ -23,15 +23,14 @@ import { Loader } from "../../../loader/Loader";
 import { AccountSettings } from "../AccountSettings";
 import { AccountContainer } from "../Account.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { useUserContext } from "../../../../contexts/UserContext";
 import { userEmailStore } from "../../../../stores/toChangeEmail.mobx";
 import { observer } from "mobx-react-lite";
 import { URLS } from "../../../../constants/urls.const";
+import { user } from "../../../../stores/toUser.mobx";
 
 export const ChangeEmail: React.FC = observer(() => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const[backendError, setBackendError] = useState<string | null>(null);
-  const { user } = useUserContext();
   const navigate = useNavigate();
   const url = new URLS();
 
@@ -47,9 +46,9 @@ export const ChangeEmail: React.FC = observer(() => {
 
   useEffect(() => {
     formik.setValues({
-      email: userEmailStore.email || ""
+      email: user.email || ""
     });
-  }, [user]);
+  }, [user.isUserAuthenticated]);
 
   const handleChangeEmail = async () => {
     setIsLoading(true);
@@ -72,8 +71,8 @@ export const ChangeEmail: React.FC = observer(() => {
 
   return (
     <AccountContainer>
-      {!user && <PageLoader />}
-      {user && (
+      {!user.isUserAuthenticated && <PageLoader />}
+      {user.isUserAuthenticated && (
         <GlobalContainer>
           <AccountSettings />
           <GoBackContainer>

@@ -11,15 +11,14 @@ import {
   ShuffleButton,
 } from "./Player.styled";
 import "react-h5-audio-player/lib/styles.css";
-import { useUserContext } from "../../../contexts/UserContext";
 import { userSongsStore as song } from "../../../stores/toSongs.mobx";
 import { observer } from "mobx-react-lite";
+import { user } from "../../../stores/toUser.mobx";
 
 export const Player: React.FC = observer(() => {
   const [index, setIndex] = useState(0);
   const [isShuffled, setIsShuffled] = useState<boolean>(false);
   const SHUFFLE_ICON = isShuffled ? "url(/shuffle-on.webp)" : "url(/shuffle-off.webp)";
-  const { user } = useUserContext();
 
   const handlePlayNext = useCallback(() => {
     if(isShuffled) {

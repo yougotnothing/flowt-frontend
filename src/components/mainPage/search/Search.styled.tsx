@@ -107,6 +107,7 @@ export const SearchFilterButton = styled('button')`
 export const Card = styled('div')`
   display: inline-flex;
   flex-direction: row;
+  background-color: transparent;
   z-index: 1;
   justify-content: space-around;
   align-items: center;
@@ -120,14 +121,16 @@ export const Card = styled('div')`
   padding: 4px;
 `;
 
-export const CardIcon = styled('picture')<ICardType>`
+export const CardIcon = styled('button')<ICardType>`
   width: 126px;
   height: 126px;
+  border: none;
   border-radius: ${props => props.$type === 'user' ? '50%' : '4px'};
   background-image: ${props => `url(${props.$src})`};
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  cursor: pointer;
 `;
 
 export const CardInfoContainer = styled('div')`

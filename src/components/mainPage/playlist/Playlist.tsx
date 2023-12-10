@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { FC, useState, useEffect } from "react";
 
 import {
   Container,
@@ -20,7 +20,6 @@ import {
   PrivacySettings
 } from "./Playlist.styled";
 import { observer } from "mobx-react-lite";
-import { userUsernameStore } from "../../../stores/toChangeUsername.mobx";
 import { playlistsStore as playlist } from "../../../stores/toPlaylists.mobx";
 import settings from "../../../json/playlistSettings.json";
 import { useFormik } from "formik";
@@ -29,12 +28,12 @@ import { useLocation } from "react-router-dom";
 import { handlePostAvatar } from "./functions";
 import { PlaylistItems } from "./Playlist-Items";
 import { api } from "../../../api/axiosConfig";
+import { user } from "../../../stores/toUser.mobx";
 
-export const Playlist: React.FC = observer(() => {
+export const Playlist: FC = observer(() => {
   const[isApply, setIsApply] = useState<boolean>(false);
   const[isNull, setIsNull] = useState<boolean>(true);
   const[isPrivate, setIsPrivate] = useState<boolean>(false);
-  const[param, setParam] = useState<string>("All");
   const location = useLocation();
 
   const handleCreatePlaylist = async () => {
@@ -111,7 +110,7 @@ export const Playlist: React.FC = observer(() => {
         />
         <PlaylistIcon $avatar={playlist.avatarURL || '/plus.png'} htmlFor="avatar" $isApply={isApply} />
         <InfoContainer>
-          <CreatorName>{userUsernameStore.username}</CreatorName>
+          <CreatorName>{user.username}</CreatorName>
           <PlaylistInfo
             $isNull={isNull}
             placeholder="Name"
@@ -149,7 +148,7 @@ export const Playlist: React.FC = observer(() => {
         <SearchSongsNav>
           <NavItemContainer>
             {settings.map((setting, index) => (
-              <NavItem key={index} onClick={() => setParam(setting)}>
+              <NavItem key={index}>
                 {setting}
               </NavItem>
             ))}

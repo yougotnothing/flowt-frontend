@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useNavigate, generatePath } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
 import { A, AContainer } from "../../MainPage.styled";
-import { AccountSettings } from "../AccountSettings";
 import {
   Title,
   InfoContainer,
@@ -21,6 +20,9 @@ import {
   StatsContainer,
   AccountContainer,
   PlaylistContainer,
+  Droplist,
+  DroplistItemsContainer,
+  DroplistItem
 } from "../Account.styled";
 import {
   Container,
@@ -30,20 +32,16 @@ import {
   PlaylistInfoContainer
 } from "../../playlist/large/Playlist.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { useUserContext } from "../../../../contexts/UserContext";
 import { userDescriptionStore as descriptionStore } from "../../../../stores/toChangeDescription.mobx";
-import { userUsernameStore as usernameStore } from "../../../../stores/toChangeUsername.mobx";
-import { userAvatarStore as avatarStore } from "../../../../stores/toChangeAvatar.mobx";
-import { userRegionStore as regionStore } from "../../../../stores/toChangeRegion.mobx";
-import { userEmailStore as emailStore } from "../../../../stores/toChangeEmail.mobx";
 import { FullsizeSongs } from "../../../songs/fullsizeSongs/FullsizeSongs";
 import { playlistsStore as playlists } from "../../../../stores/toPlaylists.mobx";
 import { editPlaylistStore as editPlaylist } from "../../../../stores/toEditPlaylist.mobx";
-import { searchUsersStore } from "../../../../stores/toSearchUsers.mobx";
+import accountSettingsData from "../../../../json/accountSettingsDroplist.json";
+import { user as $ } from "../../../../stores/toUser.mobx";
 
 export const AccountInfo: React.FC = observer(() => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { user, followers, subscribes } = useUserContext();
 
   useEffect(() => {
     playlists.getPlaylists();
@@ -67,30 +65,40 @@ export const AccountInfo: React.FC = observer(() => {
 
   return (
     <AccountContainer>
-      {!user && <PageLoader />}
-      <AccountSettings />
+      {!$.isUserAuthenticated && <PageLoader />}
       <InfoContainer>
         <Title>Your info</Title>
-        {user && followers && subscribes && (
+        {$.isUserAuthenticated && (
           <UserContainer>
-            <UserAvatar style={{ backgroundImage: `url(${avatarStore.avatar})` }}/>
+            <Droplist onClick={() => setIsOpen(!isOpen)} />
+            <DroplistItemsContainer $isOpen={isOpen}>
+              {accountSettingsData.map((setting, index) => (
+                <DroplistItem
+                  key={index}
+                  $isOpen={isOpen}
+                  disabled={!isOpen}
+                  onClick={() => navigate(generatePath(`/account/:id/${setting.url}`, { id: $.username }))}
+                >{setting.type}</DroplistItem>
+              ))}
+            </DroplistItemsContainer>
+            <UserAvatar style={{backgroundImage: `url(${$.avatar})`}}/>
             <UserInfo>
-              <Username>{usernameStore.username}</Username>
+              <Username>{$.username}</Username>
               <StatsContainer>
-                <Email>{emailStore.email && emailStore.email.trim()}</Email>
-                <Region>{regionStore.region}</Region>
+                <Email>{$.email && $.email.trim()}</Email>
+                <Region>{$.region}</Region>
               </StatsContainer>
               <ButtonsContainer>
                 <AContainer>
                   <A
-                    onClick={() => navigate(generatePath("/profile/:id/followers", {id: user.username}))}>
-                    followers: {followers.length}
+                    onClick={() => navigate(generatePath("/profile/:id/followers", {id: $.username}))}>
+                    followers: {$.followers.length}
                   </A>
                 </AContainer>
                 <AContainer>
                   <A
-                    onClick={() => navigate(generatePath("/profile/:id/subscribes", {id: user.username,}))}>
-                    subscribes: {subscribes.length}
+                    onClick={() => navigate(generatePath("/profile/:id/subscribes", {id: $.username}))}>
+                    subscribes: {$.subscribes.length}
                   </A>
                 </AContainer>
               </ButtonsContainer>
@@ -99,13 +107,13 @@ export const AccountInfo: React.FC = observer(() => {
         )}
         <DescriptionTitle>Your description</DescriptionTitle>
         <DescriptionContainer>
-          {user && descriptionStore.description ? (
+          {$.isUserAuthenticated && descriptionStore.description ? 
             <Description>{descriptionStore.description}</Description>
-          ) :
+            :
             <Description>No description</Description>
           }
         </DescriptionContainer>
-        {user && (
+        {$.isUserAuthenticated && (
           <PlaylistContainer>
             <FullsizeSongs />
           </PlaylistContainer>
@@ -114,14 +122,14 @@ export const AccountInfo: React.FC = observer(() => {
           <Container $isEditing={editPlaylist.isEditing} key={index}>
             <PlaylistIcon
               $isEditing={editPlaylist.isEditing} 
-              $username={usernameStore.username} 
+              $username={$.username} 
               $name={item.name}
             />
             <PlaylistInfoContainer>
               <PlaylistInfo $type="name">{item.name}</PlaylistInfo>
-              <PlaylistInfo $type="username">{usernameStore.username}</PlaylistInfo>
+              <PlaylistInfo $type="username">{$.username}</PlaylistInfo>
             </PlaylistInfoContainer>
-            <PlaylistButton onClick={() => handleRedirectToEditPlalist(item.name, usernameStore.username)}>
+            <PlaylistButton onClick={() => handleRedirectToEditPlalist(item.name, $.username)}>
               Open
             </PlaylistButton>
           </Container>

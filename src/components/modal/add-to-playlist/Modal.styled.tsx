@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
-import { colors } from "../../constants/colors.const";
+import { colors } from "../../../constants/colors.const";
 
 interface IModalContainer {
   $isOpen: boolean;
@@ -82,7 +82,6 @@ export const ContentContainer = styled('div')`
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 40px;
   gap: 6px;
 `;
 
@@ -96,4 +95,12 @@ export const CloseModal = styled('button')`
   background-position: center;
   background-repeat: no-repeat;
   cursor: pointer;
+`;
+
+export const ModalStatus = styled('div')`
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
+  color: ${colors.WHITE};
+  margin-top: 36px;
 `;

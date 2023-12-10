@@ -1,4 +1,5 @@
 import axios from "axios";
+import { user } from "../stores/toUser.mobx";
 
 export const API_URL = 'http://localhost:8080';
 let failedRequestsQueue: any = [];
@@ -15,9 +16,8 @@ api.interceptors.request.use((config => {
   return config;
 }));
 
-api.interceptors.response.use(
-(response) => response,
-async (error) => {
+api.interceptors.response.use((response) => response,
+  async (error) => {
   const originalRequest = error.config;
 
   if (error.response.status === 401 && error.response.data === 'Token not found') return error;
@@ -57,16 +57,22 @@ export const registration = async (registerDto: any) => {
   console.log(response.data);
 }
 
-export const login = async (loginDto: any) => {
-  const response = await api.post('/auth/login', {
-    login: loginDto.username,
-    password: loginDto.password
-  });
-  console.log(response.data);
-  if (response) {
-    const token = response.data.token;
-    console.log(token);
-    localStorage.setItem('token', token);
+export const login = async (loginDto: { login: string, password: string }) => {
+  try {
+    const response = await api.post('/auth/login', {
+      login: loginDto.login,
+      password: loginDto.password
+    });
+    console.log(response.data);
+    if(response) {
+      const token = response.data.token;
+      console.log(token);
+      localStorage.setItem('token', token);
+      await user.setUser();
+      console.log(user);
+    }
+  }catch(error: any) {
+    console.log(error.response.data.message);
   }
 }
 
@@ -83,7 +89,7 @@ export const refreshToken = async () => {
 export const verifyEmail = async (code: any) => {
   const response = await api.get('/verify', {
     params: {
-        code: code
+      code: code
     }
   });
   return response;

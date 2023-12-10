@@ -17,14 +17,13 @@ import {
 } from "./Songs.styled";
 import { userSongsStore as songs } from "../../../stores/toSongs.mobx";
 import { api, API_URL } from "../../../api/axiosConfig";
-import { useUserContext } from "../../../contexts/UserContext";
+import { user } from "../../../stores/toUser.mobx";
 
 export const Songs: React.FC = observer(() => {
   const[isLiked, setIsLiked] = useState<boolean[]>(
     Array(songs.container.length).fill(false)
   );
   const navigate = useNavigate();
-  const { user } = useUserContext();
 
   const getSong = async () => {
     try {
@@ -66,13 +65,18 @@ export const Songs: React.FC = observer(() => {
       {user.username ? songs.container.map((song, index) => (
         <SongContainer key={index}>
           <SongImage style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/song/${user.username}/${song.name}`)})`}}>
-            <SongButton onClick={() => songs.setSong(index, encodeURI(user.username))} />
+            <SongButton onClick={() => {
+              if(user.username) {
+                songs.patchSong(song);
+                songs.setSong(index, encodeURI(user.username))}
+              }}
+            />
           </SongImage>
           <SongData>
             <SongTitle
               onClick={() => navigate(generatePath('/profile/:id', { id: user.username }))}
             >
-              {user.username}
+              {song.author}
             </SongTitle>
             <SongTitle
               onClick={() => navigate(generatePath('/song/:id', { id: song.name }))}

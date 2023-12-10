@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 
-import { API_URL, api } from "../../../api/axiosConfig";
+import { API_URL } from "../../../api/axiosConfig";
 import {
   Container,
   ContentContainer,
@@ -18,49 +18,35 @@ import {
 import filters from "../../../json/filters.json";
 import { searchStore as search } from "../../../stores/toSearch.mobx";
 import { observer } from "mobx-react-lite";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { modalStore as modal } from "../../../stores/toModal.mobx";
 import { playlistsStore as playlists } from "../../../stores/toPlaylists.mobx";
-import { useUserContext } from "../../../contexts/UserContext";
+import { reportStore } from "../../../stores/toReport.mobx";
+import { user as User } from "../../../stores/toUser.mobx";
+import { 
+  handleCardClick, 
+  handleClickPlaylistModalButton,
+  handleClickSongModalButton,
+  handleClickUserModalButton,
+  handleMouseEnter,
+  handleMouseLeave,
+  handleSubscribe
+} from "./functions";
+import { addModerator, getUser, deleteUser } from "../../admin/functions";
 
 export const Search: FC = observer(() => {
-  const [isOpenSongs, setIsOpenSongs] = useState<boolean[]>(Array(search.songs.length).fill(false));
-  const [isOpenUsers, setIsOpenUsers] = useState<boolean[]>(Array(search.users.length).fill(false));
-  const [isOpenPlaylists, setIsOpenPlaylists] = useState<boolean[]>(Array(search.playlists.length).fill(false));
+  const[isOpenSongs, setIsOpenSongs] = useState<boolean[]>(Array(search.songs.length).fill(false));
+  const[isOpenUsers, setIsOpenUsers] = useState<boolean[]>(Array(search.users.length).fill(false));
+  const[isOpenPlaylists, setIsOpenPlaylists] = useState<boolean[]>(Array(search.playlists.length).fill(false));
+  const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useUserContext();
-  const User = user;
-
-  const handleSubscribe = async (username: string) => {
-    try {
-      const response = await api.post(`/users/subscribe/${username}`);
-      console.log(`subscribed to user ${username}!`);
-    }catch(error: any) {
-      console.error(error.response.data.message);
-    }
-  }
-
-  const handleMouseEnter = (index: number, set: React.Dispatch<React.SetStateAction<boolean[]>>) => {
-    set(prevState => {
-      const newState = [...prevState];
-      newState[index] = true;
-      return newState;
-    });
-  };
-
-  const handleMouseLeave = (index: number, set: React.Dispatch<React.SetStateAction<boolean[]>>) => {
-    set(prevState => {
-      const newState = [...prevState];
-      newState[index] = false;
-      return newState;
-    });
-  };
 
   useEffect(() => {
     if(location.pathname === '/search') {
       search.setIsOpen(false);
+      reportStore.setIsOpen(false);
     }
-  }, [location.pathname, search.isOpen]);
+  }, [location.pathname]);
 
   return (
     <Container>
@@ -94,36 +80,55 @@ export const Search: FC = observer(() => {
             </CardInfoContainer>
             <CardButtonsContainer $isOpen={isOpenSongs[index]}>
               <CardButton>Like</CardButton>
-              <CardButton>Report</CardButton>
+              <CardButton
+                disabled={song.author === User.username ? true : false}
+                onClick={() => handleClickSongModalButton(song)}
+              >Report</CardButton>
               <CardButton 
                 onClick={() => {
                   playlists.getPlaylists();
                   playlists.setSongData(song);
-                  modal.setIsOpen(true)
+                  if(playlists.self.length > 0) modal.setIsOpen(true);
                 }}
               >Add to playlist</CardButton>
             </CardButtonsContainer>
           </Card>
         ))}
         {search.users && search.users.map((user, index) => (
-          <Card 
+          <Card
             key={index}
             onMouseEnter={() => handleMouseEnter(index, setIsOpenUsers)}
             onMouseLeave={() => handleMouseLeave(index, setIsOpenUsers)}
           >
-            <CardIcon $type='user' $src={user.avatar} />
+            <CardIcon $type='user' $src={user.avatar} onClick={() => handleCardClick(user, navigate)} />
             <CardInfoContainer>
               <CardInfo>{user.username}</CardInfo>
               <CardInfo>{user.region}</CardInfo>
             </CardInfoContainer>
             <CardButtonsContainer $isOpen={isOpenUsers[index]}>
               <CardButton
-                disabled={user.email === User.email ? true : false}
+                disabled={user.username === User.username ? true : false}
                 onClick={() => handleSubscribe(user.username)}
               >Subscribe</CardButton>
               <CardButton
-                disabled={user.email === User.email ? true : false}
+                disabled={user.username === User.username ? true : false}
+                onClick={() => handleClickUserModalButton(user)}
               >Report</CardButton>
+              {User.username === 'admin' &&
+                <>
+                  <CardButton
+                    disabled={user.username === User.username ? true : false}
+                    onClick={() => {
+                      addModerator(user.username);
+                      getUser('bari');
+                    }}
+                    >Add moderator</CardButton>
+                  <CardButton
+                    disabled={user.username === User.username ? true : false}
+                    onClick={() => deleteUser(user.username)}
+                  >Delete user</CardButton>
+                </>
+              }
             </CardButtonsContainer>
           </Card>
         ))}
@@ -140,11 +145,14 @@ export const Search: FC = observer(() => {
             </CardInfoContainer>
             <CardButtonsContainer $isOpen={isOpenPlaylists[index]}>
               <CardButton>Like</CardButton>
-              <CardButton>Report</CardButton>
+              <CardButton
+                disabled={playlist.username === User.username ? true : false}
+                onClick={() => handleClickPlaylistModalButton(playlist)}
+              >Report</CardButton>
             </CardButtonsContainer>
           </Card>
         ))}
       </ContentContainer>
     </Container>
-  )
+  );
 });

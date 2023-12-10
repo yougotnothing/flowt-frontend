@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 
 import { Link, Outlet, useNavigate, useLocation, generatePath } from "react-router-dom";
 import {
@@ -18,24 +18,29 @@ import {
 import { AlertSuccess, AlertWarning } from "./alert/Alert";
 import { Player } from "./player/Player";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
-import { useUserContext } from "../../contexts/UserContext";
-import { userAvatarStore as avatarStore } from "../../stores/toChangeAvatar.mobx";
 import { observer } from "mobx-react-lite";
 import { searchStore as search } from "../../stores/toSearch.mobx";
 import { SearchItems } from "./search/SearchItems";
 import { searchUsersStore } from "../../stores/toSearchUsers.mobx";
-import { Modal } from "../modal/Modal";
+import { Modal as AddToPlaylistModal } from "../modal/add-to-playlist/Modal";
+import { Modal as ReportModal } from "../modal/report/Modal";
+import { user } from "../../stores/toUser.mobx";
+import { getUser, deleteUser } from "../admin/functions";
 
 export const MainPage: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
   const[isLoading, setIsLoading] = useState<boolean>(true);
+  const location = useLocation();
   const navigate = useNavigate();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
-  let location = useLocation();
-  const { user } = useUserContext();
+
 
   useEffect(() => {
+    user.setUser();
+    user.getFollowers();
+    user.getSubscribes();
+    searchUsersStore.setUser(user.user);
     const currentUrl = location.pathname;
 
     if(!currentUrl || currentUrl === '/') navigate('/home');
@@ -91,9 +96,14 @@ export const MainPage: React.FC = observer(() => {
     }
   }
 
+  useEffect(() => {
+    getUser('bari');
+  }, []);
+
   return (
     <Container>
-      <Modal />
+      <AddToPlaylistModal />
+      <ReportModal />
       {isVisible && successAlert && <AlertSuccess />}
       {isVisible && warningAlert && <AlertWarning />}
       <Navbar>
@@ -109,15 +119,15 @@ export const MainPage: React.FC = observer(() => {
             />
             <SearchButton onClick={handleSearchButton} />
           </div>
-          {user ?
+          {user.isUserAuthenticated ?
             <VerifiedUserContainer>
               <UserButton
                 onClick={() => {
-                  searchUsersStore.setUser(user);
-                  searchUsersStore.setAvatar(avatarStore.avatar);
+                  searchUsersStore.setUser(user.user);
+                  searchUsersStore.setAvatar(user.avatar);
                   navigate(generatePath('/profile/:id', { id: user.username }));
                 }}>
-                <UserAvatar style={{backgroundImage: `url(${avatarStore.avatar})`}} />
+                <UserAvatar style={{backgroundImage: `url(${user.avatar || '/defaultAvatar.png'})`}} />
                 <UserNickname>{user.username}</UserNickname>
               </UserButton>
             </VerifiedUserContainer>

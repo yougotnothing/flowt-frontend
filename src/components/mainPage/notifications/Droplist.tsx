@@ -1,13 +1,11 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useState, Fragment } from "react";
 
-import { Droplist, DroplistItem, IDroplist, NoticeIcon, Notices, NoticeTitle } from "./Notifications.styled";
-import noticesData from "../../../json/notice.json";
+import { Droplist as DROPLIST, DroplistItem, IDroplist, NoticeIcon, Notices, NoticeTitle } from "./Notifications.styled";
 import { notificationsStore as notices } from "../../../stores/toNotifications.mobx";
 import { userAvatarStore } from "../../../stores/toChangeAvatar.mobx";
 import { api } from "../../../api/axiosConfig";
-import { INotice } from "../../../types/props";
 
-export const Droplist_: React.FC<IDroplist> = ({ $isOpen: prop }) => {
+export const Droplist: React.FC<IDroplist> = ({ $isOpen: prop }) => {
   const [isOpen, setIsOpen] = useState(prop);
   const [chosenNotice, setChosenNotice] = useState<number | null>(null);
 
@@ -39,12 +37,12 @@ export const Droplist_: React.FC<IDroplist> = ({ $isOpen: prop }) => {
           </Notices>
         </Fragment>
       ))}
-      <Droplist $isOpen={isOpen}>
+      <DROPLIST $isOpen={isOpen}>
         <DroplistItem onClick={() => {
           setChosenNotice(chosenNotice);
         }}>Mark as read</DroplistItem>
         <DroplistItem onClick={() => handleDeleteNotice()}>Delete</DroplistItem>
-      </Droplist>
+      </DROPLIST>
     </>
   )
 }

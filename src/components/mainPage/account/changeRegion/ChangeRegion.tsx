@@ -15,14 +15,13 @@ import {
   ChosenRegion
 } from "./ChangeRegion.styled";
 import { regions } from "../../../../constants/regions";
-import { A, AContainer,GoBackContainer, GlobalContainer } from "../../MainPage.styled";
+import { A, AContainer, GoBackContainer, GlobalContainer } from "../../MainPage.styled";
 import { AccountSettings } from "../AccountSettings";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { useUserContext } from "../../../../contexts/UserContext";
 import { URLS } from "../../../../constants/urls.const";
+import { user } from "../../../../stores/toUser.mobx";
 
 export const ChangeRegion: React.FC = observer(() => {
-  const { user } = useUserContext();
   const navigate = useNavigate();
   const url = new URLS();
 
@@ -42,8 +41,8 @@ export const ChangeRegion: React.FC = observer(() => {
 
   return (
     <AccountContainer>
-    {!user && <PageLoader />}
-    {user && (
+    {!user.isUserAuthenticated && <PageLoader />}
+    {user.isUserAuthenticated && (
       <GlobalContainer>
         <AccountSettings />
           <GoBackContainer>
@@ -56,7 +55,7 @@ export const ChangeRegion: React.FC = observer(() => {
           <ChangeRegionContainer>
             <Container>
               <Title>Change region</Title>
-              {userRegionStore && <ChosenRegion>{userRegionStore.region}</ChosenRegion>}
+              {userRegionStore && <ChosenRegion>{user.region}</ChosenRegion>}
               <Droplist>
                 {regions.map((region, index) => (
                   <DroplistItem

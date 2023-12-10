@@ -19,12 +19,11 @@ import {
 } from './ChangeDescription.styled';
 import { Span } from '../../login-register/Login.register.styled';
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { useUserContext } from "../../../../contexts/UserContext";
 import { URLS } from "../../../../constants/urls.const";
+import { user } from '../../../../stores/toUser.mobx';
 
 export const ChangeDescription: React.FC = () => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
-  const { user } = useUserContext();
   const navigate = useNavigate();
   const url = new URLS();
   
@@ -65,17 +64,17 @@ export const ChangeDescription: React.FC = () => {
   );
 
   useEffect(() => {
-    if(user) {
+    if(user.isUserAuthenticated) {
       formik.setValues({ description: userDescriptionStore.description || "" });
     }
-  }, [user]);
+  }, [user.isUserAuthenticated]);
 
   return (
     <AccountContainer>
-      {!user && <PageLoader />}
-      {user && <AccountSettings />}
+      {!user.isUserAuthenticated && <PageLoader />}
+      {user.isUserAuthenticated && <AccountSettings />}
       <Container>
-        {user && (
+        {user.isUserAuthenticated && (
           <GoBackContainer>
             <AContainer>
               <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>

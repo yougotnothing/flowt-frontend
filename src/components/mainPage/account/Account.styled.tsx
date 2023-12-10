@@ -84,13 +84,15 @@ export const InfoContainer = styled('div')`
 export const UserContainer = styled('div')`
   display: flex;
   flex-direction: row;
+  position: relative;
   gap: 6em;
-  align-items: start;
+  align-items: center;
   align-self: start;
   width: 63em;
   padding: 36px;
   border-radius: 18px;
   max-height: 400px;
+  z-index: 998;
   background: linear-gradient(135deg, ${colors.DARK_BLUE} 0% , ${colors.AQUAMARINE} 60%, ${colors.SECONDARY_HOVER} 120%);
 `;
 
@@ -106,7 +108,6 @@ export const UserAvatar = styled('picture')`
 export const UserInfo = styled('div')`
   display: flex;
   flex-direction: column;
-  margin: auto;
   justify-content: center;
   gap: 26px;
 `;
@@ -198,4 +199,64 @@ export const NavigationContainer = styled('div')`
 export const NavigationButton = styled('button')`
   background-color: transparent;
   color: ${colors.WHITE};
+`;
+
+export const Droplist = styled('button')`
+  position: absolute;
+  top: 8%;
+  left: 93%;
+  background-color: transparent;
+  border: none;
+  background-image: url('/settings.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 42px;
+  width: 42px;
+  transition: 0.3s ease;
+  z-index: 997;
+  cursor: pointer;
+`;
+
+interface IDroplistItemsContainer {
+  $isOpen: boolean;
+}
+
+export const DroplistItemsContainer = styled('div')<IDroplistItemsContainer>`
+  transition: 0.3s ease;
+  position: absolute;
+  width: 220px;
+  height: 288px;
+  background-image: none;
+  background-color: ${colors.FRONT};
+  border: 2px solid ${colors.BORDER};
+  display: flex;
+  opacity: ${props => props.$isOpen ? '1' : '0'};
+  flex-direction: column;
+  gap: 6px;
+  border-radius: 8px;
+  padding: 6px;
+  align-items: start;
+  top: 8%;
+  left: 70%;
+`;
+
+export const DroplistItem = styled('button')<IDroplistItemsContainer>`
+  background-color: transparent;
+  color: ${colors.WHITE};
+  font-family: 'Raleway', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  transition: 0.3s ease;
+  width: 100%;
+  height: 32px;
+  text-align: start;
+  border-radius: 4px;
+  cursor: ${props => props.$isOpen ? 'pointer' : 'default'};
+
+  &:hover {
+    background-color: ${colors.BORDER};
+    color: ${colors.SECONDARY};
+  }
 `;

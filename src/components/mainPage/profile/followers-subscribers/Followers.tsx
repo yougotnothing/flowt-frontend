@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, API_URL } from "../../../../api/axiosConfig";
 
@@ -8,21 +8,18 @@ import {
   Container
 } from "./Followers.styled";
 import { URLS } from "../../../../constants/urls.const";
-import { useUserContext } from "../../../../contexts/UserContext";
 import { observer } from "mobx-react-lite";
-import { IUserProps } from "../../../../types/props";
+import { user } from "../../../../stores/toUser.mobx";
 
-export const Followers: React.FC = observer(() => {
+export const Followers: FC = observer(() => {
   const navigate = useNavigate();
-  let counter: number = 0;
   const url = new URLS();
-  const { followers } = useUserContext();
 
   return(
     <Container>
-      {followers.map((follower: IUserProps, index: number) => (
+      {user.followers.map((follower, index) => (
         <Card key={index}>
-          <Avatar style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/user/${follower.username}`)})`}}/>
+          <Avatar style={{backgroundImage: `url(${follower.userHaveAvatar ? follower.avatar : '/defaultAvatar.png'})`}}/>
         </Card>
       ))}
     </Container>

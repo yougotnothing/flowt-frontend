@@ -14,6 +14,7 @@ class PlaylistsStore {
   playlist: 'Create' | 'Browse';
   isHaveAvatar: boolean;
   songData: ISongPlaylist | null;
+  message: string;
 
   constructor() {
     this.self = [];
@@ -27,6 +28,7 @@ class PlaylistsStore {
     this.playlist = 'Create';
     this.isHaveAvatar = false;
     this.songData = null;
+    this.message = '';
 
     makeObservable(this, {
       self: observable,
@@ -53,8 +55,13 @@ class PlaylistsStore {
       changePage: action,
       setInput: action,
       setName: action,
-      setSongData: action
+      setSongData: action,
+      setMessage: action
     });
+  }
+
+  setMessage(message: string) {
+    this.message = message;
   }
 
   setSongData(data: ISongPlaylist) {
@@ -161,6 +168,7 @@ class PlaylistsStore {
   async addSong(name: string) {
     try {
       await api.post(encodeURI(`/playlists/${name}/${this.songData?.author}/${this.songData?.name}`));
+      this.setMessage(`Song: ${this.songData?.name}, added successfully`);
       console.log(`Song: ${this.songData?.name}, added successfully`);
     }catch(error: any) {
       console.error(error);

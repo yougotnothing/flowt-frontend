@@ -1,5 +1,5 @@
 import { observable, action, runInAction, makeObservable } from "mobx";
-import { IUserSearch, UserDTO } from "../types/props";
+import { IUserProps, IUserSearch, UserDTO } from "../types/props";
 
 class SearchUsersStore {
   username: string | null;
@@ -31,7 +31,37 @@ class SearchUsersStore {
       setUser: action,
       setAvatar: action,
       setFollowers: action,
-      setSubscribes: action
+      setSubscribes: action,
+      getData: action
+    });
+  }
+
+  removeData() {
+    localStorage.removeItem('username');
+    localStorage.removeItem('region');
+    localStorage.removeItem('avatar');
+    localStorage.removeItem('email');
+    localStorage.removeItem('userHaveAvatar');
+    localStorage.removeItem('description');
+  }
+
+  getData() {
+    const username = localStorage.getItem('username');
+    const region = localStorage.getItem('region');
+    const avatar = localStorage.getItem('avatar');
+    console.log(username);
+    const storageIsHaveAvatar = localStorage.getItem('userHaveAvatar');
+    const userHaveAvatar = storageIsHaveAvatar ? JSON.parse(storageIsHaveAvatar) : null;
+    const email = localStorage.getItem('email');
+    const description = localStorage.getItem('description');
+
+    runInAction(() => {
+      this.username = username;
+      this.avatar = avatar;
+      this.region = region;
+      this.userHaveAvatar = userHaveAvatar;
+      this.email = email;
+      this.description = description;
     });
   }
 
@@ -53,14 +83,24 @@ class SearchUsersStore {
     });
   }
 
-  setUser(data: UserDTO | IUserSearch) {
-    runInAction(() => {
-      this.username = data.username;
-      this.region = data.region;
-      this.description = data.description;
-      this.email = data.email;
-      this.userHaveAvatar = data.userHaveAvatar;
-    });
+  setUser(data: any) {
+    if(data) {
+      runInAction(() => {
+        this.username = data.username;
+        this.region = data.region;
+        this.description = data.description;
+        this.email = data.email;
+        this.avatar = data.userHaveAvatar ? data.avatar : '/defaultAvatar.png';
+        this.userHaveAvatar = data.userHaveAvatar;
+      });
+    }
+
+    if(this.username) localStorage.setItem('username', this.username);
+    if(this.region) localStorage.setItem('region', this.region);
+    if(this.avatar) localStorage.setItem('avatar', this.avatar);
+    if(this.email) localStorage.setItem('email', this.email);
+    if(this.userHaveAvatar) localStorage.setItem('userHaveAvatar', `${this.userHaveAvatar}`);
+    if(this.description) localStorage.setItem('description', this.description);
   }
 }
 

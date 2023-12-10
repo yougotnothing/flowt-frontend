@@ -12,26 +12,24 @@ import {
   StatsInfoContainer,
   StatsContainer
 } from "./FullsizeSongs.styled";
-import { useUserContext } from "../../../contexts/UserContext";
 import { userSongsStore as songs } from "../../../stores/toSongs.mobx";
 import { ISongData } from "../../../types/types";
 import { api, API_URL } from "../../../api/axiosConfig";
 import { URLS } from "../../../constants/urls.const";
 import { observer } from "mobx-react-lite";
 import { generatePath, useNavigate } from "react-router-dom";
+import { user } from "../../../stores/toUser.mobx";
 
 export const FullsizeSongs: React.FC = observer(() => {
-  const[isLiked, setIsLiked] = useState<boolean[]>(
-    Array(songs.container.length).fill(false)
-  );
+  const[isLiked, setIsLiked] = useState<boolean[]>(Array(songs.container.length).fill(false));
   const navigate = useNavigate();
   const url = new URLS();
-  const { user } = useUserContext();
 
   const getSong = async () => {
     try {
       const response = await api.get(url.songs);
       songs.getInfo(response.data.songs);
+      console.log(response.data);
     }catch(error: any) {
       console.log(error);
     }
@@ -40,7 +38,7 @@ export const FullsizeSongs: React.FC = observer(() => {
   const handleLikedSong = async (song_name: string | null, username: string | null, index: number) => {
     try {
       if(!isLiked[index]) {
-        await api.post( `/liked/${username}/${song_name}`);
+        await api.post(`/liked/${username}/${song_name}`);
         setIsLiked((prevState) => {
           const updatedStates = [...prevState];
           updatedStates[index] = true;

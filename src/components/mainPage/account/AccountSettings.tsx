@@ -9,16 +9,15 @@ import {
   UserSettingsContainer,
 } from "./Account.styled";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
-import { useUserContext } from "../../../contexts/UserContext";
 import settings from "../../../json/accountSettings.json";
+import { user } from "../../../stores/toUser.mobx";
 
 export const AccountSettings: React.FC = () => {
-  const { user } = useUserContext();
   const navigate = useNavigate();
 
   return (
     <UserSettingsContainer>
-      {!user && <PageLoader />}
+      {!user.isUserAuthenticated && <PageLoader />}
       <Title>Account</Title>
       <UserSettings>
         {settings.map((setting, index) => (

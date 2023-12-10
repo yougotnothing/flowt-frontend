@@ -21,21 +21,18 @@ import { ChangePassword } from "../mainPage/account/changePassword/ChangePasswor
 import { Playlist } from "../mainPage/playlist/Playlist";
 import { Upload } from "../upload/Upload";
 import { Player } from "../mainPage/player/Player";
-import { UserContext } from "../../contexts/UserContext";
 import { Notifications } from "../mainPage/notifications/Notifications";
 import { Songs } from "../songs/smallsizeSongs/Songs";
 import { GoogleAuth } from "../OAuth2/GoogleAuth";
 import { EditPlaylist } from "../mainPage/playlist/editPlaylist/EditPlaylist";
 import { FacebookAuth } from "../OAuth2/FacebookAuth";
 import { Playlist as BrowsePlaylist } from "../mainPage/playlist/large/Playlist";
+import { Admin } from "../admin/Admin";
 
 export const pageRouter = createBrowserRouter([
   {
     path: '/',
-    element:
-      <UserContext>
-        <MainPage />
-      </UserContext>,
+    element: <MainPage />,
     children: [
       {
         path: '/home/',
@@ -140,6 +137,10 @@ export const pageRouter = createBrowserRouter([
       {
         path: '/playlist/:id',
         element: <BrowsePlaylist />
+      },
+      {
+        path: '/admin',
+        element: <Admin />
       }
     ]
   }

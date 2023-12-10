@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { colors } from "../../constants/colors.const";
 import { A_, A_CONTAINER, INPUT } from "../../constants/styles.const";
+import { ISongPlaylist } from "../../types/props";
+import { API_URL } from "../../api/axiosConfig";
 
 export const Container = styled('div')`
   display: flex;
@@ -180,10 +182,6 @@ export const UserButton = styled('button')`
   }
 `;
 
-interface IUserAvatar {
-  $image: string;
-}
-
 export const UserAvatar = styled('picture')`
   border-radius: 50%;
   width: 40px;
@@ -209,9 +207,9 @@ export const GoBackContainer = styled('div')`
   justify-content: end;
 `;
 
-export const AContainer = styled('div')`${A_CONTAINER};`;
+export const AContainer = styled('div')`${A_CONTAINER}`;
 
-export const A = styled('a')`${A_};`;
+export const A = styled('a')`${A_}`;
 
 export const GlobalContainer = styled('div')`
   display: flex;
@@ -270,7 +268,8 @@ export const Item = styled('div')`
 `;
 
 export interface IIconProps {
-  $type: 'user' | 'song' | 'playlist'
+  $type: 'user' | 'song' | 'playlist';
+  $song?: ISongPlaylist;
 }
 
 export const ItemIcon = styled('img')<IIconProps>`
@@ -278,6 +277,7 @@ export const ItemIcon = styled('img')<IIconProps>`
   height: 84px;
   border-radius: ${(props) => (props.$type === 'user' ? '50%' : props.$type === 'song' ? '8px' : '8px')};
   background-size: cover;
+  background-image: ${_ => `url(${encodeURI(`${API_URL}/images/song/${_.$song?.author}/${_.$song?.name}`)})`};
   background-position: center;
   background-repeat: no-repeat;
 `;

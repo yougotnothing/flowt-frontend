@@ -24,29 +24,27 @@ import {
   FooterContainer,
   SongContainer,
   SongsTitle,
-  SongMainContainer, SubscribeButton
+  SongMainContainer, SubscribeButton, SubscribeText, SubscribeTextContainer
 } from "./Profile.styled";
 
 import { Options } from "./options/Options";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
 import { observer } from "mobx-react-lite";
-import { userUsernameStore as usernameStore } from "../../../stores/toChangeUsername.mobx";
-import { useUserContext } from "../../../contexts/UserContext";
 import { Songs } from "../../songs/smallsizeSongs/Songs";
 import { searchUsersStore as searchUsers } from "../../../stores/toSearchUsers.mobx";
-import { Playlist } from "../playlist/small/Playlist";
 import { IUserProps } from "../../../types/props";
 import { playlistsStore } from "../../../stores/toPlaylists.mobx";
+import { user } from "../../../stores/toUser.mobx";
 
 export const Profile: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
   const[isOpen, setIsOpen] = useState(true);
   const[isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { user, followers, subscribes } = useUserContext();
 
   useEffect(() => {
     playlistsStore.getPlaylists();
+    searchUsers.getData();
   }, []);
 
   useEffect(() => {
@@ -54,16 +52,16 @@ export const Profile: React.FC = observer(() => {
   }, [isVisible, isOpen]);
 
   useEffect(() => {
-    if(user && user.username !== searchUsers.username) {
+    if(user.user && user.email !== searchUsers.email) {
       setIsCurrentUser(true);
     }else{
       setIsCurrentUser(false);
     }
-  }, [searchUsers.username]);
+  }, [user.user]);
 
   const handleSubscribe = async () => {
     try {
-      if(user && user.username !== searchUsers.username) {
+      if(user && user.email !== searchUsers.email) {
         const response = await api.post(`/users/subscribe/${searchUsers.username}`);
 
         if(response.status === 200) {
@@ -77,34 +75,34 @@ export const Profile: React.FC = observer(() => {
 
   return (
     <UserContainer>
-      {!user && <PageLoader />}
+      {!user.isUserAuthenticated && <PageLoader />}
         {isVisible
           ? <Options $isVisible={isVisible} />
           : <Settings $isVisible={isOpen} onClick={() => setIsVisible(true)} />
         }
-        {user && followers && subscribes && (
+        {user.user && user.followers && user.subscribes && (
         <>
           <HeadContainer>
             <UserParams>
-              <UserAvatar style={{backgroundImage: `url(${searchUsers.avatar})`}} />
+              <UserAvatar $isHaveAvatar={searchUsers.userHaveAvatar} $avatar={searchUsers.avatar} />
               <ProfileTextContainer>
                 <ProfileTitle>Profile</ProfileTitle>
                 <UserNickname onClick={() =>
-                  navigate(generatePath('/account/:id/change-username', { id: usernameStore.username }))
+                  navigate(generatePath('/account/:id/change-username', { id: searchUsers.username }))
                 }>
                   {searchUsers.username}
                 </UserNickname>
                 <ProfileTitle>{searchUsers.region}</ProfileTitle>
                 <LinksContainer>
                   <FollowsSubscribes onClick={() =>
-                    navigate(generatePath('/profile/:id/followers', { id: usernameStore.username }))
+                    navigate(generatePath('/profile/:id/followers', { id: searchUsers.username }))
                   }>
-                    Followers: {followers.length}
+                    Followers: {user.followers.length}
                   </FollowsSubscribes>
                   <FollowsSubscribes onClick={() =>
-                    navigate(generatePath('/profile/:id/subscribes', { id: usernameStore.username }))
+                    navigate(generatePath('/profile/:id/subscribes', { id: searchUsers.username }))
                   }>
-                    Subscribes: {subscribes.length}
+                    Subscribes: {user.subscribes.length}
                   </FollowsSubscribes>
                 </LinksContainer>
               </ProfileTextContainer>
@@ -128,14 +126,17 @@ export const Profile: React.FC = observer(() => {
           </FooterContainer>
           <LikedText>Favorite</LikedText>
           <LikedContainer>
-            {subscribes.map((subscribe: IUserProps, index: number) => (
+            {user.subscribes.map((subscribe: IUserProps, index: number) => (
               <LikedTrackContainer key={index}>
                 {subscribe.userHaveAvatar ?
-                  <LikedTrackIcon style={{backgroundImage: `url(${API_URL}/images/user/avatar/${subscribe.username})`}} />
+                  <LikedTrackIcon style={{backgroundImage: `url(${subscribe.avatar})`}} />
                   :
                   <LikedTrackIcon style={{backgroundImage: 'url(/defaultAvatar.png)'}} />
                 }
-                {subscribe.username}
+                <SubscribeTextContainer>
+                  <SubscribeText $type="Username">{subscribe.username}</SubscribeText>
+                  <SubscribeText $type="Region">{subscribe.region}</SubscribeText>
+                </SubscribeTextContainer>
               </LikedTrackContainer>
             ))}
           </LikedContainer>

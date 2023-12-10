@@ -18,14 +18,13 @@ import {
   Container
 } from "./Login.register.styled";
 import { Loader } from "../../loader/Loader";
-import { useUserContext } from "../../../contexts/UserContext";
 import { URLS } from "../../../constants/urls.const";
+import { user } from "../../../stores/toUser.mobx";
 
 export const RestorePassword: React.FC = () => {
   const[errorMessage, setErrorMessage] = useState<string | null>(null);
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const[isVerify, setIsVerify] = useState<boolean>(false);
-  const { user } = useUserContext();
   const navigate = useNavigate();
   const url = new URLS();
 

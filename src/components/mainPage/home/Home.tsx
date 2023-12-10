@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 
 import {
   UserContainer,
@@ -17,20 +17,16 @@ import {
   LastListenCard,
   LastListenContainer
 } from "./Home.styled";
-import { userAvatarStore } from "../../../stores/toChangeAvatar.mobx";
 import { observer } from "mobx-react-lite";
-import { useUserContext } from "../../../contexts/UserContext";
-import { IUserProps } from "../../../types/props";
+import { user } from "../../../stores/toUser.mobx";
 
 export const Home: FC = observer(() => {
-  const { user, subscribes } = useUserContext();
-
   return (
     <>
       <FavoriteContainer>
         <Title>Favorite</Title>
         <UserContainer>
-          {subscribes && subscribes.map((subscribe: IUserProps, index: number) => (
+          {user.subscribes.map((subscribe, index) => (
             <Card key={index}>
               <CardIcon $userHaveAvatar={subscribe.userHaveAvatar} $avatar={subscribe.avatar} />
               <CardHeader>{subscribe.username}</CardHeader>
@@ -44,7 +40,7 @@ export const Home: FC = observer(() => {
         <RecommendationCard>
           {user &&
             <>
-              <RecommendationsIcon style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
+              <RecommendationsIcon style={{backgroundImage: `url(${user.avatar})`}} />
               <RecTextContainer>
                 <RecommendationTitle>{user.username}</RecommendationTitle>
                 <RecommendationsHeader>{user.username}</RecommendationsHeader>

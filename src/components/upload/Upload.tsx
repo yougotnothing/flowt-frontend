@@ -33,7 +33,7 @@ import { useFormik } from "formik";
 import { songNameSchema } from "../../validation/yup.config";
 import { Loader } from "../loader/Loader";
 import genresData from "../../json/genres.json";
-import { useUserContext } from "../../contexts/UserContext";
+import { user } from "../../stores/toUser.mobx";
 
 export const Upload = () => {
   const[songGenre, setSongGenre] = useState<string | null>(null);
@@ -41,8 +41,6 @@ export const Upload = () => {
   const[song, setSong] = useState<any | Blob>(null);
   const[avatar, setAvatar] = useState<any | Blob>(null);
   const navigate = useNavigate();
-  const { user } = useUserContext();
-  let counter: number = 0;
 
   const formik = useFormik<{
     songName: string
@@ -79,11 +77,14 @@ export const Upload = () => {
   }
 
   const postSongInfo = async () => {
-
     try {
       const date = new Date().toLocaleDateString('en-GB');
 
-      await api.post('/songs', { name: formik.values.songName, issueYear: date, genre: songGenre });
+      await api.post('/songs', {
+        name: formik.values.songName, 
+        issueYear: date, 
+        genre: songGenre 
+      });
 
       console.log('everything is ok!');
     }catch(error: any) {
@@ -96,16 +97,14 @@ export const Upload = () => {
       const avatarData = new FormData();
       avatarData.append('file', avatar);
 
-      const response = await api.post(
-        `/songs/avatar/${formik.values.songName}`,
-        avatarData,
-        {
+      await api.post(`/songs/avatar/${formik.values.songName}`,
+        avatarData, {
           headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
 
-      if(response.status === 200) console.log('response is ok!');
+      console.log('response is ok!');
     }catch(error: any) {
       console.log('response error');
     }
@@ -116,7 +115,7 @@ export const Upload = () => {
       const songData = new FormData();
       songData.append('file', song);
 
-      if (!songData.get('file')) {
+      if(!songData.get('file')) {
         setIsLoading(false);
         console.log('No file selected');
         return;
@@ -125,20 +124,18 @@ export const Upload = () => {
         return;
       }
 
-      const response = await api.post(
-        `/songs/audio/${formik.values.songName}`,
-        songData,
-        {
+      const response = await api.post(`/songs/audio/${formik.values.songName}`,
+        songData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         }
       );
 
-      if (response.status === 200) {
+      if(response.status === 200) {
         console.log('Response is ok!');
         navigate(generatePath('/account/:id', { id: user.username }));
-      } else {
+      }else{
         setIsLoading(false);
         console.log('Unexpected response status:', response.status);
       }
@@ -190,10 +187,7 @@ export const Upload = () => {
                       onChange={(event: any) => handleChoseAvatar(event)}
                     />
                     {avatar ? (
-                      <SongAvatar style={{
-                        display: "flex",
-                        backgroundImage: `url(${URL.createObjectURL(avatar)})`
-                      }} />
+                      <SongAvatar style={{display: "flex", backgroundImage: `url(${URL.createObjectURL(avatar)})`}} />
                     ) : (
                       <SongAvatar style={{display: "none"}} />
                     )}
@@ -202,9 +196,9 @@ export const Upload = () => {
                     </SetAvatarLabelContainer>
                     </AvatarContainer>
                     <Genres>
-                      {genresData.map((genre: any) => (
+                      {genresData.map((genre, index) => (
                         <GenresItem
-                          key={++counter}
+                          key={index}
                           onClick={() => setSongGenre(genre)}
                         >
                           {genre}

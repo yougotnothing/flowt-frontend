@@ -1,24 +1,28 @@
-import React, { useEffect, useState } from "react";
+import { FC } from "react";
 
-import { useNavigate } from "react-router-dom";
-import { api, API_URL } from "../../../../api/axiosConfig";
+import { generatePath, useNavigate } from "react-router-dom";
 import { Container, Avatar, Card, Header, PageHeader } from "./Followers.styled";
-import { URLS } from "../../../../constants/urls.const";
-import { useUserContext } from "../../../../contexts/UserContext";
 import { observer } from "mobx-react-lite";
+import { searchUsersStore } from "../../../../stores/toSearchUsers.mobx";
+import { user } from "../../../../stores/toUser.mobx";
 
-export const Subscribers: React.FC = observer(() => {
+export const Subscribers: FC = observer(() => {
   const navigate = useNavigate();
-  let counter: number = 0;
-  const url = new URLS();
-  const { subscribes } = useUserContext();
 
   return(
     <Container>
       <PageHeader>Subscribes</PageHeader>
-      {subscribes && subscribes.map((subscribe: any) => (
-        <Card key={++counter}>
-          <Avatar style={{backgroundImage: `url(/defaultAvatar.png)`}} />
+      {user.subscribes.map((subscribe, index) => (
+        <Card key={index}
+          onClick={() => {
+            searchUsersStore.setUser(subscribe);
+            navigate(generatePath('/profile/:id', {id: searchUsersStore.username}));
+          }}>
+          {subscribe.userHaveAvatar ? 
+            <Avatar style={{backgroundImage: `url(${subscribe.avatar})`}} />
+            :
+            <Avatar style={{backgroundImage: 'url(/defaultAvatar.png)'}} />
+          }
           <Header>{subscribe.username}</Header>
         </Card>
       ))}

@@ -16,7 +16,6 @@ import { observer } from "mobx-react-lite";
 import { searchStore as search } from "../../../stores/toSearch.mobx";
 import { API_URL } from "../../../api/axiosConfig";
 import { generatePath, useNavigate } from "react-router-dom";
-import { userSongsStore as songs } from "../../../stores/toSongs.mobx";
 import { searchUsersStore } from "../../../stores/toSearchUsers.mobx";
 
 export const SearchItems: React.FC = observer(() => {
@@ -49,7 +48,7 @@ export const SearchItems: React.FC = observer(() => {
     <Droplist $isOpen={search.isOpen} ref={ref}>
       {search.songs.map((song, index) => (
         <Item key={index}>
-          <ItemIcon $type="song" style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/song/${song.author}/${song.name}`)})`}} />
+          <ItemIcon $song={song} $type="song" />
           <ItemInfo>
             <Text>{song.author}</Text>
             <BigText>{song.name}</BigText>
@@ -75,7 +74,7 @@ export const SearchItems: React.FC = observer(() => {
           <Item key={index}>
             <ItemIcon 
               $type="user"
-              src={searchUser.avatar}
+              src={searchUser.userHaveAvatar ? searchUser.avatar : '/defaultAvatar.png'}
             />
             <ItemInfo>
               <BigText>{searchUser.username}</BigText>

@@ -3,7 +3,9 @@ import { colors } from "../../../../constants/colors.const";
 
 export const Container = styled('div')`
   display: flex;
+  margin: auto;
   flex-direction: column;
+  width: 1200px;
   background-color: ${colors.BACKGROUND};
   gap: 24px;
 `;

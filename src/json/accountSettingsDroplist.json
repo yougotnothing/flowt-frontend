@@ -1,0 +1,26 @@
+[
+  {
+    "type": "Change avatar",
+    "url": "change-avatar"
+  },
+  {
+    "type": "Change region",
+    "url": "change-region"
+  },
+  {
+    "type": "Change description",
+    "url": "change-description"
+  },
+  {
+    "type": "Change username",
+    "url": "change-username"
+  },
+  {
+    "type": "Change email",
+    "url": "change-email"
+  },
+  {
+    "type": "Change password",
+    "url": "change-password"
+  }
+]

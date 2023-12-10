@@ -68,11 +68,17 @@ export const Settings = styled('button')<OptionsProps>`
   }
 `;
 
-export const UserAvatar = styled('picture')`
+interface IUserAvatar {
+  $isHaveAvatar: boolean | null;
+  $avatar: string | null;
+}
+
+export const UserAvatar = styled('picture')<IUserAvatar>`
   width: 244px;
   height: 244px;
   border: none;
   border-radius: 50%;
+  background-image: ${props => props.$isHaveAvatar ? `url(${props.$avatar})` : 'url(/defaultAvatar.png)'};
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -180,6 +186,24 @@ export const LikedContainer = styled('div')`
   display: flex;
   flex-direction: row;
   text-align: start;
+`;
+
+interface ISubscribeText {
+  $type: 'Username' | 'Region';
+}
+
+export const SubscribeTextContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+`;
+
+export const SubscribeText = styled('div')<ISubscribeText>`
+  font-size: ${props => props.$type === 'Username' ? '22px' : '18px'};
+  font-family: 'Urbanist', sans-serif;
+  font-weight: ${props => props.$type === 'Username' ? '600' : '400'};
+  color: ${props => props.$type === 'Username' ? colors.WHITE : colors.DARK_WHITE};
 `;
 
 export const LikedText = styled('div')`

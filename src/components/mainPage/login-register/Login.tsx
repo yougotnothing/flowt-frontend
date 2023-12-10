@@ -15,30 +15,28 @@ import {
 } from "./Login.register.styled";
 import { loginValidationSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/Loader";
-import { api, login } from "../../../api/axiosConfig";
+import { login } from "../../../api/axiosConfig";
 import { FacebookButton, GoogleButton } from "../../OAuth2/OAuthButtons";
 import { OAuthButtonsContainer } from "../../OAuth2/OAuthButtons.styled";
-import { useUserContext } from "../../../contexts/UserContext";
 import { observer } from "mobx-react-lite";
 import { OAuth } from "../../../stores/toOAuthButtons.mobx";
-import { userAvatarStore } from "../../../stores/toChangeAvatar.mobx";
+import { user as $ } from "../../../stores/toUser.mobx";
 
 export const Login: React.FC = observer(() => {
   const navigate = useNavigate();
-  const { user } = useUserContext();
   const[errorMessage, setErrorMessage] = useState<string | null>(null);
   const[isError, setIsError] = useState<boolean>(false);
   const[isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if(!user && window.location.pathname === '/login') {
+    if(!$.isUserAuthenticated && window.location.pathname === '/login') {
       return;
-    }else if(!user && window.location.pathname === '/register') {
+    }else if(!$.isUserAuthenticated && window.location.pathname === '/register') {
       return;
     }else{
       navigate('/login');
     }
-  }, [user, window.location.pathname]);
+  }, [$.isUserAuthenticated, window.location.pathname]);
 
   useEffect(() => {
     if(OAuth.backendData?.imageUrl) {
@@ -51,10 +49,10 @@ export const Login: React.FC = observer(() => {
   }, []);
 
   useEffect(() => {
-    if(user) {
+    if($.isUserAuthenticated) {
       navigate('/home');
     }
-  }, [user]);
+  }, [$.isUserAuthenticated]);
 
   const formik = useFormik<{
     username: string,
@@ -72,8 +70,8 @@ export const Login: React.FC = observer(() => {
   const errors = formik.errors;
 
   async function handleLogin() {
-    const loginDto: { username: string, password: string } = {
-      username: field.username,
+    const loginDto: { login: string, password: string } = {
+      login: field.username,
       password: field.password
     }
 
@@ -82,7 +80,6 @@ export const Login: React.FC = observer(() => {
       setIsLoading(true);
       setErrorMessage(null);
       await login(loginDto);
-      window.location.reload();
       navigate('/home');
     }catch(error: any) {
       setIsLoading(false);
@@ -113,13 +110,8 @@ export const Login: React.FC = observer(() => {
       {errors.password && touched.password ? <ValidationSpan>{errors.password}</ValidationSpan> : null}
       {errorMessage && <ValidationSpan>{errorMessage}</ValidationSpan>}
       </InputContainer>
-      <LoginButton
-        onClick={async () => {
-          await handleLogin();
-        }}
-        disabled={isLoading}
-      >
-        { isLoading ? <Loader /> : "Login" }
+      <LoginButton onClick={handleLogin} disabled={isLoading}>
+        {isLoading ? <Loader /> : "Login"}
       </LoginButton>
       <OAuthButtonsContainer>
         <GoogleButton />
