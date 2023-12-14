@@ -107,7 +107,7 @@ export const AccountInfo: React.FC = observer(() => {
         )}
         <DescriptionTitle>Your description</DescriptionTitle>
         <DescriptionContainer>
-          {$.isUserAuthenticated && descriptionStore.description ? 
+          {$.isUserAuthenticated && $.description ? 
             <Description>{descriptionStore.description}</Description>
             :
             <Description>No description</Description>

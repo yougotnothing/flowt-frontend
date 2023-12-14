@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { OptionsContainer, Select, SelectText, CloseOptions } from "./Options.styled";
@@ -19,24 +19,29 @@ export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
     <>
       <OptionsContainer $isVisible={isVisible}>
         <CloseOptions onClick={() => setIsVisible(false)} />
-        <Select onClick={() => navigate(generatePath('/account/:id', {id: user.username}))}>
+        <Select onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>
           <SelectText>Account</SelectText>
         </Select>
-        <Select onClick={() => navigate(generatePath('/:id/songs/liked', {id: user.username}))}>
+        <Select onClick={() => navigate(generatePath('/:id/songs/liked', { id: user.username }))}>
           <SelectText>Liked songs</SelectText>
         </Select>
-        <Select onClick={() => navigate(generatePath('/:id/playlists/create-playlist', {id: user.username}))}>
+        <Select onClick={() => navigate(generatePath('/:id/playlists/create-playlist', { id: user.username }))}>
           <SelectText>Create playlist</SelectText>
         </Select>
-        <Select onClick={() => navigate(generatePath('/:id/songs/upload', {id: user.username}))}>
+        <Select onClick={() => navigate(generatePath('/:id/songs/upload', { id: user.username }))}>
           <SelectText>Upload song</SelectText>
         </Select>
-        <Select onClick={() => navigate(generatePath('/account/:id/settings', {id: user.username}))}>
+        <Select onClick={() => navigate(generatePath('/account/:id/settings', { id: user.username }))}>
           <SelectText>Settings</SelectText>
         </Select>
-        <Select onClick={() => navigate(generatePath('/notifications/:id', {id: user.username}))}>
+        <Select onClick={() => navigate(generatePath('/notifications/:id', { id: user.username }))}>
           <SelectText>Notifications</SelectText>
         </Select>
+        {user.username === 'admin' && (
+          <Select onClick={() => navigate('/admin')}>
+            <SelectText>Admin panel</SelectText>
+          </Select>
+        )}
         <Select onClick={() => {
           localStorage.removeItem('token');
           navigate('/home');

@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { OAuthButton, OAuthText, OAuthIcon } from "./OAuthButtons.styled";
 import { OAuth } from "../../stores/toOAuthButtons.mobx";
 import { useLocation } from "react-router-dom";
-import { FACEBOOK_AUTH_URL, GOOGLE_AUTH_URL } from "../../constants/urls.const";
 
 export const GoogleButton: React.FC = () => {
   const location = useLocation();
@@ -15,9 +14,9 @@ export const GoogleButton: React.FC = () => {
 
     OAuth.setWhereUsing('Sign in');
   }, [location.pathname]);
-  
+
   return (
-    <OAuthButton $type="google" href={GOOGLE_AUTH_URL}>
+    <OAuthButton $type="google" href={process.env.REACT_APP_GOOGLE_REDIRECT_URI}>
       <OAuthIcon $type="google" />
       <OAuthText
         $type="google"
@@ -41,7 +40,7 @@ export const FacebookButton: React.FC = () => {
   }, [location.pathname]);
 
   return (
-    <OAuthButton $type="facebook" href={FACEBOOK_AUTH_URL}>
+    <OAuthButton $type="facebook" href={process.env.REACT_APP_FACEBOOK_REDIRECT_URI}>
       <OAuthIcon $type="facebook" />
       <OAuthText $type="facebook" $whereUsing={OAuth.whereUsing}>
         {OAuth.whereUsing} with Facebook

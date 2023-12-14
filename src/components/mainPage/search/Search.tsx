@@ -88,7 +88,7 @@ export const Search: FC = observer(() => {
                 onClick={() => {
                   playlists.getPlaylists();
                   playlists.setSongData(song);
-                  if(playlists.self.length > 0) modal.setIsOpen(true);
+                  playlists.self.length > 0 && modal.setIsOpen(true);
                 }}
               >Add to playlist</CardButton>
             </CardButtonsContainer>
@@ -118,11 +118,8 @@ export const Search: FC = observer(() => {
                 <>
                   <CardButton
                     disabled={user.username === User.username ? true : false}
-                    onClick={() => {
-                      addModerator(user.username);
-                      getUser('bari');
-                    }}
-                    >Add moderator</CardButton>
+                    onClick={() => addModerator(user.username)}
+                  >Add moderator</CardButton>
                   <CardButton
                     disabled={user.username === User.username ? true : false}
                     onClick={() => deleteUser(user.username)}

@@ -9,7 +9,6 @@ import {
   LoginButton,
   LoginCard,
   LoginHeader,
-  Span,
   RegisteredButton,
   ValidationSpan,
   InputContainer,

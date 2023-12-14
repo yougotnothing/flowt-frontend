@@ -69,26 +69,25 @@ export const SearchItems: React.FC = observer(() => {
           }}>Listen</ItemButton>
         </Item>
       ))}
-      {search.users.map((searchUser, index) => {
-        return (
-          <Item key={index}>
-            <ItemIcon 
-              $type="user"
-              src={searchUser.userHaveAvatar ? searchUser.avatar : '/defaultAvatar.png'}
-            />
-            <ItemInfo>
-              <BigText>{searchUser.username}</BigText>
-              <Text>{searchUser.region}</Text>
-            </ItemInfo>
-            <ItemButton onClick={() => {
-              searchUsersStore.setUser(searchUser);
-              searchUsersStore.setAvatar(searchUser.avatar);
-              navigate(generatePath('/profile/:id', { id: searchUser.username }));
-            }}>
-              See more
-            </ItemButton>
-          </Item>
-        )})}
+      {search.users.map((searchUser, index) => (
+        <Item key={index}>
+          <ItemIcon 
+            $type="user"
+            src={searchUser.userHaveAvatar ? searchUser.avatar : '/defaultAvatar.png'}
+          />
+          <ItemInfo>
+            <BigText>{searchUser.username}</BigText>
+            <Text>{searchUser.region}</Text>
+          </ItemInfo>
+          <ItemButton onClick={() => {
+            searchUsersStore.setUser(searchUser);
+            searchUsersStore.setAvatar(searchUser.avatar);
+            navigate(generatePath('/profile/:id', { id: searchUser.username }));
+          }}>
+            See more
+          </ItemButton>
+        </Item>
+      ))}
       {search.users.length === 0 && search.songs.length === 0 && search.playlists.length === 0 && <Text>{search.message}</Text>}
       {search.playlists.map((playlist, index) => (
         <Item key={index}>
@@ -107,7 +106,6 @@ export const SearchItems: React.FC = observer(() => {
           </ItemButton>
         </Item>
       ))}
-      
     </Droplist>
   )
 });

@@ -25,7 +25,6 @@ import { searchUsersStore } from "../../stores/toSearchUsers.mobx";
 import { Modal as AddToPlaylistModal } from "../modal/add-to-playlist/Modal";
 import { Modal as ReportModal } from "../modal/report/Modal";
 import { user } from "../../stores/toUser.mobx";
-import { getUser, deleteUser } from "../admin/functions";
 
 export const MainPage: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -34,7 +33,6 @@ export const MainPage: React.FC = observer(() => {
   const navigate = useNavigate();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
-
 
   useEffect(() => {
     user.setUser();
@@ -95,10 +93,6 @@ export const MainPage: React.FC = observer(() => {
       return;
     }
   }
-
-  useEffect(() => {
-    getUser('bari');
-  }, []);
 
   return (
     <Container>
