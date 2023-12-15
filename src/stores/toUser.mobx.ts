@@ -43,8 +43,28 @@ class UserStore {
       getFollowers: action,
       setUser: action.bound,
       changeRegion: action,
-      changeUsername: action
+      changeUsername: action,
+      postGoogleAvatar: action
     });
+  }
+
+  async postGoogleAvatar() {
+    try {
+      const googleAvatar = localStorage.getItem('Google image');
+      while(!this.userHaveAvatar) {
+        await api.post('/users/avatar/url', {
+          imageUrl: googleAvatar
+        });
+        
+        runInAction(() => {
+          this.setAvatar(googleAvatar);
+          this.setUser();
+          console.log(this.avatar);
+        });
+      }
+    }catch(error: any) {
+      console.log(error.response.data.message);
+    }
   }
 
   async setUser() {
@@ -74,8 +94,18 @@ class UserStore {
     }
   }
 
-  async changeRegion(value: string) {
-    
+  async changeRegion(value: string | null, navigate: NavigateFunction) {
+    try {
+      const response = await api.patch('/users/description', {
+        newRegion: value
+      });
+
+      if(response) {
+        navigate(generatePath('/account/:id', {id: user.username}));
+      }
+    }catch(error: any) {
+      console.error("an error occurred");
+    }
   }
 
   logout() {
@@ -117,7 +147,7 @@ class UserStore {
     }
   }
 
-  setAvatar(value: string) {
+  setAvatar(value: string | null) {
     runInAction(() => {
       this.avatar = value;
     });
@@ -134,7 +164,7 @@ class UserStore {
     }
   }
 
-  async getSubscribes() {
+  async getSubscribes(username: string = '') {
     try {
       const response = await api.get('/users/subscribes');
       runInAction(() => {

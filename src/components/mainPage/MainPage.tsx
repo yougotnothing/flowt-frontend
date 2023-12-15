@@ -35,6 +35,13 @@ export const MainPage: React.FC = observer(() => {
   const warningAlert = localStorage.getItem('warning');
 
   useEffect(() => {
+    user.postGoogleAvatar();
+    if(user.userHaveAvatar) {
+      localStorage.removeItem('Google image');
+    }
+  }, []);
+
+  useEffect(() => {
     user.setUser();
     user.getFollowers();
     user.getSubscribes();
@@ -121,7 +128,7 @@ export const MainPage: React.FC = observer(() => {
                   searchUsersStore.setAvatar(user.avatar);
                   navigate(generatePath('/profile/:id', { id: user.username }));
                 }}>
-                <UserAvatar style={{backgroundImage: `url(${user.avatar || '/defaultAvatar.png'})`}} />
+                <UserAvatar style={{backgroundImage: `url(${user.userHaveAvatar ? user.avatar : '/defalutAvatar.png'})`}} />
                 <UserNickname>{user.username}</UserNickname>
               </UserButton>
             </VerifiedUserContainer>

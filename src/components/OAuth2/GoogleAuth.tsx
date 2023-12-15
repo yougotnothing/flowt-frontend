@@ -5,6 +5,7 @@ import { api } from "../../api/axiosConfig";
 import { PageLoader } from "../loader/pageLoader/PageLoader";
 import { OAuth } from "../../stores/toOAuthButtons.mobx";
 import { observer } from "mobx-react-lite";
+import { user } from "../../stores/toUser.mobx";
 
 export const GoogleAuth: FC = observer(() => {
   const[searchParams] = useSearchParams();
@@ -20,14 +21,14 @@ export const GoogleAuth: FC = observer(() => {
         const token = response.data.token;
         localStorage.setItem('token', token);
         navigate('/home');
-        window.location.reload();
+        if(token) {
+          user.setUser();
+        }
       }
     }catch(error: any) {
       if(error.response.status === 409) {
-        localStorage.setItem('image', error.response.data.imageUrl);
-        
         OAuth.setOAuthData(error.response.data);
-        console.log(OAuth.backendData);
+        console.log(OAuth.email);
       }else{
         console.error(error.response.data);
       }
@@ -35,10 +36,11 @@ export const GoogleAuth: FC = observer(() => {
   }
 
   useEffect(() => {
-    if(OAuth.backendData) {
+    if(OAuth.imageUrl) {
       navigate('/register');
+      localStorage.setItem('Google image', OAuth.imageUrl);
     }
-  }, [OAuth.backendData]);
+  }, [OAuth.imageUrl]);
 
   useEffect(() => {
     exchangeCodeOnJWT();
@@ -47,4 +49,4 @@ export const GoogleAuth: FC = observer(() => {
   return (
     <PageLoader />
   )
-})
+});

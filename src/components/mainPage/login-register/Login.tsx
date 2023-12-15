@@ -39,12 +39,6 @@ export const Login: React.FC = observer(() => {
   }, [$.isUserAuthenticated, window.location.pathname]);
 
   useEffect(() => {
-    if(OAuth.backendData?.imageUrl) {
-      localStorage.setItem('Google image', OAuth.backendData.imageUrl);
-    }
-  }, []);
-
-  useEffect(() => {
     OAuth.setWhereUsing('Sign in');
   }, []);
 

@@ -70,11 +70,11 @@ class SearchStore {
       });
       console.log(this.users);
 
-        if(this.users.length === 0) {
-          this.setMessage(`Can't find data by ${this.input}`);
-        }
-      }catch(error: any) {
-       console.log(error);
+      if(this.users.length === 0) {
+        this.setMessage(`Can't find data by ${this.input}`);
+      }
+    }catch(error: any) {
+      console.log(error);
     }
   }
 

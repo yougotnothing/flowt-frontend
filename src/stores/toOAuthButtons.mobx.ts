@@ -7,15 +7,18 @@ interface IBackendData {
 
 class OAuthStore {
   whereUsing: 'Sign in' | 'Sign up';
-  backendData: IBackendData;
+  imageUrl: string | null;
+  email: string | null;
 
   constructor() {
     this.whereUsing = 'Sign in';
-    this.backendData = { email: null, imageUrl: null };
+    this.imageUrl = null;
+    this.email = null;
 
     makeObservable(this, {
       whereUsing: observable,
-      backendData: observable,
+      imageUrl: observable,
+      email: observable,
       setWhereUsing: action,
       setOAuthData: action
     });
@@ -23,7 +26,10 @@ class OAuthStore {
 
   setOAuthData(data: IBackendData) {
     runInAction(() => {
-      this.backendData = data;
+      if(data) {
+        this.email = data.email;
+        this.imageUrl = data.imageUrl;
+      }
     });
   }
 

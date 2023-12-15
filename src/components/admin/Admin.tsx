@@ -3,82 +3,97 @@ import { FC, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { 
   Container,
-  GetUserInputContainer, 
-  AdminPanel, 
-  GetUserContainer, 
-  GetUserInput, 
-  GetUserAvatar, 
-  GetUserDataContainer, 
-  GetUserData, 
+  GetUserInputContainer,
+  AdminPanel,
+  GetUserInput,
   GetUserInputButton,
   Droplist,
   DroplistItem,
   DroplistAvatar,
   DroplistItemButton,
-  DroplistItemInfo
+  DroplistItemInfo,
+  DroplistItemInfoContainer,
+  Menu,
+  MenuItem,
+  Message,
+  DroplistContainer,
+  GetUserContainer,
+  GetUserAvatar,
+  GetUserData,
+  GetUserDataContainer,
+  GetUserMainInfoContainer
 } from "./Admin.styled";
-import { getUser, deleteUser, addModerator } from "./functions";
-import { searchStore as search } from "../../stores/toSearch.mobx";
-import React from "react";
-import { api } from "../../api/axiosConfig";
+import { addModerator, getUser, deleteUser } from "./functions";
+import { adminStore as admin } from "../../stores/toAdmin.mobx";
 import { IUserSearch } from "../../types/props";
 
 export const Admin: FC = observer(() => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [usersArray, setUsersArray] = useState<IUserSearch[]>([]);
-  const [input, setInput] = useState<string>('');
+  const [isUserChosen, setIsUserChosen] = useState<boolean>(false);
+  const [searchUser, setSearchUser] = useState<IUserSearch | null>(null);
 
-  const handleSearchUsers = async () => {
-    try {
-      const response = await api.post('/search/users', {
-        substring: input
-      });
-
-      setUsersArray(response.data.users);
-      console.log(response.data.users);
-    }catch(error: any) {
-      console.error(error);
+  const handleSearch = async (e: any) => {
+    if(e.target.value) {
+      admin.setInput(e.target.value.trim());
+      await admin.getUsers();
+    }else if(!e.target.value) {
+      admin.setUsers(null);
+      admin.setMessage('');
     }
   }
 
   useEffect(() => {
-    if(input.length === 0 && usersArray.length > 0) {
-      setUsersArray([]);
-    } 
-  }, [input, usersArray]);
+    if(admin.input.length === 0) {
+      admin.setUsers(null);
+    }
+  }, [admin.input]);
 
   return (
     <Container>
       <AdminPanel></AdminPanel>
-      <GetUserInputContainer>
-        <GetUserInput placeholder="search user" 
-          onChange={(e: any) => {
-            handleSearchUsers();
-            setInput(e.target.value);
-          }} />
-        <GetUserInputButton />
-      </GetUserInputContainer>
-      <Droplist>
-        {usersArray.map((user, index) => (
-          <DroplistItem key={index}>
-            <DroplistAvatar src={user.userHaveAvatar ? user.avatar : '/defalutAvatar.png'} />
-            <DroplistItemInfo>
-              {user.username}
-            </DroplistItemInfo>
-            <DroplistItemButton>click</DroplistItemButton>
-          </DroplistItem>
-        ))}
-      </Droplist>
-      <GetUserContainer>
-      {usersArray.map((user, index) => (
-        <React.Fragment key={index}>
-          <GetUserAvatar src={(user.userHaveAvatar && user.avatar) || '/defaultAvatar.png'} />
-          <GetUserDataContainer>
-            <GetUserData $type="username">{user.username}</GetUserData>
-          </GetUserDataContainer>
-        </React.Fragment>
-      ))}
-      </GetUserContainer>
+      <DroplistContainer>
+        <GetUserInputContainer>
+          <GetUserInput placeholder="search user" 
+            onChange={async (e: any) => handleSearch(e)} />
+          <GetUserInputButton />
+        </GetUserInputContainer>
+        <Droplist>
+          {admin.users && admin.users.map((user, index) => (
+            <DroplistItem key={index}>
+              <DroplistAvatar src={user.userHaveAvatar ? user.avatar : '/defalutAvatar.png'} />
+              <DroplistItemInfoContainer>
+                <DroplistItemInfo>
+                  {user.username}
+                </DroplistItemInfo>
+              </DroplistItemInfoContainer>
+              <DroplistItemButton onClick={() => {
+                getUser(user.username, setSearchUser);
+                setIsUserChosen(true);
+              }}>actions</DroplistItemButton>
+            </DroplistItem>
+          ))}
+          {admin.message && <Message>{admin.message}</Message>}
+        </Droplist>
+      </DroplistContainer>
+      {isUserChosen && searchUser && (
+        <GetUserContainer>
+          <GetUserMainInfoContainer>
+            <GetUserAvatar src={searchUser.userHaveAvatar ? searchUser.avatar : '/defaultAvatar.png'} />
+              <GetUserDataContainer>
+              <GetUserData $type="username">
+                {searchUser.username}
+              </GetUserData>
+              <GetUserData $type="else">
+                {searchUser.region}
+              </GetUserData>
+            </GetUserDataContainer>
+          </GetUserMainInfoContainer>
+          <Menu>
+            <MenuItem onClick={async () => await deleteUser(searchUser.username)}>Delete user</MenuItem>
+            <MenuItem onClick={async () => await addModerator(searchUser.username)}>Add moderator</MenuItem>
+            <MenuItem></MenuItem>
+          </Menu>
+        </GetUserContainer>
+      )}
     </Container>
   );
 });

@@ -1,18 +1,18 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 
 import { OAuthButton, OAuthText, OAuthIcon } from "./OAuthButtons.styled";
 import { OAuth } from "../../stores/toOAuthButtons.mobx";
 import { useLocation } from "react-router-dom";
 
-export const GoogleButton: React.FC = () => {
+export const GoogleButton: FC = () => {
   const location = useLocation();
 
   useEffect(() => {
     if(location.pathname !== '/login') {
       OAuth.setWhereUsing('Sign up');
+    }else{  
+      OAuth.setWhereUsing('Sign in');
     }
-
-    OAuth.setWhereUsing('Sign in');
   }, [location.pathname]);
 
   return (
@@ -28,15 +28,15 @@ export const GoogleButton: React.FC = () => {
   );
 }
 
-export const FacebookButton: React.FC = () => {
+export const FacebookButton: FC = () => {
   const location = useLocation();
 
   useEffect(() => {
     if(location.pathname !== '/login') {
       OAuth.setWhereUsing('Sign up');
+    }else{  
+      OAuth.setWhereUsing('Sign in');
     }
-
-    OAuth.setWhereUsing('Sign in');
   }, [location.pathname]);
 
   return (

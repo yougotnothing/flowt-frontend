@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { FC, useState } from "react";
 
 import { useNavigate, generatePath} from "react-router-dom";
 import { api } from "../../api/axiosConfig";
@@ -35,7 +35,7 @@ import { Loader } from "../loader/Loader";
 import genresData from "../../json/genres.json";
 import { user } from "../../stores/toUser.mobx";
 
-export const Upload = () => {
+export const Upload: FC = () => {
   const[songGenre, setSongGenre] = useState<string | null>(null);
   const[isLoading, setIsLoading] = useState(false);
   const[song, setSong] = useState<any | Blob>(null);

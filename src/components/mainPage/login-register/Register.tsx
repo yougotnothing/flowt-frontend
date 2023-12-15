@@ -47,10 +47,10 @@ export const Register: React.FC = observer(() => {
   useEffect(() => {
     OAuth.setWhereUsing('Sign up');
 
-    if(OAuth.backendData) {
-      formik.setFieldValue("email", OAuth.backendData.email);
+    if(OAuth.email) {
+      formik.setFieldValue("email", OAuth.email);
     }
-  }, [OAuth.backendData]);
+  }, [OAuth.email]);
 
   const field = formik.values;
   const errors = formik.errors;

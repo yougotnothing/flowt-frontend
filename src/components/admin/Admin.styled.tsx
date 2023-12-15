@@ -27,12 +27,20 @@ export const GetUserContainer = styled('div')`
   flex-direction: row;
   align-items: start;
   justify-content: space-evenly;
-  background-color: ${colors.FRONT};
+  background-image: linear-gradient(60deg, #586c6c 0%, #5bceb5 210%);
   padding: 8px;
   border-radius: 12px;
   overflow-y: auto;
-  max-height: 620px;
+  width: 800px;
+  justify-content: space-between;
   border: 2px solid ${colors.BORDER};
+`;
+
+export const GetUserMainInfoContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
 `;
 
 export const GetUserInput = styled('input')`
@@ -72,6 +80,9 @@ export const GetUserDataContainer = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: start;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-left: 1px solid white;
+  padding: 4px;
   gap: 10px;
 `;
 
@@ -89,6 +100,16 @@ export const GetUserInputContainer = styled('div')`
   align-items: center;
 `;
 
+export const DroplistContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  border-radius: 12px;
+  width: 816px;
+  padding: 4px;
+`;
+
 export const Droplist = styled('div')`
   display: flex;
   flex-direction: column;
@@ -98,13 +119,10 @@ export const Droplist = styled('div')`
   border: 2px solid ${colors.BORDER};
   border-radius: 8px;
   padding: 4px;
-  width: 368px;
+  width: 428px;
+  min-height: 120px;
   max-height: 364px;
   overflow-y: scroll;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 `;
 
 export const DroplistItem = styled('div')`
@@ -124,7 +142,7 @@ export const DroplistAvatar = styled('img')`
   width: 120px;
 `;
 
-export const DroplistItemInfo = styled('div')`
+export const DroplistItemInfoContainer = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -133,9 +151,51 @@ export const DroplistItemInfo = styled('div')`
   background-color:#0000007a;
 `;
 
-export const DroplistItemButton = styled('div')`
-  width: 120px;
-  height: 32px;
-  
+export const DroplistItemInfo = styled('div')`
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
+  color: ${colors.WHITE};
+`;
+
+export const DroplistItemButton = styled('button')`
   ${BUTTON}
+`;
+
+export const Menu = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 168px;
+  background-color: ${colors.FRONT};
+  border: 2px solid ${colors.BORDER};
+  border-radius: 6px;
+`;
+
+export const MenuItem = styled('button')`
+  font-family: 'Urbanist', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: ${colors.WHITE};
+  text-align: start;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-bottom: 1px solid transparent;
+  background-color: transparent;
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    border-color: ${colors.WHITE};
+  }
+`;
+
+export const Message = styled('div')`
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
+  color: ${colors.WHITE};
+  margin: auto;  
 `;

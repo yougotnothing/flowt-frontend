@@ -2,7 +2,7 @@ import { api } from "../../../api/axiosConfig";
 import { IUserSearch } from "../../../types/props";
 
 type IUser = IUserSearch | null;
-type ISetUser = (value: React.SetStateAction<IUser>) => IUser;
+type ISetUser = React.Dispatch<React.SetStateAction<IUserSearch | null>>;
 
 export const addModerator = async (username: string) => {
   try {
@@ -22,11 +22,33 @@ export const deleteUser = async (username: string) => {
   }
 }
 
-export const getUser = async(username: string, setUser: ISetUser) => {
+export const getUser = async (username: string, setUser: ISetUser) => {
   try {
     const response = await api.get(`/admin/user/${username}`);
     setUser(response.data);
     console.log(response.data);
+  }catch(error: any) {
+    console.error(error);
+  }
+}
+
+export const getMail = async () => {
+
+}
+
+export const sendWarningMail = async (username: string | null) => {
+  try {
+    await api.post(`/moderator/warning-mail/${username}`);
+    console.log('mail successfully send');
+  }catch(error: any) {
+    console.log(error);
+  }
+}
+
+export const changeUserActive = async (username: string | null) => {
+  try {
+    await api.patch(`/moderator/active/${username}`);
+    console.log('user active successfully changed');
   }catch(error: any) {
     console.error(error);
   }
