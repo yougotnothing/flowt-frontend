@@ -1,10 +1,28 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { colors } from "../../constants/colors.const";
 import { BUTTON, INPUT } from "../../constants/styles.const";
 
 interface IGetUserData {
   $type: 'username' | 'else';
 }
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+`;
 
 export const Container = styled('div')`
   display: flex;
@@ -17,9 +35,27 @@ export const Container = styled('div')`
 
 export const AdminPanel = styled('div')`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: start;
+  gap: 8px;
   width: 100%;
+  padding-bottom: 6px;
+  border-bottom: 2px solid ${colors.SECONDARY};
+`;
+
+export const AdminPanelButtons = styled('button')`
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
+  color: ${colors.WHITE};
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: ${colors.SECONDARY};
+  }
 `;
 
 export const GetUserContainer = styled('div')`
@@ -31,7 +67,7 @@ export const GetUserContainer = styled('div')`
   padding: 8px;
   border-radius: 12px;
   overflow-y: auto;
-  width: 800px;
+  width: 1180px;
   justify-content: space-between;
   border: 2px solid ${colors.BORDER};
 `;
@@ -71,8 +107,8 @@ export const GetUserInputButton = styled('button')`
 
 export const GetUserAvatar = styled('img')`
   object-fit: cover;
-  width: 210px;
-  height: 210px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
 `;
 
@@ -104,16 +140,22 @@ export const DroplistContainer = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   gap: 16px;
   border-radius: 12px;
   width: 816px;
   padding: 4px;
 `;
 
-export const Droplist = styled('div')`
-  display: flex;
+interface IDroplist {
+  $isOpen: boolean
+}
+
+export const Droplist = styled('div')<IDroplist>`
+  display: ${props => props.$isOpen ? 'flex' : 'none'};
   flex-direction: column;
   align-items: center;
+  position: absolute;
   gap: 4px;
   background-color: ${colors.FRONT};
   border: 2px solid ${colors.BORDER};
@@ -123,6 +165,7 @@ export const Droplist = styled('div')`
   min-height: 120px;
   max-height: 364px;
   overflow-y: scroll;
+  top: 50px;
 `;
 
 export const DroplistItem = styled('div')`
@@ -197,5 +240,145 @@ export const Message = styled('div')`
   font-weight: 600;
   font-family: 'Urbanist', sans-serif;
   color: ${colors.WHITE};
-  margin: auto;  
+  margin: auto;
+`;
+
+export const ReportsContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 6px;
+  border-radius: 8px;
+  border: 2px solid ${colors.BORDER};
+  background-color: ${colors.FRONT};
+  gap: 6px;
+  width: 1184px;
+`;
+
+export const Report = styled('div')`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-bottom: 1px solid ${colors.WHITE};
+  width: 100%;
+  padding: 4px;
+`;
+
+interface IReportTextProps {
+  $type: 'report mail' | 'info';
+}
+
+export const ReportText = styled('div')<IReportTextProps>`
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: ${colors.WHITE};
+  ${props => props.$type === 'report mail' && 'margin: auto;'};
+`;
+
+interface IReportButtonProps {
+  $isOpen: boolean;
+}
+
+export const ReportButtonsContainer = styled('div')<IReportButtonProps>`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 6px;
+  background-color: ${colors.DARK_BLUE};
+  border: 2px solid ${colors.BORDER};
+  opacity: ${props => props.$isOpen ? '1' : '0'};
+  animation: ${props => props.$isOpen ? css`${fadeIn} 0.3s ease` : css`${fadeOut} 0.3s ease`};
+`;
+
+export const ReportButton = styled('button')`
+  ${BUTTON}
+
+  border-radius: 4px;
+  border-color: transparent;
+  height: 32px;
+`;
+
+export const ReportTextContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 4px;
+`;
+
+export const ReportNav = styled('div')`
+  align-self: flex-start;
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 8px;
+  padding: 4px;
+  border-bottom: 2px solid ${colors.BORDER};
+`;
+
+export const ReportNavButton = styled('button')`
+  background-color: transparent;
+  border-color: transparent;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
+  color: ${colors.WHITE};
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+
+  &:hover {
+    color: ${colors.SECONDARY};
+    border-color: ${colors.SECONDARY_HOVER};
+  }
+`;
+
+export const Header = styled('div')`
+  display: flex;
+  align-self: flex-start;
+  font-size: 22px;
+  font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
+  color: ${colors.WHITE};
+`;
+
+export const UserInfoContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 1188px;
+  border: 2px solid ${colors.BORDER};
+  background-color: ${colors.FRONT};
+  border-radius: 6px;
+  padding: 4px;
+  gap: 12px;
+`;
+
+export const UserInfo = styled('div')`
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
+  color: ${colors.WHITE};
+`;
+
+export const UserInfoSpan = styled('span')`
+  color: ${colors.SECONDARY};
+`;
+
+export const UserInfoDescriptionContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  border-radius: 6px;
+  gap: 12px;
+  border: 2px solid ${colors.BORDER};
+  padding: 4px;
+  background-color: ${colors.FRONT};
 `;

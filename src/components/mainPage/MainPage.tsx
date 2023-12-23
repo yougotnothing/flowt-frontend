@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect, FC } from "react";
 
 import { Link, Outlet, useNavigate, useLocation, generatePath } from "react-router-dom";
 import {
@@ -25,21 +25,25 @@ import { searchUsersStore } from "../../stores/toSearchUsers.mobx";
 import { Modal as AddToPlaylistModal } from "../modal/add-to-playlist/Modal";
 import { Modal as ReportModal } from "../modal/report/Modal";
 import { user } from "../../stores/toUser.mobx";
+import { userAvatarStore } from "../../stores/toChangeAvatar.mobx";
 
-export const MainPage: React.FC = observer(() => {
+export const MainPage: FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
   const[isLoading, setIsLoading] = useState<boolean>(true);
   const location = useLocation();
   const navigate = useNavigate();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
+  const googleAvatar = localStorage.getItem('Google image');
 
   useEffect(() => {
-    user.postGoogleAvatar();
-    if(user.userHaveAvatar) {
+    if(!user.userHaveAvatar && googleAvatar) {
+      userAvatarStore.setAvatar(googleAvatar);
+      user.postGoogleAvatar(googleAvatar);
+    }else{
       localStorage.removeItem('Google image');
     }
-  }, []);
+  }, [googleAvatar, user.userHaveAvatar]);
 
   useEffect(() => {
     user.setUser();
@@ -128,7 +132,7 @@ export const MainPage: React.FC = observer(() => {
                   searchUsersStore.setAvatar(user.avatar);
                   navigate(generatePath('/profile/:id', { id: user.username }));
                 }}>
-                <UserAvatar style={{backgroundImage: `url(${user.userHaveAvatar ? user.avatar : '/defalutAvatar.png'})`}} />
+                <UserAvatar style={{backgroundImage: `url(${user.userHaveAvatar ? user.avatar : '/defaultAvatar.png'})`}} />
                 <UserNickname>{user.username}</UserNickname>
               </UserButton>
             </VerifiedUserContainer>

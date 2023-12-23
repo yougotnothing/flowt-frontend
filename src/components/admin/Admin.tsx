@@ -1,99 +1,35 @@
-import { FC, useEffect, useState } from "react";
+import { FC, ReactElement, useEffect, useState } from "react";
 
 import { observer } from "mobx-react-lite";
 import { 
   Container,
-  GetUserInputContainer,
   AdminPanel,
-  GetUserInput,
-  GetUserInputButton,
-  Droplist,
-  DroplistItem,
-  DroplistAvatar,
-  DroplistItemButton,
-  DroplistItemInfo,
-  DroplistItemInfoContainer,
-  Menu,
-  MenuItem,
-  Message,
-  DroplistContainer,
-  GetUserContainer,
-  GetUserAvatar,
-  GetUserData,
-  GetUserDataContainer,
-  GetUserMainInfoContainer
+  AdminPanelButtons,
+  Header
 } from "./Admin.styled";
-import { addModerator, getUser, deleteUser } from "./functions";
-import { adminStore as admin } from "../../stores/toAdmin.mobx";
-import { IUserSearch } from "../../types/props";
+import { useNavigate, useLocation } from "react-router-dom";
 
-export const Admin: FC = observer(() => {
-  const [isUserChosen, setIsUserChosen] = useState<boolean>(false);
-  const [searchUser, setSearchUser] = useState<IUserSearch | null>(null);
-
-  const handleSearch = async (e: any) => {
-    if(e.target.value) {
-      admin.setInput(e.target.value.trim());
-      await admin.getUsers();
-    }else if(!e.target.value) {
-      admin.setUsers(null);
-      admin.setMessage('');
-    }
-  }
+export const Admin: FC<{ children?: ReactElement }> = observer(({ children }) => {
+  const[header, setHeader] = useState<string>('Search users');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    if(admin.input.length === 0) {
-      admin.setUsers(null);
+    if(location.pathname === '/admin/reports') {
+      setHeader('Reports');
+    }else{
+      setHeader('Search users');
     }
-  }, [admin.input]);
+  }, [location.pathname]);
 
   return (
     <Container>
-      <AdminPanel></AdminPanel>
-      <DroplistContainer>
-        <GetUserInputContainer>
-          <GetUserInput placeholder="search user" 
-            onChange={async (e: any) => handleSearch(e)} />
-          <GetUserInputButton />
-        </GetUserInputContainer>
-        <Droplist>
-          {admin.users && admin.users.map((user, index) => (
-            <DroplistItem key={index}>
-              <DroplistAvatar src={user.userHaveAvatar ? user.avatar : '/defalutAvatar.png'} />
-              <DroplistItemInfoContainer>
-                <DroplistItemInfo>
-                  {user.username}
-                </DroplistItemInfo>
-              </DroplistItemInfoContainer>
-              <DroplistItemButton onClick={() => {
-                getUser(user.username, setSearchUser);
-                setIsUserChosen(true);
-              }}>actions</DroplistItemButton>
-            </DroplistItem>
-          ))}
-          {admin.message && <Message>{admin.message}</Message>}
-        </Droplist>
-      </DroplistContainer>
-      {isUserChosen && searchUser && (
-        <GetUserContainer>
-          <GetUserMainInfoContainer>
-            <GetUserAvatar src={searchUser.userHaveAvatar ? searchUser.avatar : '/defaultAvatar.png'} />
-              <GetUserDataContainer>
-              <GetUserData $type="username">
-                {searchUser.username}
-              </GetUserData>
-              <GetUserData $type="else">
-                {searchUser.region}
-              </GetUserData>
-            </GetUserDataContainer>
-          </GetUserMainInfoContainer>
-          <Menu>
-            <MenuItem onClick={async () => await deleteUser(searchUser.username)}>Delete user</MenuItem>
-            <MenuItem onClick={async () => await addModerator(searchUser.username)}>Add moderator</MenuItem>
-            <MenuItem></MenuItem>
-          </Menu>
-        </GetUserContainer>
-      )}
+      <AdminPanel>
+        <AdminPanelButtons onClick={() => navigate('/admin/search-users')}>Go to users</AdminPanelButtons>
+        <AdminPanelButtons onClick={() => navigate('/admin/reports')}>Go to reports</AdminPanelButtons>
+      </AdminPanel>
+      <Header>{header}</Header>
+      {children}
     </Container>
   );
 });

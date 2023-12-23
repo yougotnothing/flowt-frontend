@@ -27,7 +27,7 @@ export const SearchItems: React.FC = observer(() => {
   }
 
   const handleOutsideClick = (e: any) => {
-    if (ref.current && !ref.current.contains(e.target)) {
+    if(ref.current && !ref.current.contains(e.target)) {
       closeDroplist();
     }
   };

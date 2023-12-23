@@ -35,7 +35,7 @@ export const Modal = observer(() => {
             </Select>
           </TypeContainer>
         </MainContainer>
-        <SubmitButton onClick={report.sendReport}>Submit</SubmitButton>
+        <SubmitButton onClick={() => report.sendReport()}>Submit</SubmitButton>
       </ModalWindow>
     </Container>
   );

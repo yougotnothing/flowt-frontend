@@ -115,8 +115,10 @@ class PlaylistsStore {
   async search(param: string) {
     if(param === 'All') {
       try {
-        const response = await api.post('/search/songs',{
-          substring: this.input
+        const response = await api.get('/search/songs',{
+          params: {
+            substring: this.input
+          }
         });
         runInAction(() => {
           this.songs = response.data.songs;

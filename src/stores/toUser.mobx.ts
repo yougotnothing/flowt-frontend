@@ -1,7 +1,9 @@
 import { makeObservable, action, observable, runInAction } from "mobx";
 import { IUserProps } from "../types/props";
-import { api } from "../api/axiosConfig";
+import { API_URL, api } from "../api/axiosConfig";
 import { NavigateFunction, generatePath } from "react-router-dom";
+
+type ISetStateAction = (value: React.SetStateAction<boolean>) => void;
 
 class UserStore {
   user: IUserProps | null;
@@ -48,20 +50,20 @@ class UserStore {
     });
   }
 
-  async postGoogleAvatar() {
+  async postGoogleAvatar(googleAvatar: string | null) {
     try {
-      const googleAvatar = localStorage.getItem('Google image');
-      while(!this.userHaveAvatar) {
-        await api.post('/users/avatar/url', {
-          imageUrl: googleAvatar
-        });
-        
-        runInAction(() => {
-          this.setAvatar(googleAvatar);
-          this.setUser();
-          console.log(this.avatar);
-        });
-      }
+      await api.post('/users/avatar/url', {
+        imageUrl: googleAvatar
+      })
+      .then((r) => {
+        console.log(r.data.message);
+        this.setUser();
+      });
+      
+      runInAction(() => {
+        this.setAvatar(googleAvatar);
+        console.log(this.avatar);
+      });
     }catch(error: any) {
       console.log(error.response.data.message);
     }
@@ -90,7 +92,7 @@ class UserStore {
       });
       console.log(user.user);
     }catch(error: any) {
-      console.log(error);
+      console.log(error.response.data.message);
     }
   }
 
@@ -101,7 +103,7 @@ class UserStore {
       });
 
       if(response) {
-        navigate(generatePath('/account/:id', {id: user.username}));
+        navigate(generatePath('/account/:id', { id: user.username }));
       }
     }catch(error: any) {
       console.error("an error occurred");
@@ -123,7 +125,7 @@ class UserStore {
     })
   }
 
-  async changeUsername(value: string, navigate: NavigateFunction, setIsLoading: (value: React.SetStateAction<boolean>) => void) {
+  async changeUsername(value: string, navigate: NavigateFunction, setIsLoading: ISetStateAction) {
     try {
       const response = await api.patch('/users/username', {
         newUsername: value.trim()
@@ -139,8 +141,19 @@ class UserStore {
         this.username = value.trim();
       });
 
-      setIsLoading(true);
-      navigate(generatePath('/account/:id', { id: user.username }));
+      const image = localStorage.getItem('avatar');
+      
+      if(image !== `${API_URL}/images/avatar/${this.username}`) {  
+        await api.post('/users/avatar/url', {
+          imageUrl: image
+        });
+
+        setIsLoading(true);
+        navigate(generatePath('/account/:id', { id: user.username }));
+      }else{  
+        setIsLoading(true);
+        navigate(generatePath('/account/:id', { id: user.username }));
+      }
     }catch(error: any) {
       setIsLoading(false);
       console.log('an error occurred');
@@ -153,23 +166,45 @@ class UserStore {
     });
   }
 
-  async getFollowers() {
+  async getFollowers(username?: string) {
     try {
-      const response = await api.get('/users/followers');
-      runInAction(() => {
-        this.followers = response.data.followers;
-      });
+      if(username) {
+        const response = await api.get(`/users/followers/${username}`);
+
+        runInAction(() => {
+          this.followers = response.data.followers;
+        });
+        console.log(response.data);
+      }else if(username === this.username || !username) {
+        const response = await api.get('/users/followers');
+
+        runInAction(() => {
+          this.followers = response.data.followers;
+        });
+        console.log(response.data.followers);
+      }
     }catch(error: any) {
       console.error(error);
     }
   }
 
-  async getSubscribes(username: string = '') {
+  async getSubscribes(username?: string) {
     try {
-      const response = await api.get('/users/subscribes');
-      runInAction(() => {
-        this.subscribes = response.data.subscribes;
-      });
+      if(username) {
+        const response = await api.get(`/users/subscribes/${username}`);
+
+        runInAction(() => {
+          this.subscribes = response.data.subscribes;
+        });
+        console.log(response.data);
+      }else if(username === this.username || !username) {
+        const response = await api.get('/users/subscribes');
+        
+        runInAction(() => {
+          this.subscribes = response.data.subscribes;
+        });
+        console.log(response.data.subscribes);
+      }
     }catch(error: any) {
       console.error(error);
     }

@@ -9,6 +9,7 @@ class SearchStore {
   input: string;
   message: string | null;
   isOpen: boolean;
+  page: number;
 
   constructor() {
     this.users = [];
@@ -17,6 +18,7 @@ class SearchStore {
     this.input = '';
     this.message = null;
     this.isOpen = false;
+    this.page = 0;
 
     makeObservable(this, {
       users: observable,
@@ -25,6 +27,8 @@ class SearchStore {
       input: observable,
       message: observable,
       isOpen: observable,
+      page: observable,
+      setPage: action,
       setUsers: action,
       setSongs: action,
       setPlaylists: action,
@@ -33,6 +37,12 @@ class SearchStore {
       get: action,
       setIsOpen: action,
       setMessage: action
+    });
+  }
+
+  setPage(page: number) {
+    runInAction(() => {
+      this.page = page;
     });
   }
 
@@ -56,12 +66,15 @@ class SearchStore {
 
   async setUsers() {
     try {
-      const response = await api.post('/search/users', {
-        substring: this.input
+      const response = await api.get('/search/users', {
+        params: {
+          page: this.page,
+          substring: this.input
+        }
       });
 
       if(response) {
-        if (this.users.length === 0) {
+        if(this.users.length === 0) {
           this.setMessage(`Can't find data by ${this.input}`);
         }
       }
@@ -80,8 +93,11 @@ class SearchStore {
 
   async setSongs() {
     try {
-      const response = await api.post('/search/songs', {
-        substring: this.input
+      const response = await api.get('/search/songs', {
+        params: {
+          page: this.page,
+          substring: this.input
+        }
       });
 
       runInAction(() => {
@@ -138,8 +154,11 @@ class SearchStore {
 
   async setPlaylists() {
     try {
-      const response = await api.post('/search/playlists', {
-        substring: this.input
+      const response = await api.get('/search/playlists', {
+        params: {
+          page: this.page,
+          substring: this.input
+        }
       });
       console.log(response.data);
 

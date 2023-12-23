@@ -61,6 +61,16 @@ export interface IUserSearch {
   avatar: string;
 }
 
+export interface IUserSearchAsAdmin {
+  username: string;
+  email: string;
+  region: string;
+  description: string;
+  avatar: string;
+  userHaveAvatar: boolean;
+  roles: string[];
+}
+
 export interface ISongsSearch {
   author: string,
   genre: string,
@@ -90,4 +100,25 @@ export interface IPlaylist {
 
 export interface IPlaylistProps {
   playlist: IPlaylist[];
+}
+
+export interface IAdminUsers {
+  isModerator: boolean;
+  username: string;
+  region: string;
+  description: string;
+  avatar: string;
+  email: string;
+  userHaveAvatar: boolean;
+  emailVerifyed: boolean;
+}
+
+export interface IReportDTO {
+  checked: boolean;
+  checkedAt: string | null;
+  contentType: 'NAME' | 'AVATAR' | 'PROFILE_HEADER' | 'DESCRIPTION' | 'CONTENT';
+  contentTypeName: string;
+  createdAt: string;
+  id: number;
+  whomType: 'USER' | 'SONG' | 'PLAYLIST';
 }

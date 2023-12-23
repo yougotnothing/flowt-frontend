@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { observer } from "mobx-react-lite";
-import { userUsernameStore } from "../../../../stores/toChangeUsername.mobx";
 import { useFormik } from "formik";
 import { changeUsernameSchema } from "../../../../validation/yup.config";
 import { AccountContainer } from "../Account.styled";
@@ -38,9 +37,20 @@ export const ChangeUsername: React.FC = observer(() => {
     onSubmit: () => {}
   });
 
-  const handleChangedUsername = async (e: any) => {
+  const handleChangedUsernameEnter = async (e: any) => {
     try {
       if(e.target.value !== user.username && (e.key === 'Enter' || e.code === 'Enter')) {
+        await user.changeUsername(formik.values.username, navigate, setIsLoading);
+        await user.setUser();
+      }
+    }catch(error: any) {
+      console.error(error);
+    }
+  }
+
+  const handleChangedUsername = async () => {
+    try {
+      if(formik.values.username !== user.username) {
         await user.changeUsername(formik.values.username, navigate, setIsLoading);
         await user.setUser();
       }
@@ -72,15 +82,13 @@ export const ChangeUsername: React.FC = observer(() => {
             <Container>
               <Header>Change username</Header>
               <Input
-                onKeyDown={(e: any) => handleChangedUsername(e)}
+                onKeyDown={e => handleChangedUsernameEnter(e)}
                 name="username"
                 onBlur={formik.handleBlur}
-                onChange={(e: any) => {
-                  formik.setFieldValue('username', e.target.value);
-                }}
+                onChange={e => formik.setFieldValue('username', e.target.value)}
                 defaultValue={formik.values.username}
-                />
-              <Button onClick={(e: any) => handleChangedUsername(e)}>{isLoading ? <Loader /> : 'Apply'}</Button>
+              />
+              <Button onClick={() => handleChangedUsername()}>{isLoading ? <Loader /> : 'Apply'}</Button>
             </Container>
           </ChangeUsernameContainer>
         </GlobalContainer>

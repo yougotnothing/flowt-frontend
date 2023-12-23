@@ -28,6 +28,8 @@ import { EditPlaylist } from "../mainPage/playlist/editPlaylist/EditPlaylist";
 import { FacebookAuth } from "../OAuth2/FacebookAuth";
 import { Playlist as BrowsePlaylist } from "../mainPage/playlist/large/Playlist";
 import { Admin } from "../admin/Admin";
+import { Users } from "../admin/Users";
+import { Reports } from "../admin/Reports";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -139,8 +141,18 @@ export const pageRouter = createBrowserRouter([
         element: <BrowsePlaylist />
       },
       {
-        path: '/admin',
-        element: <Admin />
+        path: '/admin/search-users',
+        element: 
+          <Admin>
+            <Users />
+          </Admin>
+      },
+      {
+        path: '/admin/reports',
+        element: 
+          <Admin>
+            <Reports />
+          </Admin>
       }
     ]
   }

@@ -38,7 +38,7 @@ export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
           <SelectText>Notifications</SelectText>
         </Select>
         {user.username === 'admin' && (
-          <Select onClick={() => navigate('/admin')}>
+          <Select onClick={() => navigate('/admin/search-users')}>
             <SelectText>Admin panel</SelectText>
           </Select>
         )}

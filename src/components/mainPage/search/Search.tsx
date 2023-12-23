@@ -94,35 +94,39 @@ export const Search: FC = observer(() => {
             </CardButtonsContainer>
           </Card>
         ))}
-        {search.users && search.users.map((user, index) => (
+        {search.users && search.users.map((searchUser, index) => (
           <Card
             key={index}
             onMouseEnter={() => handleMouseEnter(index, setIsOpenUsers)}
             onMouseLeave={() => handleMouseLeave(index, setIsOpenUsers)}
           >
-            <CardIcon $type='user' $src={user.avatar} onClick={() => handleCardClick(user, navigate)} />
+            <CardIcon
+              $type='user'
+              $src={searchUser.userHaveAvatar ? searchUser.avatar : '/defaultAvatar.png'}
+              onClick={() => handleCardClick(searchUser, navigate)}
+            />
             <CardInfoContainer>
-              <CardInfo>{user.username}</CardInfo>
-              <CardInfo>{user.region}</CardInfo>
+              <CardInfo>{searchUser.username}</CardInfo>
+              <CardInfo>{searchUser.region}</CardInfo>
             </CardInfoContainer>
             <CardButtonsContainer $isOpen={isOpenUsers[index]}>
               <CardButton
-                disabled={user.username === User.username ? true : false}
-                onClick={() => handleSubscribe(user.username)}
+                disabled={searchUser.username === User.username ? true : false}
+                onClick={() => handleSubscribe(searchUser.username)}
               >Subscribe</CardButton>
               <CardButton
-                disabled={user.username === User.username ? true : false}
-                onClick={() => handleClickUserModalButton(user)}
+                disabled={searchUser.username === User.username ? true : false}
+                onClick={() => handleClickUserModalButton(searchUser)}
               >Report</CardButton>
               {User.username === 'admin' &&
                 <>
                   <CardButton
-                    disabled={user.username === User.username ? true : false}
-                    onClick={() => addModerator(user.username)}
+                    disabled={searchUser.username === User.username ? true : false}
+                    onClick={() => addModerator(searchUser.username)}
                   >Add moderator</CardButton>
                   <CardButton
-                    disabled={user.username === User.username ? true : false}
-                    onClick={() => deleteUser(user.username)}
+                    disabled={searchUser.username === User.username ? true : false}
+                    onClick={() => deleteUser(searchUser.username)}
                   >Delete user</CardButton>
                 </>
               }
