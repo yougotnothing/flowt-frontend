@@ -65,13 +65,16 @@ export const A_ = `
   font-family: 'Urbanist', sans-serif;
   font-weight: 600;
   font-size: 22px;
-  transition: all 0.3s;
+  transition: 0.3s ease;
+  color: ${colors.WHITE};
+  border: 2px solid transparent;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
 
   &:hover {
-    border: 1px solid ${colors.SECONDARY_HOVER};
-    border-top-width: 0;
-    border-left-width: 0;
-    border-right-width: 0;
+    color: ${colors.DARK_WHITE};
+    border-color: ${colors.DARK_WHITE};
   }
 `;
 

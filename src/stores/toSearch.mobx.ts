@@ -1,6 +1,7 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import { IPlaylist, ISongPlaylist, IUserSearch } from "../types/props";
 import { api } from "../api/axiosConfig";
+import { ISongData } from "../types/types";
 
 class SearchStore {
   users: IUserSearch[] | [];
@@ -10,6 +11,7 @@ class SearchStore {
   message: string | null;
   isOpen: boolean;
   page: number;
+  song: ISongData | null;
 
   constructor() {
     this.users = [];
@@ -19,6 +21,7 @@ class SearchStore {
     this.message = null;
     this.isOpen = false;
     this.page = 0;
+    this.song = null;
 
     makeObservable(this, {
       users: observable,
@@ -28,6 +31,7 @@ class SearchStore {
       message: observable,
       isOpen: observable,
       page: observable,
+      song: observable,
       setPage: action,
       setUsers: action,
       setSongs: action,
@@ -36,7 +40,8 @@ class SearchStore {
       setInput: action,
       get: action,
       setIsOpen: action,
-      setMessage: action
+      setMessage: action,
+      setSong: action
     });
   }
 
@@ -107,6 +112,7 @@ class SearchStore {
           this.message = `Can't find data by ${this.input}`;
         }
       });
+      console.log(this.songs);
     }catch(error: any) {
       console.log(error);
     }
@@ -189,6 +195,13 @@ class SearchStore {
     }catch(error: any) {
       console.log(error);
     }
+  }
+
+  setSong(song: ISongData)  {
+    runInAction(() => {
+      this.song = song;
+    });
+    console.log(this.song);
   }
 }
 

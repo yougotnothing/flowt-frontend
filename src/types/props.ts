@@ -87,6 +87,7 @@ export interface ISongPlaylist {
   listens: number,
   name: string,
   songId: number,
+  likes: number
 }
 
 export interface IPlaylist {

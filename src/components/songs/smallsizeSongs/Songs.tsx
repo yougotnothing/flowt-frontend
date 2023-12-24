@@ -20,9 +20,7 @@ import { api, API_URL } from "../../../api/axiosConfig";
 import { user } from "../../../stores/toUser.mobx";
 
 export const Songs: React.FC = observer(() => {
-  const[isLiked, setIsLiked] = useState<boolean[]>(
-    Array(songs.container.length).fill(false)
-  );
+  const[isLiked, setIsLiked] = useState<boolean[]>(Array(songs.container.length).fill(false));
   const navigate = useNavigate();
 
   const getSong = async () => {
@@ -64,7 +62,7 @@ export const Songs: React.FC = observer(() => {
     <>
       {user.username ? songs.container.map((song, index) => (
         <SongContainer key={index}>
-          <SongImage style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/song/${user.username}/${song.name}`)})`}}>
+          <SongImage $song={song}>
             <SongButton onClick={() => {
               if(user.username) {
                 songs.patchSong(song);

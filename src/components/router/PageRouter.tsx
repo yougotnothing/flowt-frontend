@@ -30,6 +30,7 @@ import { Playlist as BrowsePlaylist } from "../mainPage/playlist/large/Playlist"
 import { Admin } from "../admin/Admin";
 import { Users } from "../admin/Users";
 import { Reports } from "../admin/Reports";
+import { BrowseSongs } from "../songs/browse-songs/Songs";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -121,8 +122,8 @@ export const pageRouter = createBrowserRouter([
         element: <Notifications />
       },
       {
-        path: '/songs/:id',
-        element: <Songs />
+        path: '/song/:id',
+        element: <BrowseSongs />
       },
       {
         path: '/oauth/google/login',

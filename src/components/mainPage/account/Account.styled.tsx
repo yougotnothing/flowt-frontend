@@ -89,20 +89,26 @@ export const UserContainer = styled('div')`
   align-items: center;
   align-self: start;
   width: 63em;
-  padding: 36px;
+  padding: 1em;
   border-radius: 18px;
   max-height: 400px;
   z-index: 998;
   background: linear-gradient(135deg, ${colors.DARK_BLUE} 0% , ${colors.AQUAMARINE} 60%, ${colors.SECONDARY_HOVER} 120%);
 `;
 
-export const UserAvatar = styled('picture')`
+interface IUserAvatar {
+  $isHaveAvatar: boolean | null;
+  $avatar: string | null;
+}
+
+export const UserAvatar = styled('picture')<IUserAvatar>`
   width: 286px;
   height: 286px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 50%;
+  background-image: ${props => props.$isHaveAvatar ? `url(${props.$avatar})` : 'url(/defaultAvatar.png)'}
 `;
 
 export const UserInfo = styled('div')`
@@ -226,7 +232,6 @@ export const DroplistItemsContainer = styled('div')<IDroplistItemsContainer>`
   transition: 0.3s ease;
   position: absolute;
   width: 220px;
-  height: 288px;
   background-image: none;
   background-color: ${colors.FRONT};
   border: 2px solid ${colors.BORDER};
@@ -244,7 +249,7 @@ export const DroplistItemsContainer = styled('div')<IDroplistItemsContainer>`
 export const DroplistItem = styled('button')<IDroplistItemsContainer>`
   background-color: transparent;
   color: ${colors.WHITE};
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Urbanist', sans-serif;
   font-size: 18px;
   font-weight: 600;
   border: none;

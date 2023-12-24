@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { FC, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { 
@@ -14,13 +14,14 @@ import {
 import { useFormik } from "formik";
 import { registrationValidationSchema } from "../../../validation/yup.config";
 import { Loader } from "../../loader/Loader";
-import { api, registration } from "../../../api/axiosConfig";
+import { registration } from "../../../api/axiosConfig";
 import { OAuthButtonsContainer } from "../../OAuth2/OAuthButtons.styled";
 import { FacebookButton, GoogleButton } from "../../OAuth2/OAuthButtons";
 import { observer } from "mobx-react-lite";
 import { OAuth } from "../../../stores/toOAuthButtons.mobx";
+import { IRegisterDTO } from "./types";
 
-export const Register: React.FC = observer(() => { 
+export const Register: FC = observer(() => { 
   const[isLoading, setIsLoading] = useState(false);
   const[usernameError, setUsernameError] = useState(false);
   const[emailError, setEmailError] = useState(false);
@@ -56,13 +57,8 @@ export const Register: React.FC = observer(() => {
   const errors = formik.errors;
   const touched = formik.touched;
 
-  async function handleRegister() {
-    const registerDto: any = {
-      username: field.username,
-      email: field.email,
-      password: field.password,
-      confirmPassword: field.confirmPassword
-    }
+  const handleRegister = async () => {
+    const registerDto: IRegisterDTO = formik.values;
 
     setIsLoading(true);
 
@@ -71,15 +67,13 @@ export const Register: React.FC = observer(() => {
       navigate("/login");
       setErrorMessage(null);
     }catch(error: any) {
-      const field = error.response.data.field;
-
       setIsLoading(false);
       setUsernameError(false);
       setEmailError(false);
       setPasswordError(false);
       setErrorMessage(error.response.data.message);
 
-      switch(field) {
+      switch(error.response.data.field) {
         case "username":
           setUsernameError(true);
           break;

@@ -21,7 +21,7 @@ export const Reports: FC = observer(() => {
         <ReportNavButton onClick={() => admin.setType('PLAYLIST')}>Playlist reports</ReportNavButton>
       </ReportNav>
       <ReportsContainer>
-        {admin.reports.map((report, index: number) => (
+        {admin.reports.map((report, index) => (
           <Report
             key={index}
             onMouseEnter={() => handleMouseEnter(index, setIsOpen)}

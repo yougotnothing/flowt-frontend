@@ -17,6 +17,7 @@ import { searchStore as search } from "../../../stores/toSearch.mobx";
 import { API_URL } from "../../../api/axiosConfig";
 import { generatePath, useNavigate } from "react-router-dom";
 import { searchUsersStore } from "../../../stores/toSearchUsers.mobx";
+import { userSongsStore } from "../../../stores/toSongs.mobx";
 
 export const SearchItems: React.FC = observer(() => {
   const ref = useRef<any>(null);
@@ -64,8 +65,9 @@ export const SearchItems: React.FC = observer(() => {
             </StatsContainer>
           </ItemInfo>
           <ItemButton onClick={() => {
-            navigate('/search');
+            navigate(generatePath('/song/:id', { id: song.name }));
             search.setIsOpen(false);
+            search.setSong(song);
           }}>Listen</ItemButton>
         </Item>
       ))}

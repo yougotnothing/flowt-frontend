@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { colors } from "../../../constants/colors.const";
+import { API_URL } from "../../../api/axiosConfig";
+import { ISongData } from "../../../types/types";
 
 export const SongContainer = styled('div')`
   display: flex;
@@ -29,13 +31,18 @@ export const SongData = styled('div')`
   align-items: start;
 `;
 
-export const SongImage = styled('picture')`
+interface ISongImage {
+  $song: ISongData;
+}
+
+export const SongImage = styled('picture')<ISongImage>`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   border-radius: 4px;
   height: 75px;
   width: 75px;
+  background-image: ${p => `url(${encodeURI(`${API_URL}/images/song/${p.$song.author}/${p.$song.name}`)})`};
 `;
 
 export const SongTitle = styled('button')`

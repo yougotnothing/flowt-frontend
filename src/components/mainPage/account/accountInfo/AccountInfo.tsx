@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
-import { A, AContainer } from "../../MainPage.styled";
+import { A } from "../../MainPage.styled";
 import {
   Title,
   InfoContainer,
@@ -81,7 +81,7 @@ export const AccountInfo: React.FC = observer(() => {
                 >{setting.type}</DroplistItem>
               ))}
             </DroplistItemsContainer>
-            <UserAvatar style={{backgroundImage: `url(${$.avatar})`}}/>
+            <UserAvatar $avatar={$.avatar} $isHaveAvatar={$.userHaveAvatar} />
             <UserInfo>
               <Username>{$.username}</Username>
               <StatsContainer>
@@ -89,18 +89,18 @@ export const AccountInfo: React.FC = observer(() => {
                 <Region>{$.region}</Region>
               </StatsContainer>
               <ButtonsContainer>
-                <AContainer>
+                <div>
                   <A
                     onClick={() => navigate(generatePath("/profile/:id/followers", {id: $.username}))}>
                     followers: {$.followers.length}
                   </A>
-                </AContainer>
-                <AContainer>
+                </div>
+                <div>
                   <A
                     onClick={() => navigate(generatePath("/profile/:id/subscribes", {id: $.username}))}>
                     subscribes: {$.subscribes.length}
                   </A>
-                </AContainer>
+                </div>
               </ButtonsContainer>
             </UserInfo>
           </UserContainer>

@@ -208,9 +208,10 @@ export const DroplistItemButton = styled('button')`
 export const Menu = styled('div')`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  width: 168px;
+  align-items: start;
+  align-self: center;
+  gap: 8px;
+  padding: 6px;
   background-color: ${colors.FRONT};
   border: 2px solid ${colors.BORDER};
   border-radius: 6px;
@@ -218,7 +219,7 @@ export const Menu = styled('div')`
 
 export const MenuItem = styled('button')`
   font-family: 'Urbanist', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: ${colors.WHITE};
   text-align: start;

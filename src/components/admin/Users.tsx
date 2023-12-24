@@ -23,7 +23,7 @@ import {
   UserInfoDescriptionContainer,
   Header
 } from "./Admin.styled";
-import { handleSearch, getUser, addModerator, deleteUser } from "./functions";
+import { handleSearch, getUser, addModerator, deleteUser, changeUserActive } from "./functions";
 import { adminStore as admin } from "../../stores/toAdmin.mobx";
 import { useEffect, useRef, useState } from "react";
 import { IUserSearchAsAdmin } from "../../types/props";
@@ -61,7 +61,7 @@ export const Users = observer(() => {
 
   return (
     <>
-    <DroplistContainer>
+      <DroplistContainer>
         <GetUserInputContainer>
           <GetUserInput placeholder="search user" 
             onChange={async (e: any) => handleSearch(e)} />
@@ -88,37 +88,37 @@ export const Users = observer(() => {
       </DroplistContainer>
       {isUserChosen && searchUser && (
         <>
-        <GetUserContainer>
-          <GetUserMainInfoContainer>
-            <GetUserAvatar src={searchUser.userHaveAvatar ? searchUser.avatar : '/defaultAvatar.png'} />
-              <GetUserDataContainer>
-              <GetUserData $type="username">
-                {searchUser.username}
-              </GetUserData>
-              <GetUserData $type="else">
-                {searchUser.region}
-              </GetUserData>
-            </GetUserDataContainer>
-          </GetUserMainInfoContainer>
-          <Menu>
-            <MenuItem onClick={async () => await deleteUser(searchUser.username)}>Delete user</MenuItem>
-            <MenuItem onClick={async () => await addModerator(searchUser.username)}>Add moderator</MenuItem>
-            <MenuItem></MenuItem>
-          </Menu>
-        </GetUserContainer>
-        <Header>User info:</Header>
-        <UserInfoContainer>
-          <UserInfo><UserInfoSpan>username:</UserInfoSpan> {searchUser.username}</UserInfo>
-          <UserInfo><UserInfoSpan>email:</UserInfoSpan> {searchUser.email}</UserInfo>
-          <UserInfo><UserInfoSpan>region:</UserInfoSpan> {searchUser.region}</UserInfo>
-          <UserInfo><UserInfoSpan>roles:</UserInfoSpan> {searchUser.roles.map(role => role.toLowerCase())}</UserInfo>
-          <UserInfo><UserInfoSpan>description:</UserInfoSpan> {!searchUser.description && "user have no description"}</UserInfo>
-          {searchUser.description && (
-            <UserInfoDescriptionContainer>
-              <UserInfo>{searchUser.description}</UserInfo>
-            </UserInfoDescriptionContainer>
-          )}
-        </UserInfoContainer>
+          <GetUserContainer>
+            <GetUserMainInfoContainer>
+              <GetUserAvatar src={searchUser.userHaveAvatar ? searchUser.avatar : '/defaultAvatar.png'} />
+                <GetUserDataContainer>
+                <GetUserData $type="username">
+                  {searchUser.username}
+                </GetUserData>
+                <GetUserData $type="else">
+                  {searchUser.region}
+                </GetUserData>
+              </GetUserDataContainer>
+            </GetUserMainInfoContainer>
+            <Menu>
+              <MenuItem onClick={async () => await deleteUser(searchUser.username)}>Delete user</MenuItem>
+              <MenuItem onClick={async () => await addModerator(searchUser.username)}>Add moderator</MenuItem>
+              <MenuItem onClick={async () => await changeUserActive(searchUser.username)}>Change user active</MenuItem>
+            </Menu>
+          </GetUserContainer>
+          <Header>User info:</Header>
+          <UserInfoContainer>
+            <UserInfo><UserInfoSpan>username:</UserInfoSpan> {searchUser.username}</UserInfo>
+            <UserInfo><UserInfoSpan>email:</UserInfoSpan> {searchUser.email}</UserInfo>
+            <UserInfo><UserInfoSpan>region:</UserInfoSpan> {searchUser.region}</UserInfo>
+            <UserInfo><UserInfoSpan>roles:</UserInfoSpan> {searchUser.roles.map(role => role.toLowerCase())}</UserInfo>
+            <UserInfo><UserInfoSpan>description:</UserInfoSpan> {!searchUser.description && "user have no description"}</UserInfo>
+            {searchUser.description && (
+              <UserInfoDescriptionContainer>
+                <UserInfo>{searchUser.description}</UserInfo>
+              </UserInfoDescriptionContainer>
+            )}
+          </UserInfoContainer>
         </>
       )}
     </>

@@ -74,7 +74,7 @@ export const handleNavigateToReportContent = (param: string, navigate: NavigateF
       navigate(generatePath('/playlist/:id', { id: param }));
       break;
     case "SONG":
-      navigate(generatePath('/songs/:id', { id: param }));
+      navigate(generatePath('/song/:id', { id: param }));
       break;
   }
 }

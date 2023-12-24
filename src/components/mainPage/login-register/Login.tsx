@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { FC, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 
@@ -21,8 +21,9 @@ import { OAuthButtonsContainer } from "../../OAuth2/OAuthButtons.styled";
 import { observer } from "mobx-react-lite";
 import { OAuth } from "../../../stores/toOAuthButtons.mobx";
 import { user as $ } from "../../../stores/toUser.mobx";
+import { ILoginDTO } from "./types";
 
-export const Login: React.FC = observer(() => {
+export const Login: FC = observer(() => {
   const navigate = useNavigate();
   const[errorMessage, setErrorMessage] = useState<string | null>(null);
   const[isError, setIsError] = useState<boolean>(false);
@@ -49,25 +50,21 @@ export const Login: React.FC = observer(() => {
   }, [$.isUserAuthenticated]);
 
   const formik = useFormik<{
-    username: string,
+    login: string,
     password: string
   }>({
     initialValues: {
-      username: "",
+      login: "",
       password: ""
     },
     validationSchema: loginValidationSchema,
     onSubmit: () => {}
   });
-  const field = formik.values;
   const touched = formik.touched;
   const errors = formik.errors;
 
   async function handleLogin() {
-    const loginDto: { login: string, password: string } = {
-      login: field.username,
-      password: field.password
-    }
+    const loginDto: ILoginDTO = formik.values
 
     try {
       setIsError(false);
@@ -87,13 +84,13 @@ export const Login: React.FC = observer(() => {
       <LoginHeader>Welcome<Span>!</Span></LoginHeader>
       <InputContainer>
       <LoginInput
-        name="username"
+        name="login"
         type="username"
         placeholder="username"
         onBlur={formik.handleBlur}
         onChange={formik.handleChange}
       />
-      {errors.username && touched.username ? <ValidationSpan>{errors.username}</ValidationSpan> : null}
+      {errors.login && touched.login ? <ValidationSpan>{errors.login}</ValidationSpan> : null}
       <LoginInput
         name="password"
         type="password"
