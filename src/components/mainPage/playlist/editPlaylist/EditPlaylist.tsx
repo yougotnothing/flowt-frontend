@@ -23,6 +23,8 @@ import { PlaylistItems } from "../Playlist-Items";
 import { editPlaylistStore as editPlaylist } from "../../../../stores/toEditPlaylist.mobx";
 import settings from "../../../../json/playlistSettings.json";
 import { playlistsStore as playlist } from "../../../../stores/toPlaylists.mobx";
+import { userSongsStore as songs } from "../../../../stores/toSongs.mobx";
+import { user } from "../../../../stores/toUser.mobx";
 
 export const EditPlaylist: React.FC = observer(() => {
 
@@ -49,7 +51,12 @@ export const EditPlaylist: React.FC = observer(() => {
           <Info $type="name">{editPlaylist.name}</Info>
           <Info $type="username">{usernameStore.username}</Info>
         </PlaylistInfoContainer>
-        <PlaylistButton>Play</PlaylistButton>
+        <PlaylistButton
+          onClick={() => {
+            songs.getInfo(playlist.songs);
+            songs.setSong(0, playlist.songs[0].author);
+          }}
+        >Play</PlaylistButton>
       </PlaylistContainer>
       <SearchSongsContainer>
         <SearchSongsNav>

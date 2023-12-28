@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { api, API_URL } from "../../../api/axiosConfig";
@@ -40,11 +40,20 @@ export const Profile: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
   const[isOpen, setIsOpen] = useState(true);
   const[isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
+  const ref = useRef<any>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     playlistsStore.getPlaylists();
     searchUsers.getData();
+    
+    if(searchUsers.username !== user.username) {
+      user.getSubscribes(searchUsers.username);
+      user.getFollowers(searchUsers.username);
+    }else{
+      user.getFollowers();
+      user.getSubscribes();
+    }
   }, []);
 
   useEffect(() => {
@@ -76,10 +85,7 @@ export const Profile: React.FC = observer(() => {
   return (
     <UserContainer>
       {!user.isUserAuthenticated && <PageLoader />}
-        {isVisible
-          ? <Options $isVisible={isVisible} />
-          : <Settings $isVisible={isOpen} onClick={() => setIsVisible(true)} />
-        }
+        <Options />
         {user.user && user.followers && user.subscribes && (
         <>
           <HeadContainer>

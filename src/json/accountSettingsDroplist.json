@@ -22,5 +22,9 @@
   {
     "type": "Change password",
     "url": "change-password"
+  },
+  {
+    "type": "Manage playlists",
+    "url": "manage-playlists"
   }
 ]

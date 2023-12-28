@@ -1,12 +1,14 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
 import { IPlaylist, IPlaylistProps, ISongPlaylist } from "../types/props";
 import { api } from "../api/axiosConfig";
+import { ISongData } from "../types/types";
 
 class PlaylistsStore {
   self: IPlaylist[];
   liked: IPlaylistProps[];
-  songs: ISongPlaylist[];
-  added: ISongPlaylist[];
+  playlists: IPlaylistProps[];
+  songs: ISongData[];
+  added: ISongData[];
   avatar: any;
   avatarURL: any;
   input: string;
@@ -15,8 +17,10 @@ class PlaylistsStore {
   isHaveAvatar: boolean;
   songData: ISongPlaylist | null;
   message: string;
+  container: IPlaylist | null;
 
   constructor() {
+    this.playlists = [];
     this.self = [];
     this.songs = [];
     this.liked = [];
@@ -29,8 +33,11 @@ class PlaylistsStore {
     this.isHaveAvatar = false;
     this.songData = null;
     this.message = '';
+    this.container = null;
 
     makeObservable(this, {
+      playlists: observable,
+      container: observable,
       self: observable,
       name: observable,
       playlist: observable,
@@ -56,7 +63,25 @@ class PlaylistsStore {
       setInput: action,
       setName: action,
       setSongData: action,
-      setMessage: action
+      setMessage: action,
+      setContainer: action,
+      getPlaylists: action,
+    });
+  }
+
+  async deletePlaylist(name: string | null) {
+    try {
+      await api.delete(`/playlists/${name}`);
+      console.log(`playlist: ${name} successfully delete.`);
+    }catch(error: any) {
+      console.error(error);
+      return;
+    }
+  }
+
+  setContainer(data: IPlaylist) {
+    runInAction(() => {
+      this.container = data;
     });
   }
 
@@ -78,7 +103,7 @@ class PlaylistsStore {
     });
   }
 
-  removeAdded(song: ISongPlaylist) {
+  removeAdded(song: ISongData) {
     runInAction(() => {
       const isDuplicate = this.songs.some(existingSong => existingSong.songId === song.songId);
 
@@ -95,7 +120,7 @@ class PlaylistsStore {
     });
   }
 
-  setAdded(song: ISongPlaylist) {
+  setAdded(song: ISongData) {
     runInAction(() => {
       const isDuplicate = this.added.some(existingSong => existingSong.songId === song.songId);
 
@@ -164,6 +189,7 @@ class PlaylistsStore {
       console.log('songs added');
     }catch(error: any) {
       console.error(error);
+      return;
     }
   }
 
@@ -174,6 +200,7 @@ class PlaylistsStore {
       console.log(`Song: ${this.songData?.name}, added successfully`);
     }catch(error: any) {
       console.error(error);
+      return;
     }
   }
 
@@ -182,17 +209,20 @@ class PlaylistsStore {
       const response = await api.get('/users/playlists');
       console.log(response.data);      
       this.setSelf(response.data.playlists);
+      console.log(this.self);     
     }catch(error: any) {
       console.error(error);
+      return;
     }
   }
   
-  async removeSong(song: ISongPlaylist) {
+  async removeSong(song: ISongData) {
     try {
       await api.delete(`/playlists/${this.input}/${song.author}/${song.name}`);
       console.log(`Song: ${song.name}, removed successfully`);
     }catch(error: any) {
       console.error(error);
+      return;
     }
   }
 

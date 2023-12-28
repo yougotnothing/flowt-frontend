@@ -15,7 +15,6 @@ export const Card = styled('button')`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-auto;
   align-self: flex-start;
   padding: 24px;
   gap: 24px;
@@ -31,12 +30,18 @@ export const Card = styled('button')`
   }
 `;
 
-export const Avatar = styled('picture')`
+interface IAvatar {
+  $avatar: string | null;
+  $userHaveAvatar: boolean | null;
+}
+
+export const Avatar = styled('picture')<IAvatar>`
   width: 180px;
   height: 180px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-image: ${props => props.$userHaveAvatar ? `url(${props.$avatar})` : 'url(/defalutAvatar.png)'};
   border: none;
   border-radius: 50%;
 `;
@@ -52,5 +57,12 @@ export const PageHeader = styled('div')`
   font-family: 'Raleway', sans-serif;
   font-size: 34px;
   font-weight: 900;
+  color: ${colors.WHITE};
+`;
+
+export const Info = styled('div')`
+  font-weight: 600;
+  font-size: 16px;
+  font-family: 'Urbanist', sans-serif;
   color: ${colors.WHITE};
 `;

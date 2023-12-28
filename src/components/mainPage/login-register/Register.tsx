@@ -97,8 +97,8 @@ export const Register: FC = observer(() => {
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
         />
-        {errors.username && touched.username ? <ValidationSpan>{errors.username}</ValidationSpan> : null}
-        { errorMessage && usernameError && <ValidationSpan>{errorMessage}</ValidationSpan> }
+        {errors.username && touched.username && <ValidationSpan>{errors.username}</ValidationSpan>}
+        {errorMessage && usernameError && <ValidationSpan>{errorMessage}</ValidationSpan>}
         <LoginInput
           name="email"
           placeholder="email"
@@ -106,8 +106,8 @@ export const Register: FC = observer(() => {
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
         />
-        {errors.email && touched.email ? <ValidationSpan>{errors.email}</ValidationSpan> : null}
-        { errorMessage && emailError && <ValidationSpan>{errorMessage}</ValidationSpan> }
+        {errors.email && touched.email && <ValidationSpan>{errors.email}</ValidationSpan>}
+        {errorMessage && emailError && <ValidationSpan>{errorMessage}</ValidationSpan>}
         <LoginInput
           name="password"
           type="password"
@@ -115,8 +115,8 @@ export const Register: FC = observer(() => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        {errors.password && touched.password ? <ValidationSpan>{errors.password}</ValidationSpan> : null}
-        { errorMessage && passwordError && <ValidationSpan>{errorMessage}</ValidationSpan> }
+        {errors.password && touched.password && <ValidationSpan>{errors.password}</ValidationSpan>}
+        {errorMessage && passwordError && <ValidationSpan>{errorMessage}</ValidationSpan>}
         <LoginInput
           name="confirmPassword"
           type="password"
@@ -124,13 +124,13 @@ export const Register: FC = observer(() => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        {errors.confirmPassword && touched.password ? <ValidationSpan>{errors.confirmPassword}</ValidationSpan> : null}
+        {errors.confirmPassword && touched.password && <ValidationSpan>{errors.confirmPassword}</ValidationSpan>}
       </InputContainer>
       <LoginButton
         onClick={async () => await handleRegister()}
         disabled={isLoading}
       >
-        { isLoading ? <Loader /> : "register" }
+        {isLoading ? <Loader /> : "register"}
       </LoginButton>
       <OAuthButtonsContainer>
         <GoogleButton />

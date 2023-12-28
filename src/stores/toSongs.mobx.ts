@@ -2,6 +2,7 @@ import { action, makeObservable, observable, runInAction } from "mobx";
 
 import { ISongData, ISongParameters } from "../types/types";
 import { API_URL, api } from "../api/axiosConfig";
+import { ISongPlaylist } from "../types/props";
 
 class UserSongsStore implements ISongParameters {
   id: number | null;
@@ -11,6 +12,7 @@ class UserSongsStore implements ISongParameters {
   listens: number | null;
   avatar: string | null;
   url: any;
+  author: string | null;
   playlistId: number | null;
   playlistName: string | null;
   playlistIssueYear: string | null;
@@ -21,6 +23,7 @@ class UserSongsStore implements ISongParameters {
   container: ISongData[];
 
   constructor() {
+    this.author = null;
     this.url = null;
     this.avatar = null;
     this.listens = null;
@@ -37,6 +40,7 @@ class UserSongsStore implements ISongParameters {
     this.playlistName = null;
 
     makeObservable(this, {
+      author: observable,
       container: observable,
       listens: observable,
       id: observable,
@@ -62,6 +66,10 @@ class UserSongsStore implements ISongParameters {
 
   getInfo(data: ISongData[]) {
     this.container = data;
+  }
+
+  pushInfo(data: ISongData) {
+    this.container.push(data);
   }
 
   setUrl(URL: string) {
@@ -105,6 +113,7 @@ class UserSongsStore implements ISongParameters {
         this.genre = songInfo.genre;
         this.setName(songInfo.name);
         this.id = songInfo.songId;
+        this.author = songInfo.author;
       }
     });
   }

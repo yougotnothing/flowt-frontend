@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { colors } from "../../../../constants/colors.const";
 import { API_URL } from "../../../../api/axiosConfig";
 import { BUTTON } from "../../../../constants/styles.const";
@@ -15,6 +15,38 @@ interface IPlaylistContainerProps {
 interface IPlaylistInfoProps {
   $type: 'name' | 'username';
 }
+
+interface IPlaylistDroplist {
+  $isOpen: boolean;
+}
+
+const fadeIn = keyframes`
+  from {
+    display: none;
+    opacity: 0;
+  }
+  to {
+    display: flex;
+    opacity: 1;
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    display: flex;
+    opacity: 1;
+  }
+  to {
+    display: none;
+    opacity: 0;
+  }
+`;
+
+export const ContentContainer = styled('div')`
+  display: flex;
+  width: 1200px;
+  margin: 0 auto;
+`;
 
 export const Container = styled('div')<IPlaylistContainerProps>`
   display: flex;
@@ -75,4 +107,35 @@ export const PlaylistButton = styled('button')`
   margin: auto 24px auto auto;
   width: 140px;
   height: 34px;
+`;
+
+export const PlaylistDroplist = styled('div')<IPlaylistDroplist>`
+  display: ${p => p.$isOpen ? 'flex' : 'none'};
+  flex-direction: column;
+  align-items: start;
+  background-color: ${colors.VERY_DARK_BLUE};
+  border: 2px solid ${colors.BORDER};
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+  position: absolute;
+  left: 71%;
+  opacity: ${p => p.$isOpen ? '1' : '0'};
+  animation: ${p => p.$isOpen ? css`${fadeIn} 0.3s ease` : css`${fadeOut} 0.3s ease`};
+`;
+
+export const PlaylistItem = styled('button')`
+  width: 168px;
+  height: 32px;
+  text-align: start;
+  border: none !important;
+  
+  ${BUTTON}
+`;
+
+export const Header = styled('div')`
+  font-size: 26px;
+  font-weight: 800;
+  font-family: 'Raleway', sans-serif;
+  color: ${colors.WHITE};
 `;

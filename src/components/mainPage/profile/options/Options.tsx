@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { FC, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { OptionsContainer, Select, SelectText, CloseOptions } from "./Options.styled";
 import { Settings } from "../Profile.styled";
-import { OptionsProps } from "./Options.styled";
 import { user } from "../../../../stores/toUser.mobx";
 
-export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
-  const[isVisible, setIsVisible] = useState<boolean>(prop);
-  const[isOpen, setIsOpen] = useState(prop);
+export const Options: FC = () => {
+  const[isVisible, setIsVisible] = useState<boolean>(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setIsOpen(!isVisible);
-  }, [isVisible, isOpen]);
 
   return (
     <>
@@ -38,7 +32,7 @@ export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
           <SelectText>Notifications</SelectText>
         </Select>
         {user.username === 'admin' && (
-          <Select onClick={() => navigate('/admin/search-users')}>
+          <Select onClick={() => navigate('/admin/reports')}>
             <SelectText>Admin panel</SelectText>
           </Select>
         )}
@@ -50,7 +44,7 @@ export const Options: React.FC<OptionsProps> = ({ $isVisible: prop }) => {
           <SelectText>Logout</SelectText>
         </Select>
       </OptionsContainer>
-      {!isVisible ? <Settings $isVisible={isOpen} onClick={() => setIsVisible(true)} /> : null}
+      {!isVisible ? <Settings $isVisible={!isVisible} onClick={() => setIsVisible(true)} /> : null}
     </>
   )
 }

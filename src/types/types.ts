@@ -6,13 +6,13 @@ export type IDescription = string | null;
 export type IRegion = string | null;
 
 export interface ISongData {
+  author: string;
+  genre: string;
+  issueYear: string;
+  likes: number;
+  listens: number;
+  name: string;
   songId: number;
-  name: string | null;
-  issueYear: string | null;
-  genre: string | null;
-  listens: number | null;
-  likes: number | null;
-  author: string | null;
 }
 
 export interface ISongParameters {

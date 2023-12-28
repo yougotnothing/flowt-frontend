@@ -1,3 +1,5 @@
+import { ISongData } from "./types";
+
 export interface UserDTO {
   username: string | null;
   region: string | null;
@@ -96,7 +98,7 @@ export interface IPlaylist {
   username: string;
   playlistId: number;
   isPrivate: boolean;
-  songs: ISongPlaylist[];
+  songs: ISongData[];
 }
 
 export interface IPlaylistProps {

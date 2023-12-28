@@ -26,7 +26,6 @@ import { ILoginDTO } from "./types";
 export const Login: FC = observer(() => {
   const navigate = useNavigate();
   const[errorMessage, setErrorMessage] = useState<string | null>(null);
-  const[isError, setIsError] = useState<boolean>(false);
   const[isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -64,17 +63,15 @@ export const Login: FC = observer(() => {
   const errors = formik.errors;
 
   async function handleLogin() {
-    const loginDto: ILoginDTO = formik.values
+    const loginDto: ILoginDTO = formik.values;
 
     try {
-      setIsError(false);
       setIsLoading(true);
       setErrorMessage(null);
       await login(loginDto);
       navigate('/home');
     }catch(error: any) {
       setIsLoading(false);
-      setIsError(true);
       setErrorMessage(error.response.data.message);
     }
   }
@@ -90,7 +87,7 @@ export const Login: FC = observer(() => {
         onBlur={formik.handleBlur}
         onChange={formik.handleChange}
       />
-      {errors.login && touched.login ? <ValidationSpan>{errors.login}</ValidationSpan> : null}
+      {errors.login && touched.login && <ValidationSpan>{errors.login}</ValidationSpan>}
       <LoginInput
         name="password"
         type="password"
@@ -98,12 +95,12 @@ export const Login: FC = observer(() => {
         onBlur={formik.handleBlur}
         onChange={formik.handleChange}
       />
-      {errors.password && touched.password ? <ValidationSpan>{errors.password}</ValidationSpan> : null}
+      {errors.password && touched.password && <ValidationSpan>{errors.password}</ValidationSpan>}
       {errorMessage && <ValidationSpan>{errorMessage}</ValidationSpan>}
       </InputContainer>
       <LoginButton onClick={handleLogin} disabled={isLoading}>
         {isLoading ? <Loader /> : "Login"}
-      </LoginButton>
+       </LoginButton>
       <OAuthButtonsContainer>
         <GoogleButton />
         <FacebookButton />

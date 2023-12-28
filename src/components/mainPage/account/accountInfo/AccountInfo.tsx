@@ -38,6 +38,7 @@ import { playlistsStore as playlists } from "../../../../stores/toPlaylists.mobx
 import { editPlaylistStore as editPlaylist } from "../../../../stores/toEditPlaylist.mobx";
 import accountSettingsData from "../../../../json/accountSettingsDroplist.json";
 import { user as $ } from "../../../../stores/toUser.mobx";
+import { userSongsStore as songs } from "../../../../stores/toSongs.mobx";
 
 export const AccountInfo: React.FC = observer(() => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -48,7 +49,7 @@ export const AccountInfo: React.FC = observer(() => {
     editPlaylist.setEditing(false);
   }, []);
 
-  const handleRedirectToEditPlalist = (name: string | null, username: string | null) => {
+  const handleRedirectToEditPlaylist = (name: string | null, username: string | null) => {
     if(username && name) {
       editPlaylist.setEditing(true);
       editPlaylist.setData(name, username);
@@ -129,9 +130,11 @@ export const AccountInfo: React.FC = observer(() => {
               <PlaylistInfo $type="name">{item.name}</PlaylistInfo>
               <PlaylistInfo $type="username">{$.username}</PlaylistInfo>
             </PlaylistInfoContainer>
-            <PlaylistButton onClick={() => handleRedirectToEditPlalist(item.name, $.username)}>
-              Open
-            </PlaylistButton>
+            <PlaylistButton onClick={() => {
+              playlists.setContainer(item);
+              songs.getInfo(item.songs);
+              handleRedirectToEditPlaylist(item.name, $.username);
+            }}>Open</PlaylistButton>
           </Container>
         ))}
       </InfoContainer>

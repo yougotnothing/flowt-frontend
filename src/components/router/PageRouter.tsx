@@ -31,6 +31,7 @@ import { Admin } from "../admin/Admin";
 import { Users } from "../admin/Users";
 import { Reports } from "../admin/Reports";
 import { BrowseSongs } from "../songs/browse-songs/Songs";
+import { ManagePlaylists } from "../mainPage/playlist/manage-playlists/ManagePlaylsits";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -154,6 +155,10 @@ export const pageRouter = createBrowserRouter([
           <Admin>
             <Reports />
           </Admin>
+      },
+      {
+        path: '/account/:id/manage-playlists',
+        element: <ManagePlaylists />
       }
     ]
   }

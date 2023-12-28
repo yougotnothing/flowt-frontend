@@ -66,10 +66,8 @@ export const Player: React.FC = observer(() => {
   }, [isShuffled]);
 
   useEffect(() => {
-    if(user) {
-      song.setSong(index, user.username);
-    }
-  }, [index, user]);
+    song.setSong(index, song.author);
+  }, [index, song.author]);
 
   return (
     <>
@@ -91,7 +89,7 @@ export const Player: React.FC = observer(() => {
                 <SongPicture style={{ backgroundImage: `url(${song.avatar})` }}/>
                 <SongInfoContainer>
                   <div>
-                    <SongCreatorLink>{user.username}</SongCreatorLink>
+                    <SongCreatorLink>{song.author}</SongCreatorLink>
                   </div>
                   <SongTitle>{song.name}</SongTitle>
                 </SongInfoContainer>

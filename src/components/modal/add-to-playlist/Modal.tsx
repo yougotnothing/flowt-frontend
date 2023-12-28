@@ -24,7 +24,7 @@ export const Modal = observer(() => {
     playlist.setMessage(message);
   }
   
-  return(
+  return (
     <ModalContainer $isOpen={modal.isOpen}>
       <ModalWindow>
         <ModalText>
@@ -33,7 +33,7 @@ export const Modal = observer(() => {
         </ModalText>
         <ModalStatus>{playlist.message}</ModalStatus>
         <ContentContainer>
-        {playlist.self.map((item, index) => (
+        {Array.isArray(playlist.self) && playlist.self.map((item, index) => (
           <Container
             disabled={isSongAdded[index]}
             key={index}

@@ -42,13 +42,16 @@ export const Playlist: FC = observer(() => {
         name: formik.values.name,
         isPrivate: isPrivate
       });
+
       if(response.status === 200) {
         console.log(response.data.name, response.data.isPrivate);
         playlist.setSelf(response.data);
+        await playlist.addSongs(formik.values.name);
         console.log('Playlist created successfuly!');
       }
     }catch(error: any) {
       console.error(error);
+      return;
     }
   }
 
@@ -88,17 +91,6 @@ export const Playlist: FC = observer(() => {
     playlist.search('All');
   }, []);
 
-  const createPlaylist = async () => {
-    try {
-      if(isNull === false) {
-        await handlePostAvatar(playlist.avatar, formik.values.name);
-        await playlist.addSongs(formik.values.name);
-      }
-    }catch(error: any) {
-      console.error(error);
-    }
-  }
-
    return (
     <Container>
       <PlaylistContainer>
@@ -135,14 +127,15 @@ export const Playlist: FC = observer(() => {
           </PrivacySettings>
         </InfoContainer>
         <CreatePlaylist
-          disabled={isNull} 
+          disabled={isNull}
           onClick={() => {
-            handleCreatePlaylist();
-            createPlaylist();
-          }}
-        >
-          Create
-        </CreatePlaylist>
+            handleCreatePlaylist()
+              .then(() => {
+                handlePostAvatar(playlist.avatar, playlist.name);
+                playlist.addSongs(playlist.name);
+              });
+            }
+          }>Create</CreatePlaylist>
       </PlaylistContainer>
       <SearchSongsContainer>
         <SearchSongsNav>

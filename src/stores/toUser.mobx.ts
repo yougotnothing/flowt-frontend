@@ -46,8 +46,25 @@ class UserStore {
       setUser: action.bound,
       changeRegion: action,
       changeUsername: action,
-      postGoogleAvatar: action
+      postGoogleAvatar: action,
+      changeDescription: action.bound
     });
+  }
+
+  async changeDescription(description: string) {
+    try {
+      await api.patch('/users/description', {
+        newDescription: description
+      });
+
+      runInAction(() => {
+        this.description = description;
+      });
+
+      console.log('description changed successfully');
+    }catch(error: any) {
+      console.error(error);
+    }
   }
 
   async postGoogleAvatar(googleAvatar: string | null) {
@@ -166,7 +183,7 @@ class UserStore {
     });
   }
 
-  async getFollowers(username?: string) {
+  async getFollowers(username: string | null = null) {
     try {
       if(username) {
         const response = await api.get(`/users/followers/${username}`);
@@ -188,7 +205,7 @@ class UserStore {
     }
   }
 
-  async getSubscribes(username?: string) {
+  async getSubscribes(username: string | null = null) {
     try {
       if(username) {
         const response = await api.get(`/users/subscribes/${username}`);
