@@ -9,15 +9,18 @@ import {
   SongCreatorLink,
   SongInfoContainer,
   ShuffleButton,
+  LikeButton,
 } from "./Player.styled";
 import "react-h5-audio-player/lib/styles.css";
 import { userSongsStore as song } from "../../../stores/toSongs.mobx";
 import { observer } from "mobx-react-lite";
 import { user } from "../../../stores/toUser.mobx";
+import { likedSongs } from "../../../stores/toLiked-songs.mobx";
 
 export const Player: React.FC = observer(() => {
-  const [index, setIndex] = useState(0);
-  const [isShuffled, setIsShuffled] = useState<boolean>(false);
+  const[index, setIndex] = useState<number>(0);
+  const[isShuffled, setIsShuffled] = useState<boolean>(false);
+  const[isLiked, setIsLiked] = useState<boolean>(false);
   const SHUFFLE_ICON = isShuffled ? "url(/shuffle-on.webp)" : "url(/shuffle-off.webp)";
 
   const handlePlayNext = useCallback(() => {
@@ -66,8 +69,18 @@ export const Player: React.FC = observer(() => {
   }, [isShuffled]);
 
   useEffect(() => {
-    song.setSong(index, song.author);
-  }, [index, song.author]);
+    for(let index = 0; index < likedSongs.songs.length; index++) {
+      const likedSongElement = likedSongs.songs[index];
+
+      if(likedSongElement.author === song.author && likedSongElement.name === song.name) {
+        setIsLiked(true);
+      }
+    }
+  }, [song.author, song.name, likedSongs.songs]);
+
+  useEffect(() => {
+    song.setSong(index);
+  }, [index]);
 
   return (
     <>
@@ -93,6 +106,7 @@ export const Player: React.FC = observer(() => {
                   </div>
                   <SongTitle>{song.name}</SongTitle>
                 </SongInfoContainer>
+                <LikeButton $isLiked={isLiked} />
               </SongContainer>,
               <ShuffleButton
                 style={{ backgroundImage: SHUFFLE_ICON }}

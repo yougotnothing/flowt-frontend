@@ -16,7 +16,7 @@ import {
   LikeSongButton
 } from "./Songs.styled";
 import { userSongsStore as songs } from "../../../stores/toSongs.mobx";
-import { api, API_URL } from "../../../api/axiosConfig";
+import { api } from "../../../api/axiosConfig";
 import { user } from "../../../stores/toUser.mobx";
 
 export const Songs: React.FC = observer(() => {
@@ -66,7 +66,7 @@ export const Songs: React.FC = observer(() => {
             <SongButton onClick={() => {
               if(user.username) {
                 songs.patchSong(song);
-                songs.setSong(index, encodeURI(user.username))}
+                songs.setSong(index)}
               }}
             />
           </SongImage>
@@ -88,7 +88,7 @@ export const Songs: React.FC = observer(() => {
               </Stats>
               <Stats>
                 <SongLikedIcon />
-                <StatsTitle>liked</StatsTitle>
+                <StatsTitle>{song.likes}</StatsTitle>
               </Stats>
             </SongStatsContainer>
           </SongData>

@@ -98,6 +98,7 @@ export interface IPlaylist {
   username: string;
   playlistId: number;
   isPrivate: boolean;
+  saveCount: number;
   songs: ISongData[];
 }
 
@@ -124,4 +125,11 @@ export interface IReportDTO {
   createdAt: string;
   id: number;
   whomType: 'USER' | 'SONG' | 'PLAYLIST';
+}
+
+export interface ISearchPlaylist {
+  id: number;
+  username: string;
+  name: string;
+  songCount: number;
 }

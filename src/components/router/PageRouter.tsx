@@ -22,7 +22,6 @@ import { Playlist } from "../mainPage/playlist/Playlist";
 import { Upload } from "../upload/Upload";
 import { Player } from "../mainPage/player/Player";
 import { Notifications } from "../mainPage/notifications/Notifications";
-import { Songs } from "../songs/smallsizeSongs/Songs";
 import { GoogleAuth } from "../OAuth2/GoogleAuth";
 import { EditPlaylist } from "../mainPage/playlist/editPlaylist/EditPlaylist";
 import { FacebookAuth } from "../OAuth2/FacebookAuth";
@@ -32,6 +31,8 @@ import { Users } from "../admin/Users";
 import { Reports } from "../admin/Reports";
 import { BrowseSongs } from "../songs/browse-songs/Songs";
 import { ManagePlaylists } from "../mainPage/playlist/manage-playlists/ManagePlaylsits";
+import { LikedSongs } from "../mainPage/liked/liked-songs/Liked-songs";
+import { LikedPlaylists } from "../mainPage/liked/liked-playlists/Liked-playlists";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -159,6 +160,14 @@ export const pageRouter = createBrowserRouter([
       {
         path: '/account/:id/manage-playlists',
         element: <ManagePlaylists />
+      },
+      {
+        path: '/profile/:id/liked-songs',
+        element: <LikedSongs />
+      },
+      {
+        path: '/profile/:id/liked-playlists',
+        element: <LikedPlaylists />
       }
     ]
   }

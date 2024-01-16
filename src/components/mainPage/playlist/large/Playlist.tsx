@@ -7,29 +7,40 @@ import {
   PlaylistInfoContainer,
   PlaylistButton,
   PlaylistIcon,
-  ContentContainer
+  ContentContainer,
+  Header,
+  PlaylistDataContainer
 } from "./Playlist.styled";
 import { playlistsStore as playlists } from "../../../../stores/toPlaylists.mobx";
 import { user } from "../../../../stores/toUser.mobx";
 import { userSongsStore as songs } from "../../../../stores/toSongs.mobx";
+import { API_URL } from "../../../../api/axiosConfig";
 
 export const Playlist: FC = observer(() => {
   return (
-    <ContentContainer>
-      {playlists.container && (
-        <Container $isEditing>
-          <PlaylistIcon
-            $isEditing={false}
-            $username={user.username}
-            $name={playlists.container.name}
-          />
-          <PlaylistInfoContainer>
-            <PlaylistInfo $type="name">{playlists.container.name}</PlaylistInfo>
-            <PlaylistInfo $type="username">{user.username}</PlaylistInfo>
-          </PlaylistInfoContainer>
-          {/* <PlaylistButton onClick={songs.setSong(playlists[0].)}>click</PlaylistButton> */}
-        </Container>
-      )}
-    </ContentContainer>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 26,
+      width: 1200,
+      margin: '0 auto'
+    }}>
+      <Header>Playlist: </Header>
+      <ContentContainer>
+        {playlists.container && (
+          <Container $isEditing>
+            <PlaylistIcon
+              $username={playlists.container.username}
+              $name={playlists.container.name}
+            />
+            <PlaylistInfoContainer>
+              <PlaylistInfo $type="name">{playlists.container.name}</PlaylistInfo>
+              <PlaylistInfo $type="username">{user.username}</PlaylistInfo>
+            </PlaylistInfoContainer>
+            <PlaylistButton onClick={() => songs.setSong(0, playlists.container?.songs)}>listen</PlaylistButton>
+          </Container>
+        )}
+      </ContentContainer>
+    </div>
   );
-})
+});

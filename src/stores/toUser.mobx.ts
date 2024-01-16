@@ -224,6 +224,17 @@ class UserStore {
       }
     }catch(error: any) {
       console.error(error);
+      return;
+    }
+  }
+  
+  async getLastListenedSongs() {
+    try {
+      const response = await api.get('/users/last-listened/songs');
+      console.log('last listened songs: ', response.data);
+    }catch(error: any) {
+      console.log(error);
+      return;
     }
   }
 }

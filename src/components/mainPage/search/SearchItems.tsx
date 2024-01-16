@@ -18,6 +18,7 @@ import { API_URL } from "../../../api/axiosConfig";
 import { generatePath, useNavigate } from "react-router-dom";
 import { searchUsersStore } from "../../../stores/toSearchUsers.mobx";
 import { userSongsStore } from "../../../stores/toSongs.mobx";
+import { playlistsStore } from "../../../stores/toPlaylists.mobx";
 
 export const SearchItems: React.FC = observer(() => {
   const ref = useRef<any>(null);
@@ -91,17 +92,18 @@ export const SearchItems: React.FC = observer(() => {
         </Item>
       ))}
       {search.users.length === 0 && search.songs.length === 0 && search.playlists.length === 0 && <Text>{search.message}</Text>}
-      {search.playlists.map((playlist, index) => (
+      {search.playlists && search.playlists.map((playlist, index) => (
         <Item key={index}>
-          <ItemIcon 
+          <ItemIcon
             $type="song"
-            src={`${API_URL}/images/playlist/${playlist.author}/${playlist.name}`}
+            src={`${API_URL}/images/playlist/${playlist.username}/${playlist.name}`}
           />
           <ItemInfo>
-            <BigText>{playlist.author}</BigText>
+            <BigText>{playlist.username}</BigText>
             <Text>{playlist.name}</Text>
           </ItemInfo>
           <ItemButton onClick={() => {
+            playlistsStore.getPlaylist(playlist);
             navigate(generatePath('/playlist/:id', { id: playlist.name }));
           }}>
             See more

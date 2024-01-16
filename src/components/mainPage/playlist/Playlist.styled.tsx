@@ -57,6 +57,10 @@ export const Navbar = styled('div')`
   padding: 4px;
 `;
 
+interface INavItem {
+  $isCurrentSetting: boolean;
+}
+
 export const NavItem = styled('button')`
   background-color: transparent;
   border: none;
@@ -66,7 +70,7 @@ export const NavItem = styled('button')`
   font-weight: 600;
   font-family: 'Raleway', sans-serif;
   color: ${colors.WHITE};
-  
+
   &:hover {
     color: ${colors.SECONDARY};
   }
@@ -375,4 +379,43 @@ export const AddSong = styled('button')`
   ${BUTTON};
   width: 80px;
   height: 34px;
+`;
+
+export const PlaylistOptionsButton = styled('button')`
+  width: 34px;
+  height: 34px;
+  background-size: cover;
+  background-image: url('/settings.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  z-index: 999;
+  position: absolute;
+  left: 1158px;
+  top: 6px;
+  cursor: pointer;
+`;
+
+interface IPlaylistOptionsContainer {
+  $isOpen: boolean;
+}
+
+export const PlaylistOptionsContainer = styled('div')<IPlaylistOptionsContainer>`
+  display: ${props => props.$isOpen ? 'flex' : 'none'};
+  flex-direction: column;
+  border: 2px solid ${colors.BORDER};
+  background-color: ${colors.VERY_DARK_BLUE};
+  border-radius: 12px;
+  padding: 4px;
+  gap: 6px;
+  position: absolute;
+  left: 1026px;
+  top: 42px;
+`;
+
+export const PlaylistOption = styled('button')`
+  width: 146px;
+  height: 32px;
+  ${BUTTON}
 `;

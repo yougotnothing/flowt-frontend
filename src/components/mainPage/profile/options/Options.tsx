@@ -16,8 +16,11 @@ export const Options: FC = () => {
         <Select onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>
           <SelectText>Account</SelectText>
         </Select>
-        <Select onClick={() => navigate(generatePath('/:id/songs/liked', { id: user.username }))}>
+        <Select onClick={() => navigate(generatePath('/profile/:id/liked-songs', { id: user.username }))}>
           <SelectText>Liked songs</SelectText>
+        </Select>
+        <Select onClick={() => navigate(generatePath('/profile/:id/liked-playlists', { id: user.username }))}>
+          <SelectText>Liked playlists</SelectText>
         </Select>
         <Select onClick={() => navigate(generatePath('/:id/playlists/create-playlist', { id: user.username }))}>
           <SelectText>Create playlist</SelectText>

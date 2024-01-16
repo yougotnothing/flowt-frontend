@@ -1,4 +1,5 @@
 import { observable, action, makeObservable, runInAction } from "mobx";
+import { IPlaylist } from "../types/props";
 
 class EditPlaylistStore {
   name: string | null;
@@ -30,6 +31,13 @@ class EditPlaylistStore {
     runInAction(() => {
       this.isEditing = arg;
     });
+  }
+
+  setPlaylist(playlist: IPlaylist) {
+    runInAction(() => {
+      this.name = playlist.name;
+      this.username = playlist.username;
+    })
   }
 }
 

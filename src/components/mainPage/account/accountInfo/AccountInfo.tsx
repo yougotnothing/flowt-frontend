@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { useNavigate, generatePath } from "react-router-dom";
+import { useNavigate, generatePath, useLocation } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
 import { A } from "../../MainPage.styled";
@@ -49,16 +49,16 @@ export const AccountInfo: React.FC = observer(() => {
     editPlaylist.setEditing(false);
   }, []);
 
-  const handleRedirectToEditPlaylist = (name: string | null, username: string | null) => {
-    if(username && name) {
+  const handleRedirectToEditPlaylist = (name: string | null) => {
+    if(name && $.username) {
       editPlaylist.setEditing(true);
-      editPlaylist.setData(name, username);
+      editPlaylist.setData(name, $.username);
 
       sessionStorage.setItem('name', name);
-      sessionStorage.setItem('username', username);
-      
+      sessionStorage.setItem('username', $.username);
+
       navigate(generatePath('/:u/playlist/:n/edit-playlist', {
-        u: username,
+        u: $.username,
         n: name
       }));
     }
@@ -133,7 +133,8 @@ export const AccountInfo: React.FC = observer(() => {
             <PlaylistButton onClick={() => {
               playlists.setContainer(item);
               songs.getInfo(item.songs);
-              handleRedirectToEditPlaylist(item.name, $.username);
+              sessionStorage.setItem('songs', JSON.stringify(item.songs));
+              handleRedirectToEditPlaylist(item.name);
             }}>Open</PlaylistButton>
           </Container>
         ))}

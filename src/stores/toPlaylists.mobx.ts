@@ -1,5 +1,5 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
-import { IPlaylist, IPlaylistProps, ISongPlaylist } from "../types/props";
+import { IPlaylist, IPlaylistProps, ISearchPlaylist, ISongPlaylist } from "../types/props";
 import { api } from "../api/axiosConfig";
 import { ISongData } from "../types/types";
 
@@ -93,6 +93,12 @@ class PlaylistsStore {
     this.songData = data;
   }
 
+  setSongs(data: ISongPlaylist[]) {
+    runInAction(() => {
+      this.songs = data;
+    });
+  }
+
   setName(name: string) {
     this.name = name;
   }
@@ -120,37 +126,42 @@ class PlaylistsStore {
     });
   }
 
-  setAdded(song: ISongData) {
-    runInAction(() => {
-      const isDuplicate = this.added.some(existingSong => existingSong.songId === song.songId);
-
-      if(!isDuplicate) {
-        const filteredContainer = this.songs.filter((existingSong) => existingSong.songId !== song.songId);
-
-        this.added.push(song);
-
-        this.songs = filteredContainer;
+  setAdded(song: ISongData | null = null, container: ISongData[] | null = null) {
+    if(song && !container) {
+      runInAction(() => {
+        const isDuplicate = this.added.some((existingSong) => existingSong.songId === song.songId);
         
-        console.log("Added:", this.added);
-        console.log("Songs:", this.songs);
-      }
-    });
+        if(!isDuplicate) {
+          const filteredContainer = this.songs.filter((existingSong) => existingSong.songId !== song.songId);
+          
+          this.added.push(song);
+          
+          this.songs = filteredContainer;
+          
+          console.log("Added:", this.added);
+          console.log("Songs:", this.songs);
+        }
+      });
+    }else if(container && !song) {
+      runInAction(() => {
+        this.added = container;
+      })
+    }
   }
 
-  async search(param: string) {
-    if(param === 'All') {
-      try {
-        const response = await api.get('/search/songs',{
-          params: {
-            substring: this.input
-          }
-        });
-        runInAction(() => {
-          this.songs = response.data.songs;
-        });
-      }catch(error: any) {
-        console.error(error);
-      }
+  async search(param: string, substring: string = this.input) {
+    try {
+      const response = await api.get('/search/songs',{
+        params: {
+          substring: substring
+        }
+      });
+      runInAction(() => {
+        this.songs = response.data.songs;
+      });
+    }catch(error: any) {
+      console.error(error);
+      return;
     }
   }
 
@@ -181,15 +192,31 @@ class PlaylistsStore {
     });
   }
 
-  async addSongs(name: string) {
+  async addSongs(name: string | null, songs: ISongData[] = this.added) {
     try {
       await api.post(`/playlists/${name}`, {
-        songs: this.added
+        songs: songs
       });
       console.log('songs added');
     }catch(error: any) {
       console.error(error);
       return;
+    }
+  }
+
+  async postSong(name: string | null, author: string | null, song: ISongData) {
+    const isSongMatch = this.added.some((exitedSong) => exitedSong.songId === song.songId);
+
+    if(isSongMatch) return;
+
+    try {
+      await api.post(encodeURI(`/playlists/${name}/${author}/${song.name}`));
+
+      runInAction(() => {
+        this.added.push(song);
+      });
+    }catch(error: any) {
+      console.error(error);
     }
   }
 
@@ -207,9 +234,9 @@ class PlaylistsStore {
   async getPlaylists() {
     try {
       const response = await api.get('/users/playlists');
-      console.log(response.data);      
+      console.log(response.data);
       this.setSelf(response.data.playlists);
-      console.log(this.self);     
+      console.log(this.self);
     }catch(error: any) {
       console.error(error);
       return;
@@ -230,6 +257,62 @@ class PlaylistsStore {
     runInAction(() => {
       this.self = playlist;
     });
+  }
+
+  async getLikedPlaylists() {
+    try {
+      const response = await api.get('/users/last-listened/playlists');
+      console.log(response.data);
+    }catch(error: any) {
+      console.error('last listened: ', error);
+      return;
+    }
+  }
+
+  async getPlaylist(playlist: ISearchPlaylist) {
+    try {
+      const response = await api.get(`/playlists/${playlist.username}/${playlist.name}`);
+      this.setContainer(response.data);
+      console.log(response.data);
+    }catch(error: any) {
+      console.error(error);
+      return;
+    }
+  }
+
+  async setRecommendations(type: 'All' | 'Liked', set?: React.Dispatch<React.SetStateAction<ISongData[]>>) {
+    switch(type) {
+      case "All":
+        try {
+          const response = await api.get('/search/songs',{
+            params: {
+              substring: this.input
+            }
+          });
+          runInAction(() => {
+            set ? set(response.data.songs) : this.songs = response.data.songs;
+          });
+        }catch(error: any) {
+          console.error(error);
+          return;
+        }
+        break;
+      case "Liked":
+        try {
+          const response = await api.get('/users/liked');
+
+          runInAction(() => {
+            set
+            ? set(response.data.songs)
+            : this.songs = response.data.songs;
+          });
+          console.log(response.data.songs);
+        }catch(error: any) {
+          console.error(error);
+          return;
+        }
+        break;
+    }
   }
 }
 

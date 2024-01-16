@@ -33,6 +33,7 @@ import {
   handleSubscribe
 } from "./functions";
 import { addModerator, getUser, deleteUser } from "../../admin/functions";
+import { likedPlaylists } from "../../../stores/toLiked-playlists.mobx";
 
 export const Search: FC = observer(() => {
   const[isOpenSongs, setIsOpenSongs] = useState<boolean[]>(Array(search.songs.length).fill(false));
@@ -145,10 +146,12 @@ export const Search: FC = observer(() => {
               <CardInfo>{playlist.name}</CardInfo>
             </CardInfoContainer>
             <CardButtonsContainer $isOpen={isOpenPlaylists[index]}>
-              <CardButton>Like</CardButton>
+              <CardButton
+                // onClick={() => likedPlaylists.addLikedPlaylist(playlist)}
+              >Like</CardButton>
               <CardButton
                 disabled={playlist.username === User.username ? true : false}
-                onClick={() => handleClickPlaylistModalButton(playlist)}
+                // onClick={() => handleClickPlaylistModalButton(author)}
               >Report</CardButton>
             </CardButtonsContainer>
           </Card>

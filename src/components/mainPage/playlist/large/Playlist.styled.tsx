@@ -58,13 +58,14 @@ export const Container = styled('div')<IPlaylistContainerProps>`
   background-color: ${colors.FRONT};
   border-radius: 8px;
   border: 2px solid ${colors.BORDER};
+  position: relative;
 `;
 
 export const PlaylistIcon = styled('picture')<IPlaylistIconProps & IPlaylistContainerProps>`
   width: ${props => props.$isEditing ? '320px' : '220px'};
   height: ${props => props.$isEditing ? '320px' : '220px'};
   border-radius: 6px;
-  background-image: ${props => `url(${API_URL}/images/playlist/${props.$username}/${props.$name})`};
+  background-image: ${props => `url(${encodeURI(`${API_URL}/images/playlist/${props.$username}/${props.$name}`)})`};
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -138,4 +139,43 @@ export const Header = styled('div')`
   font-weight: 800;
   font-family: 'Raleway', sans-serif;
   color: ${colors.WHITE};
+`;
+
+export const Settings = styled('button')`
+  width: 34px;
+  height: 34px;
+  background-image: url('/settings.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+`;
+
+export const SettingsItemsContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 6px;
+  border-radius: 6px;
+  padding: 4px;
+`;
+
+export const PlaylistDataContainer = styled('div')`
+  position: absolute;
+  left: 80%;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  gap: 12px;
+  background-color: ${colors.FRONT};
+  border: 2px solid ${colors.BORDER};
 `;

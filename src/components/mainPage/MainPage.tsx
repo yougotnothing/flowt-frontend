@@ -26,6 +26,9 @@ import { Modal as AddToPlaylistModal } from "../modal/add-to-playlist/Modal";
 import { Modal as ReportModal } from "../modal/report/Modal";
 import { user } from "../../stores/toUser.mobx";
 import { userAvatarStore } from "../../stores/toChangeAvatar.mobx";
+import { ChangePlaylistAvatar } from "../modal/change-playlist-avatar/Change-playlist-avatar";
+import { DeletePlaylistModal } from "../modal/delete-playlist/Delete-Playlist";
+import { ChangePlaylistName } from "../modal/change-playlist-name/Change-playlist-name";
 
 export const MainPage: FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -107,6 +110,9 @@ export const MainPage: FC = observer(() => {
 
   return (
     <Container>
+      <ChangePlaylistName />
+      <DeletePlaylistModal />
+      <ChangePlaylistAvatar />
       <AddToPlaylistModal />
       <ReportModal />
       {isVisible && successAlert && <AlertSuccess />}

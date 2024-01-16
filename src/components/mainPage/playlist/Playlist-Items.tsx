@@ -4,11 +4,10 @@ import { observer } from "mobx-react-lite";
 import { playlistsStore as playlist } from "../../../stores/toPlaylists.mobx";
 import { AddSong, Song, SongContainer, SongContainerText, SongIcon, SongInfo, SongMainInfo, SongStats, SongStatsContainer } from "./Playlist.styled";
 import { API_URL } from "../../../api/axiosConfig";
-import { user } from "../../../stores/toUser.mobx";
 
 export const PlaylistItems: React.FC = observer(() => {
-
   useEffect(() => {
+    playlist.container && playlist.setAdded(null, playlist.container.songs);
     console.log(playlist.container?.songs);
     console.log(playlist.songs);
   }, []);
@@ -36,9 +35,7 @@ export const PlaylistItems: React.FC = observer(() => {
             <AddSong onClick={() => {
               playlist.removeAdded(song);
               playlist.removeSong(song);
-            }}>
-              Remove
-            </AddSong>
+            }}>Remove</AddSong>
           </Song>
         ))}
       </SongContainer>
@@ -63,28 +60,11 @@ export const PlaylistItems: React.FC = observer(() => {
               </SongStatsContainer>
               <AddSong onClick={() => {
                 playlist.setAdded(song);
-              }}>
-                Add
-              </AddSong>
+              }}>Add</AddSong>
             </Song>
           ))}
         </SongContainer>
       }
-      {playlist.playlist === 'Browse' && playlist.self.map((item, index) => (
-        <Song key={index}>
-          <SongStatsContainer>
-            <SongStats>{index + 1}</SongStats>
-            <SongIcon style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/playlist/${item.author}/${item.name}`)})`}} />
-            <SongMainInfo>
-              <SongInfo>{item.name}</SongInfo>
-            </SongMainInfo>
-          </SongStatsContainer>
-          <SongInfo>{item.isPrivate}</SongInfo>
-          <SongStatsContainer>
-            <SongStats>liked</SongStats>
-          </SongStatsContainer>
-        </Song>
-      ))}
     </>
   )
 });

@@ -34,17 +34,21 @@ export const Playlist: FC = observer(() => {
   const[isApply, setIsApply] = useState<boolean>(false);
   const[isNull, setIsNull] = useState<boolean>(true);
   const[isPrivate, setIsPrivate] = useState<boolean>(false);
+  const[currentSetting, setCurrentSetting] = useState<boolean[]>(Array(settings.length).fill(false));
   const location = useLocation();
 
   const handleCreatePlaylist = async () => {
     try {
       const response = await api.post('/playlists', {
         name: formik.values.name,
-        isPrivate: isPrivate
+        isPrivate: isPrivate,
+        username: user.username
       });
 
-      if(response.status === 200) {
-        console.log(response.data.name, response.data.isPrivate);
+      if(!playlist.added) {
+        console.log('add songs!!!');
+        return;
+      }else if(response.status === 200) {
         playlist.setSelf(response.data);
         await playlist.addSongs(formik.values.name);
         console.log('Playlist created successfuly!');
@@ -79,7 +83,23 @@ export const Playlist: FC = observer(() => {
     playlist.setAvatarURL(image);
     playlist.setAvatar(file);
     setIsApply(true);
+
+    console.log('avatar changed!');
   }
+
+  const setSetting = (index: number) => {
+    setCurrentSetting((prevState) => {
+      const newState = [...prevState];
+      newState[index] = true;
+      return newState;
+    });
+
+    console.log(currentSetting);
+  }
+
+  useEffect(() => {
+    console.log(currentSetting);
+  }, [currentSetting]);
 
   useEffect(() => {
     if(location.pathname !== '/:id/playlists') {
@@ -89,6 +109,7 @@ export const Playlist: FC = observer(() => {
 
   useEffect(() => {
     playlist.search('All');
+    currentSetting[0] = true;
   }, []);
 
    return (

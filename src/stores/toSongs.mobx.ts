@@ -2,7 +2,6 @@ import { action, makeObservable, observable, runInAction } from "mobx";
 
 import { ISongData, ISongParameters } from "../types/types";
 import { API_URL, api } from "../api/axiosConfig";
-import { ISongPlaylist } from "../types/props";
 
 class UserSongsStore implements ISongParameters {
   id: number | null;
@@ -100,13 +99,25 @@ class UserSongsStore implements ISongParameters {
     });
   }
 
-  setSong(index: number, username: string | null) {
+  setSong(index: number, songs: ISongData[] | null = null) {
     runInAction(() => {
-      if(this.container && index >= 0 && index < this.container.length) {
+      if(!songs && (this.container && index >= 0 && index < this.container.length)) {
         const songInfo = this.container[index];
 
-        this.setUrl(`${API_URL}/songs/audio/${username}/${songInfo.name}`);
-        this.setAvatar(`${API_URL}/images/song/${username}/${songInfo.name}`);
+        this.setUrl(`${API_URL}/songs/audio/${songInfo.author}/${songInfo.name}`);
+        this.setAvatar(`${API_URL}/images/song/${songInfo.author}/${songInfo.name}`);
+
+        this.issueYear = songInfo.issueYear;
+        this.listens = songInfo.listens;
+        this.genre = songInfo.genre;
+        this.setName(songInfo.name);
+        this.id = songInfo.songId;
+        this.author = songInfo.author;
+      }else if(songs && (songs && index >= 0 && index < songs.length)) {
+        const songInfo = songs[index];
+
+        this.setUrl(`${API_URL}/songs/audio/${songInfo.author}/${songInfo.name}`);
+        this.setAvatar(`${API_URL}/images/song/${songInfo.author}/${songInfo.name}`);
 
         this.issueYear = songInfo.issueYear;
         this.listens = songInfo.listens;
@@ -116,6 +127,20 @@ class UserSongsStore implements ISongParameters {
         this.author = songInfo.author;
       }
     });
+  }
+
+  setSongObject(Song: ISongData[], index: number) {
+    const song = Song[index];
+    runInAction(() => {
+      this.setUrl(`${API_URL}/songs/audio/${song.author}/${song.name}`);
+      this.setAvatar(`${API_URL}/images/song/${song.author}/${song.name}`);
+      this.issueYear = song.issueYear;
+      this.listens = song.listens;
+      this.genre = song.genre;
+      this.setName(song.name);
+      this.id = song.songId;
+      this.author = song.author;
+    })
   }
 
   async patchSong(songData: ISongData) {

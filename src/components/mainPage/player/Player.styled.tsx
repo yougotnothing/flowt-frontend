@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { colors } from "../../../constants/colors.const";
 
-interface ShuffleProps {
-  $isShuffled: boolean;
+interface ILikeButton {
+  $isLiked: boolean;
 }
 
 export const PlayerContainer = styled('div')`
@@ -84,6 +84,7 @@ export const SongPicture = styled('picture')`
 export const SongContainer = styled('div')`
   display: flex;
   flex-direction: row;
+  align-items: center;
   background-color: ${colors.DARK_BLUE};
   padding: 6px;
   width: 150px;
@@ -140,4 +141,18 @@ export const ShuffleButton = styled('button')`
   background-position: center;
   justify-content: center;
   margin-left: calc(50% - 150px - 100px);
+`;
+
+export const LikeButton = styled('button')<ILikeButton>`
+  border: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background-image: url(${p => p.$isLiked ? '/like_hover.png' : '/like.png'});
+  background-size: 18px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 `;

@@ -1,4 +1,5 @@
 import { api } from "../../../../api/axiosConfig";
+import { likedSongs } from "../../../../stores/toLiked-songs.mobx";
 import { playlistsStore } from "../../../../stores/toPlaylists.mobx";
 
 export const handleCreatePlaylist = async (name: string, isPrivate: boolean) => {
@@ -56,5 +57,16 @@ export const handleChangePlaylistName = async (name: string) => {
     console.log('Playlist name changed successfully!');
   }catch(error: any) {
     console.error(error);
+  }
+}
+
+export const handleChangeTypeRecommendationSongs = async (type: string) => {
+  switch(type) {
+    case "All":
+      playlistsStore.setRecommendations('All');
+      break;
+    case "Liked":
+      playlistsStore.setRecommendations('Liked');
+      break;
   }
 }

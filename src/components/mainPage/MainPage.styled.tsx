@@ -280,6 +280,7 @@ export const ItemIcon = styled('img')<IIconProps>`
   background-image: ${_ => `url(${encodeURI(`${API_URL}/images/song/${_.$song?.author}/${_.$song?.name}`)})`};
   background-position: center;
   background-repeat: no-repeat;
+  object-fit: cover;
 `;
 
 export const ItemInfo = styled('div')`

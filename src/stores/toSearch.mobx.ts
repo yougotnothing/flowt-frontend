@@ -1,12 +1,12 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
-import { IPlaylist, ISongPlaylist, IUserSearch } from "../types/props";
+import { IPlaylist, ISearchPlaylist, ISongPlaylist, IUserSearch } from "../types/props";
 import { api } from "../api/axiosConfig";
 import { ISongData } from "../types/types";
 
 class SearchStore {
   users: IUserSearch[] | [];
   songs: ISongPlaylist[] | [];
-  playlists: IPlaylist[];
+  playlists: ISearchPlaylist[];
   input: string;
   message: string | null;
   isOpen: boolean;
@@ -166,11 +166,17 @@ class SearchStore {
           substring: this.input
         }
       });
+
       console.log(response.data);
 
       runInAction(() => {
         this.playlists = response.data.playlists;
+
+        if(this.playlists.length === 0) {
+          this.message = `Can't find data by ${this.input}`;
+        }
       });
+      console.log(this.playlists);
     }catch(error: any) {
       console.log(error);
     }

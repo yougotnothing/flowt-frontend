@@ -84,7 +84,7 @@ export const FullsizeSongs: React.FC = observer(() => {
               </StatsInfoContainer>
             </StatsContainer>
           </DataContainer>
-          <ListenButton onClick={() => songs.setSong(index, user.username)} />
+          <ListenButton onClick={() => songs.setSong(index)} />
         </Container>
       ))}
     </>
