@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { colors } from "../../../constants/colors.const";
 import { BUTTON } from "../../../constants/styles.const";
+import { ISongData } from "../../../types/types";
+import { API_URL } from "../../../api/axiosConfig";
 
 interface ISongInfo {
   $type: 'name' | 'else';
@@ -25,8 +27,14 @@ export const Song = styled('div')`
   border-radius: 12px;
 `;
 
-export const SongAvatar = styled('img')`
-  object-fit: contain;
+interface ISongAvatar {
+  $src: ISongData;
+}
+
+export const SongAvatar = styled('picture')<ISongAvatar>`
+  background-size: cover;
+  background-position: center;
+  background-image: url(${({ $src }) => `${API_URL}/images/song/${$src.author}/${$src.name}`});
   width: 280px;
   height: 280px;
   border-radius: 8px;

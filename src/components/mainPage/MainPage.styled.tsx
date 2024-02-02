@@ -22,7 +22,7 @@ export const Navbar = styled('div')`
   border-radius: 0 0 20px 20px;
   width: 96vw;
   position: fixed;
-  z-index: 1000;
+  z-index: 998;
 
   .form {
     display: flex;

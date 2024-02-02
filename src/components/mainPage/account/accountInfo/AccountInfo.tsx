@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { useNavigate, generatePath, useLocation } from "react-router-dom";
+import { useNavigate, generatePath } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
 import { A } from "../../MainPage.styled";
@@ -81,6 +81,11 @@ export const AccountInfo: React.FC = observer(() => {
                   onClick={() => navigate(generatePath(`/account/:id/${setting.url}`, { id: $.username }))}
                 >{setting.type}</DroplistItem>
               ))}
+              <DroplistItem
+                $isOpen={isOpen}
+                disabled={!isOpen}
+                onClick={() => navigate(generatePath('/account/:id/artist-statistic', { id: $.username }))}
+              >Artist statistic</DroplistItem>
             </DroplistItemsContainer>
             <UserAvatar $avatar={$.avatar} $isHaveAvatar={$.userHaveAvatar} />
             <UserInfo>

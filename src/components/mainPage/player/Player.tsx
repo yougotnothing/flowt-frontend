@@ -106,7 +106,7 @@ export const Player: React.FC = observer(() => {
                   </div>
                   <SongTitle>{song.name}</SongTitle>
                 </SongInfoContainer>
-                <LikeButton $isLiked={isLiked} />
+                <LikeButton $isLiked={isLiked} onClick={() => likedSongs.likeSong(null, { author: song.author, name: song.name })} />
               </SongContainer>,
               <ShuffleButton
                 style={{ backgroundImage: SHUFFLE_ICON }}

@@ -18,6 +18,7 @@ import {
 import { userSongsStore as songs } from "../../../stores/toSongs.mobx";
 import { api } from "../../../api/axiosConfig";
 import { user } from "../../../stores/toUser.mobx";
+import { searchStore } from "../../../stores/toSearch.mobx";
 
 export const Songs: React.FC = observer(() => {
   const[isLiked, setIsLiked] = useState<boolean[]>(Array(songs.container.length).fill(false));
@@ -35,7 +36,7 @@ export const Songs: React.FC = observer(() => {
   const handleLikedSong = async (song_name: string | null, username: string | null, index: number) => {
     try {
       if(!isLiked[index]) {
-        await api.post( `/liked/${username}/${song_name}`);
+        await api.post(`/liked/${username}/${song_name}`);
         setIsLiked((prevState) => {
           const updatedStates = [...prevState];
           updatedStates[index] = true;
@@ -77,7 +78,10 @@ export const Songs: React.FC = observer(() => {
               {song.author}
             </SongTitle>
             <SongTitle
-              onClick={() => navigate(generatePath('/song/:id', { id: song.name }))}
+              onClick={() => {
+                searchStore.setSong(song);
+                navigate(generatePath('/song/:id', { id: song.name }));
+              }}
             >
               {song.name}
             </SongTitle>
@@ -93,7 +97,7 @@ export const Songs: React.FC = observer(() => {
             </SongStatsContainer>
           </SongData>
           <LikeSongButton
-            style={{backgroundImage: isLiked[index] ? 'url(/like_hover.png)' : 'url(/like.png)'}}
+            $isLiked={isLiked[index]}
             onClick={() => handleLikedSong(song.name, user.username, index)} />
         </SongContainer>
       )) : null}

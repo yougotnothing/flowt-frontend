@@ -127,8 +127,7 @@ export const UserNickname = styled('a')`
   text-align: start;
   font-size: 40px;
   font-weight: 800;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin: auto 0;
   font-family: 'Raleway', sans-serif;
   color: ${colors.WHITE};
   cursor: pointer;

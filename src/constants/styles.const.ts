@@ -25,7 +25,7 @@ export const INPUT = `
   font-family: 'Urbanist', sans-serif;
   font-weight: 400;
   font-size: 18px;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 
   &::placeholder {
     opacity: 1;
@@ -54,7 +54,8 @@ export const BUTTON = `
 
   &:hover {
     background-color: ${colors.BORDER};
-    color: ${colors.SECONDARY}; 
+    color: ${colors.SECONDARY};
+    translate: 0 -6px;
   }
 `;
 

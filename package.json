@@ -12,6 +12,7 @@
     "mobx-react-lite": "^4.0.3",
     "mobx-state-tree": "^5.2.0",
     "react": "^18.2.0",
+    "react-calendar": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-easy-crop": "^5.0.2",
     "react-h5-audio-player": "^3.8.6",
@@ -20,6 +21,7 @@
     "react-router-dom": "^6.14.2",
     "react-scripts": "^5.0.1",
     "styled-components": "^6.0.7",
+    "swiper": "^11.0.5",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
     "yup": "^1.2.0"

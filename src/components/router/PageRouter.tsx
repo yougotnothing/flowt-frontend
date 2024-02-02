@@ -33,6 +33,9 @@ import { BrowseSongs } from "../songs/browse-songs/Songs";
 import { ManagePlaylists } from "../mainPage/playlist/manage-playlists/ManagePlaylsits";
 import { LikedSongs } from "../mainPage/liked/liked-songs/Liked-songs";
 import { LikedPlaylists } from "../mainPage/liked/liked-playlists/Liked-playlists";
+import { VerifyArtist } from "../verify-artist/Verify-artist";
+import { VerifyArtists } from "../admin/Verify-artists";
+import { ArtistStatistic } from "../mainPage/account/artist-statistic/Artist-statistic";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -168,6 +171,21 @@ export const pageRouter = createBrowserRouter([
       {
         path: '/profile/:id/liked-playlists',
         element: <LikedPlaylists />
+      },
+      {
+        path: '/:id/verify-artist/send',
+        element: <VerifyArtist />
+      },
+      {
+        path: '/admin/verify-artists',
+        element: 
+          <Admin>
+            <VerifyArtists />
+          </Admin>
+      },
+      {
+        path: '/account/:id/artist-statistic',
+        element: <ArtistStatistic />
       }
     ]
   }

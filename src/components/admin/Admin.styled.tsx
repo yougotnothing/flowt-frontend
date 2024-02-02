@@ -6,6 +6,10 @@ interface IGetUserData {
   $type: 'username' | 'else';
 }
 
+interface IDroplist {
+  $isOpen: boolean;
+}
+
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -146,10 +150,6 @@ export const DroplistContainer = styled('div')`
   width: 816px;
   padding: 4px;
 `;
-
-interface IDroplist {
-  $isOpen: boolean
-}
 
 export const Droplist = styled('div')<IDroplist>`
   display: ${props => props.$isOpen ? 'flex' : 'none'};
@@ -382,4 +382,74 @@ export const UserInfoDescriptionContainer = styled('div')`
   border: 2px solid ${colors.BORDER};
   padding: 4px;
   background-color: ${colors.FRONT};
+`;
+
+export const VerifyArtistsContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 1200px;
+  gap: 24px;
+`;
+
+export const ArtistDataContainer = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: ${colors.FRONT};
+  border: 2px solid ${colors.BORDER};
+  padding: 8px;
+  border-radius: 12px;
+  gap: 8px;
+`;
+
+export const ArtistDataSpan = styled('span')`
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
+  color: ${colors.WHITE};
+`;
+
+export const ArtistData = styled('div')`
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
+  color: ${colors.DARK_WHITE};
+`;
+
+export const ArtistDataLink = styled('a')`
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Urbanist', sans-serif;
+  color: ${colors.SECONDARY};
+`;
+
+interface IArtistDataButton {
+  $type: 'apply' | 'decline';
+}
+
+export const ArtistDataButton = styled('button')<IArtistDataButton>`
+  ${BUTTON}
+  height: 34px;
+  width: 146px;
+
+  &:hover {
+    background-color: ${({ $type }) => $type === 'apply' ? colors.GREEN : colors.RED} !important;
+    color: ${colors.WHITE} !important;
+  }
+`;
+
+export const ArtistDataButtonContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 319.55px;
+`;
+
+export const Wrapper = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 320px;
+  gap: 18px;
 `;

@@ -29,6 +29,7 @@ import { userAvatarStore } from "../../stores/toChangeAvatar.mobx";
 import { ChangePlaylistAvatar } from "../modal/change-playlist-avatar/Change-playlist-avatar";
 import { DeletePlaylistModal } from "../modal/delete-playlist/Delete-Playlist";
 import { ChangePlaylistName } from "../modal/change-playlist-name/Change-playlist-name";
+import { LinksModal } from "../modal/links/Links";
 
 export const MainPage: FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -115,6 +116,7 @@ export const MainPage: FC = observer(() => {
       <ChangePlaylistAvatar />
       <AddToPlaylistModal />
       <ReportModal />
+      <LinksModal />
       {isVisible && successAlert && <AlertSuccess />}
       {isVisible && warningAlert && <AlertWarning />}
       <Navbar>

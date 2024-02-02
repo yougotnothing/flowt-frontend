@@ -1,7 +1,7 @@
 import axios from "axios";
 import { user } from "../stores/toUser.mobx";
 
-export const API_URL = 'http://localhost:8080';
+export const API_URL = process.env.REACT_APP_API_URL;
 let failedRequestsQueue: any = [];
 let isRefreshing = false;
 
@@ -16,11 +16,12 @@ api.interceptors.request.use((config => {
   return config;
 }));
 
-api.interceptors.response.use((response) => response,
+api.interceptors.response.use(
+  (response) => response,
   async (error) => {
   const originalRequest = error.config;
 
-  if(error.response.status === 401 && error.response.data === 'Token not found') return error;
+  if(error.response.status === 401 && error.response.data === 'Token not found') return Promise.reject(error);
 
   if(error.response.status === 401 && !originalRequest._retry && !originalRequest.url.includes('/auth/')) {
     if(isRefreshing) {

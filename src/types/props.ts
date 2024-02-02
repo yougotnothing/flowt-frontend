@@ -133,3 +133,26 @@ export interface ISearchPlaylist {
   name: string;
   songCount: number;
 }
+
+export interface IPersonalData {
+  name: string;
+  surname: string;
+  birthDate: string;
+  sex: string;
+  country: string;
+  passportNumber: string;
+}
+
+export interface IVerifyRequest {
+  personalDataDto: IPersonalData;
+  links: Array<{ url: string }>;
+  username: string;
+}
+
+export interface IOverallStatistic {
+  eachCountryListeningCount: {},
+  eachRegionLinsteningCount: {},
+  listeners: number,
+  listens: number,
+  songCount: number
+}

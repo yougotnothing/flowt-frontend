@@ -16,9 +16,9 @@ class LikedSongsStore {
     });
   }
 
-  async likeSong(song: ISongData | null) {
+  async likeSong(song: ISongData | null, obj?: { author: string | null, name: string | null }) {
     try {
-      await api.post(`/liked/${song?.author}/${song?.name}`);
+      await api.post(`/liked/${song ? song.author : obj?.author}/${song ? song.name : obj?.name}`);
 
       runInAction(() => {
         if(song) {

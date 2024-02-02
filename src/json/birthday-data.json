@@ -1,0 +1,14 @@
+[
+  {
+    "id": "birthDay",
+    "placeholder": "day"
+  },
+  {
+    "id": "birthMonth",
+    "placeholder": "month"
+  },
+  {
+    "id": "birthYear",
+    "placeholder": "year"
+  }
+]

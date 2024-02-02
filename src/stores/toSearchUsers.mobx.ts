@@ -83,7 +83,7 @@ class SearchUsersStore {
     });
   }
 
-  setUser(data: any) {
+  setUser(data: IUserProps | IUserSearch | null) {
     if(data) {
       runInAction(() => {
         this.username = data.username;

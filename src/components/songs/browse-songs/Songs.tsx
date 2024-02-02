@@ -18,15 +18,6 @@ import { API_URL } from "../../../api/axiosConfig";
 import { likedSongs } from "../../../stores/toLiked-songs.mobx";
 
 export const BrowseSongs: FC = observer(() => {
-  const [author, setAuthor] = useState<string | null>(null);
-
-  useEffect(() => {
-    if(search.song) {
-      setAuthor(search.song.author);
-      console.log(author);
-    }
-  }, [search.song]);
-
   useEffect(() => {
     if(search.song) {
       const songArray = [];
@@ -40,7 +31,7 @@ export const BrowseSongs: FC = observer(() => {
       <Song>
         {search.song && (
           <>
-            <SongAvatar src={`${API_URL}/images/song/${search.song?.author}/${search.song?.name}`} />
+            <SongAvatar $src={search.song} />
             <SongInfoContainer>
               <SongInfo $type="name">{search.song?.name}</SongInfo>
               <SongInfo $type="else">{search.song?.author}</SongInfo>

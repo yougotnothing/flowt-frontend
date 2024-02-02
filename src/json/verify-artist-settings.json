@@ -1,0 +1,14 @@
+[
+  {
+    "id": "name",
+    "placeholder": "name"
+  },
+  {
+    "id": "surname",
+    "placeholder": "surname"
+  },
+  {
+    "id": "passportNumber",
+    "placeholder": "passport number"
+  }
+]

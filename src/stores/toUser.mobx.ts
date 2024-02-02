@@ -1,7 +1,8 @@
 import { makeObservable, action, observable, runInAction } from "mobx";
-import { IUserProps } from "../types/props";
+import { IPlaylist, IUserProps } from "../types/props";
 import { API_URL, api } from "../api/axiosConfig";
 import { NavigateFunction, generatePath } from "react-router-dom";
+import { ISongData } from "../types/types";
 
 type ISetStateAction = (value: React.SetStateAction<boolean>) => void;
 
@@ -17,6 +18,8 @@ class UserStore {
   username: string | null;
   followers: IUserProps[];
   subscribes: IUserProps[];
+  lastListenedSongs: ISongData[];
+  lastListenedPlaylists: IPlaylist[];
 
   constructor() {
     this.user = null;
@@ -30,6 +33,8 @@ class UserStore {
     this.username = null;
     this.followers = [];
     this.subscribes = [];
+    this.lastListenedPlaylists = [];
+    this.lastListenedSongs = [];
 
     makeObservable(this, {
       isUserAuthenticated: observable,
@@ -98,8 +103,12 @@ class UserStore {
         this.description = response.data.description;
         this.userHaveAvatar = response.data.userHaveAvatar;
         this.emailVerified = response.data.emailVerified;
-        console.log(response.data.avatar);
-        console.log(response.data);
+
+        const isVerifyed = localStorage.getItem('artist verifyed');
+
+        if(!isVerifyed) {
+          localStorage.setItem('isVerifyed', 'false');
+        }
         
         if(response.data.userHaveAvatar === true) {
           this.avatar = response.data.avatar;
@@ -107,9 +116,9 @@ class UserStore {
           this.avatar = '/defaultAvatar.png';
         }
       });
-      console.log(user.user);
     }catch(error: any) {
-      console.log(error.response.data.message);
+      console.error(error.response.data.message);
+      return;
     }
   }
 
@@ -227,7 +236,7 @@ class UserStore {
       return;
     }
   }
-  
+
   async getLastListenedSongs() {
     try {
       const response = await api.get('/users/last-listened/songs');
@@ -235,6 +244,41 @@ class UserStore {
     }catch(error: any) {
       console.log(error);
       return;
+    }
+  }
+
+  async getLastListened(type: 'songs' | 'playlists' = 'songs') {
+    switch(type) {
+      case "songs":
+        try {
+          const { data } = await api.get('/users/last-listened/songs');
+
+          runInAction(() => {
+            this.lastListenedSongs = data.songs;
+          });
+
+          console.log(data.songs);
+        }catch(error: any) {
+          console.error(error);
+          return;
+        }
+
+        break;
+      case "playlists":
+        try {
+          const { data } = await api.get('/users/last-listened/playlists');
+
+          runInAction(() => {
+            this.lastListenedPlaylists = data.playlists;
+          });
+
+          console.log(data.playlists);
+        }catch(error: any) {
+          console.error(error);
+          return;
+        }
+
+        break;
     }
   }
 }

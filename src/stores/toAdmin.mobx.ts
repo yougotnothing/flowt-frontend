@@ -1,5 +1,5 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
-import { IReportDTO, IUserSearch } from "../types/props";
+import { IReportDTO, IUserSearch, IVerifyRequest } from "../types/props";
 import { api } from "../api/axiosConfig";
 
 class AdminStore {
@@ -11,8 +11,11 @@ class AdminStore {
   type: 'USER' | 'SONG' | 'PLAYLIST';
   report_mail: string;
   isOpen: boolean;
+  verify_artists_list: IVerifyRequest[];
+  page: number;
 
   constructor() {
+    this.verify_artists_list = [];
     this.input = '';
     this.user = null;
     this.users = null;
@@ -21,8 +24,10 @@ class AdminStore {
     this.type = 'USER';
     this.report_mail = '';
     this.isOpen = false;
+    this.page = 0;
 
     makeObservable(this, {
+      verify_artists_list: observable,
       input: observable,
       isOpen: observable,
       report_mail: observable,
@@ -37,8 +42,33 @@ class AdminStore {
       setUser: action,
       setUsers: action,
       getReports: action.bound,
-      setIsOpen: action
+      setIsOpen: action,
+      getVerifyArtists: action.bound
     });
+  }
+
+  async getVerifyArtists() {
+    try {
+      const response = await api.get('/moderator/artist/requests');
+      runInAction(() => {
+        this.verify_artists_list = response.data.artistVerifyRequests;
+      });
+      console.log(response.data);
+    }catch(error: any) {
+      console.error(error);
+      return;
+    }
+  }
+
+  async applyArtist(username: string | null) {
+    try {
+      const response = await api.patch(`/moderator/artist/${username}`);
+      console.log(response.data);
+      console.log('artist verifyed');
+    }catch(error: any) {
+      console.error(error);
+      return;
+    }
   }
 
   setIsOpen(value: boolean) {
@@ -87,7 +117,7 @@ class AdminStore {
     try {
       const response = await api.get('/search/users', {
         params: {
-          page: 0,
+          page: this.page,
           substring: this.input
         }
       });
@@ -109,20 +139,21 @@ class AdminStore {
   }
 
   parseData() {
-    const options = { day: 'numeric', month: 'long', year: "numeric" } as Intl.DateTimeFormatOptions;
+    const options = { day: 'numeric', month: 'long', year: 'numeric' } as Intl.DateTimeFormatOptions;
     const formattedDate = new Intl.DateTimeFormat('en-EN', options);
-
+ 
     for(let index = 0; index <= this.reports.length; index++) {
       if(this.reports[index]) {
         const createdAtObject = new Date(this.reports[index].createdAt);
         const checkedAtObject = new Date(this.reports[index].createdAt);
+
         this.reports[index].createdAt = formattedDate.format(createdAtObject);
+
         if(this.reports[index].checkedAt) {
           this.reports[index].checkedAt = formattedDate.format(checkedAtObject);
         }else{
           this.reports[index].checkedAt = 'Report is not checked now.';
         }
-        console.log(this.reports);
       }
     }
   }

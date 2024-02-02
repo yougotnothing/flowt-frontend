@@ -108,7 +108,7 @@ export const UserAvatar = styled('picture')<IUserAvatar>`
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 50%;
-  background-image: ${props => props.$isHaveAvatar ? `url(${props.$avatar})` : 'url(/defaultAvatar.png)'}
+  background-image: ${props => props.$isHaveAvatar ? `url(${props.$avatar})` : 'url(/defaultAvatar.png)'};
 `;
 
 export const UserInfo = styled('div')`

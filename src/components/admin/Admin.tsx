@@ -15,10 +15,16 @@ export const Admin: FC<{ children?: ReactElement }> = observer(({ children }) =>
   const location = useLocation();
 
   useEffect(() => {
-    if(location.pathname === '/admin/reports') {
-      setHeader('Reports');
-    }else{
-      setHeader('Search users');
+    switch(location.pathname) {
+      case "/admin/search-users":
+        setHeader('Search users');
+        break;
+      case "/admin/reports":
+        setHeader('Reports');
+        break;
+      case "/admin/verify-artists":
+        setHeader('Verify artists');
+        break;
     }
   }, [location.pathname]);
 
@@ -27,6 +33,7 @@ export const Admin: FC<{ children?: ReactElement }> = observer(({ children }) =>
       <AdminPanel>
         <AdminPanelButtons onClick={() => navigate('/admin/search-users')}>Go to users</AdminPanelButtons>
         <AdminPanelButtons onClick={() => navigate('/admin/reports')}>Go to reports</AdminPanelButtons>
+        <AdminPanelButtons onClick={() => navigate('/admin/verify-artists')}>Go to verify artists</AdminPanelButtons>
       </AdminPanel>
       <Header>{header}</Header>
       {children}

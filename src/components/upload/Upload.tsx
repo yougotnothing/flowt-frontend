@@ -212,7 +212,7 @@ export const Upload: FC = () => {
                 <Label htmlFor="uploadAudio">{song ? "Chose another" : "Chose song"}</Label>
                 <SubmitContainer>
                   <UploadButton
-                    disabled={isLoading}
+                    disabled={user.emailVerified ? isLoading : true}
                     onClick={() => postSong()}>
                     {isLoading ? <Loader /> : "submit" }
                   </UploadButton>

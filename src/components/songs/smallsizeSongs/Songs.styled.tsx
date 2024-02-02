@@ -123,7 +123,11 @@ export const SongButton = styled('button')`
   }
 `;
 
-export const LikeSongButton = styled('button')`
+interface ILikeSongButton {
+  $isLiked: boolean;
+}
+
+export const LikeSongButton = styled('button')<ILikeSongButton>`
   width: 36px;
   height: 36px;
   background-color: ${colors.FRONT};
@@ -134,6 +138,7 @@ export const LikeSongButton = styled('button')`
   transition: 0.3s;
   cursor: pointer;
   border: 2px solid ${colors.FRONT};
+  background-image: url(${({ $isLiked }) => $isLiked ? '/like_hover.png' : '/like.png'});
   
   &:hover {
     background-color: ${colors.BORDER};

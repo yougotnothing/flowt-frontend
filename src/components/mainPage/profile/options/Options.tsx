@@ -34,6 +34,9 @@ export const Options: FC = () => {
         <Select onClick={() => navigate(generatePath('/notifications/:id', { id: user.username }))}>
           <SelectText>Notifications</SelectText>
         </Select>
+        <Select onClick={() => navigate(generatePath('/:id/verify-artist/send', { id: user.username }))}>
+          <SelectText>Verify artist</SelectText>
+        </Select>
         {user.username === 'admin' && (
           <Select onClick={() => navigate('/admin/reports')}>
             <SelectText>Admin panel</SelectText>
