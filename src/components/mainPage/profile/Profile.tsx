@@ -35,6 +35,7 @@ import { searchUsersStore as searchUsers } from "../../../stores/toSearchUsers.m
 import { IUserProps } from "../../../types/props";
 import { playlistsStore } from "../../../stores/toPlaylists.mobx";
 import { user } from "../../../stores/toUser.mobx";
+import { Title as Helmet } from "../../../helmet";
 
 export const Profile: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -84,6 +85,7 @@ export const Profile: React.FC = observer(() => {
 
   return (
     <UserContainer>
+      <Helmet title={`Profile: ${searchUsers.username}`} />
       {!user.isUserAuthenticated && <PageLoader />}
         <Options />
         {user.user && user.followers && user.subscribes && (

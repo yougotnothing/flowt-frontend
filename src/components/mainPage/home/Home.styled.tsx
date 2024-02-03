@@ -51,6 +51,8 @@ export const LikedSongs = styled('div')`
   border-radius: 12px;
   padding: 8px;
   max-width: 200px;
+  max-height: 360px;
+  overflow-y: auto;
 `;
 
 export const Song = styled('div')`

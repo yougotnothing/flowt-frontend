@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { adminStore } from "../../stores/toAdmin.mobx";
 import { ArtistData, ArtistDataButton, ArtistDataButtonContainer, ArtistDataContainer, ArtistDataLink, ArtistDataSpan, VerifyArtistsContainer, Wrapper } from "./Admin.styled";
+import { Title as Helmet } from "../../helmet";
 
 export const VerifyArtists = observer(() => {
   const[isRequestsVerified, setIsRequestsVerified] = useState<Array<boolean>>(
@@ -24,6 +25,7 @@ export const VerifyArtists = observer(() => {
 
   return (
     <VerifyArtistsContainer>
+      <Helmet title="Verify artist" />
       {adminStore.verify_artists_list.map((request, index) => {
         return (
           <Wrapper key={index}>

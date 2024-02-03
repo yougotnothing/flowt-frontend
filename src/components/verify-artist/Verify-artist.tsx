@@ -14,16 +14,7 @@ export const VerifyArtist = observer(() => {
   const[currentCountry, setCurrentCountry] = useState<string>('');
   const[isOpen, setIsOpen] = useState<boolean>(false);
   const[gender, setGender] = useState<'male' | 'female'>('male');
-  const[links, setLinks] = useState<Array<{ url: string }>>([]);
   const date = verifyArtist.personalData.birthDate.split('.');
-
-  const handlePushLink = (url: string) => {
-    setLinks(prevState => {
-      const newState = [...prevState];
-      newState.push({ url: url });
-      return newState;
-    });
-  }
   
   const formik = useFormik<{
     name: string;
@@ -37,9 +28,9 @@ export const VerifyArtist = observer(() => {
       name: '',
       surname: '',
       passportNumber: '',
-      birthDay: encodeURIComponent(date[0]),
-      birthMonth: encodeURIComponent(date[1]),
-      birthYear: encodeURIComponent(date[2])
+      birthDay: date[0],
+      birthMonth: date[1],
+      birthYear: date[2]
     },
     onSubmit: () => {},
     validationSchema: verifyArtistSchema

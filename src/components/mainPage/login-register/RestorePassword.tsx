@@ -19,6 +19,7 @@ import {
 import { Loader } from "../../loader/Loader";
 import { URLS } from "../../../constants/urls.const";
 import { user } from "../../../stores/toUser.mobx";
+import { Title as Helmet } from "../../../helmet";
 
 export const RestorePassword: React.FC = () => {
   const[errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -73,6 +74,7 @@ export const RestorePassword: React.FC = () => {
 
   return (
     <Container>
+      <Helmet title="Restore password" />
       {localStorage.getItem('token') ? (
         <AContainer>
           <A onClick={() => navigate(generatePath('/account/:id', {id: user.username}))}>

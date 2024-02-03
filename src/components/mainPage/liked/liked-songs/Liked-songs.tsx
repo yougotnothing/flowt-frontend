@@ -17,6 +17,7 @@ import {
 import { likedSongs } from "../../../../stores/toLiked-songs.mobx";
 import { userSongsStore as songs } from "../../../../stores/toSongs.mobx";
 import { ISongData } from "../../../../types/types";
+import { Title as Helmet } from "../../../../helmet";
 
 export const LikedSongs = observer(() => {
   const [isLiked, setIsLiked] = useState<boolean[]>([]);
@@ -41,6 +42,7 @@ export const LikedSongs = observer(() => {
 
   return (
     <Container>
+      <Helmet title="Liked songs" />
       <Header>Liked songs:</Header>
       {likedSongs.songs.map((song, index) => (
         <React.Fragment key={index}>

@@ -14,7 +14,7 @@ import {
 import { playlistsStore as playlists } from "../../../../stores/toPlaylists.mobx";
 import { user } from "../../../../stores/toUser.mobx";
 import { userSongsStore as songs } from "../../../../stores/toSongs.mobx";
-import { API_URL } from "../../../../api/axiosConfig";
+import { Title as Helmet } from "../../../../helmet";
 
 export const Playlist: FC = observer(() => {
   return (
@@ -25,6 +25,7 @@ export const Playlist: FC = observer(() => {
       width: 1200,
       margin: '0 auto'
     }}>
+      <Helmet title={`Playlist: ${playlists.container?.name}`} />
       <Header>Playlist: </Header>
       <ContentContainer>
         {playlists.container && (

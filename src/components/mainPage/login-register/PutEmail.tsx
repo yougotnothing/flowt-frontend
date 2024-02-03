@@ -16,6 +16,7 @@ import {
   InputContainer
 } from "./Login.register.styled";
 import { URLS } from "../../../constants/urls.const";
+import { Title as Helmet } from "../../../helmet";
 
 export const PutEmail: React.FC = () => {
   const[validationError, setValidationError] = useState<string | null>(null);
@@ -51,6 +52,7 @@ export const PutEmail: React.FC = () => {
       
   return (
     <LoginCard>
+      <Helmet title="Put email" />
       <LoginHeader>Enter <Span>email</Span></LoginHeader>
       <InputContainer>
         <LoginInput

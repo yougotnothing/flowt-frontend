@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 
 import { observer } from "mobx-react-lite";
 import { 
@@ -17,7 +17,7 @@ import {
 } from "./Liked-playlists.styled";
 import { likedPlaylists } from "../../../../stores/toLiked-playlists.mobx";
 import { userSongsStore as songs } from "../../../../stores/toSongs.mobx";
-import React from "react";
+import { Title as Helmet } from "../../../../helmet";
 
 export const LikedPlaylists = observer(() => {
   const [isLiked, setIsLiked] = useState<boolean[]>([]);
@@ -29,10 +29,11 @@ export const LikedPlaylists = observer(() => {
 
   return (
     <Container>
+      <Helmet title="Saved playlists" />
       <Header>Saved playlists: </Header>
       <PlaylistsContainer>
         {likedPlaylists.playlists && likedPlaylists.playlists.map((playlist, index) => (
-          <React.Fragment key={index}>
+          <Fragment key={index}>
             <Playlist>
               <DataContainer>
                 <PlaylistIcon $playlist={playlist} />
@@ -49,7 +50,7 @@ export const LikedPlaylists = observer(() => {
               </ManagementButtonsContainer>
             </Playlist>
             <Border />
-          </React.Fragment>
+          </Fragment>
         ))}
       </PlaylistsContainer>
     </Container>

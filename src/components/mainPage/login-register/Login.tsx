@@ -22,6 +22,7 @@ import { observer } from "mobx-react-lite";
 import { OAuth } from "../../../stores/toOAuthButtons.mobx";
 import { user as $ } from "../../../stores/toUser.mobx";
 import { ILoginDTO } from "./types";
+import { Title as Helmet } from "../../../helmet";
 
 export const Login: FC = observer(() => {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ export const Login: FC = observer(() => {
   const touched = formik.touched;
   const errors = formik.errors;
 
-  async function handleLogin() {
+  const handleLogin = async () => {
     const loginDto: ILoginDTO = formik.values;
 
     try {
@@ -78,6 +79,7 @@ export const Login: FC = observer(() => {
 
   return (
     <LoginCard>
+      <Helmet title="Login" />
       <LoginHeader>Welcome<Span>!</Span></LoginHeader>
       <InputContainer>
       <LoginInput

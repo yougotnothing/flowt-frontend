@@ -16,6 +16,7 @@ import { userSongsStore as song } from "../../../stores/toSongs.mobx";
 import { observer } from "mobx-react-lite";
 import { user } from "../../../stores/toUser.mobx";
 import { likedSongs } from "../../../stores/toLiked-songs.mobx";
+import { Title as Helmet } from "../../../helmet";
 
 export const Player: React.FC = observer(() => {
   const[index, setIndex] = useState<number>(0);
@@ -86,6 +87,7 @@ export const Player: React.FC = observer(() => {
     <>
       {user && song.url && (
         <PlayerContainer>
+          <Helmet title={`Playing: ${song.name}`} />
           <H5AudioPlayer
             layout="stacked-reverse"
             volume={0.5}
@@ -106,7 +108,10 @@ export const Player: React.FC = observer(() => {
                   </div>
                   <SongTitle>{song.name}</SongTitle>
                 </SongInfoContainer>
-                <LikeButton $isLiked={isLiked} onClick={() => likedSongs.likeSong(null, { author: song.author, name: song.name })} />
+                <LikeButton 
+                  $isLiked={isLiked}
+                  onClick={() => likedSongs.likeSong(null, { author: song.author, name: song.name })}
+                />
               </SongContainer>,
               <ShuffleButton
                 style={{ backgroundImage: SHUFFLE_ICON }}

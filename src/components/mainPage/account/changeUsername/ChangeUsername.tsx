@@ -22,6 +22,7 @@ import { Loader } from "../../../loader/Loader";
 import { user } from "../../../../stores/toUser.mobx";
 import { AccountSettings } from "../AccountSettings";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
+import { Title as Helmet } from "../../../../helmet";
 
 export const ChangeUsername: React.FC = observer(() => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
@@ -67,6 +68,7 @@ export const ChangeUsername: React.FC = observer(() => {
   
   return (
     <AccountContainer>
+      <Helmet title={`${user.username}: change username`} />
       {!user.isUserAuthenticated && <PageLoader />}
       {user.isUserAuthenticated && (
         <GlobalContainer>

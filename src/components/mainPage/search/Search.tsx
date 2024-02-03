@@ -32,8 +32,8 @@ import {
   handleMouseLeave,
   handleSubscribe
 } from "./functions";
-import { addModerator, getUser, deleteUser } from "../../admin/functions";
-import { likedPlaylists } from "../../../stores/toLiked-playlists.mobx";
+import { addModerator, deleteUser } from "../../admin/functions";
+import { Title as Helmet } from "../../../helmet";
 
 export const Search: FC = observer(() => {
   const[isOpenSongs, setIsOpenSongs] = useState<boolean[]>(Array(search.songs.length).fill(false));
@@ -51,6 +51,7 @@ export const Search: FC = observer(() => {
 
   return (
     <Container>
+      <Helmet title={`Search: ${search.input}`} />
       <Header>Search</Header>
       <FiltersContainer>
         <SearchFilters>

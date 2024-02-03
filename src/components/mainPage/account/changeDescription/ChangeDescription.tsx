@@ -21,6 +21,7 @@ import { Span } from '../../login-register/Login.register.styled';
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { URLS } from "../../../../constants/urls.const";
 import { user } from '../../../../stores/toUser.mobx';
+import { Title as Helmet } from '../../../../helmet';
 
 export const ChangeDescription: React.FC = () => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
@@ -71,6 +72,7 @@ export const ChangeDescription: React.FC = () => {
 
   return (
     <AccountContainer>
+      <Helmet title="Change description" />
       {!user.isUserAuthenticated && <PageLoader />}
       {user.isUserAuthenticated && <AccountSettings />}
       <Container>

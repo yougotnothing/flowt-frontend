@@ -20,6 +20,8 @@ import {
 import { Loader } from "../../../loader/Loader";
 import { URLS } from "../../../../constants/urls.const";
 import { user } from "../../../../stores/toUser.mobx";
+import { Title as Helmet } from "../../../../helmet";
+
 export const ChangePassword: React.FC = () => {
   const[errorMessage, setErrorMessage] = useState<any>('');
   const[isLoading, setIsLoading] = useState<boolean>(false);
@@ -84,6 +86,7 @@ export const ChangePassword: React.FC = () => {
 
   return (
     <AccountContainer>
+      <Helmet title={`${user.username}: change password`} />
       <AccountSettings />
       <Container>
         {localStorage.getItem('token') ? (

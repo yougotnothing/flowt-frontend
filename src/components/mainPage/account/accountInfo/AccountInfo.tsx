@@ -39,9 +39,10 @@ import { editPlaylistStore as editPlaylist } from "../../../../stores/toEditPlay
 import accountSettingsData from "../../../../json/accountSettingsDroplist.json";
 import { user as $ } from "../../../../stores/toUser.mobx";
 import { userSongsStore as songs } from "../../../../stores/toSongs.mobx";
+import { Title as Helmet } from "../../../../helmet";
 
 export const AccountInfo: React.FC = observer(() => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const[isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,6 +67,7 @@ export const AccountInfo: React.FC = observer(() => {
 
   return (
     <AccountContainer>
+      <Helmet title={`Account info: ${$.username}`} />
       {!$.isUserAuthenticated && <PageLoader />}
       <InfoContainer>
         <Title>Your info</Title>

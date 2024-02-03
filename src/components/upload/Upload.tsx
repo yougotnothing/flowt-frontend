@@ -34,6 +34,7 @@ import { songNameSchema } from "../../validation/yup.config";
 import { Loader } from "../loader/Loader";
 import genresData from "../../json/genres.json";
 import { user } from "../../stores/toUser.mobx";
+import { Title as Helmet } from "../../helmet";
 
 export const Upload: FC = () => {
   const[songGenre, setSongGenre] = useState<string | null>(null);
@@ -150,6 +151,7 @@ export const Upload: FC = () => {
       {!user && <PageLoader />}
       {user && (
         <>
+          <Helmet title="Upload song" />
           <AccountSettings />
           <UploadContainer>
             <Container>

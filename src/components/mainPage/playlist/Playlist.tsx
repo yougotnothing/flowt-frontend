@@ -29,6 +29,7 @@ import { handlePostAvatar } from "./functions";
 import { PlaylistItems } from "./Playlist-Items";
 import { api } from "../../../api/axiosConfig";
 import { user } from "../../../stores/toUser.mobx";
+import { Title as Helmet } from "../../../helmet";
 
 export const Playlist: FC = observer(() => {
   const[isApply, setIsApply] = useState<boolean>(false);
@@ -87,16 +88,6 @@ export const Playlist: FC = observer(() => {
     console.log('avatar changed!');
   }
 
-  const setSetting = (index: number) => {
-    setCurrentSetting((prevState) => {
-      const newState = [...prevState];
-      newState[index] = true;
-      return newState;
-    });
-
-    console.log(currentSetting);
-  }
-
   useEffect(() => {
     console.log(currentSetting);
   }, [currentSetting]);
@@ -114,6 +105,7 @@ export const Playlist: FC = observer(() => {
 
    return (
     <Container>
+      <Helmet title="Create playlist" />
       <PlaylistContainer>
         <Input
           type="file"

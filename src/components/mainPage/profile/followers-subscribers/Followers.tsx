@@ -12,12 +12,14 @@ import {
 import { observer } from "mobx-react-lite";
 import { user } from "../../../../stores/toUser.mobx";
 import { searchUsersStore as searchUsers } from "../../../../stores/toSearchUsers.mobx";
+import { Title as Helmet } from "../../../../helmet";
 
 export const Followers: FC = observer(() => {
   const navigate = useNavigate();
 
   return(
     <Container>
+      <Helmet title={`Followers: ${user.username}`} />
       <PageHeader>Followers</PageHeader>
       {user.followers.map((follower, index) => (
         <Card key={index}

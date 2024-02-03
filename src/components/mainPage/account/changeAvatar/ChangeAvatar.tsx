@@ -22,11 +22,11 @@ import {
 } from "./ChangeAvatar.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { userAvatarStore as avatarStore } from "../../../../stores/toChangeAvatar.mobx";
-import { userUsernameStore } from "../../../../stores/toChangeUsername.mobx";
 import Cropper from "react-easy-crop";
 import { getCroppedImg } from "../../../avatar/canvas";
 import { api } from "../../../../api/axiosConfig";
 import { user } from "../../../../stores/toUser.mobx";
+import { Title as Helmet } from "../../../../helmet";
 
 export const ChangeAvatar: React.FC = observer(() => {
   const[isFileChosen, setIsFileChosen] = useState<boolean>(false);
@@ -89,6 +89,7 @@ export const ChangeAvatar: React.FC = observer(() => {
 
   return (
     <AccountContainer>
+      <Helmet title="Change avatar" />
       {!user.isUserAuthenticated && <PageLoader />}
       {user.isUserAuthenticated && (
         <GlobalContainer>

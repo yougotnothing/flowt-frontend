@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 
 import { observer } from "mobx-react-lite";
 import {
@@ -14,8 +14,8 @@ import {
 } from "./Songs.styled";
 import { searchStore as search } from "../../../stores/toSearch.mobx";
 import { userSongsStore as songs } from "../../../stores/toSongs.mobx";
-import { API_URL } from "../../../api/axiosConfig";
 import { likedSongs } from "../../../stores/toLiked-songs.mobx";
+import { Title as Helmet } from "../../../helmet";
 
 export const BrowseSongs: FC = observer(() => {
   useEffect(() => {
@@ -28,27 +28,28 @@ export const BrowseSongs: FC = observer(() => {
 
   return (
     <Container>
-      <Song>
-        {search.song && (
-          <>
+      {search.song && (
+        <>
+        <Helmet title={`Song: ${search.song.name}`} />
+          <Song>
             <SongAvatar $src={search.song} />
             <SongInfoContainer>
-              <SongInfo $type="name">{search.song?.name}</SongInfo>
-              <SongInfo $type="else">{search.song?.author}</SongInfo>
+              <SongInfo $type="name">{search.song.name}</SongInfo>
+              <SongInfo $type="else">{search.song.author}</SongInfo>
             </SongInfoContainer>
             <SongButton onClick={() => songs.setSong(0)}>Listen</SongButton>
             <SongButton onClick={() => likedSongs.likeSong(search.song)}></SongButton>
-          </>
-        )}
-      </Song>
-      <SongInfo $type="name">Song info:</SongInfo>
-      <SongDataContainer>
-        <SongData><SongDataSpan>Author: </SongDataSpan>{search.song?.author}</SongData>
-        <SongData><SongDataSpan>Genre: </SongDataSpan>{search.song?.genre && search.song?.genre.toLowerCase()}</SongData>
-        <SongData><SongDataSpan>Listens: </SongDataSpan>{search.song?.listens}</SongData>
-        <SongData><SongDataSpan>Likes: </SongDataSpan>{search.song?.likes}</SongData>
-        <SongData><SongDataSpan>Year of issue: </SongDataSpan>{search.song?.issueYear && search.song?.issueYear.replaceAll('/', '.')}</SongData>
-      </SongDataContainer>
+          </Song>
+          <SongInfo $type="name">Song info:</SongInfo>
+          <SongDataContainer>
+            <SongData><SongDataSpan>Author: </SongDataSpan>{search.song.author}</SongData>
+            <SongData><SongDataSpan>Genre: </SongDataSpan>{search.song.genre.toLowerCase()}</SongData>
+            <SongData><SongDataSpan>Listens: </SongDataSpan>{search.song.listens}</SongData>
+            <SongData><SongDataSpan>Likes: </SongDataSpan>{search.song.likes}</SongData>
+            <SongData><SongDataSpan>Year of issue: </SongDataSpan>{search.song.issueYear.replaceAll('/', '.')}</SongData>
+          </SongDataContainer>
+        </>
+      )}
     </Container>
   );
 });

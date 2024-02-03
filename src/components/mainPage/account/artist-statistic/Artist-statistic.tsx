@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Container, Header, NavButton, Navbar, Stats, StatsContainer } from "./Artist-statistic.styled";
 import { artistStatistic } from "../../../../stores/toArtist-statistic.mobx";
+import { Title } from "../../../../helmet";
 
 export const ArtistStatistic = observer(() => {
   const [type, setType] = useState<boolean>(true);
@@ -26,6 +27,7 @@ export const ArtistStatistic = observer(() => {
 
   return (
     <Container>
+      <Title title="Artist statistic" />
       <Header>Artist statistic</Header>
       <Navbar>
         <NavButton

@@ -27,6 +27,7 @@ import { userEmailStore } from "../../../../stores/toChangeEmail.mobx";
 import { observer } from "mobx-react-lite";
 import { URLS } from "../../../../constants/urls.const";
 import { user } from "../../../../stores/toUser.mobx";
+import { Title as Helmet } from "../../../../helmet";
 
 export const ChangeEmail: React.FC = observer(() => {
   const[isLoading, setIsLoading] = useState<boolean>(false);
@@ -71,6 +72,7 @@ export const ChangeEmail: React.FC = observer(() => {
 
   return (
     <AccountContainer>
+      <Helmet title="Change email" />
       {!user.isUserAuthenticated && <PageLoader />}
       {user.isUserAuthenticated && (
         <GlobalContainer>

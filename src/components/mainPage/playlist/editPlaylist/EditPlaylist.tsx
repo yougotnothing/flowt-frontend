@@ -32,6 +32,7 @@ import { user } from "../../../../stores/toUser.mobx";
 import { modalStore } from "../../../../stores/toModal.mobx";
 import { deletePlaylistStore } from "../../../../stores/toDelete-playlist.mobx";
 import { changePlaylistName } from "../../../../stores/toChange-playlist-name.mobx";
+import { Title } from "../../../../helmet";
 
 export const EditPlaylist: React.FC = observer(() => {
   const [recommendations, setRecommendations] = useState<ISongData[]>([]);
@@ -127,6 +128,7 @@ export const EditPlaylist: React.FC = observer(() => {
 
   return (
     <Container>
+      <Title title="Edit playlist" />
       <PlaylistContainer $isEditing={editPlaylist.isEditing}>
         <Icon
           $isEditing={editPlaylist.isEditing}

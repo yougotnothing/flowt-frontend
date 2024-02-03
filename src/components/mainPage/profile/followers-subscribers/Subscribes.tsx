@@ -5,12 +5,14 @@ import { Container, Avatar, Card, Header, PageHeader, Info } from "./Followers.s
 import { observer } from "mobx-react-lite";
 import { searchUsersStore as searchUsers } from "../../../../stores/toSearchUsers.mobx";
 import { user } from "../../../../stores/toUser.mobx";
+import { Title as Helmet } from "../../../../helmet";
 
 export const Subscribers: FC = observer(() => {
   const navigate = useNavigate();
 
   return(
     <Container>
+      <Helmet title={`Subscribes: ${user.username}`} />
       <PageHeader>Subscribes</PageHeader>
       {user.subscribes.map((subscribe, index) => (
         <Card key={index}

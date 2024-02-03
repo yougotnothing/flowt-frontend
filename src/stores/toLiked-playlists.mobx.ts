@@ -18,11 +18,12 @@ class LikedPlaylistsStore {
 
   async setLikedPlaylists() {
     try {
-      const response = await api.get('/users/saved-playlists');
+      const { data } = await api.get('/users/saved-playlists');
 
-      console.log(response.data);
+      console.log(data);
+      
       runInAction(() => {
-        this.playlists = response.data.playlists;
+        this.playlists = data.playlists;
       });
     }catch(error: any) {
       console.log(error);

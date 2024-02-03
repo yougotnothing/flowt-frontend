@@ -20,6 +20,7 @@ import { api } from "../../../../api/axiosConfig";
 import { generatePath, useLocation, useNavigate } from "react-router-dom";
 import { runInAction } from "mobx";
 import { userSongsStore } from "../../../../stores/toSongs.mobx";
+import { Title as Helmet } from "../../../../helmet";
 
 export const ManagePlaylists: FC = observer(() => {
   const[isOpen, setIsOpen] = useState<boolean[]>(Array(playlists.self.length).fill(false));
@@ -79,6 +80,7 @@ export const ManagePlaylists: FC = observer(() => {
 
   return (
     <Container style={{ alignItems: "start" }}>
+      <Helmet title={`${user.username}: manage playlists`} />
       <Header>Your playlists:</Header>
       {playlists.self.map((playlist, index) => (
         <PlaylistContainer key={index} $isEditing={editPlaylist.isEditing}>

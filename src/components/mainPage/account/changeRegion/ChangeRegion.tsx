@@ -17,6 +17,7 @@ import { A, AContainer, GoBackContainer, GlobalContainer } from "../../MainPage.
 import { AccountSettings } from "../AccountSettings";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { user } from "../../../../stores/toUser.mobx";
+import { Title as Helmet } from "../../../../helmet";
 
 export const ChangeRegion: React.FC = observer(() => {
   const [chosenRegion, setChosenRegion] = useState<string | null>(user.region);
@@ -24,6 +25,7 @@ export const ChangeRegion: React.FC = observer(() => {
 
   return (
     <AccountContainer>
+    <Helmet title={`${user.username}: change region`} />
     {!user.isUserAuthenticated && <PageLoader />}
     {user.isUserAuthenticated && (
       <GlobalContainer>

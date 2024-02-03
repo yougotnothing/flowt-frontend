@@ -20,6 +20,7 @@ import { FacebookButton, GoogleButton } from "../../OAuth2/OAuthButtons";
 import { observer } from "mobx-react-lite";
 import { OAuth } from "../../../stores/toOAuthButtons.mobx";
 import { IRegisterDTO } from "./types";
+import { Title as Helmet } from "../../../helmet";
 
 export const Register: FC = observer(() => { 
   const[isLoading, setIsLoading] = useState(false);
@@ -89,6 +90,7 @@ export const Register: FC = observer(() => {
 
   return (
     <LoginCard>
+      <Helmet title="Register" />
       <LoginHeader>Welcome<Span>!</Span></LoginHeader>
       <InputContainer>
         <LoginInput
