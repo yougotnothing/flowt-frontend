@@ -4,25 +4,39 @@ import { A_, A_CONTAINER, INPUT } from "../../constants/styles.const";
 import { ISongPlaylist } from "../../types/props";
 import { API_URL } from "../../api/axiosConfig";
 
-export const Container = styled('div')`
+interface ContainerProps {
+  $isWelcomePage: boolean;
+}
+
+interface NavbarProps {
+  $isWelcome: boolean;
+}
+
+export const Container = styled('div')<ContainerProps>`
   display: flex;
   position: relative;
+  min-height: 100svh;
   z-index: 1000;
   flex-direction: column;
   align-items: center;
-  background-color: ${colors.BACKGROUND};
+  ${({ $isWelcomePage }) => (
+    $isWelcomePage 
+    ? `background: rgb(174,238,208);
+       background: radial-gradient(circle, #93c7afbc 0%, #192430 100%);`
+    : `background-color: ${colors.BACKGROUND};`
+  )};
 `;
 
-export const Navbar = styled('div')`
+export const Navbar = styled('div')<NavbarProps>`
   background-color: ${colors.FRONT};
-  display: flex;
+  display: ${({ $isWelcome }) => $isWelcome ? 'none' : 'flex'};
   flex-direction: row;
   justify-content: space-between;
   height: 64px;
   border-radius: 0 0 20px 20px;
   width: 96vw;
   position: fixed;
-  z-index: 998;
+  z-index: 999;
 
   .form {
     display: flex;

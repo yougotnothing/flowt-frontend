@@ -25,7 +25,6 @@ import { reportStore } from "../../../stores/toReport.mobx";
 import { user as User } from "../../../stores/toUser.mobx";
 import { 
   handleCardClick, 
-  handleClickPlaylistModalButton,
   handleClickSongModalButton,
   handleClickUserModalButton,
   handleMouseEnter,
@@ -39,8 +38,35 @@ export const Search: FC = observer(() => {
   const[isOpenSongs, setIsOpenSongs] = useState<boolean[]>(Array(search.songs.length).fill(false));
   const[isOpenUsers, setIsOpenUsers] = useState<boolean[]>(Array(search.users.length).fill(false));
   const[isOpenPlaylists, setIsOpenPlaylists] = useState<boolean[]>(Array(search.playlists.length).fill(false));
+  const[isFetching, setIsFetching] = useState<boolean>(false);
+  const[param, setParam] = useState<string>('All');
   const navigate = useNavigate();
   const location = useLocation();
+
+  const handleScroll = (e: any) => {
+    if(e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
+      search.setPage(search.page + 1);
+      setIsFetching(true);
+      console.log('scroll', e.target.documentElement.scrollTop);
+    }
+  }
+
+  useEffect(() => {
+    if(isFetching) {
+      if(search.songs.length >= 3 && search.playlists.length >= 3 && search.users.length >= 3) {
+        search.get(param);
+        setIsFetching(false);
+      }
+    }
+  }, [isFetching, search.songs.length, search.playlists.length, search.users.length]);
+
+  useEffect(() => {
+    document.addEventListener('scroll', handleScroll);
+  
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
 
   useEffect(() => {
     if(location.pathname === '/search') {
@@ -58,7 +84,10 @@ export const Search: FC = observer(() => {
           {filters.map((filter, index) => (
             <SearchFilterButton
               key={index}
-              onClick={async () => await search.get(filter)}
+              onClick={async () => {
+                await search.get(filter);
+                setParam(filter);
+              }}
             >
               {filter}
             </SearchFilterButton>

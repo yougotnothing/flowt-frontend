@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { ISongData } from "./types";
 
 export interface UserDTO {
@@ -156,3 +157,10 @@ export interface IOverallStatistic {
   listens: number,
   songCount: number
 }
+
+export interface LoginDto {
+  login: string;
+  password: string;
+}
+
+export type SetState<T> = Dispatch<SetStateAction<T>>;

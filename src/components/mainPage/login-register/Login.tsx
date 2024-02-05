@@ -26,7 +26,7 @@ import { Title as Helmet } from "../../../helmet";
 
 export const Login: FC = observer(() => {
   const navigate = useNavigate();
-  const[errorMessage, setErrorMessage] = useState<string | null>(null);
+  const[errorMessage, setErrorMessage] = useState<string>('');
   const[isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -65,16 +65,7 @@ export const Login: FC = observer(() => {
 
   const handleLogin = async () => {
     const loginDto: ILoginDTO = formik.values;
-
-    try {
-      setIsLoading(true);
-      setErrorMessage(null);
-      await login(loginDto);
-      navigate('/home');
-    }catch(error: any) {
-      setIsLoading(false);
-      setErrorMessage(error.response.data.message);
-    }
+    await login(loginDto, navigate, setErrorMessage);
   }
 
   return (

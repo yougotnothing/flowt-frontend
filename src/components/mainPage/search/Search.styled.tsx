@@ -130,6 +130,7 @@ export const CardIcon = styled('button')<ICardType>`
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  background-color: transparent;
   cursor: pointer;
 `;
 

@@ -124,8 +124,12 @@ class UserStore {
 
   async changeRegion(value: string | null, navigate: NavigateFunction) {
     try {
-      const response = await api.patch('/users/description', {
+      const response = await api.patch('/users/region', {
         newRegion: value
+      });
+
+      runInAction(() => {  
+        this.region = value;
       });
 
       if(response) {

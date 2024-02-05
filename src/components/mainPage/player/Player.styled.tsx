@@ -19,6 +19,7 @@ export const PlayerContainer = styled('div')`
     border-radius: 12px;
     background-color: ${colors.VERY_DARK_BLUE};
     box-shadow: 0 0 12px 1px ${colors.BORDER};
+    position: relative;
   }
   
   .rhap_time,
@@ -37,10 +38,13 @@ export const PlayerContainer = styled('div')`
     background-color: ${colors.DARK_WHITE};
     border-radius: 5px;
   }
+
+  .rhap_main-controls {
+    position: absolute;
+    left: 40%;
+  }
   
   .rhap_volume-controls {
-    flex: none;
-    margin: auto 12px auto auto;
     width: 100px !important;
   }
   
@@ -50,11 +54,12 @@ export const PlayerContainer = styled('div')`
   }
 
   .rhap_controls-section {
-    height: max-content;
+    height: 60px;
   }
 
   .rhap_controls-section {
     align-items: center;
+    height: 60px;
   }
 
   .rhap_progress-filled {
@@ -87,10 +92,10 @@ export const SongContainer = styled('div')`
   align-items: center;
   background-color: ${colors.DARK_BLUE};
   padding: 6px;
-  width: 150px;
+  width: 200px;
   gap: 12px;
   border-radius: 5px;
-  align-self: start;
+  position: absolute;
 `;
 
 export const SongInfoContainer = styled('div')`
@@ -99,6 +104,9 @@ export const SongInfoContainer = styled('div')`
   align-items: start;
   gap: 8px;
   margin-right: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const SongTitle = styled('div')`
@@ -112,12 +120,29 @@ export const SongTitle = styled('div')`
   color: ${colors.WHITE};
 `;
 
+export const SongInfoDataWrapper = styled('div')`
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: ${colors.DARK_WHITE};
+  transition: 0.3s ease;
+
+  &:hover {
+    color: ${colors.SECONDARY};
+  }
+`;
+
 export const SongCreatorLink = styled('a')`
   font-family: 'Urbanist', sans-serif;
   font-weight: 400;
   font-size: 14px;
   color: ${colors.DARK_WHITE};
   cursor: pointer;
+  width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   
   &:hover {
     color: ${colors.SECONDARY};
@@ -140,7 +165,8 @@ export const ShuffleButton = styled('button')`
   background-size: contain;
   background-position: center;
   justify-content: center;
-  margin-left: calc(50% - 150px - 100px);
+  position: absolute;
+  left: 55.5%;  
 `;
 
 export const LikeButton = styled('button')<ILikeButton>`

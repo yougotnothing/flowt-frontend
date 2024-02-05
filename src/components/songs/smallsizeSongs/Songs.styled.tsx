@@ -52,7 +52,7 @@ export const SongTitle = styled('button')`
   text-align: start;
   background-color: ${colors.DARK_BLUE};
   color: ${colors.WHITE};
-  width: 100%;
+  width: 126px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

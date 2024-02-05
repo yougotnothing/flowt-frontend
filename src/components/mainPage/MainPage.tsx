@@ -34,11 +34,13 @@ import { LinksModal } from "../modal/links/Links";
 export const MainPage: FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
   const[isLoading, setIsLoading] = useState<boolean>(true);
+  const[isWelcomePage, setIsWelcomePage] = useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();
   const successAlert = localStorage.getItem('success');
   const warningAlert = localStorage.getItem('warning');
   const googleAvatar = localStorage.getItem('Google image');
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     if(!user.userHaveAvatar && googleAvatar) {
@@ -69,6 +71,15 @@ export const MainPage: FC = observer(() => {
 
     setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    if(!token && (location.pathname === '/' || location.pathname === '/home')) {
+      navigate('/welcome');
+      console.log(location.pathname);
+    }else{
+      return;
+    }
+  }, [location.pathname, token]);
 
   const handleSearch = async (key: any) => {
     const inputLength = search.input.length;
@@ -109,8 +120,16 @@ export const MainPage: FC = observer(() => {
     }
   }
 
+  useEffect(() => {
+    if(location.pathname !== '/welcome') {
+      setIsWelcomePage(false);
+    }else{
+      setIsWelcomePage(true);
+    }
+  }, [location.pathname]);
+
   return (
-    <Container>
+    <Container $isWelcomePage={isWelcomePage}>
       <ChangePlaylistName />
       <DeletePlaylistModal />
       <ChangePlaylistAvatar />
@@ -119,7 +138,7 @@ export const MainPage: FC = observer(() => {
       <LinksModal />
       {isVisible && successAlert && <AlertSuccess />}
       {isVisible && warningAlert && <AlertWarning />}
-      <Navbar>
+      <Navbar $isWelcome={isWelcomePage}>
         <NavContainer>
           <Logo onClick={() => navigate('/home')} />
           <div className='form'>

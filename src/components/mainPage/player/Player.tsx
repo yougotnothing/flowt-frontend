@@ -10,6 +10,7 @@ import {
   SongInfoContainer,
   ShuffleButton,
   LikeButton,
+  SongInfoDataWrapper,
 } from "./Player.styled";
 import "react-h5-audio-player/lib/styles.css";
 import { userSongsStore as song } from "../../../stores/toSongs.mobx";
@@ -103,10 +104,12 @@ export const Player: React.FC = observer(() => {
               <SongContainer>
                 <SongPicture style={{ backgroundImage: `url(${song.avatar})` }}/>
                 <SongInfoContainer>
-                  <div>
+                  <SongInfoDataWrapper>
                     <SongCreatorLink>{song.author}</SongCreatorLink>
-                  </div>
-                  <SongTitle>{song.name}</SongTitle>
+                  </SongInfoDataWrapper>
+                  <SongInfoDataWrapper>
+                    <SongTitle>{song.name}</SongTitle>
+                  </SongInfoDataWrapper>
                 </SongInfoContainer>
                 <LikeButton 
                   $isLiked={isLiked}

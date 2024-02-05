@@ -1,5 +1,8 @@
 import axios from "axios";
 import { user } from "../stores/toUser.mobx";
+import { NavigateFunction } from "react-router-dom";
+import { Dispatch, SetStateAction } from "react";
+import { LoginDto, SetState } from "../types/props";
 
 export const API_URL = process.env.REACT_APP_API_URL;
 let failedRequestsQueue: any = [];
@@ -58,28 +61,33 @@ export const registration = async (registerDto: any) => {
   console.log(response.data);
 }
 
-export const login = async (loginDto: { login: string, password: string }) => {
+export const login = async (loginDto: LoginDto, navigate: NavigateFunction, set?: SetState<string>) => {
   try {
     const response = await api.post('/auth/login', {
       login: loginDto.login,
       password: loginDto.password
     });
-    console.log(response.data);
+    
     if(response) {
       const token = response.data.token;
       console.log(token);
       localStorage.setItem('token', token);
       await user.setUser();
+      navigate('/home');
       console.log(user);
+      set && set('');
     }
+
+    console.log(response.data);
   }catch(error: any) {
-    console.log(error.response.data.message);
+    set && set('incorrect login or password');
+    console.log(error);
   }
 }
 
 export const refreshToken = async () => {
   const response = await api.get('/auth/refresh');
-  if (response) {
+  if(response) {
     const json = response.data;
     const token = json.token;
     console.log(token);

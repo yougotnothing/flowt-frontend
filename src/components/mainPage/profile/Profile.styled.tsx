@@ -288,6 +288,8 @@ export const SongContainer = styled('div')`
   flex-wrap: wrap;
   width: 660px;
   gap: 12px;
+  max-height: 202px;
+  overflow-y: auto;
 `;
 
 export const SongMainContainer = styled('div')`

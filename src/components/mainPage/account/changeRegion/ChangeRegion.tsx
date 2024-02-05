@@ -18,6 +18,7 @@ import { AccountSettings } from "../AccountSettings";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { user } from "../../../../stores/toUser.mobx";
 import { Title as Helmet } from "../../../../helmet";
+import { searchUsersStore } from "../../../../stores/toSearchUsers.mobx";
 
 export const ChangeRegion: React.FC = observer(() => {
   const [chosenRegion, setChosenRegion] = useState<string | null>(user.region);
@@ -45,7 +46,10 @@ export const ChangeRegion: React.FC = observer(() => {
                 {regions.map((region, index) => (
                   <DroplistItem
                     key={index}
-                    onClick={() => setChosenRegion(region)}
+                    onClick={() => {
+                      setChosenRegion(region);
+                      searchUsersStore.setUser(user.user);
+                    }}
                   >
                     {region}
                   </DroplistItem>

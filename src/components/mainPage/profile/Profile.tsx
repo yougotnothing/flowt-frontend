@@ -41,7 +41,6 @@ export const Profile: React.FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
   const[isOpen, setIsOpen] = useState(true);
   const[isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
-  const ref = useRef<any>(null);
   const navigate = useNavigate();
 
   useEffect(() => {

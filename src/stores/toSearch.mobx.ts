@@ -1,11 +1,11 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
-import { IPlaylist, ISearchPlaylist, ISongPlaylist, IUserSearch } from "../types/props";
+import { ISearchPlaylist, ISongPlaylist, IUserSearch } from "../types/props";
 import { api } from "../api/axiosConfig";
 import { ISongData } from "../types/types";
 
 class SearchStore {
-  users: IUserSearch[] | [];
-  songs: ISongPlaylist[] | [];
+  users: IUserSearch[];
+  songs: ISongPlaylist[];
   playlists: ISearchPlaylist[];
   input: string;
   message: string | null;
@@ -78,19 +78,20 @@ class SearchStore {
         }
       });
 
-      if(response) {
+      runInAction(() => {
+        const uniqueUsers: Set<IUserSearch> = new Set(
+          response.data.users.filter((user: IUserSearch) => 
+            !this.users.some((existingUser: IUserSearch) => 
+              existingUser.email === user.email
+            )
+          )
+        );
+        this.users.push(...Array.from(uniqueUsers));
+        
         if(this.users.length === 0) {
           this.setMessage(`Can't find data by ${this.input}`);
         }
-      }
-      runInAction(() => {
-        this.users = response.data.users;
       });
-      console.log(this.users);
-
-      if(this.users.length === 0) {
-        this.setMessage(`Can't find data by ${this.input}`);
-      }
     }catch(error: any) {
       console.log(error);
     }
@@ -106,7 +107,14 @@ class SearchStore {
       });
 
       runInAction(() => {
-        this.songs = response.data.songs;
+        const uniqueSongs: Set<ISongPlaylist> = new Set(
+          response.data.songs.filter((song: ISongPlaylist) =>
+            !this.songs.some((existingSong: ISongPlaylist) => 
+              existingSong.songId === song.songId
+            )
+          )
+        );
+        this.songs.push(...Array.from(uniqueSongs));
 
         if(this.songs.length === 0) {
           this.message = `Can't find data by ${this.input}`;
@@ -167,10 +175,16 @@ class SearchStore {
         }
       });
 
-      console.log(response.data);
-
       runInAction(() => {
-        this.playlists = response.data.playlists;
+        const uniquePlaylists: Set<ISearchPlaylist> = new Set(
+          response.data.playlists.filter((playlist: ISearchPlaylist) => 
+            !this.playlists.some((existingPlaylist: ISearchPlaylist) => 
+              existingPlaylist.id === playlist.id
+            )
+          )
+        );
+
+        this.playlists.push(...Array.from(uniquePlaylists));
 
         if(this.playlists.length === 0) {
           this.message = `Can't find data by ${this.input}`;
