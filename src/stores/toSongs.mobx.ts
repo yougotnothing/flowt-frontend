@@ -104,8 +104,6 @@ class UserSongsStore implements ISongParameters {
       if(!songs && (this.container && index >= 0 && index < this.container.length)) {
         const songInfo = this.container[index];
 
-        await api.get(`/songs/audio/${songInfo.author}/${songInfo.name}`);
-        
         this.setUrl(`${API_URL}/songs/audio/${songInfo.author}/${songInfo.name}`);
         this.setAvatar(`${API_URL}/images/song/${songInfo.author}/${songInfo.name}`);
 

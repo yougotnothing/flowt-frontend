@@ -20,10 +20,21 @@ class RecommendationsStore {
 
   async getMustLikeList() {
     try {
-      const response = await api.get('/recommendations/might-like');
-      console.log(response.data);
+      const { data } = await api.get('/recommendations/might-like');
+
+      const uniqueList: ISongData[] = data.filter(
+        (song: ISongData, index: number, array: any[]) => 
+          !array.slice(0, index)
+            .some((prevSong: ISongData) => 
+            prevSong.songId === song.songId
+        )
+      );
+
+      runInAction(() => {
+        this.list = Array.from(uniqueList);
+      });
     }catch(error: any) {
-      console.error(error);
+      console.error(error.response);
       return;
     }
   }
@@ -32,11 +43,17 @@ class RecommendationsStore {
     try {
       const { data } = await api.get('/recommendations');
 
-      runInAction(() => {
-        this.list = data;
-      });
+      const uniqueList: ISongData[] = data.filter(
+        (song: ISongData, index: number, array: any[]) => 
+          !array.slice(0, index)
+            .some((prevSong: ISongData) => 
+            prevSong.songId === song.songId
+        )
+      );
 
-      console.log(data);
+      runInAction(() => {
+        this.list = Array.from(uniqueList);
+      });
     }catch(error: any) {
       console.error(error);
       return;

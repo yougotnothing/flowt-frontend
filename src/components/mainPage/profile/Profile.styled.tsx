@@ -306,7 +306,7 @@ export interface ISubscribeProp {
 export const SubscribeButton = styled('button')<ISubscribeProp>`
   ${BUTTON};
   
-  display: ${props => props.$isVisible ? 'flex' : 'none'};
+  opacity: ${({ $isVisible }) => $isVisible ? '1' : '0'};
   align-self: center;
   justify-items: end;
   margin: auto 0 auto auto;

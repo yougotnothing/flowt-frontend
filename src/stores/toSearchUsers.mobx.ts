@@ -53,6 +53,7 @@ class SearchUsersStore {
     const storageIsHaveAvatar = localStorage.getItem('userHaveAvatar');
     const userHaveAvatar = storageIsHaveAvatar ? JSON.parse(storageIsHaveAvatar) : null;
     const email = localStorage.getItem('email');
+    console.log(email);
     const description = localStorage.getItem('description');
 
     runInAction(() => {
@@ -94,6 +95,8 @@ class SearchUsersStore {
         this.userHaveAvatar = data.userHaveAvatar;
       });
     }
+
+    localStorage.setItem('search_user_data', JSON.stringify(data));
 
     if(this.username) localStorage.setItem('username', this.username);
     if(this.region) localStorage.setItem('region', this.region);

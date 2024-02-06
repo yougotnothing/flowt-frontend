@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
-import { api, API_URL } from "../../../api/axiosConfig";
 import {
   UserContainer,
-  Settings,
   UserAvatar,
   UserNickname,
   HeadContainer,
@@ -24,7 +22,9 @@ import {
   FooterContainer,
   SongContainer,
   SongsTitle,
-  SongMainContainer, SubscribeButton, SubscribeText, SubscribeTextContainer
+  SongMainContainer,
+  SubscribeText,
+  SubscribeTextContainer
 } from "./Profile.styled";
 
 import { Options } from "./options/Options";
@@ -38,8 +38,6 @@ import { user } from "../../../stores/toUser.mobx";
 import { Title as Helmet } from "../../../helmet";
 
 export const Profile: React.FC = observer(() => {
-  const[isVisible, setIsVisible] = useState<boolean>(false);
-  const[isOpen, setIsOpen] = useState(true);
   const[isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -57,36 +55,18 @@ export const Profile: React.FC = observer(() => {
   }, []);
 
   useEffect(() => {
-    setIsOpen(!isVisible);
-  }, [isVisible, isOpen]);
-
-  useEffect(() => {
-    if(user.user && user.email !== searchUsers.email) {
+    if(searchUsers.username === user.username) {
       setIsCurrentUser(true);
     }else{
       setIsCurrentUser(false);
     }
-  }, [user.user]);
-
-  const handleSubscribe = async () => {
-    try {
-      if(user && user.email !== searchUsers.email) {
-        const response = await api.post(`/users/subscribe/${searchUsers.username}`);
-
-        if(response.status === 200) {
-          console.log(`successfully subscribed to ${searchUsers.username}`);
-        }
-      }
-    }catch(error: any) {
-      console.log(error);
-    }
-  }
+  }, [searchUsers.username, user.username]);
 
   return (
     <UserContainer>
       <Helmet title={`Profile: ${searchUsers.username}`} />
       {!user.isUserAuthenticated && <PageLoader />}
-        <Options />
+        <Options isCurrentUser={isCurrentUser} />
         {user.user && user.followers && user.subscribes && (
         <>
           <HeadContainer>
@@ -113,9 +93,6 @@ export const Profile: React.FC = observer(() => {
                   </FollowsSubscribes>
                 </LinksContainer>
               </ProfileTextContainer>
-              <SubscribeButton $isVisible={isCurrentUser} onClick={handleSubscribe}>
-                subscribe
-              </SubscribeButton>
             </UserParams>
           </HeadContainer>
           <BorderContainer> </BorderContainer>

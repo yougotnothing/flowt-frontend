@@ -50,9 +50,7 @@ export const ChangeRegion: React.FC = observer(() => {
                       setChosenRegion(region);
                       searchUsersStore.setUser(user.user);
                     }}
-                  >
-                    {region}
-                  </DroplistItem>
+                  >{region}</DroplistItem>
                 ))}
               </Droplist>
               <Button onClick={() => user.changeRegion(chosenRegion, navigate)}>Apply</Button>

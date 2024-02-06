@@ -7,7 +7,33 @@ import { observer } from "mobx-react-lite";
 
 export const Reports: FC = observer(() => {
   const [isOpen, setIsOpen] = useState<boolean[]>(Array(admin.reports.length).fill(false));
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  const handleScroll = (e: any) => {
+    const element = e.target.documentElement;
+
+    if(element.scrollHeight - (element.scrollTop + window.innerHeight) < 100) {
+      setIsFetching(true);
+      console.log('scroll', e.target.documentElement.scrollTop);
+    }
+  }
+
+  useEffect(() => {
+    if(isFetching) {
+      admin.setPage(admin.page + 1);
+      admin.getReports();
+      setIsFetching(false);
+    }
+  }, [isFetching]);
+
+  useEffect(() => {
+    document.addEventListener('scroll', handleScroll);
+  
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
 
   useEffect(() => {
     admin.getReports();

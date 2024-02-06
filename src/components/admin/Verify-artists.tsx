@@ -5,9 +5,35 @@ import { ArtistData, ArtistDataButton, ArtistDataButtonContainer, ArtistDataCont
 import { Title as Helmet } from "../../helmet";
 
 export const VerifyArtists = observer(() => {
+  const[isFetching, setIsFetching] = useState<boolean>(false);
   const[isRequestsVerified, setIsRequestsVerified] = useState<Array<boolean>>(
     Array(adminStore.verify_artists_list.length).fill(false)
   );
+
+  const handleScroll = (e: any) => {
+    const element = e.target.documentElement;
+
+    if(element.scrollHeight - (element.scrollTop + window.innerHeight) < 100) {
+      setIsFetching(true);
+      console.log('scroll', e.target.documentElement.scrollTop);
+    }
+  }
+
+  useEffect(() => {
+    if(isFetching) {
+      adminStore.setPage(adminStore.page + 1);
+      adminStore.getVerifyArtists();
+      setIsFetching(false);
+    }
+  }, [isFetching]);
+
+  useEffect(() => {
+    document.addEventListener('scroll', handleScroll);
+  
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
 
   const setVerifyedRequest = async (username: string, index: number) => {
     await adminStore.applyArtist(username);
@@ -20,6 +46,7 @@ export const VerifyArtists = observer(() => {
   }
 
   useEffect(() => {
+    adminStore.setPage(0);
     adminStore.getVerifyArtists();
   }, []);
 
@@ -50,9 +77,7 @@ export const VerifyArtists = observer(() => {
               </ArtistData>
               {request.links.map((link, index) => (
                 <ArtistData key={index}>
-                  {link.url.includes('youtube') 
-                  ? 'youtube: ' 
-                  : link.url.includes('github') 
+                  {link.url.includes('github') 
                   ? 'github: ' 
                   : 'soundcloud: '
                   }<ArtistDataLink href={link.url}>{link.url}</ArtistDataLink>

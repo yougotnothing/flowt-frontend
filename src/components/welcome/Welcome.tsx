@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 
 import { useFormik } from "formik";
 import {
@@ -25,9 +25,8 @@ import { loginValidationSchema } from "../../validation/yup.config";
 import { useNavigate } from "react-router-dom";
 import { FacebookButton, GoogleButton } from "../OAuth2/OAuthButtons";
 import { login } from "../../api/axiosConfig";
-import { colors } from "../../constants/colors.const";
 
-export const Welcome = () => {
+export const Welcome: FC = () => {
   const[errorMessage, setErrorMessage] = useState<string>('');
   const navigate = useNavigate();
   const formik = useFormik<{
@@ -92,7 +91,7 @@ export const Welcome = () => {
             <Input
               $isError={!!formik.errors.username} 
               type="username"
-              name="login"
+              name="username"
               placeholder="login"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

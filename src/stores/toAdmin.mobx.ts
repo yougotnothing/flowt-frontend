@@ -49,7 +49,11 @@ class AdminStore {
 
   async getVerifyArtists() {
     try {
-      const response = await api.get('/moderator/artist/requests');
+      const response = await api.get('/moderator/artist/requests', {
+        params: {
+          page: this.page
+        }
+      });
       runInAction(() => {
         this.verify_artists_list = response.data.artistVerifyRequests;
       });
@@ -113,6 +117,12 @@ class AdminStore {
     });
   }
 
+  setPage(value: number) {
+    runInAction(() => {
+      this.page = value;
+    });
+  }
+
   async getUsers() {
     try {
       const response = await api.get('/search/users', {
@@ -160,10 +170,20 @@ class AdminStore {
 
   async getReports() {
     try {
-      const response = await api.get(`/reports/${this.type}`);
-      console.log(response.data);
+      const response = await api.get(`/reports/${this.type}`, {
+        params: {
+          page: this.page
+        }
+      });
+
       runInAction(() => {
-        this.reports = response.data.reports;
+        const uniqueReports: Set<IReportDTO> = new Set(
+          response.data.reports.filter((existingReport: IReportDTO) =>
+            !this.reports.some((report: IReportDTO) => existingReport.id === report.id)
+          )
+        );
+
+        this.reports.push(...Array.from(uniqueReports));
         this.parseData();
       });
 
@@ -173,7 +193,7 @@ class AdminStore {
         this.setReportMail('');
       }
     }catch(error: any) {
-      console.error(error);
+      throw new Error(error);
     }
   }
 

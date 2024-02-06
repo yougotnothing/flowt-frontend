@@ -7,7 +7,8 @@ import {
   Container,
   PageHeader,
   Header,
-  Info
+  Info,
+  ContentWrapper
 } from "./Followers.styled";
 import { observer } from "mobx-react-lite";
 import { user } from "../../../../stores/toUser.mobx";
@@ -21,18 +22,20 @@ export const Followers: FC = observer(() => {
     <Container>
       <Helmet title={`Followers: ${user.username}`} />
       <PageHeader>Followers</PageHeader>
-      {user.followers.map((follower, index) => (
-        <Card key={index}
+      <ContentWrapper>
+        {user.followers.map((follower, index) => (
+          <Card key={index}
           onClick={() => {
             searchUsers.setUser(follower);
             navigate(generatePath('/profile/:id', { id: follower.username }));
           }}
-        >
-          <Avatar $userHaveAvatar={follower.userHaveAvatar} $avatar={follower.avatar} />
-          <Header>{follower.username}</Header>
-          <Info>{follower.region}</Info>
-        </Card>
-      ))}
+          >
+            <Avatar $userHaveAvatar={follower.userHaveAvatar} $avatar={follower.avatar} />
+            <Header>{follower.username}</Header>
+            <Info>{follower.region}</Info>
+          </Card>
+        ))}
+      </ContentWrapper>
     </Container>
   )
 });

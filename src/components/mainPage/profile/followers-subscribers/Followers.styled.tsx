@@ -5,9 +5,18 @@ export const Container = styled('div')`
   display: flex;
   margin: auto;
   flex-direction: column;
+  flex-wrap: wrap;
   width: 1200px;
   background-color: ${colors.BACKGROUND};
   gap: 24px;
+`;
+
+export const ContentWrapper = styled('div')`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
 `;
 
 export const Card = styled('button')`
