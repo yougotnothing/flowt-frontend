@@ -10,7 +10,18 @@ import {
   Container,
   SongDataContainer,
   SongData,
-  SongDataSpan
+  SongDataSpan,
+  ButtonsWrapper,
+  SongDataWrapper,
+  LikeButton,
+  Line,
+  RandomSong,
+  RandomSongsWrapper,
+  RandomSongAvatar,
+  RandomSongButton,
+  RandomSongData,
+  RandomSongDataWrapper,
+  RandomSongWrapper,
 } from "./Songs.styled";
 import { searchStore as search } from "../../../stores/toSearch.mobx";
 import { userSongsStore as songs } from "../../../stores/toSongs.mobx";
@@ -20,9 +31,12 @@ import { Title as Helmet } from "../../../helmet";
 export const BrowseSongs: FC = observer(() => {
   useEffect(() => {
     if(search.song) {
+      const searchSong = localStorage.getItem('song');
       const songArray = [];
-      songArray.push(search.song);
+
+      searchSong && songArray.push(JSON.parse(searchSong));
       songs.getInfo(songArray);
+      songs.getRandomByGenre(search.song.genre);
     }
   }, []);
 
@@ -30,15 +44,19 @@ export const BrowseSongs: FC = observer(() => {
     <Container>
       {search.song && (
         <>
-        <Helmet title={`Song: ${search.song.name}`} />
+          <Helmet title={`Song: ${search.song.name}`} />
           <Song>
-            <SongAvatar $src={search.song} />
-            <SongInfoContainer>
-              <SongInfo $type="name">{search.song.name}</SongInfo>
-              <SongInfo $type="else">{search.song.author}</SongInfo>
-            </SongInfoContainer>
-            <SongButton onClick={() => songs.setSong(0)}>Listen</SongButton>
-            <SongButton onClick={() => likedSongs.likeSong(search.song)}></SongButton>
+            <SongDataWrapper>
+              <SongAvatar $src={search.song} />
+              <SongInfoContainer>
+                <SongInfo $type="name">{search.song.name}</SongInfo>
+                <SongInfo $type="else">{search.song.author}</SongInfo>
+              </SongInfoContainer>
+            </SongDataWrapper>
+            <ButtonsWrapper>
+              <LikeButton $isLiked onClick={() => likedSongs.likeSong(search.song)} />
+              <SongButton onClick={() => songs.setSong(0)}>Listen</SongButton>
+            </ButtonsWrapper>
           </Song>
           <SongInfo $type="name">Song info:</SongInfo>
           <SongDataContainer>
@@ -48,6 +66,24 @@ export const BrowseSongs: FC = observer(() => {
             <SongData><SongDataSpan>Likes: </SongDataSpan>{search.song.likes}</SongData>
             <SongData><SongDataSpan>Year of issue: </SongDataSpan>{search.song.issueYear.replaceAll('/', '.')}</SongData>
           </SongDataContainer>
+          <Line> </Line>
+          <RandomSongsWrapper>
+            {songs.randomByGenre.map((song, index) => (
+              <RandomSong key={index}>
+                <RandomSongWrapper>
+                  <RandomSongAvatar $src={song} />
+                  <RandomSongDataWrapper>
+                    <RandomSongData>{song.author}</RandomSongData>
+                    <RandomSongData $name>{song.name}</RandomSongData>
+                  </RandomSongDataWrapper>
+                  <RandomSongWrapper>
+                    <RandomSongButton />
+                    <RandomSongButton $like />
+                  </RandomSongWrapper>
+                </RandomSongWrapper>
+              </RandomSong>
+            ))}
+          </RandomSongsWrapper>
         </>
       )}
     </Container>

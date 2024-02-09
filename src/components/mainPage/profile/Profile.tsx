@@ -104,7 +104,7 @@ export const Profile: React.FC = observer(() => {
             <SongMainContainer>
               <SongsTitle>Songs</SongsTitle>
               <SongContainer>
-                <Songs />
+                <Songs username={searchUsers.username} />
               </SongContainer>
             </SongMainContainer>
           </FooterContainer>

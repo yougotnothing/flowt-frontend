@@ -20,18 +20,9 @@ import { api } from "../../../api/axiosConfig";
 import { user } from "../../../stores/toUser.mobx";
 import { searchStore } from "../../../stores/toSearch.mobx";
 
-export const Songs: React.FC = observer(() => {
+export const Songs: React.FC<{ username: string | null }> = observer(({ username }) => {
   const[isLiked, setIsLiked] = useState<boolean[]>(Array(songs.container.length).fill(false));
   const navigate = useNavigate();
-
-  const getSong = async () => {
-    try {
-      const response = await api.get('/users/songs');
-      songs.getInfo(response.data.songs);
-    }catch(error: any) {
-      console.log(error);
-    }
-  }
 
   const handleLikedSong = async (song_name: string | null, username: string | null, index: number) => {
     try {
@@ -56,7 +47,7 @@ export const Songs: React.FC = observer(() => {
   }
 
   useEffect(() => {
-    getSong();
+    songs.getSongs(username);
   }, []);
 
   return (
@@ -80,6 +71,7 @@ export const Songs: React.FC = observer(() => {
             <SongTitle
               onClick={() => {
                 searchStore.setSong(song);
+                localStorage.setItem('song', JSON.stringify(song))
                 navigate(generatePath('/song/:id', { id: song.name }));
               }}
             >

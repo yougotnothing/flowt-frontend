@@ -20,6 +20,7 @@ class UserSongsStore implements ISongParameters {
   playlistAvatar: string | null;
   playlistUrl: any;
   container: ISongData[];
+  randomByGenre: ISongData[];
 
   constructor() {
     this.author = null;
@@ -37,6 +38,7 @@ class UserSongsStore implements ISongParameters {
     this.playlistListens = null;
     this.playlistIssueYear = null;
     this.playlistName = null;
+    this.randomByGenre = [];
 
     makeObservable(this, {
       author: observable,
@@ -54,6 +56,7 @@ class UserSongsStore implements ISongParameters {
       playlistListens: observable,
       playlistIssueYear: observable,
       playlistName: observable,
+      randomByGenre: observable,
       setUrl: action,
       setAvatar: action,
       getInfo: action,
@@ -83,6 +86,29 @@ class UserSongsStore implements ISongParameters {
     runInAction(() => {
       this.avatar = encodeURI(src);
     });
+  }
+
+  async getSongs(username: string | null) {
+    if(!username) return;
+
+    try {
+      const { data } = await api.get(`/songs/user-songs/${encodeURI(username)}`);
+
+      runInAction(() => {
+        const uniqueSongs: Set<ISongData> = new Set(
+          data.songs.filter((existingSong: ISongData) => 
+            !this.container.some((song: ISongData) => 
+              song.songId === existingSong.songId
+            )
+          )
+        );
+
+        this.container.push(...Array.from(uniqueSongs));
+      });
+    }catch(error: any) {
+      console.error(error);
+      return;
+    }
   }
 
   setSearchSong(username: string, songName: string) {
@@ -129,8 +155,9 @@ class UserSongsStore implements ISongParameters {
     });
   }
 
-  setSongObject(Song: ISongData[], index: number) {
-    const song = Song[index];
+  setSongObject(arg: ISongData[], index: number) {
+    const song = arg[index];
+    
     runInAction(() => {
       this.setUrl(`${API_URL}/songs/audio/${song.author}/${song.name}`);
       this.setAvatar(`${API_URL}/images/song/${song.author}/${song.name}`);
@@ -140,7 +167,7 @@ class UserSongsStore implements ISongParameters {
       this.setName(song.name);
       this.id = song.songId;
       this.author = song.author;
-    })
+    });
   }
 
   async patchSong(songData: ISongData) {
@@ -149,6 +176,35 @@ class UserSongsStore implements ISongParameters {
       console.log('success');
     }catch(error: any) {
       console.error(error);
+    }
+  }
+
+  async getRandomByGenre(genre: string | null) {
+    if(!genre) return;
+
+    try {
+      const response = await api.get(`/songs/random/${encodeURI(genre)}`);
+
+      console.log(response.data);
+
+      runInAction(() => {
+        if(Array.isArray(response.data)) {
+          const uniqueSongs: Set<ISongData> = new Set(
+              response.data.filter((existingSong: ISongData) =>
+                !this.randomByGenre.some((song: ISongData) =>
+                  song.songId === existingSong.songId
+              )
+            )
+          );
+          
+          this.randomByGenre.push(...Array.from(uniqueSongs));
+        }
+
+        this.randomByGenre.push(response.data);
+      });
+    }catch(error: any) {
+      console.error(error);
+      return;
     }
   }
 }

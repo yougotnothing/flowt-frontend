@@ -290,6 +290,7 @@ export const SongContainer = styled('div')`
   gap: 12px;
   max-height: 202px;
   overflow-y: auto;
+  scrollbar-width: thin;
 `;
 
 export const SongMainContainer = styled('div')`
