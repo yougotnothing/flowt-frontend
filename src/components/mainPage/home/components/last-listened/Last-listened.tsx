@@ -1,21 +1,21 @@
 import { observer } from "mobx-react-lite";
 import { Container, LikedSongs, Song, SongIcon, SongInfo, SongInfoContainer, Span, Title } from "../../Home.styled";
 import { useEffect } from "react";
-import { likedSongs } from "../../../../../stores/toLiked-songs.mobx";
 import { useNavigate, generatePath } from "react-router-dom";
+import { userSongsStore } from "../../../../../stores/toSongs.mobx";
 
 export const LastListened = observer(() => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    likedSongs.setSongs();
+    userSongsStore.getLastListened();
   }, []);
 
   return (
     <Container>
       <Title>Last listened</Title>
       <LikedSongs>
-        {likedSongs.songs.length ? likedSongs.songs.map((song, index) => (
+        {userSongsStore.lastListened.length ? userSongsStore.lastListened.map((song, index) => (
           <Song key={index}>
             <SongIcon
               $author={song.author}
@@ -30,7 +30,7 @@ export const LastListened = observer(() => {
             </SongInfoContainer>
           </Song>
         )) : (
-          <Span>This will be your last listened songs</Span>
+          <Span $size="16">This will be your last listened songs</Span>
         )}
       </LikedSongs>
     </Container>

@@ -28,7 +28,7 @@ export const Player: React.FC = observer(() => {
   const handlePlayNext = useCallback(() => {
     if(isShuffled) {
       setIndex((prevIndex) => {
-        let randomIndex;
+        let randomIndex: number;
         do {
           randomIndex = Math.floor(Math.random() * song.container.length);
         }while(prevIndex === randomIndex);

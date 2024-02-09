@@ -30,8 +30,10 @@ class RecommendationsStore {
         )
       );
 
+      console.log(data);
+
       runInAction(() => {
-        this.list = Array.from(uniqueList);
+        this.mustLikeList.push(...Array.from(uniqueList));
       });
     }catch(error: any) {
       console.error(error.response);

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { colors } from "../../../constants/colors.const";
 import { API_URL } from "../../../api/axiosConfig";
+import { BUTTON } from "../../../constants/styles.const";
 
 interface UrlProps {
   $name: string;
@@ -53,6 +54,8 @@ export const LikedSongs = styled('div')`
   max-width: 200px;
   max-height: 360px;
   overflow-y: auto;
+
+  scrollbar-width: thin;
 `;
 
 export const Song = styled('div')`
@@ -79,6 +82,7 @@ export const SongIcon = styled('button')<UrlProps>`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  background-color: transparent;
   transition: 0.3s ease;
   padding: 0;
 
@@ -107,7 +111,7 @@ export const SongInfoContainer = styled('div')`
   flex-direction: column;
   align-items: start;
   gap: 4px;
-  width: 124px;
+  width: 100px;
   height: 100%;
   padding: 6px;
   background-color: ${colors.DARK_BLUE};
@@ -120,6 +124,10 @@ export const SongInfo = styled('a')<TextProps>`
   font-family: 'Urbanist', sans-serif;
   color: ${colors.DARK_WHITE};
   transition: color 0.3s ease;
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
 
   &:hover {
@@ -133,7 +141,6 @@ export const RecommendationsWrapper = styled('div')`
   align-items: start;
   gap: 24px;
   overflow-y: scroll;
-  height: 720px;
 
   .swiper-button-next,
   .swiper-button-prev {
@@ -188,9 +195,16 @@ export const Container = styled('div')`
   gap: 24px;
 `;
 
-export const Span = styled('span')`
+interface SpanProps {
+  $size: string;
+}
+
+export const Span = styled('span')<SpanProps>`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   font-family: 'Urbanist', sans-serif;
   font-weight: 600;
-  font-size: 18px;
+  font-size: ${({ $size }) => `${$size}px`};
   color: ${colors.WHITE};
 `;

@@ -2,6 +2,7 @@ import { action, makeObservable, observable, runInAction } from "mobx";
 
 import { ISongData, ISongParameters } from "../types/types";
 import { API_URL, api } from "../api/axiosConfig";
+import genresData from "../json/genres.json";
 
 class UserSongsStore implements ISongParameters {
   id: number | null;
@@ -20,7 +21,9 @@ class UserSongsStore implements ISongParameters {
   playlistAvatar: string | null;
   playlistUrl: any;
   container: ISongData[];
-  randomByGenre: ISongData[];
+  randomByGenre: ISongData | null;
+  lastListened: ISongData[];
+  randomByGenreList: ISongData[];
 
   constructor() {
     this.author = null;
@@ -38,7 +41,9 @@ class UserSongsStore implements ISongParameters {
     this.playlistListens = null;
     this.playlistIssueYear = null;
     this.playlistName = null;
-    this.randomByGenre = [];
+    this.randomByGenre = null;
+    this.lastListened = [];
+    this.randomByGenreList = [];
 
     makeObservable(this, {
       author: observable,
@@ -57,6 +62,11 @@ class UserSongsStore implements ISongParameters {
       playlistIssueYear: observable,
       playlistName: observable,
       randomByGenre: observable,
+      lastListened: observable,
+      randomByGenreList: observable,
+      getLastListened: action,
+      getSongs: action,
+      getRandomByGenre: action,
       setUrl: action,
       setAvatar: action,
       getInfo: action,
@@ -111,6 +121,18 @@ class UserSongsStore implements ISongParameters {
     }
   }
 
+  async updateStatistic(song: ISongData) {
+    try {
+      const response = await api.patch(`/songs/statistic/${song.author}/${song.name}`);
+
+      console.log(response.data);
+
+      console.log('statistic updated');
+    }catch(error: any) {
+      console.error(error);
+    }
+  }
+
   setSearchSong(username: string, songName: string) {
     runInAction(() => {
       this.setUrl(`${API_URL}/songs/audio/${username}/${songName}`);
@@ -130,6 +152,8 @@ class UserSongsStore implements ISongParameters {
       if(!songs && (this.container && index >= 0 && index < this.container.length)) {
         const songInfo = this.container[index];
 
+        this.updateStatistic(songInfo);
+
         this.setUrl(`${API_URL}/songs/audio/${songInfo.author}/${songInfo.name}`);
         this.setAvatar(`${API_URL}/images/song/${songInfo.author}/${songInfo.name}`);
 
@@ -141,6 +165,8 @@ class UserSongsStore implements ISongParameters {
         this.author = songInfo.author;
       }else if(songs && (songs && index >= 0 && index < songs.length)) {
         const songInfo = songs[index];
+
+        this.updateStatistic(songInfo);
 
         this.setUrl(`${API_URL}/songs/audio/${songInfo.author}/${songInfo.name}`);
         this.setAvatar(`${API_URL}/images/song/${songInfo.author}/${songInfo.name}`);
@@ -179,7 +205,7 @@ class UserSongsStore implements ISongParameters {
     }
   }
 
-  async getRandomByGenre(genre: string | null) {
+  async getRandomByGenre(genre: string | null, param?: 'push') {
     if(!genre) return;
 
     try {
@@ -188,24 +214,73 @@ class UserSongsStore implements ISongParameters {
       console.log(response.data);
 
       runInAction(() => {
-        if(Array.isArray(response.data)) {
-          const uniqueSongs: Set<ISongData> = new Set(
-              response.data.filter((existingSong: ISongData) =>
-                !this.randomByGenre.some((song: ISongData) =>
-                  song.songId === existingSong.songId
-              )
-            )
-          );
-          
-          this.randomByGenre.push(...Array.from(uniqueSongs));
-        }
-
-        this.randomByGenre.push(response.data);
+        if(param) this.randomByGenreList.push(response.data);
+        
+        this.randomByGenre = response.data;
       });
     }catch(error: any) {
       console.error(error);
       return;
     }
+  }
+
+  async getLastListened() {
+    try {
+      const response = await api.get('/users/last-listened/songs');
+      
+      console.log(response.data)
+
+      runInAction(() => {
+        const uniqueList: Set<ISongData> = new Set(
+          response.data.songs.filter((existingSong: ISongData) =>
+            !this.lastListened.some((song: ISongData) =>
+              existingSong.songId === song.songId
+            )
+          )
+        );
+
+
+        this.lastListened.push(...Array.from(uniqueList));
+      });
+
+    }catch(error: any) {
+      console.error(error);
+      return;
+    }
+  }
+
+  async getRandomSong() {
+    try {
+      const response = await api.get<ISongData>(`/songs/random/${genresData[Math.floor(Math.random() * genresData.length)].replace(/[\s-]/g, '_').toUpperCase()}`);
+
+      console.log(response.data);
+      
+      if(!response.data) {
+        await this.getRandomSong();
+      }
+      
+      runInAction(() => {
+        if(response.data) {
+          this.setSongObject_(response.data);
+        }
+      });
+    } catch (error: any) {
+      await this.getRandomSong();
+      console.error(error);
+    }
+  }
+
+  setSongObject_(song: ISongData) {
+    runInAction(() => {
+      this.setUrl(`${API_URL}/songs/audio/${song.author}/${song.name}`);
+      this.setAvatar(`${API_URL}/images/song/${song.author}/${song.name}`);
+      this.issueYear = song.issueYear;
+      this.listens = song.listens;
+      this.genre = song.genre;
+      this.setName(song.name);
+      this.id = song.songId;
+      this.author = song.author;
+    });
   }
 }
 export const userSongsStore = new UserSongsStore();

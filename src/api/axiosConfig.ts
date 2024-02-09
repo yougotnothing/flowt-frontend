@@ -1,7 +1,6 @@
 import axios from "axios";
 import { user } from "../stores/toUser.mobx";
 import { NavigateFunction } from "react-router-dom";
-import { Dispatch, SetStateAction } from "react";
 import { LoginDto, SetState } from "../types/props";
 
 export const API_URL = process.env.REACT_APP_API_URL;

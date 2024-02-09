@@ -33,7 +33,7 @@ export const LikedPlaylists: FC = observer(() => {
             </SongInfoContainer>
           </Song>
         )) : (
-          <Span>This will be your liked playlists</Span>
+          <Span $size="16">This will be your liked playlists</Span>
         )}
       </LikedSongs>
     </Container>

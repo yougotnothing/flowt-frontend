@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { Wrapper } from "./Home.styled";
 import { observer } from "mobx-react-lite";
@@ -12,7 +12,6 @@ import { LikedPlaylists } from "./components/liked-playlists/Liked-playlists";
 import { Recommendations } from "./components/recommendations/Recommendations";
 
 export const Home: FC = observer(() => {
-
   useEffect(() => {
     recommendations.getRecommendationList();
     recommendations.getMustLikeList();

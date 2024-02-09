@@ -126,12 +126,6 @@ export const Playlist: FC = observer(() => {
             name="name"
             $type="name"
           />
-          <PlaylistInfo
-            $isNull={isNull}
-            onChange={formik.handleChange}
-            placeholder="Description"
-            $type="description"
-          />
           <PrivacySettings>
             Privacy settings:
             <IsPrivateField onClick={() => setIsPrivate(!isPrivate)}>

@@ -138,7 +138,6 @@ export const RandomSong = styled('div')`
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.3);
-
   }
 `;
 

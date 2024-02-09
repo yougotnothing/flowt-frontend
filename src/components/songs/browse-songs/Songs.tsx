@@ -68,21 +68,23 @@ export const BrowseSongs: FC = observer(() => {
           </SongDataContainer>
           <Line> </Line>
           <RandomSongsWrapper>
-            {songs.randomByGenre.map((song, index) => (
-              <RandomSong key={index}>
-                <RandomSongWrapper>
-                  <RandomSongAvatar $src={song} />
-                  <RandomSongDataWrapper>
-                    <RandomSongData>{song.author}</RandomSongData>
-                    <RandomSongData $name>{song.name}</RandomSongData>
-                  </RandomSongDataWrapper>
+            <RandomSong>
+              {songs.randomByGenre && (
+                <>
+                  <RandomSongWrapper>
+                    <RandomSongAvatar $src={songs.randomByGenre} />
+                    <RandomSongDataWrapper>
+                      <RandomSongData>{songs.randomByGenre.author}</RandomSongData>
+                      <RandomSongData $name>{songs.randomByGenre.name}</RandomSongData>
+                    </RandomSongDataWrapper>
+                  </RandomSongWrapper>
                   <RandomSongWrapper>
                     <RandomSongButton />
                     <RandomSongButton $like />
                   </RandomSongWrapper>
-                </RandomSongWrapper>
-              </RandomSong>
-            ))}
+                </>
+              )}
+            </RandomSong>
           </RandomSongsWrapper>
         </>
       )}
