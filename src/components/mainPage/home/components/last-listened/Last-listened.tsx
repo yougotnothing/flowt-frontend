@@ -18,6 +18,10 @@ export const LastListened = observer(() => {
         {userSongsStore.lastListened.length ? userSongsStore.lastListened.map((song, index) => (
           <Song key={index}>
             <SongIcon
+              onClick={() => {
+                userSongsStore.getInfo(userSongsStore.lastListened);
+                userSongsStore.setSong(index);
+              }}
               $author={song.author}
               $name={song.name}
             />
