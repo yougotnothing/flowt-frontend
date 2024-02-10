@@ -138,7 +138,7 @@ export const Register: FC = observer(() => {
         <GoogleButton />
         <FacebookButton />
       </OAuthButtonsContainer>
-      <RegisteredButton>Registered?</RegisteredButton>
+      <RegisteredButton onClick={() => navigate('/login')}>Registered?</RegisteredButton>
     </LoginCard>
   );
 });
