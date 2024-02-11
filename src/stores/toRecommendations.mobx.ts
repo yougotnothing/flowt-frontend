@@ -22,15 +22,13 @@ class RecommendationsStore {
     try {
       const { data } = await api.get('/recommendations/might-like');
 
-      const uniqueList: ISongData[] = data.filter(
-        (song: ISongData, index: number, array: any[]) => 
-          !array.slice(0, index)
-            .some((prevSong: ISongData) => 
-            prevSong.songId === song.songId
+      const uniqueList: Set<ISongData> = new Set(
+        data.filter((existingSong: ISongData) => 
+          !this.mustLikeList.some((song: ISongData) =>
+            song.songId === existingSong.songId
+          )
         )
       );
-
-      console.log(data);
 
       runInAction(() => {
         this.mustLikeList.push(...Array.from(uniqueList));
@@ -47,10 +45,9 @@ class RecommendationsStore {
 
       const uniqueList: ISongData[] = data.filter(
         (song: ISongData, index: number, array: any[]) => 
-          !array.slice(0, index)
-            .some((prevSong: ISongData) => 
-            prevSong.songId === song.songId
-        )
+          !array
+            .slice(0, index)
+            .some((prevSong: ISongData) => prevSong.songId === song.songId)
       );
 
       runInAction(() => {

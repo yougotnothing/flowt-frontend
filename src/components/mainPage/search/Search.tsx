@@ -25,6 +25,8 @@ import { reportStore } from "../../../stores/toReport.mobx";
 import { user as User } from "../../../stores/toUser.mobx";
 import { 
   handleCardClick, 
+  handleCheckIsSubscribed, 
+  handleClickPlaylistModalButton, 
   handleClickSongModalButton,
   handleClickUserModalButton,
   handleMouseEnter,
@@ -33,11 +35,13 @@ import {
 } from "./functions";
 import { addModerator, deleteUser } from "../../admin/functions";
 import { Title as Helmet } from "../../../helmet";
+import { likedSongs } from "../../../stores/toLiked-songs.mobx";
 
 export const Search: FC = observer(() => {
   const[isOpenSongs, setIsOpenSongs] = useState<boolean[]>(Array(search.songs.length).fill(false));
   const[isOpenUsers, setIsOpenUsers] = useState<boolean[]>(Array(search.users.length).fill(false));
   const[isOpenPlaylists, setIsOpenPlaylists] = useState<boolean[]>(Array(search.playlists.length).fill(false));
+  const[isSubscribed, setIsSubscribed] = useState<boolean[]>(Array(search.users.length).fill(false));
   const[isFetching, setIsFetching] = useState<boolean>(false);
   const[param, setParam] = useState<string>('All');
   const navigate = useNavigate();
@@ -74,6 +78,25 @@ export const Search: FC = observer(() => {
       reportStore.setIsOpen(false);
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    likedSongs.setSongs();
+    User.getSubscribes();
+  }, []);
+
+  useEffect(() => {
+    const newSubscriptions = search.users.map((user) => handleCheckIsSubscribed(user, User.subscribes));
+    setIsSubscribed(newSubscriptions);
+  }, [search.users, User.subscribes]);
+
+  const handleSubscribeClick = (index: number) => {
+    setIsSubscribed((prevState) => {
+      const newState = [...prevState];
+      newState[index] = !newState[index];
+      return newState;
+    });
+    handleSubscribe(search.users[index].username, isSubscribed[index]);
+  };
 
   return (
     <Container>
@@ -142,21 +165,21 @@ export const Search: FC = observer(() => {
             </CardInfoContainer>
             <CardButtonsContainer $isOpen={isOpenUsers[index]}>
               <CardButton
-                disabled={searchUser.username === User.username ? true : false}
-                onClick={() => handleSubscribe(searchUser.username)}
-              >Subscribe</CardButton>
+                disabled={searchUser.username === User.username}
+                onClick={() => handleSubscribeClick(index)}
+              >{isSubscribed[index] ? 'unsubscribe' : 'subscribe'}</CardButton>
               <CardButton
-                disabled={searchUser.username === User.username ? true : false}
+                disabled={searchUser.username === User.username}
                 onClick={() => handleClickUserModalButton(searchUser)}
               >Report</CardButton>
               {User.username === 'admin' &&
                 <>
                   <CardButton
-                    disabled={searchUser.username === User.username ? true : false}
+                    disabled={searchUser.username === User.username}
                     onClick={() => addModerator(searchUser.username)}
                   >Add moderator</CardButton>
                   <CardButton
-                    disabled={searchUser.username === User.username ? true : false}
+                    disabled={searchUser.username === User.username}
                     onClick={() => deleteUser(searchUser.username)}
                   >Delete user</CardButton>
                 </>
@@ -180,8 +203,8 @@ export const Search: FC = observer(() => {
                 // onClick={() => likedPlaylists.addLikedPlaylist(playlist)}
               >Like</CardButton>
               <CardButton
-                disabled={playlist.username === User.username ? true : false}
-                // onClick={() => handleClickPlaylistModalButton(author)}
+                disabled={playlist.username === User.username}
+                onClick={() => handleClickPlaylistModalButton(playlist)}
               >Report</CardButton>
             </CardButtonsContainer>
           </Card>

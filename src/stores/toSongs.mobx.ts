@@ -114,6 +114,8 @@ class UserSongsStore implements ISongParameters {
         );
 
         this.container.push(...Array.from(uniqueSongs));
+        
+        if(!data.songs.length) this.container = [];
       });
     }catch(error: any) {
       console.error(error);

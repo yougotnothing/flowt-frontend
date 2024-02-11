@@ -185,6 +185,8 @@ export const LikedContainer = styled('div')`
   display: flex;
   flex-direction: row;
   text-align: start;
+  width: 100%;
+  --swiper-navigation-color: ${colors.SECONDARY} !important;
 `;
 
 interface ISubscribeText {
@@ -215,7 +217,7 @@ export const LikedText = styled('div')`
   color: ${colors.WHITE};
 `;
 
-export const LikedTrackContainer = styled('div')`
+export const LikedTrackContainer = styled('button')`
   display: flex;
   height: 348px;
   flex-direction: column;
@@ -230,6 +232,7 @@ export const LikedTrackContainer = styled('div')`
   transition: all 0.3s;
   cursor: pointer;
   gap: 24px;
+  border: none;
 
   &:hover {
     background-color: ${colors.FRONT_HOVER};

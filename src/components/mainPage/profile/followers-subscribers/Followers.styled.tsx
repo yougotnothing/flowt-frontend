@@ -14,9 +14,8 @@ export const Container = styled('div')`
 export const ContentWrapper = styled('div')`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 26px;
 `;
 
 export const Card = styled('button')`
@@ -45,8 +44,8 @@ interface IAvatar {
 }
 
 export const Avatar = styled('picture')<IAvatar>`
-  width: 180px;
-  height: 180px;
+  width: 220px;
+  height: 220px;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -60,6 +59,9 @@ export const Header = styled('div')`
   font-family: 'Raleway', sans-serif;
   font-size: 28px;
   font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
 `;
 
 export const PageHeader = styled('div')`

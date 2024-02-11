@@ -57,11 +57,13 @@ export const ChangeAvatar: React.FC = observer(() => {
           'Content-type': 'image/jpeg'
         }
       });
+      
       avatarStore.setAvatar(URL.createObjectURL(croppedAvatarBlob));
 
       if(googleAvatar) {
         localStorage.removeItem('image');
       }
+
       navigate(generatePath('/account/:id', { id: user.username }));
     }catch(error: any) {
       console.log(error);
@@ -142,7 +144,7 @@ export const ChangeAvatar: React.FC = observer(() => {
                       onZoomChange={setZoom}
                     />
                     <ButtonContainer>
-                      <SetNewAvatarButton onClick={handleChangeAvatar}>
+                      <SetNewAvatarButton onClick={() => handleChangeAvatar().then(() => user.setAvatar(avatarStore.avatar))}>
                         Set avatar
                       </SetNewAvatarButton>
                     </ButtonContainer>

@@ -1,5 +1,5 @@
 import { observable, action, runInAction, makeObservable } from "mobx";
-import { IUserProps, IUserSearch, UserDTO } from "../types/props";
+import { IUserProps, IUserSearch } from "../types/props";
 
 class SearchUsersStore {
   username: string | null;
@@ -37,33 +37,23 @@ class SearchUsersStore {
   }
 
   removeData() {
-    localStorage.removeItem('username');
-    localStorage.removeItem('region');
-    localStorage.removeItem('avatar');
-    localStorage.removeItem('email');
-    localStorage.removeItem('userHaveAvatar');
-    localStorage.removeItem('description');
+    localStorage.removeItem('search_user_data');
   }
 
   getData() {
-    const username = localStorage.getItem('username');
-    const region = localStorage.getItem('region');
-    const avatar = localStorage.getItem('avatar');
-    console.log(username);
-    const storageIsHaveAvatar = localStorage.getItem('userHaveAvatar');
-    const userHaveAvatar = storageIsHaveAvatar ? JSON.parse(storageIsHaveAvatar) : null;
-    const email = localStorage.getItem('email');
-    console.log(email);
-    const description = localStorage.getItem('description');
+    if(localStorage.getItem('search_user_data')) {
+      const data = localStorage.getItem('search_user_data');
+      const user = data && JSON.parse(data);
 
-    runInAction(() => {
-      this.username = username;
-      this.avatar = avatar;
-      this.region = region;
-      this.userHaveAvatar = userHaveAvatar;
-      this.email = email;
-      this.description = description;
-    });
+      runInAction(() => {
+        this.username = user.username;
+        this.avatar = user.avatar;
+        this.region = user.region;
+        this.userHaveAvatar = user.userHaveAvatar;
+        this.email = user.email;
+        this.description = user.description;
+      });
+    }
   }
 
   setAvatar(src: any) {
@@ -97,13 +87,6 @@ class SearchUsersStore {
     }
 
     localStorage.setItem('search_user_data', JSON.stringify(data));
-
-    if(this.username) localStorage.setItem('username', this.username);
-    if(this.region) localStorage.setItem('region', this.region);
-    if(this.avatar) localStorage.setItem('avatar', this.avatar);
-    if(this.email) localStorage.setItem('email', this.email);
-    if(this.userHaveAvatar) localStorage.setItem('userHaveAvatar', `${this.userHaveAvatar}`);
-    if(this.description) localStorage.setItem('description', this.description);
   }
 }
 

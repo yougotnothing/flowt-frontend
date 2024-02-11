@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 
 import { Wrapper } from "./Home.styled";
 import { observer } from "mobx-react-lite";

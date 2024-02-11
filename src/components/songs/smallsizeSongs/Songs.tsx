@@ -20,7 +20,7 @@ import { api } from "../../../api/axiosConfig";
 import { user } from "../../../stores/toUser.mobx";
 import { searchStore } from "../../../stores/toSearch.mobx";
 
-export const Songs: React.FC<{ username: string | null }> = observer(({ username }) => {
+export const Songs: React.FC = observer(() => {
   const[isLiked, setIsLiked] = useState<boolean[]>(Array(songs.container.length).fill(false));
   const navigate = useNavigate();
 
@@ -45,10 +45,6 @@ export const Songs: React.FC<{ username: string | null }> = observer(({ username
       console.log(error);
     }
   }
-
-  useEffect(() => {
-    songs.getSongs(username);
-  }, []);
 
   return (
     <>

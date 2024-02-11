@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, generatePath } from "react-router-dom";
 
 import {
   UserContainer,
@@ -26,7 +25,7 @@ import {
   SubscribeText,
   SubscribeTextContainer
 } from "./Profile.styled";
-
+import { useNavigate, generatePath } from "react-router-dom";
 import { Options } from "./options/Options";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
 import { observer } from "mobx-react-lite";
@@ -36,6 +35,9 @@ import { IUserProps } from "../../../types/props";
 import { playlistsStore } from "../../../stores/toPlaylists.mobx";
 import { user } from "../../../stores/toUser.mobx";
 import { Title as Helmet } from "../../../helmet";
+import { userSongsStore } from "../../../stores/toSongs.mobx";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
 
 export const Profile: React.FC = observer(() => {
   const[isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
@@ -61,6 +63,10 @@ export const Profile: React.FC = observer(() => {
       setIsCurrentUser(false);
     }
   }, [searchUsers.username, user.username]);
+
+  useEffect(() => {
+    userSongsStore.getSongs(searchUsers.username);
+  }, [searchUsers.username]);
 
   return (
     <UserContainer>
@@ -104,25 +110,42 @@ export const Profile: React.FC = observer(() => {
             <SongMainContainer>
               <SongsTitle>Songs</SongsTitle>
               <SongContainer>
-                <Songs username={searchUsers.username} />
+                <Songs />
               </SongContainer>
             </SongMainContainer>
           </FooterContainer>
           <LikedText>Favorite</LikedText>
           <LikedContainer>
-            {user.subscribes.map((subscribe: IUserProps, index: number) => (
-              <LikedTrackContainer key={index}>
-                {subscribe.userHaveAvatar ?
-                  <LikedTrackIcon style={{backgroundImage: `url(${subscribe.avatar})`}} />
-                  :
-                  <LikedTrackIcon style={{backgroundImage: 'url(/defaultAvatar.png)'}} />
-                }
-                <SubscribeTextContainer>
-                  <SubscribeText $type="Username">{subscribe.username}</SubscribeText>
-                  <SubscribeText $type="Region">{subscribe.region}</SubscribeText>
-                </SubscribeTextContainer>
-              </LikedTrackContainer>
-            ))}
+            <Swiper
+              style={{width: 1200}}
+              slidesPerView={4}
+              direction="horizontal"
+              navigation
+              modules={[Navigation]}
+            >
+              {user.subscribes.map((subscribe: IUserProps, index: number) => (
+                <SwiperSlide key={index}>
+                  <LikedTrackContainer
+                    onClick={() => {
+                      searchUsers.setUser(subscribe);
+                      user.getFollowers(subscribe.username);
+                      user.getSubscribes(subscribe.username);
+                      navigate(generatePath('/profile/:id', { id: subscribe.username }));
+                    }}
+                  >
+                    {subscribe.userHaveAvatar ?
+                      <LikedTrackIcon style={{backgroundImage: `url(${subscribe.avatar})`}} />
+                      :
+                      <LikedTrackIcon style={{backgroundImage: 'url(/defaultAvatar.png)'}} />
+                    }
+                    <SubscribeTextContainer>
+                      <SubscribeText $type="Username">{subscribe.username}</SubscribeText>
+                      <SubscribeText $type="Region">{subscribe.region}</SubscribeText>
+                    </SubscribeTextContainer>
+                  </LikedTrackContainer>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </LikedContainer>
         </>
       )}

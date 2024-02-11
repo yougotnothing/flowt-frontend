@@ -1,5 +1,5 @@
 import { observable, action, runInAction, makeObservable } from "mobx";
-import { IPlaylist } from "../types/props";
+import { IPlaylist, ISearchPlaylist } from "../types/props";
 import { api } from "../api/axiosConfig";
 
 class LikedPlaylistsStore {
