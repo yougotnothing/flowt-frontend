@@ -25,6 +25,11 @@ export const Content = styled('div')`
   margin: auto;
   gap: 46px;
   position: relative;
+
+  @media (max-width: 460px) {
+    width: 96%;
+    gap: 8px;
+  }
 `;
 
 export const Title = styled('span')`
@@ -36,6 +41,10 @@ export const Title = styled('span')`
   background: linear-gradient(125deg, rgba(174,238,184,1) 0%, rgba(191,213,255,1) 100%);
   -webkit-background-clip: text;
   color: transparent;
+
+  @media (max-width: 460px) {
+    font-size: 28px;
+  }
 `;
 
 export const RowWrapper = styled('div')`
@@ -48,6 +57,15 @@ export const RowWrapper = styled('div')`
   background-color: rgba(0, 0, 0, 0.4);
   padding: 34px;
   border-radius: 42px;
+
+  @media (max-width: 460px) {
+    margin-top: 48px;
+    gap: 18px;
+    width: 98%;
+    padding: 12px;
+    border-radius: 16px;
+    flex-direction: column;
+  }
 `;
 
 export const TitleWrapper = styled('div')`
@@ -55,6 +73,10 @@ export const TitleWrapper = styled('div')`
   flex-direction: column;
   gap: 6px;
   text-align: start;
+
+  @media (max-width: 460px) {
+    gap: 4px;
+  }
 `;
 
 export const MainInfoWrapper = styled('div')`
@@ -63,6 +85,10 @@ export const MainInfoWrapper = styled('div')`
   align-items: start;
   justify-content: space-between;
   height: 100%;
+
+  @media (max-width: 460px) {
+    gap: 24px;
+  }
 `;
 
 interface SpanProps {
@@ -74,6 +100,10 @@ export const Span = styled('span')<SpanProps>`
   font-weight: 500;
   font-size: 24px;
   color: ${({ $color }) => $color ? $color : 'rgba(161, 255, 208, 0.671)'};
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+  }
 `;
 
 interface IconProps {
@@ -91,6 +121,11 @@ export const Icon = styled('a')<IconProps>`
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 50%;
+
+  @media (max-width: 460px) {
+    width: 25px;
+    height: 25px;
+  }
 `;
 
 export const TextWrapper = styled('div')`
@@ -98,19 +133,30 @@ export const TextWrapper = styled('div')`
   flex-direction: column;
   align-items: start;
   gap: 8px;
+
+  @media (max-width: 460px) {
+    gap: 5px;
+  }
 `;
 
 export const LoginWrapper = styled('div')`
+  --gap: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: var(--gap);
   padding: 12px;
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 16px;
   width: 450px;
-  height: calc(100% - 24px);
+  height: calc(100% - var(--gap));
+
+  @media (max-width: 460px) {
+    align-self: center;
+    --gap: 14px;
+    width: calc(100% - 24px);
+  }
 `;
 
 export const InputWrapper = styled('div')`
@@ -132,6 +178,10 @@ export const Strong = styled('strong')`
   flex-direction: row;
   align-items: center;
   gap: 8px;
+
+  @media (max-width: 460px) {
+    font-size: 16px;
+  }
 `;
 
 export const ButtonsWrapper = styled('div')`
@@ -157,6 +207,10 @@ export const Button = styled('button')`
     color: #aeeeb8;
     border-color: #aeeeb8;
   }
+
+  @media (max-width: 460px) {
+    font-size: 15px;
+  }
 `;
 
 export const Input = styled('input')<InputProps>`
@@ -165,12 +219,24 @@ export const Input = styled('input')<InputProps>`
   width: 268px;
   height: 38px;
   border-color: ${({ $isError }) => $isError ? colors.RED : colors.BORDER};
+
+  @media (max-width: 460px) {
+    width: 168px;
+    height: 26px;
+    font-size: 15px;
+  }
 `;
 
 export const LoginButton = styled('button')`
   ${BUTTON};
   width: 168px;
   height: 36px;
+
+  @media (max-width: 460px) {
+    width: 118px;
+    height: 29px;
+    font-size: 15px;
+  }
 `;
 
 export const Error = styled('span')`
@@ -179,6 +245,11 @@ export const Error = styled('span')`
   font-size: 18px;
   color: ${colors.RED};
   height: 20px;
+
+  @media (max-width: 460px) {
+    font-size: 15px;
+    height: 17px;
+  }
 `;
 
 interface LinkProps {
@@ -200,18 +271,30 @@ export const Link = styled('a')<LinkProps>`
   &:hover {
     border-bottom-color: rgba(255, 255, 255, 0.3);
   }
+
+  @media (max-width: 460px) {
+    font-size: 15px;
+  }
 `;
 
 interface LinkWrapperProps {
   $direction: 'row' | 'column';
+  $size: 'small' | 'big';
 }
 
 export const LinkWrapper = styled('div')<LinkWrapperProps>`
   background-color: ${({ $direction }) => $direction === 'column' ? 'rgba(0, 0, 0, 0.2)' : 'transparent'};
   padding: 8px;
   border-radius: 12px;
-  display: flex;
+  display: ${({ $size }) => $size === 'small' ? 'none' : 'flex'};
   flex-direction: ${({ $direction }) => $direction};
   align-items: start;
   gap: 12px;
+
+  @media (max-width: 460px) {
+    display: ${({ $size }) => $size === 'small' ? 'flex' : 'none'};
+    border-radius: 8px;
+    gap: 8px;
+    padding: 5px;
+  }
 `;

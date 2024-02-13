@@ -143,13 +143,14 @@ export const MainPage: FC = observer(() => {
           <Logo onClick={() => navigate('/home')} />
           <div className='form'>
             <Search
+              className="search-input"
               onKeyDown={handleSearch}
               name="search"
               placeholder="search"
               type="text"
               onChange={handleChange}
             />
-            <SearchButton onClick={handleSearchButton} />
+            <SearchButton onTouchStart={handleSearchButton} className="search-button" onClick={handleSearchButton} />
           </div>
           {user.isUserAuthenticated ?
             <VerifiedUserContainer>

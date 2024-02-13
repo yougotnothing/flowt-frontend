@@ -52,7 +52,7 @@ export const Navbar = styled('div')<NavbarProps>`
     gap: 20px;
 
     @media (max-width: 460px) {
-      gap: 6px;
+      gap: 0;
     }
   }
 `;
@@ -64,8 +64,14 @@ export const Search = styled('input')`
   height: 38px;
 
   @media (max-width: 460px) {  
-    width: 164px;
-    height: 32px;
+    width: 129px;
+    height: 26px;
+    font-size: 15px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 26px;
+    border-bottom-left-radius: 26px;
+    border-right-width: 0;
   }
 `;
 
@@ -91,6 +97,13 @@ export const SearchButton = styled('button')`
     width: 32px;
     height: 32px;
     background-size: 16px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: ${colors.BORDER};
+
+    &:active {
+      background-color: ${colors.SECONDARY};
+    }
   }
 `;
 
@@ -101,6 +114,10 @@ export const ContentContainer = styled('div')`
   width: 96%;
   align-self: center;
   gap: 6%;
+
+  @media (max-width: 460px) {
+    padding-top: 5em;
+  }
 `;
 
 export const Button = styled('button')`
@@ -225,8 +242,8 @@ export const UserButton = styled('button')`
 
 export const UserAvatar = styled('picture')`
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

@@ -142,7 +142,7 @@ export const UserNickname = styled('a')`
 
   @media (max-width: 460px) {
     font-size: 26px;
-    max-width: 140px;
+    max-width: 154px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -161,6 +161,10 @@ export const UserParams = styled('div')`
   flex-direction: row;
   align-self: start;
   gap: 24px;
+
+  @media (max-width: 460px) {
+    gap: 16px;
+  }
 `;
 
 export const ProfileTitle = styled('div')`
@@ -243,6 +247,10 @@ export const SubscribeText = styled('div')<ISubscribeText>`
   font-family: 'Urbanist', sans-serif;
   font-weight: ${props => props.$type === 'Username' ? '600' : '400'};
   color: ${props => props.$type === 'Username' ? colors.WHITE : colors.DARK_WHITE};
+
+  @media (max-width: 460px) {
+    font-size: ${({ $type }) => $type === 'Username' ? '18px' : '14px'};
+  }
 `;
 
 export const LikedText = styled('div')`
@@ -279,7 +287,7 @@ export const LikedTrackContainer = styled('button')`
 
   @media (max-width: 460px) {
     font-size: 18px;
-    gap: 18px;
+    gap: 16px;
     height: max-content;
     padding: 8px;
   }

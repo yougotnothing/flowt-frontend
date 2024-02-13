@@ -16,15 +16,13 @@ import {
   TitleWrapper,
   Error,
   MainInfoWrapper,
-  LinkWrapper,
-  Link,
-  TextWrapper,
-  Icon
+  TextWrapper
 } from "./Welcome.styled";
 import { loginValidationSchema } from "../../validation/yup.config";
 import { useNavigate } from "react-router-dom";
 import { FacebookButton, GoogleButton } from "../OAuth2/OAuthButtons";
 import { login } from "../../api/axiosConfig";
+import { LinkWrapper } from "./Link-wrapper";
 
 export const Welcome: FC = () => {
   const[errorMessage, setErrorMessage] = useState<string>('');
@@ -63,28 +61,8 @@ export const Welcome: FC = () => {
             <Span $color="white">Dive into an</Span>
             <Strong>ocean <Span $color="white">of </Span>music</Strong>
           </TextWrapper>
-          <LinkWrapper $direction="column">
-            <Icon
-              $url="/github-logo.png"
-              target="_blank"
-              href="https://github.com/yougotnothing/flowt-frontend"
-            />
-            <LinkWrapper $direction="row">
-              <Strong>
-                <Link
-                  $strong
-                  target="_blank"
-                  href="https://github.com/vilsoncake"
-                >VilsonCake</Link>
-                <Link
-                  $strong
-                  target="_blank"
-                  href="https://github.com/yougotnothing"
-                >yougotnothing</Link>
-              </Strong>
-            </LinkWrapper>
-          </LinkWrapper>
         </MainInfoWrapper>
+        <LinkWrapper size="big" />
         <LoginWrapper>
           <Strong>Login</Strong>
           <InputWrapper>
@@ -115,6 +93,7 @@ export const Welcome: FC = () => {
             onClick={() => navigate('/register')}
           >Not registered?</Button>
         </LoginWrapper>
+        <LinkWrapper size="small" />
       </RowWrapper>
     </Content>
   );

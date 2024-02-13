@@ -11,6 +11,10 @@ export const OAuthButtonsContainer = styled('div')`
   align-items: center;
   width: max-content;
   gap: 8px;
+
+  @media (max-width: 460px) {
+    gap: 5px;
+  }
 `;
 
 export const OAuthIcon = styled('picture')<IOAuthButtonProps>`
@@ -21,6 +25,12 @@ export const OAuthIcon = styled('picture')<IOAuthButtonProps>`
   background-position: center;
   background-repeat: no-repeat;
   background-size: 20px;
+
+  @media (max-width: 460px) {
+    width: 20px;
+    height: 20px;
+    background-size: 16px;
+  }
 `;
 
 export const OAuthButton = styled('a')<IOAuthButtonProps>`
@@ -39,6 +49,11 @@ export const OAuthButton = styled('a')<IOAuthButtonProps>`
   &:hover {
     background-color: ${props => props.$type === 'google' ? '#b0b0b0' : '#2f4a7f'};
   }
+
+  @media (max-width: 460px) {
+    width: 115px;
+    height: 35px;
+  }
 `;
 
 export const OAuthText = styled('div')<IOAuthButtonProps>`
@@ -48,4 +63,9 @@ export const OAuthText = styled('div')<IOAuthButtonProps>`
   font-size: 14px;
   font-family: 'Urbanist', sans-serif;
   font-weight: 600;
+
+  @media (max-width: 460px) {
+    font-size: 12px;
+    font-weight: 600;
+  }
 `;
