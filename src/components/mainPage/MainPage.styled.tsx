@@ -40,7 +40,7 @@ export const Navbar = styled('div')<NavbarProps>`
 
   @media (max-width: 460px) {
     height: 55px;
-    width: 100svw;
+    width: 100vw;
     border-radius: 0px;
   }
 
