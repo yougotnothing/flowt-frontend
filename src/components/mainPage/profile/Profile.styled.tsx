@@ -141,7 +141,11 @@ export const UserNickname = styled('a')`
   cursor: pointer;
 
   @media (max-width: 460px) {
-    font-size: 30px;
+    font-size: 26px;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `;
 
