@@ -37,6 +37,13 @@ export const OptionsContainer = styled('div')<OptionsProps>`
   gap: 8px;
   opacity: ${props => props.$isVisible ? '1' : '0'};
   animation: ${props => props.$isVisible ? css`${fadeIn} 0.3s ease` : css`${fadeOut} 0.3s ease`};
+
+  @media (max-width: 460px) {
+    width: 148px;
+    padding: 6px;
+    gap: 5px;
+    border-radius: 9px;
+  }
 `;
 
 export const Select = styled('button')`
@@ -48,6 +55,11 @@ export const Select = styled('button')`
   color: ${colors.WHITE};
   cursor: pointer;
   transition: all 0.3s;
+
+  @media (max-width: 460px) {
+    width: 108px;
+    height: 32px;
+  }
 
   &:hover {
     border: 1px solid ${colors.WHITE};
@@ -63,6 +75,10 @@ export const SelectText = styled('div')`
   font-size: 18px;
   font-weight: 400;
   text-align: start;
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+  }
 `;
 
 export const CloseOptions = styled('button')`
@@ -79,6 +95,11 @@ export const CloseOptions = styled('button')`
   background-size: cover;
   transition: all 0.3s;
   cursor: pointer;
+
+  @media (max-width: 460px) {
+    width: 24px;
+    height: 24px;
+  }
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.2);

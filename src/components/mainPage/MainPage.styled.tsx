@@ -38,20 +38,35 @@ export const Navbar = styled('div')<NavbarProps>`
   position: fixed;
   z-index: 999;
 
+  @media (max-width: 460px) {
+    height: 55px;
+    width: 100svw;
+    border-radius: 0px;
+  }
+
   .form {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin: auto;
     gap: 20px;
+
+    @media (max-width: 460px) {
+      gap: 6px;
+    }
   }
 `;
 
 export const Search = styled('input')`
-  ${INPUT};
+  ${INPUT}
 
-  width: 300px;
+  width: 268px;
   height: 38px;
+
+  @media (max-width: 460px) {  
+    width: 164px;
+    height: 32px;
+  }
 `;
 
 export const SearchButton = styled('button')`
@@ -70,6 +85,12 @@ export const SearchButton = styled('button')`
   &:hover {
     background-color: ${colors.SECONDARY_HOVER};
     transition: all 0.2s;
+  }
+
+  @media (max-width: 460px) {
+    width: 32px;
+    height: 32px;
+    background-size: 16px;
   }
 `;
 
@@ -136,6 +157,12 @@ export const Logo = styled('button')`
     width: 100%;
     height: 100%;
     opacity: 0;
+  }
+
+  @media (max-width: 460px) {
+    width: 86px;
+    height: 32px;
+    background-size: 86px;
   }
 `;
 
@@ -211,6 +238,10 @@ export const UserNickname = styled('div')`
   overflow: hidden;
   text-align: start;
   text-overflow: ellipsis;
+
+  @media (max-width: 460px) {
+    display: none;
+  }
 `;
 
 export const GoBackContainer = styled('div')`
@@ -237,6 +268,10 @@ export const NavContainer = styled('div')`
   display: flex;
   flex-direction: row;
   margin: auto;
+
+  @media (max-width: 460px) {
+    width: 96%;
+  }
 `;
 
 export interface IDroplistProp {

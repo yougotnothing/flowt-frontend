@@ -31,6 +31,11 @@ export const UserContainer = styled('div')`
   margin: 0 auto;
   position: relative;
 
+  @media (max-width: 460px) {
+    width: 420px;
+    padding: 0;
+  }
+
   .link {
     display: block;
     font-size: 18px;
@@ -63,6 +68,12 @@ export const Settings = styled('button')<OptionsProps>`
   transform: rotate(180deg);
   cursor: pointer;
 
+  @media (max-width: 460px) {
+    width: 29px;
+    height: 29px;
+    background-size: 38px;
+  }
+
   &:hover {
     transform: rotate(0deg);
   }
@@ -82,23 +93,10 @@ export const UserAvatar = styled('picture')<IUserAvatar>`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-`;
 
-export const SwitchTheme = styled('button')`
-  width: 146px;
-  height: 48px;
-  color: ${colors.DARK_WHITE};
-  background-color: ${colors.SECONDARY};
-  text-align: center;
-  font-family: 'Urbanist', sans-serif;
-  font-size: 18px;
-  font-weight: 400;
-  margin: auto; 
-  align-self: start;
-
-  &:hover {
-    color: ${colors.WHITE};
-    background-color: ${colors.SECONDARY_HOVER};
+  @media (max-width: 460px) {
+    height: 154px;
+    width: 154px;
   }
 `;
 
@@ -113,6 +111,12 @@ export const DescriptionContainer = styled('div')`
   padding: 14px;
   height: 218px;
   width: 30em;
+
+  @media (max-width: 460px) {
+    width: 300px;
+    padding: 8px;
+    gap: 9px;
+  }
 `;
 
 export const DescriptionTitle = styled('div')`
@@ -121,6 +125,10 @@ export const DescriptionTitle = styled('div')`
   font-weight: 800;
   font-size: 24px;
   margin-bottom: 12px;
+
+  @media (max-width: 460px) {
+    font-size: 16px;
+  }
 `;
 
 export const UserNickname = styled('a')`
@@ -131,6 +139,10 @@ export const UserNickname = styled('a')`
   font-family: 'Raleway', sans-serif;
   color: ${colors.WHITE};
   cursor: pointer;
+
+  @media (max-width: 460px) {
+    font-size: 30px;
+  }
 `;
 
 export const HeadContainer = styled('div')`
@@ -152,6 +164,10 @@ export const ProfileTitle = styled('div')`
   font-family: 'Urbanist', 'Noto Color Emoji', sans-serif;
   font-weight: 500;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 16px;
+  }
 `;
 
 export const ProfileTextContainer = styled('div')`
@@ -177,6 +193,10 @@ export const FollowsSubscribes = styled('a')`
   &:hover {
     color: ${colors.WHITE};
   }
+
+  @media (max-width: 460px) {
+    font-size: 16px;
+  }
 `;
 
 export const LikedContainer = styled('div')`
@@ -187,6 +207,20 @@ export const LikedContainer = styled('div')`
   text-align: start;
   width: 100%;
   --swiper-navigation-color: ${colors.SECONDARY} !important;
+
+  .swiper-wrapper {
+    align-self: flex-start;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .swiper-button-next {
+    right: 0;
+  }
+
+  .swiper-button-prev {
+    left: 0;
+  }
 `;
 
 interface ISubscribeText {
@@ -215,6 +249,11 @@ export const LikedText = styled('div')`
   font-weight: 800;
   font-family: 'Raleway', sans-serif;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 18px;
+    margin-top: 19px;
+  }
 `;
 
 export const LikedTrackContainer = styled('button')`
@@ -234,6 +273,13 @@ export const LikedTrackContainer = styled('button')`
   gap: 24px;
   border: none;
 
+  @media (max-width: 460px) {
+    font-size: 18px;
+    gap: 18px;
+    height: max-content;
+    padding: 8px;
+  }
+
   &:hover {
     background-color: ${colors.FRONT_HOVER};
     color: ${colors.WHITE}
@@ -252,6 +298,11 @@ export const LikedTrackIcon = styled('picture')`
   margin: 1%;
   border-radius: 14px;
   justify-content: start;
+
+  @media (max-width: 460px) {
+    height: 180px;
+    width: 180px;
+  }
 `;
 
 export const Description = styled('div')`
@@ -260,6 +311,11 @@ export const Description = styled('div')`
   font-weight: 700;
   color: ${colors.WHITE};
   margin: 12px auto auto 0;
+
+  @media (max-width: 460px) {
+    font-size: 18px;
+    margin: 0 auto auto 0;
+  }
 `;
 
 export const BorderContainer = styled('div')`
@@ -276,6 +332,11 @@ export const FooterContainer = styled('div')`
   align-items: start;
   width: 1200px;
   gap: 36px;
+
+  @media (max-width: 460px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 export const SongsTitle = styled('div')`
@@ -294,6 +355,10 @@ export const SongContainer = styled('div')`
   max-height: 202px;
   overflow-y: auto;
   scrollbar-width: thin;
+
+  @media (max-width: 460px) {
+    width: 330px;
+  }
 `;
 
 export const SongMainContainer = styled('div')`

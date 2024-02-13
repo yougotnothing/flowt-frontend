@@ -25,7 +25,7 @@ import {
   SubscribeText,
   SubscribeTextContainer
 } from "./Profile.styled";
-import { useNavigate, generatePath } from "react-router-dom";
+import { useNavigate, generatePath, useLocation } from "react-router-dom";
 import { Options } from "./options/Options";
 import { PageLoader } from "../../loader/pageLoader/PageLoader";
 import { observer } from "mobx-react-lite";
@@ -38,9 +38,11 @@ import { Title as Helmet } from "../../../helmet";
 import { userSongsStore } from "../../../stores/toSongs.mobx";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
+import { Breakpoints } from "./swiper-breakpoints";
 
 export const Profile: React.FC = observer(() => {
   const[isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,6 +57,10 @@ export const Profile: React.FC = observer(() => {
       user.getSubscribes();
     }
   }, []);
+
+  useEffect(() => {
+    if(location.pathname === `/profile/${user.username}`) searchUsers.setUser(user.user);
+  }, [location.pathname]);
 
   useEffect(() => {
     if(searchUsers.username === user.username) {
@@ -107,46 +113,54 @@ export const Profile: React.FC = observer(() => {
               <DescriptionTitle>Description</DescriptionTitle>
               <Description>{searchUsers.description}</Description>
             </DescriptionContainer>
-            <SongMainContainer>
-              <SongsTitle>Songs</SongsTitle>
-              <SongContainer>
-                <Songs />
-              </SongContainer>
-            </SongMainContainer>
+            {userSongsStore.container.length ? (
+              <SongMainContainer>
+                <SongsTitle>Songs</SongsTitle>
+                <SongContainer>
+                  <Songs />
+                </SongContainer>
+              </SongMainContainer>
+            ) : null}
           </FooterContainer>
-          <LikedText>Favorite</LikedText>
-          <LikedContainer>
-            <Swiper
-              style={{width: 1200}}
-              slidesPerView={4}
-              direction="horizontal"
-              navigation
-              modules={[Navigation]}
-            >
-              {user.subscribes.map((subscribe: IUserProps, index: number) => (
-                <SwiperSlide key={index}>
-                  <LikedTrackContainer
-                    onClick={() => {
-                      searchUsers.setUser(subscribe);
-                      user.getFollowers(subscribe.username);
-                      user.getSubscribes(subscribe.username);
-                      navigate(generatePath('/profile/:id', { id: subscribe.username }));
-                    }}
-                  >
-                    {subscribe.userHaveAvatar ?
-                      <LikedTrackIcon style={{backgroundImage: `url(${subscribe.avatar})`}} />
-                      :
-                      <LikedTrackIcon style={{backgroundImage: 'url(/defaultAvatar.png)'}} />
-                    }
-                    <SubscribeTextContainer>
-                      <SubscribeText $type="Username">{subscribe.username}</SubscribeText>
-                      <SubscribeText $type="Region">{subscribe.region}</SubscribeText>
-                    </SubscribeTextContainer>
-                  </LikedTrackContainer>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </LikedContainer>
+          {user.subscribes.length ? (
+            <>
+              <LikedText>Favorite</LikedText>
+              <LikedContainer>
+                <Swiper
+                  className="swiper-wrapper"
+                  slidesPerView={5}
+                  spaceBetween={60}
+                  breakpoints={Breakpoints}
+                  direction="horizontal"
+                  navigation
+                  modules={[Navigation]}
+                >
+                  {user.subscribes.map((subscribe: IUserProps, index: number) => (
+                    <SwiperSlide key={index}>
+                      <LikedTrackContainer
+                        onClick={() => {
+                          searchUsers.setUser(subscribe);
+                          user.getFollowers(subscribe.username);
+                          user.getSubscribes(subscribe.username);
+                          navigate(generatePath('/profile/:id', { id: subscribe.username }));
+                        }}
+                      >
+                        {subscribe.userHaveAvatar ?
+                          <LikedTrackIcon style={{backgroundImage: `url(${subscribe.avatar})`}} />
+                          :
+                          <LikedTrackIcon style={{backgroundImage: 'url(/defaultAvatar.png)'}} />
+                        }
+                        <SubscribeTextContainer>
+                          <SubscribeText $type="Username">{subscribe.username}</SubscribeText>
+                          <SubscribeText $type="Region">{subscribe.region}</SubscribeText>
+                        </SubscribeTextContainer>
+                      </LikedTrackContainer>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </LikedContainer>
+            </>
+          ) : null}
         </>
       )}
     </UserContainer>
