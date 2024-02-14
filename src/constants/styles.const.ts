@@ -5,6 +5,11 @@ export const TITLE = `
   font-size: 32px;
   font-weight: 800;
   color: ${colors.WHITE};
+  width: max-content;
+
+  @media (max-width: 460px) {
+    font-size: 22px;
+  }
 `;
 
 export const VALIDATION = `
@@ -76,6 +81,10 @@ export const A_ = `
   &:hover {
     color: ${colors.DARK_WHITE};
     border-color: ${colors.DARK_WHITE};
+  }
+
+  @media (max-width: 460px) {
+    font-size: 15px;
   }
 `;
 

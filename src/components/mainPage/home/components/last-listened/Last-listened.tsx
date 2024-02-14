@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 import { userSongsStore } from "../../../../../stores/toSongs.mobx";
 
-export const LastListened = observer(() => {
+export const LastListened: React.FC<{ size: 'big' | 'small' }> = observer(({ size }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,7 +12,7 @@ export const LastListened = observer(() => {
   }, []);
 
   return (
-    <Container>
+    <Container $size={size}>
       <Title>Last listened</Title>
       <LikedSongs>
         {userSongsStore.lastListened.length ? userSongsStore.lastListened.map((song, index) => (

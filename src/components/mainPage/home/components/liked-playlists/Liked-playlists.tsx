@@ -6,7 +6,7 @@ import { Container, LikedSongs, Song, SongIcon, SongInfo, SongInfoContainer, Spa
 import { useNavigate, generatePath } from "react-router-dom";
 
 
-export const LikedPlaylists: FC = observer(() => {
+export const LikedPlaylists: FC<{ size: 'big' | 'small' }> = observer(({ size }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export const LikedPlaylists: FC = observer(() => {
   }, []);
 
   return (
-    <Container>
+    <Container $size={size}>
       <Title>Playlists</Title>
       <LikedSongs>
         {savedPlaylists.playlists.length ? savedPlaylists.playlists.map((playlist, index) => (

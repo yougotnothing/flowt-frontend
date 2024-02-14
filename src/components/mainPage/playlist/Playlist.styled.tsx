@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { colors } from "../../../constants/colors.const";
-import { BUTTON, INPUT } from "../../../constants/styles.const";
+import { BUTTON } from "../../../constants/styles.const";
 
 interface IIconProps {
   $isApply: boolean;

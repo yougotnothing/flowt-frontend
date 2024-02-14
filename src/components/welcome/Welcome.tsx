@@ -61,8 +61,8 @@ export const Welcome: FC = () => {
             <Span $color="white">Dive into an</Span>
             <Strong>ocean <Span $color="white">of </Span>music</Strong>
           </TextWrapper>
-        </MainInfoWrapper>
         <LinkWrapper size="big" />
+        </MainInfoWrapper>
         <LoginWrapper>
           <Strong>Login</Strong>
           <InputWrapper>

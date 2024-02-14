@@ -9,6 +9,11 @@ export const Container = styled('div')`
   width: 1200px;
   background-color: ${colors.BACKGROUND};
   gap: 24px;
+
+  @media (max-width: 460px) {
+    width: 96%;
+    gap: 14px;
+  }
 `;
 
 export const ContentWrapper = styled('div')`
@@ -31,6 +36,12 @@ export const Card = styled('button')`
   color: ${colors.WHITE};
   transition: all 0.3s;
 
+  @media (max-width: 460px) {
+    gap: 12px;
+    padding: 14px;
+    border-radius: 9px;
+  }
+
   &:hover {
     cursor: pointer;
     background-color: ${colors.FRONT_HOVER};
@@ -52,6 +63,11 @@ export const Avatar = styled('picture')<IAvatar>`
   background-image: ${props => props.$userHaveAvatar ? `url(${props.$avatar})` : 'url(/defalutAvatar.png)'};
   border: none;
   border-radius: 50%;
+
+  @media (max-width: 460px) {
+    width: 140px;
+    height: 140px;
+  }
 `;
 
 export const Header = styled('div')`
@@ -62,6 +78,10 @@ export const Header = styled('div')`
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 220px;
+
+  @media (max-width: 460px) {
+    font-size: 18px;
+  }
 `;
 
 export const PageHeader = styled('div')`
@@ -69,6 +89,10 @@ export const PageHeader = styled('div')`
   font-size: 34px;
   font-weight: 900;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 22px;
+  }
 `;
 
 export const Info = styled('div')`
@@ -76,4 +100,8 @@ export const Info = styled('div')`
   font-size: 16px;
   font-family: 'Urbanist', sans-serif;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+  }
 `;

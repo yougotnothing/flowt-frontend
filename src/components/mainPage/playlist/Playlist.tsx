@@ -80,17 +80,24 @@ export const Playlist: FC = observer(() => {
   
   const handleSetAvatar = (e: any) => {
     const file = e.target.files[0];
-    const image = URL.createObjectURL(file);
-    playlist.setAvatarURL(image);
-    playlist.setAvatar(file);
-    setIsApply(true);
-
-    console.log('avatar changed!');
+    if(file) {
+      const image = URL.createObjectURL(file);
+      playlist.setAvatarURL(image);
+      playlist.setAvatar(file);
+      setIsApply(true); 
+      console.log('avatar changed!');
+    }else{
+      console.log('something went wrong');
+    }
   }
 
   useEffect(() => {
-    console.log(currentSetting);
-  }, [currentSetting]);
+    console.log(isApply);
+  }, [isApply]);
+
+  useEffect(() => {
+    console.log(playlist.avatar);
+  }, [playlist.avatar]);
 
   useEffect(() => {
     if(location.pathname !== '/:id/playlists') {

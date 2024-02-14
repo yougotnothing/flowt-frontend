@@ -59,6 +59,11 @@ export const Container = styled('div')<IPlaylistContainerProps>`
   border-radius: 8px;
   border: 2px solid ${colors.BORDER};
   position: relative;
+
+  @media (max-width: 460px) {
+    padding: 5px;
+    width: calc(100% - 10px);
+  }
 `;
 
 export const PlaylistIcon = styled('picture')<IPlaylistIconProps & IPlaylistContainerProps>`

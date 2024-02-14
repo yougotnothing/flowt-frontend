@@ -7,14 +7,12 @@ import { recommendations } from "../../../stores/toRecommendations.mobx";
 import { savedPlaylists } from "../../../stores/toSaved-playlists.mobx";
 import { likedSongs } from "../../../stores/toLiked-songs.mobx";
 import { Title as PageTitle } from "../../../helmet";
-import { LastListened } from "./components/last-listened/Last-listened";
-import { LikedPlaylists } from "./components/liked-playlists/Liked-playlists";
-import { Recommendations } from "./components/recommendations/Recommendations";
+import { PlaylistsSongs } from "./components/smallsize";
 
 export const Home: FC = observer(() => {
   useEffect(() => {
     recommendations.getRecommendationList();
-    recommendations.getMustLikeList();
+    // recommendations.getMustLikeList();
     user.getLastListened('songs');
     user.getLastListened('playlists');
     savedPlaylists.getSaved();
@@ -24,9 +22,8 @@ export const Home: FC = observer(() => {
   return (
     <Wrapper>
       <PageTitle title="Home" />
-      <LastListened />
-      <Recommendations />
-      <LikedPlaylists />
+      <PlaylistsSongs size="big" />
+      <PlaylistsSongs size="small" />
     </Wrapper>
   );
 });

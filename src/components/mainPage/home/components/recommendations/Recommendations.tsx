@@ -12,14 +12,14 @@ import 'swiper/css/scrollbar';
 import { searchStore } from "../../../../../stores/toSearch.mobx";
 import { userSongsStore } from "../../../../../stores/toSongs.mobx";
 import { RandomSongButton } from "../../../../songs/browse-songs/Songs.styled";
-import { randomSongByGenre } from "../../../../../stores/toRandom-song-by-genre.mobx";
+import { Breakpoints } from "../../../profile/swiper-breakpoints";
 
 export const Recommendations = observer(() => {
   const navigate = useNavigate();
 
   useEffect(() => {
     recommendations.getRecommendationList();
-    recommendations.getMustLikeList();
+    // recommendations.getMustLikeList();
   }, []);
 
   return (
@@ -33,10 +33,12 @@ export const Recommendations = observer(() => {
       <Recommendation>
         {recommendations.list.length ? (
           <Swiper
-            spaceBetween={2}
-            slidesPerView={3}
-            navigation
+            className="swiper-wrapper"
+            slidesPerView={5}
+            spaceBetween={60}
+            breakpoints={Breakpoints}
             direction="horizontal"
+            navigation
             modules={[Navigation]}
           >
             {recommendations.list.length > 3 ? recommendations.list.map((recommendation, index) => (

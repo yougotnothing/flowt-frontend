@@ -222,4 +222,9 @@ export const RandomSongButton = styled('button')<RandomSongButtonProps>`
   background-color: transparent;
   background-image: ${({ $like }) => $like ? 'url(/like_hover.png)' : 'url(/play_hover.png)'};
   cursor: pointer;
+
+  @media (max-width: 460px) {
+    height: 25px;
+    width: 25px;
+  }
 `;

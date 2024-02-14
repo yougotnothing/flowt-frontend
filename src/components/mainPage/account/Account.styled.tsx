@@ -8,6 +8,11 @@ export const AccountContainer = styled('div')`
   width: 100%;
   position: relative;
   gap: 10em;
+
+  @media (max-width: 460px) {
+    width: 96%;
+    gap: 20px;
+  }
 `;
 
 export const Title = styled('div')`
@@ -79,6 +84,11 @@ export const InfoContainer = styled('div')`
   gap: 24px;
   padding: 0 4px 4px 4px;
   text-align: start;
+
+  @media (max-width: 460px) {
+    gap: 12px;
+    padding: 0;
+  }
 `;
 
 export const UserContainer = styled('div')`
@@ -94,6 +104,13 @@ export const UserContainer = styled('div')`
   max-height: 400px;
   z-index: 998;
   background: linear-gradient(135deg, ${colors.DARK_BLUE} 0% , ${colors.AQUAMARINE} 60%, ${colors.SECONDARY_HOVER} 120%);
+
+  @media (max-width: 460px) {
+    width: calc(100% - 12px);
+    padding: 6px;
+    border-radius: 8px;
+    gap: 8px;
+  }
 `;
 
 interface IUserAvatar {
@@ -109,6 +126,11 @@ export const UserAvatar = styled('picture')<IUserAvatar>`
   background-repeat: no-repeat;
   border-radius: 50%;
   background-image: ${props => props.$isHaveAvatar ? `url(${props.$avatar})` : 'url(/defaultAvatar.png)'};
+
+  @media (max-width: 460px) {
+    width: 146px;
+    height: 146px;
+  }
 `;
 
 export const UserInfo = styled('div')`
@@ -116,6 +138,10 @@ export const UserInfo = styled('div')`
   flex-direction: column;
   justify-content: center;
   gap: 26px;
+
+  @media (max-width: 460px) {
+    gap: 11px;
+  }
 `;
 
 export const Username = styled('div')`
@@ -126,12 +152,23 @@ export const Username = styled('div')`
   background: none;
   border: none;
   color: ${colors.WHITE};
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+
+  @media (max-width: 460px) {
+    font-size: 19px;
+  }
 `;
 
 export const ButtonsContainer = styled('div')`
   display: flex;
   flex-direction: row;
   gap: 12px;
+
+  @media (max-width: 460px) {
+    gap: 8px;
+  }
 `;
 
 export const Region = styled('div')`
@@ -139,6 +176,10 @@ export const Region = styled('div')`
   font-weight: 400;
   font-size: 18px;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+  }
 `;
 
 export const DescriptionContainer = styled('div')`
@@ -150,6 +191,13 @@ export const DescriptionContainer = styled('div')`
   padding: 12px;
   gap: 24px;
   border-bottom: 1px solid ${colors.SECONDARY};
+
+  @media (max-width: 460px) {
+    width: calc(100% - 16px);
+    min-height: 28px;
+    padding: 8px;
+    gap: 14px;
+  }
 `;
 
 export const Description = styled('div')`
@@ -157,6 +205,10 @@ export const Description = styled('div')`
   font-weight: 600;
   font-size: 24px;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 15px;
+  }
 `;
 
 export const DescriptionTitle = styled('div')`
@@ -164,12 +216,20 @@ export const DescriptionTitle = styled('div')`
   font-size: 36px;
   font-weight: 800;
   color: ${colors.SECONDARY};
+
+  @media (max-width: 460px) {
+    font-size: 22px;
+  }
 `;
 
 export const Email = styled('div')`
   font-family: 'Urbanist', sans-serif;
   font-weight: 400;
   font-size: 18px;
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+  }
 `;
 
 export const StatsContainer = styled('div')`
@@ -179,6 +239,10 @@ export const StatsContainer = styled('div')`
   width: max-content;
   gap: 12px;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    gap: 7px;
+  }
 `;
 
 export const Container = styled('div')`
@@ -192,6 +256,11 @@ export const PlaylistContainer = styled('div')`
   flex-direction: column;
   margin: 26px 0;
   gap: 24px;
+
+  @media (max-width: 460px) {
+    margin: 14px 0;
+    gap: 11px;
+  }
 `;
 
 export const NavigationContainer = styled('div')`
