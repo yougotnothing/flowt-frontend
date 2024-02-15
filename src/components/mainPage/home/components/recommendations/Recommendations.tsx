@@ -19,7 +19,7 @@ export const Recommendations = observer(() => {
 
   useEffect(() => {
     recommendations.getRecommendationList();
-    // recommendations.getMustLikeList();
+    recommendations.getMustLikeList();
   }, []);
 
   return (
@@ -34,7 +34,7 @@ export const Recommendations = observer(() => {
         {recommendations.list.length ? (
           <Swiper
             className="swiper-wrapper"
-            slidesPerView={5}
+            slidesPerView={3}
             spaceBetween={60}
             breakpoints={Breakpoints}
             direction="horizontal"
