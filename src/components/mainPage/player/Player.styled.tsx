@@ -53,6 +53,7 @@ export const PlayerContainer = styled('div')`
     .rhap_volume-container {
       flex: 0;
       width: max-content;
+      display: none !important;
     }
 
     .rhap_volume-bar-area {
@@ -64,6 +65,14 @@ export const PlayerContainer = styled('div')`
       width: 22px;
       height: 22px;
     }
+
+    .rhap_repeat-button {
+      left: 86% !important;
+      width: 22px !important;
+      height: 22px !important;
+      font-size: 22px !important;
+    }
+
     .rhap_repeat-button,
     .rhap_main-controls-button {
       font-size: 28px;
@@ -270,9 +279,9 @@ export const ShuffleButton = styled('button')`
   left: 55.5%;
 
   @media (max-width: 460px) {
-    left: 65%;
-    height: 20px;
-    width: 20px;
+    left: 74%;
+    height: 22px;
+    width: 22px;
   }
 `;
 
