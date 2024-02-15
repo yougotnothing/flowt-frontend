@@ -242,11 +242,16 @@ export const UserButton = styled('button')`
 
 export const UserAvatar = styled('picture')`
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
+  @media (max-width: 460px) {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 export const UserNickname = styled('div')`
@@ -271,7 +276,10 @@ export const GoBackContainer = styled('div')`
 
 export const AContainer = styled('div')`${A_CONTAINER}`;
 
-export const A = styled('a')`${A_}`;
+export const A = styled('a')`
+  ${A_}
+  
+`;
 
 export const GlobalContainer = styled('div')`
   display: flex;

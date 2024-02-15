@@ -20,11 +20,22 @@ export const PlayerContainer = styled('div')`
     background-color: ${colors.VERY_DARK_BLUE};
     box-shadow: 0 0 12px 1px ${colors.BORDER};
     position: relative;
-
+    padding: 4px 7px;
   }
 
   @media (max-width: 460px) {
     bottom: 0;
+
+    .rhap_repeat-button {
+      left: 72% !important;
+      width: 20px !important;
+      height: 20px !important;
+      font-size: 20px !important;
+    }
+
+    .rhap_controls-section {
+      justify-content: space-between;
+    }
 
     .rhap_container {
       width: 100svw;
@@ -33,6 +44,19 @@ export const PlayerContainer = styled('div')`
 
     .rhap_time {
       font-size: 14px;
+    }
+
+    .rhap_volume-bar {
+      width: 44px !important;
+    }
+
+    .rhap_volume-container {
+      flex: 0;
+      width: max-content;
+    }
+
+    .rhap_volume-bar-area {
+      width: 44px !important;
     }
 
     .rhap_volume-button {
@@ -47,9 +71,23 @@ export const PlayerContainer = styled('div')`
       height: 28px;
     }
 
+    .rhap_main-controls {
+      left: center !important;
+      width: max-content !important;
+    }
+
+    .rhap_skip-button {
+      margin: 0 !important;
+    }
+
     .rhap_controls-section {
       height: 45px !important;
     }
+  }
+
+  .rhap_repeat-button {
+    left: 37%;
+    position: absolute;
   }
   
   .rhap_time,
@@ -136,7 +174,7 @@ export const SongContainer = styled('div')`
     gap: 8px;
     border-radius: 4px;
     padding: 4px;
-    width: 148px;
+    width: max-content;
   }
 `;
 
@@ -152,6 +190,7 @@ export const SongInfoContainer = styled('div')`
 
   @media (max-width: 460px) {
     gap: 6px;
+    margin-right: 0;
   }
 `;
 
@@ -181,7 +220,7 @@ export const SongInfoDataWrapper = styled('div')`
   transition: 0.3s ease;
 
   @media (max-width: 460px) {
-    width: 78px;
+    width: 60px;
   }
 
   &:hover {
@@ -231,7 +270,7 @@ export const ShuffleButton = styled('button')`
   left: 55.5%;
 
   @media (max-width: 460px) {
-    left: 62%;
+    left: 65%;
     height: 20px;
     width: 20px;
   }
@@ -254,5 +293,7 @@ export const LikeButton = styled('button')<ILikeButton>`
     width: 15px;
     height: 15px;
     background-size: 14px;
+    margin: 0;
+    padding: 0;
   }
 `;

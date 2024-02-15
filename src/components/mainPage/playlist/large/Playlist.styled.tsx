@@ -62,7 +62,7 @@ export const Container = styled('div')<IPlaylistContainerProps>`
 
   @media (max-width: 460px) {
     padding: 5px;
-    width: calc(100% - 10px);
+    width: max-content;
   }
 `;
 
@@ -95,7 +95,7 @@ export const PlaylistInfoContainer = styled('div')`
 
   @media (max-width: 460px) {
     height: 100%;
-    width: 160px;
+    width: 100px;
   }
 `;
 
@@ -133,6 +133,7 @@ export const PlaylistButton = styled('button')`
     width: 84px;
     height: 28px;
     font-size: 14px;
+    margin: auto 0;
   }
 `;
 

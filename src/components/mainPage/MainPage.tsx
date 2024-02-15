@@ -147,7 +147,6 @@ export const MainPage: FC = observer(() => {
               onKeyDown={handleSearch}
               name="search"
               placeholder="search"
-              type="text"
               onChange={handleChange}
             />
             <SearchButton onTouchStart={handleSearchButton} className="search-button" onClick={handleSearchButton} />
