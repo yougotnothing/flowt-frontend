@@ -34,9 +34,8 @@ export const Recommendations = observer(() => {
         {recommendations.list.length ? (
           <Swiper
             className="swiper-wrapper"
+            spaceBetween={2}
             slidesPerView={3}
-            spaceBetween={60}
-            breakpoints={Breakpoints}
             direction="horizontal"
             navigation
             modules={[Navigation]}
