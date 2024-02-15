@@ -92,14 +92,6 @@ export const Playlist: FC = observer(() => {
   }
 
   useEffect(() => {
-    console.log(isApply);
-  }, [isApply]);
-
-  useEffect(() => {
-    console.log(playlist.avatar);
-  }, [playlist.avatar]);
-
-  useEffect(() => {
     if(location.pathname !== '/:id/playlists') {
       playlist.setAvatarURL(null);
     }
@@ -116,11 +108,11 @@ export const Playlist: FC = observer(() => {
       <PlaylistContainer>
         <Input
           type="file"
-          id="avatar"
+          id="avatar-input"
           accept="image/*"
           onChange={handleSetAvatar}
         />
-        <PlaylistIcon $avatar={playlist.avatarURL || '/plus.png'} htmlFor="avatar" $isApply={isApply} />
+        <PlaylistIcon $avatar={playlist.avatarURL || '/plus.png'} htmlFor="avatar-input" $isApply={isApply} />
         <InfoContainer>
           <CreatorName>{user.username}</CreatorName>
           <PlaylistInfo

@@ -2,6 +2,7 @@ import { makeObservable, observable, action, runInAction } from "mobx";
 import { IPlaylist, IPlaylistProps, ISearchPlaylist, ISongPlaylist } from "../types/props";
 import { api } from "../api/axiosConfig";
 import { ISongData } from "../types/types";
+import { ChangeEvent, ChangeEventHandler } from "react";
 
 class PlaylistsStore {
   self: IPlaylist[];

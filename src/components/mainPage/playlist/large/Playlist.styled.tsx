@@ -74,6 +74,12 @@ export const PlaylistIcon = styled('picture')<IPlaylistIconProps & IPlaylistCont
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+
+  @media (max-width: 460px) {
+    width: ${({ $isEditing }) => $isEditing ? '96px' : '78px'};
+    height: ${({ $isEditing }) => $isEditing ? '96px' : '78px'};
+    border-radius: 5px;
+  }
 `;
 
 export const PlaylistInfoContainer = styled('div')`
@@ -86,6 +92,11 @@ export const PlaylistInfoContainer = styled('div')`
   width: 240px;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.3);
+
+  @media (max-width: 460px) {
+    height: 100%;
+    width: 160px;
+  }
 `;
 
 export const PlaylistInfo = styled('button')<IPlaylistInfoProps>`
@@ -102,6 +113,10 @@ export const PlaylistInfo = styled('button')<IPlaylistInfoProps>`
   cursor: pointer;
   transition: color 0.3s ease;
 
+  @media (max-width: 460px) {
+    font-size: ${({ $type }) => $type === 'name' ? '18px' : '14px'};
+  }
+
   &:hover {
     color: ${colors.SECONDARY};
   }
@@ -113,6 +128,12 @@ export const PlaylistButton = styled('button')`
   margin: auto 24px auto auto;
   width: 140px;
   height: 34px;
+
+  @media (max-width: 460px) {
+    width: 84px;
+    height: 28px;
+    font-size: 14px;
+  }
 `;
 
 export const PlaylistDroplist = styled('div')<IPlaylistDroplist>`

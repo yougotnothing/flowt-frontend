@@ -12,6 +12,7 @@ export const AccountContainer = styled('div')`
   @media (max-width: 460px) {
     width: 96%;
     gap: 20px;
+    margin-bottom: 146px;
   }
 `;
 
@@ -86,8 +87,10 @@ export const InfoContainer = styled('div')`
   text-align: start;
 
   @media (max-width: 460px) {
+    width: 100%;
     gap: 12px;
     padding: 0;
+    margin: 0;
   }
 `;
 
@@ -291,6 +294,13 @@ export const Droplist = styled('button')`
   transition: 0.3s ease;
   z-index: 997;
   cursor: pointer;
+
+  @media (max-width: 460px) {
+    left: 92.3%;
+    top: 0;
+    height: 32px;
+    width: 32px;
+  }
 `;
 
 interface IDroplistItemsContainer {
@@ -313,6 +323,13 @@ export const DroplistItemsContainer = styled('div')<IDroplistItemsContainer>`
   align-items: start;
   top: 8%;
   left: 70%;
+
+  @media (max-width: 460px) {
+    width: 146px;
+    border-radius: 6px;
+    top: 4%;
+    left: 55%;
+  }
 `;
 
 export const DroplistItem = styled('button')<IDroplistItemsContainer>`
@@ -328,6 +345,11 @@ export const DroplistItem = styled('button')<IDroplistItemsContainer>`
   text-align: start;
   border-radius: 4px;
   cursor: ${props => props.$isOpen ? 'pointer' : 'default'};
+
+  @media (max-width: 460px) {
+    font-size: 15px;
+    height: 24px;
+  }
 
   &:hover {
     background-color: ${colors.BORDER};

@@ -34,6 +34,7 @@ export const UserContainer = styled('div')`
   @media (max-width: 460px) {
     width: 420px;
     padding: 0;
+    margin-bottom: 146px;
   }
 
   .link {

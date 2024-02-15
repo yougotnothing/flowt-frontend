@@ -20,6 +20,36 @@ export const PlayerContainer = styled('div')`
     background-color: ${colors.VERY_DARK_BLUE};
     box-shadow: 0 0 12px 1px ${colors.BORDER};
     position: relative;
+
+  }
+
+  @media (max-width: 460px) {
+    bottom: 0;
+
+    .rhap_container {
+      width: 100svw;
+      border-radius: 0;
+    }
+
+    .rhap_time {
+      font-size: 14px;
+    }
+
+    .rhap_volume-button {
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+    }
+    .rhap_repeat-button,
+    .rhap_main-controls-button {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+    }
+
+    .rhap_controls-section {
+      height: 45px !important;
+    }
   }
   
   .rhap_time,
@@ -29,7 +59,7 @@ export const PlayerContainer = styled('div')`
     font-family: 'Urbanist', sans-serif;
     color: ${colors.WHITE} !important;
     
-    :hover {
+    &:hover {
       color: ${colors.DARK_WHITE};
     }
   }
@@ -84,6 +114,11 @@ export const SongPicture = styled('picture')`
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 5px;
+
+  @media (max-width: 460px) {
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 export const SongContainer = styled('div')`
@@ -96,6 +131,13 @@ export const SongContainer = styled('div')`
   gap: 12px;
   border-radius: 5px;
   position: absolute;
+
+  @media (max-width: 460px) {
+    gap: 8px;
+    border-radius: 4px;
+    padding: 4px;
+    width: 148px;
+  }
 `;
 
 export const SongInfoContainer = styled('div')`
@@ -107,6 +149,10 @@ export const SongInfoContainer = styled('div')`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media (max-width: 460px) {
+    gap: 6px;
+  }
 `;
 
 export const SongTitle = styled('div')`
@@ -118,6 +164,12 @@ export const SongTitle = styled('div')`
   font-weight: 600;
   font-size: 16px;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 13px;
+    max-width: 68px;
+    height: 13px;
+  }
 `;
 
 export const SongInfoDataWrapper = styled('div')`
@@ -128,6 +180,10 @@ export const SongInfoDataWrapper = styled('div')`
   color: ${colors.DARK_WHITE};
   transition: 0.3s ease;
 
+  @media (max-width: 460px) {
+    width: 78px;
+  }
+
   &:hover {
     color: ${colors.SECONDARY};
   }
@@ -137,12 +193,18 @@ export const SongCreatorLink = styled('a')`
   font-family: 'Urbanist', sans-serif;
   font-weight: 400;
   font-size: 14px;
+  height: 14px;
   color: ${colors.DARK_WHITE};
   cursor: pointer;
   width: 80px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media (max-width: 460px) {
+    width: 68px;
+    font-size: 12px;
+  }
   
   &:hover {
     color: ${colors.SECONDARY};
@@ -166,7 +228,13 @@ export const ShuffleButton = styled('button')`
   background-position: center;
   justify-content: center;
   position: absolute;
-  left: 55.5%;  
+  left: 55.5%;
+
+  @media (max-width: 460px) {
+    left: 62%;
+    height: 20px;
+    width: 20px;
+  }
 `;
 
 export const LikeButton = styled('button')<ILikeButton>`
@@ -181,4 +249,10 @@ export const LikeButton = styled('button')<ILikeButton>`
   background-color: transparent;
   border: none;
   cursor: pointer;
+
+  @media (max-width: 460px) {
+    width: 15px;
+    height: 15px;
+    background-size: 14px;
+  }
 `;
