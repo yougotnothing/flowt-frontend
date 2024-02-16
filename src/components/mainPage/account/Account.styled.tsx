@@ -25,6 +25,10 @@ export const UserSettingsContainer = styled('div')`
   flex-direction: column;
   position: fixed;
   gap: 24px;
+
+  @media (max-width: 460px) {
+    display: none;
+  }
 `;
 
 export const UserSettings = styled('div')`

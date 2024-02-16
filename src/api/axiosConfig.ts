@@ -69,15 +69,12 @@ export const login = async (loginDto: LoginDto, navigate: NavigateFunction, set?
     
     if(response) {
       const token = response.data.token;
-      console.log(token);
       localStorage.setItem('token', token);
       await user.setUser();
       navigate('/home');
-      console.log(user);
       set && set('');
     }
 
-    console.log(response.data);
   }catch(error: any) {
     set && set('incorrect login or password');
     console.log(error);
@@ -89,7 +86,6 @@ export const refreshToken = async () => {
   if(response) {
     const json = response.data;
     const token = json.token;
-    console.log(token);
     localStorage.setItem('token', token);
   }
 }

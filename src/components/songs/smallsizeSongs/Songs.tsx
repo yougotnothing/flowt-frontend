@@ -85,6 +85,7 @@ export const Songs: React.FC = observer(() => {
             </SongStatsContainer>
           </SongData>
           <LikeSongButton
+            disabled={song.author === user.username}
             $isLiked={isLiked[index]}
             onClick={() => handleLikedSong(song.name, user.username, index)} />
         </SongContainer>

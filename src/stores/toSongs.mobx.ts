@@ -102,20 +102,23 @@ class UserSongsStore implements ISongParameters {
     if(!username) return;
 
     try {
-      const { data } = await api.get(`/songs/user-songs/${encodeURI(username)}`);
+      const response = await api.get(`/songs/user-songs/${encodeURI(username)}`);
 
       runInAction(() => {
         const uniqueSongs: Set<ISongData> = new Set(
-          data.songs.filter((existingSong: ISongData) => 
+          response.data.songs.filter((existingSong: ISongData) => 
             !this.container.some((song: ISongData) => 
               song.songId === existingSong.songId
             )
           )
         );
 
-        this.container.push(...Array.from(uniqueSongs));
+        const arr = Array.from(uniqueSongs);
+        console.log(arr);
+
+        this.container = response.data.songs;
         
-        if(!data.songs.length) this.container = [];
+        if(!response.data.songs.length) this.container = [];
       });
     }catch(error: any) {
       console.error(error);
@@ -257,7 +260,7 @@ class UserSongsStore implements ISongParameters {
 
       console.log(response.data);
       
-      if(!response.data) {
+      if(!response.data || response.data.songId === this.id) {
         await this.getRandomSong();
       }
       
@@ -266,7 +269,7 @@ class UserSongsStore implements ISongParameters {
           this.setSongObject_(response.data);
         }
       });
-    } catch (error: any) {
+    }catch(error: any) {
       await this.getRandomSong();
       console.error(error);
     }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { useFormik } from "formik";
@@ -31,8 +31,8 @@ export const ChangePassword: React.FC = () => {
 
   const formik = useFormik<{
     password: string,
-    confirmPassword: "",
-    code: ""
+    confirmPassword: string,
+    code: string
   }>({
     initialValues: {
       password: "",
@@ -46,7 +46,7 @@ export const ChangePassword: React.FC = () => {
   const handleChangePassword = async () => {
     try{
       setIsLoading(true);
-      if(localStorage.getItem('email') === null) {
+      if(!localStorage.getItem('email')) {
         await api.post(url.change_password, {
           newPassword: formik.values.password,
           code: formik.values.code
@@ -63,13 +63,28 @@ export const ChangePassword: React.FC = () => {
           navigate('/home');
           setIsLoading(false);
         }
-    }catch(error: any){
+    }catch(error: any) {
       if(error) {
         setErrorMessage("Incorrect restore code");
         setIsVerify(false);
       }
     }
   }
+
+  useEffect(() => {
+    const handleGetCode = async () => {
+      try {
+        const response = await api.get('/verify/password');
+
+        console.log(response.data);
+      }catch(error: any) {
+        console.error(error);
+        return;
+      }
+    }
+
+    handleGetCode();
+  }, []);
 
   const passwordError = (
       formik.errors.password && formik.touched.password &&

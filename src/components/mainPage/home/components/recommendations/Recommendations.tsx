@@ -12,7 +12,6 @@ import 'swiper/css/scrollbar';
 import { searchStore } from "../../../../../stores/toSearch.mobx";
 import { userSongsStore } from "../../../../../stores/toSongs.mobx";
 import { RandomSongButton } from "../../../../songs/browse-songs/Songs.styled";
-import { Breakpoints } from "../../../profile/swiper-breakpoints";
 
 export const Recommendations = observer(() => {
   const navigate = useNavigate();
