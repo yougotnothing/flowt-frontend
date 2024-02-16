@@ -99,7 +99,7 @@ export const MainPage: FC = observer(() => {
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if(e.target.value && location.pathname !== '/search') {
       search.setInput(e.target.value.trim());
-      await search.all();
+      await search.all('main page');
       search.setIsOpen(true);
     }
     if(!e.target.value) {
@@ -114,7 +114,7 @@ export const MainPage: FC = observer(() => {
   const handleSearchButton = async () => {
     const isDataNull = (search.songs.length > 0  || search.users.length > 0 || search.playlists.length > 0);
     if(search.input.length > 0 && isDataNull) {
-      await search.setUsers();
+      await search.all('main page');
       navigate('/search');
     }else{
       return;

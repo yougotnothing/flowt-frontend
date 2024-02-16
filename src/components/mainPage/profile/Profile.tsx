@@ -39,6 +39,7 @@ import { userSongsStore } from "../../../stores/toSongs.mobx";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { Breakpoints } from "./swiper-breakpoints";
+import { formatNumbers } from "../functions";
 
 export const Profile: React.FC = observer(() => {
   const[isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
@@ -100,12 +101,12 @@ export const Profile: React.FC = observer(() => {
                       <FollowsSubscribes onClick={() =>
                         navigate(generatePath('/profile/:id/followers', { id: searchUsers.username }))
                       }>
-                        Followers: {user.followers.length}
+                        Followers: {formatNumbers(user.followers.length.toString())}
                       </FollowsSubscribes>
                       <FollowsSubscribes onClick={() =>
                         navigate(generatePath('/profile/:id/subscribes', { id: searchUsers.username }))
                       }>
-                        Subscribes: {user.subscribes.length}
+                        Subscribes: {formatNumbers(user.subscribes.length.toString())}
                       </FollowsSubscribes>
                     </LinksContainer>
                   </ProfileTextContainer>
