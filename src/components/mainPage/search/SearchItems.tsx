@@ -17,7 +17,6 @@ import { searchStore as search } from "../../../stores/toSearch.mobx";
 import { API_URL } from "../../../api/axiosConfig";
 import { generatePath, useNavigate } from "react-router-dom";
 import { searchUsersStore } from "../../../stores/toSearchUsers.mobx";
-import { userSongsStore } from "../../../stores/toSongs.mobx";
 import { playlistsStore } from "../../../stores/toPlaylists.mobx";
 
 export const SearchItems: React.FC = observer(() => {
@@ -40,10 +39,6 @@ export const SearchItems: React.FC = observer(() => {
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
-  }, []);
-
-  useEffect(() => {
-    console.log(search.users);
   }, []);
 
   return (

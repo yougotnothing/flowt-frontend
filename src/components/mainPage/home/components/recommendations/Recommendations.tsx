@@ -5,20 +5,20 @@ import { Recommendation, RecommendationCard, RecommendationIcon, RecommendationT
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from "swiper/modules";
 import { recommendations } from "../../../../../stores/toRecommendations.mobx";
+import { searchStore } from "../../../../../stores/toSearch.mobx";
+import { userSongsStore } from "../../../../../stores/toSongs.mobx";
+import { RandomSongButton } from "../../../../songs/browse-songs/Songs.styled";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { searchStore } from "../../../../../stores/toSearch.mobx";
-import { userSongsStore } from "../../../../../stores/toSongs.mobx";
-import { RandomSongButton } from "../../../../songs/browse-songs/Songs.styled";
 
 export const Recommendations = observer(() => {
   const navigate = useNavigate();
 
   useEffect(() => {
     recommendations.getRecommendationList();
-    recommendations.getMustLikeList();
+    // recommendations.getMustLikeList();
   }, []);
 
   return (

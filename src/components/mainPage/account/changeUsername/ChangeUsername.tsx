@@ -42,7 +42,7 @@ export const ChangeUsername: React.FC = observer(() => {
     try {
       if(e.target.value !== user.username && (e.key === 'Enter' || e.code === 'Enter')) {
         await user.changeUsername(formik.values.username, navigate, setIsLoading);
-        await user.setUser();
+        await user.login();
       }
     }catch(error: any) {
       console.error(error);
@@ -53,7 +53,7 @@ export const ChangeUsername: React.FC = observer(() => {
     try {
       if(formik.values.username !== user.username) {
         await user.changeUsername(formik.values.username, navigate, setIsLoading);
-        await user.setUser();
+        await user.login();
       }
     }catch(error: any) {
       console.error(error);

@@ -37,6 +37,7 @@ export const OptionsContainer = styled('div')<OptionsProps>`
   gap: 8px;
   opacity: ${props => props.$isVisible ? '1' : '0'};
   animation: ${props => props.$isVisible ? css`${fadeIn} 0.3s ease` : css`${fadeOut} 0.3s ease`};
+  z-index: 1;
 
   @media (max-width: 460px) {
     width: 148px;

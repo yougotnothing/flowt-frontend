@@ -70,7 +70,7 @@ export const login = async (loginDto: LoginDto, navigate: NavigateFunction, set?
     if(response) {
       const token = response.data.token;
       localStorage.setItem('token', token);
-      await user.setUser();
+      await user.login();
       navigate('/home');
       set && set('');
     }

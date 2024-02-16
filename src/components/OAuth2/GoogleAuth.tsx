@@ -22,7 +22,7 @@ export const GoogleAuth: FC = observer(() => {
         localStorage.setItem('token', token);
         navigate('/home');
         if(token) {
-          user.setUser();
+          user.login();
         }
       }
     }catch(error: any) {

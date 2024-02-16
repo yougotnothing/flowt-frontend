@@ -69,7 +69,7 @@ class SearchStore {
     });
   }
 
-  async setUsers() {
+  async setUsers(method?: 'main page' | 'search') {
     try {
       const response = await api.get('/search/users', {
         params: {
@@ -79,14 +79,17 @@ class SearchStore {
       });
 
       runInAction(() => {
-        const uniqueUsers: Set<IUserSearch> = new Set(
-          response.data.users.filter((user: IUserSearch) => 
-            !this.users.some((existingUser: IUserSearch) => 
-              existingUser.email === user.email
-            )
-          )
-        );
-        this.users.push(...Array.from(uniqueUsers));
+        switch(method) {
+          case 'main page':
+            this.users = response.data.users;
+            break;
+          case 'search':
+            this.users = [...this.users, ...response.data.users];
+            break;
+          case undefined:
+            this.users = response.data.users;
+            break;
+        }
         
         if(this.users.length === 0) {
           this.setMessage(`Can't find data by ${this.input}`);
@@ -97,7 +100,7 @@ class SearchStore {
     }
   }
 
-  async setSongs() {
+  async setSongs(method: 'main page' | 'search' = 'search') {
     try {
       const response = await api.get('/search/songs', {
         params: {
@@ -107,14 +110,11 @@ class SearchStore {
       });
 
       runInAction(() => {
-        const uniqueSongs: Set<ISongPlaylist> = new Set(
-          response.data.songs.filter((song: ISongPlaylist) =>
-            !this.songs.some((existingSong: ISongPlaylist) => 
-              existingSong.songId === song.songId
-            )
-          )
-        );
-        this.songs.push(...Array.from(uniqueSongs));
+        if(method === 'main page') {
+          this.songs = response.data.songs;
+        }else{
+          this.songs = [...this.songs, response.data.songs];
+        }
 
         if(this.songs.length === 0) {
           this.message = `Can't find data by ${this.input}`;
@@ -166,7 +166,8 @@ class SearchStore {
     }
   }
 
-  async setPlaylists() {
+  async setPlaylists(method: 'main page' | 'search' = 'search') {
+
     try {
       const response = await api.get('/search/playlists', {
         params: {
@@ -176,15 +177,11 @@ class SearchStore {
       });
 
       runInAction(() => {
-        const uniquePlaylists: Set<ISearchPlaylist> = new Set(
-          response.data.playlists.filter((playlist: ISearchPlaylist) => 
-            !this.playlists.some((existingPlaylist: ISearchPlaylist) => 
-              existingPlaylist.id === playlist.id
-            )
-          )
-        );
-
-        this.playlists.push(...Array.from(uniquePlaylists));
+        if(method === 'main page') {
+          this.playlists = response.data.playlists;
+        }else{
+          this.playlists = [...this.playlists, ...response.data.playlists];
+        }
 
         if(this.playlists.length === 0) {
           this.message = `Can't find data by ${this.input}`;
@@ -196,11 +193,11 @@ class SearchStore {
     }
   }
 
-  async all() {
+  async all(method: 'main page' | 'search' = 'search') {
     try {
-      await this.setPlaylists();
-      await this.setSongs();
-      await this.setUsers();
+      await this.setPlaylists(method);
+      await this.setSongs(method);
+      await this.setUsers(method);
 
       if(this.songs.length > 0 || this.users.length > 0) {
         runInAction(() => {

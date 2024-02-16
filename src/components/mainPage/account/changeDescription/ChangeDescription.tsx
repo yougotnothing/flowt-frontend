@@ -32,7 +32,7 @@ export const ChangeDescription: React.FC = () => {
     description: string
   }>({
     initialValues: {
-      description: ""
+      description: user.description || ''
     },
     validationSchema: changeDescriptionSchema,
     onSubmit: () => {}
@@ -40,21 +40,22 @@ export const ChangeDescription: React.FC = () => {
 
   const patchDescription = async () => {
     try {
-      userDescriptionStore.setDescription(formik.values.description);
+      // user.setDescription(formik.values.description);
 
       await api.patch(url.description, {
-        newDescription: userDescriptionStore.description
+        newDescription: formik.values.description
       });
 
       setIsLoading(true);
 
+      user.login();
       navigate(generatePath('/account/:id', { id: user.username }));
     }catch(error: any) {
       console.log('an error occurred:', error.response.data);
     }
   }
 
-  const handlePatchDescription = async (key: any) => {
+  const handlePatchDescription = async (key: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if(key.key === 'Enter') {
       await patchDescription();
     }

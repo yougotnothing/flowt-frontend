@@ -46,22 +46,59 @@ class SearchUsersStore {
   }
 
   getData() {
-    const username = localStorage.getItem('username');
-    const region = localStorage.getItem('region');
-    const avatar = localStorage.getItem('avatar');
-    const storageIsHaveAvatar = localStorage.getItem('userHaveAvatar');
-    const userHaveAvatar = storageIsHaveAvatar && JSON.parse(storageIsHaveAvatar);
-    const email = localStorage.getItem('email');
-    const description = localStorage.getItem('description');
+    const data = localStorage.getItem('user');
+    
+    if(data) {
+      const user: IUserProps | IUserSearch = JSON.parse(data);
+      runInAction(() => {
+        this.avatar = user.userHaveAvatar ? user.avatar : '/defaultAvatar.png';
+        this.username = user.username;
+        if(user.description) this.description = user.description?.length > 0 ? user.description : 'No description.';
+        this.email = user.email;
+        this.region = user.region;
+        this.userHaveAvatar = user.userHaveAvatar;
+      });
 
-    runInAction(() => {
-      this.username = username;
-      this.avatar = avatar;
-      this.region = region;
-      this.userHaveAvatar = userHaveAvatar;
-      this.email = email;
-      this.description = description;
-    });
+      localStorage.setItem('user', JSON.stringify({
+        username: this.username,
+        avatar: this.avatar,
+        userHaveAvatar: this.userHaveAvatar,
+        region: this.region,
+        email: this.email,
+        description: this.description
+      }));
+    }
+  }
+
+  setUserObj(data: IUserProps | IUserSearch | null) {
+    if(data) {
+      localStorage.setItem('user', JSON.stringify(data));
+    }else return;
+  }
+
+  getUserObj() {
+    const data = localStorage.getItem('user');
+    
+    if(data) {
+      const user: IUserProps | IUserSearch = JSON.parse(data);
+      runInAction(() => {
+        this.avatar = user.userHaveAvatar ? user.avatar : '/defaultAvatar.png';
+        this.username = user.username;
+        if(user.description) this.description = user.description?.length > 0 ? user.description : 'No description.';
+        this.email = user.email;
+        this.region = user.region;
+        this.userHaveAvatar = user.userHaveAvatar;
+      });
+
+      localStorage.setItem('user', JSON.stringify({
+        username: this.username,
+        avatar: this.avatar,
+        userHaveAvatar: this.userHaveAvatar,
+        region: this.region,
+        email: this.email,
+        description: this.description
+      }));
+    }
   }
 
   setAvatar(src: any) {
@@ -87,18 +124,20 @@ class SearchUsersStore {
       runInAction(() => {
         this.username = data.username;
         this.region = data.region;
-        this.description = data.description;
+        this.description = data.description?.length ? data.description : 'No description.';
         this.email = data.email;
         this.avatar = data.userHaveAvatar ? data.avatar : '/defaultAvatar.png';
         this.userHaveAvatar = data.userHaveAvatar;
       });
 
-      this.username && localStorage.setItem('username', this.username);
-      this.region && localStorage.setItem('region', this.region);
-      this.avatar && localStorage.setItem('avatar', this.avatar);
-      this.email && localStorage.setItem('email', this.email);
-      this.userHaveAvatar && localStorage.setItem('userHaveAvatar', `${this.userHaveAvatar}`);
-      this.description && localStorage.setItem('description', this.description);
+      localStorage.setItem('user', JSON.stringify({
+        username: this.username,
+        region: this.region,
+        description: this.description,
+        email: this.email,
+        avatar: this.avatar,
+        userHaveAvatar: this.userHaveAvatar
+      }));
     }
   }
 }

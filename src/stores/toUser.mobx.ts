@@ -48,7 +48,7 @@ class UserStore {
       emailVerified: observable,
       username: observable,
       getFollowers: action,
-      setUser: action.bound,
+      login: action.bound,
       changeRegion: action,
       changeUsername: action,
       postGoogleAvatar: action,
@@ -79,7 +79,7 @@ class UserStore {
       })
       .then((r) => {
         console.log(r.data.message);
-        this.setUser();
+        this.login();
       });
       
       runInAction(() => {
@@ -91,7 +91,7 @@ class UserStore {
     }
   }
 
-  async setUser() {
+  async login() {
     try {
       const response = await api.get('/users/authenticated');
       runInAction(() => {

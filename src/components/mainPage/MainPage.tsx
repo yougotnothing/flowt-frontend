@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from "react";
+import React, { useState, useEffect, FC } from "react";
 
 import { Link, Outlet, useNavigate, useLocation, generatePath } from "react-router-dom";
 import {
@@ -52,7 +52,7 @@ export const MainPage: FC = observer(() => {
   }, [googleAvatar, user.userHaveAvatar]);
 
   useEffect(() => {
-    user.setUser();
+    user.login();
     user.getFollowers();
     user.getSubscribes();
     searchUsersStore.setUser(user.user);
@@ -96,7 +96,7 @@ export const MainPage: FC = observer(() => {
     }
   }
 
-  const handleChange = async (e: any) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if(e.target.value && location.pathname !== '/search') {
       search.setInput(e.target.value.trim());
       await search.all();
@@ -105,6 +105,7 @@ export const MainPage: FC = observer(() => {
     if(!e.target.value) {
       search.setIsOpen(false);
     }
+
     if(location.pathname === '/search') {
       search.setIsOpen(false);
     }
@@ -113,7 +114,7 @@ export const MainPage: FC = observer(() => {
   const handleSearchButton = async () => {
     const isDataNull = (search.songs.length > 0  || search.users.length > 0 || search.playlists.length > 0);
     if(search.input.length > 0 && isDataNull) {
-      await search.all();
+      await search.setUsers();
       navigate('/search');
     }else{
       return;
@@ -149,7 +150,7 @@ export const MainPage: FC = observer(() => {
               placeholder="search"
               onChange={handleChange}
             />
-            <SearchButton onTouchStart={handleSearchButton} className="search-button" onClick={handleSearchButton} />
+            <SearchButton className="search-button" onClick={handleSearchButton} />
           </div>
           {user.isUserAuthenticated ?
             <VerifiedUserContainer>
