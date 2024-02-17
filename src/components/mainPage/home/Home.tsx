@@ -12,7 +12,7 @@ import { PlaylistsSongs } from "./components/smallsize";
 export const Home: FC = observer(() => {
   useEffect(() => {
     recommendations.getRecommendationList();
-    // recommendations.getMustLikeList();
+    recommendations.getMustLikeList();
     user.getLastListened('songs');
     user.getLastListened('playlists');
     savedPlaylists.getSaved();
