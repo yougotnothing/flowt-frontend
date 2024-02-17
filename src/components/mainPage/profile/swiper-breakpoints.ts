@@ -1,8 +1,7 @@
 export const Breakpoints = {
   320: {
     slidesPerView: 2,
-    spaceBetween: 20,
-    centeredSlides: false
+    spaceBetween: 60,
   },
   480: {
     slidesPerView: 3,

@@ -37,13 +37,14 @@ export const OptionsContainer = styled('div')<OptionsProps>`
   gap: 8px;
   opacity: ${props => props.$isVisible ? '1' : '0'};
   animation: ${props => props.$isVisible ? css`${fadeIn} 0.3s ease` : css`${fadeOut} 0.3s ease`};
-  z-index: 1;
+  z-index: 2;
 
   @media (max-width: 460px) {
     width: 148px;
     padding: 6px;
     gap: 5px;
     border-radius: 9px;
+    right: 8px;
   }
 `;
 

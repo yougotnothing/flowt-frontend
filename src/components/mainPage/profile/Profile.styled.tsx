@@ -70,9 +70,11 @@ export const Settings = styled('button')<OptionsProps>`
   cursor: pointer;
 
   @media (max-width: 460px) {
-    width: 29px;
-    height: 29px;
-    background-size: 38px;
+    width: 34px;
+    height: 34px;
+    background-size: 42px;
+    right: 8px;
+    transform: initial;
   }
 
   &:hover {
@@ -215,6 +217,7 @@ export const LikedContainer = styled('div')`
   flex-direction: row;
   text-align: start;
   width: 100%;
+  align-self: center;
   --swiper-navigation-color: ${colors.SECONDARY} !important;
 
   .swiper-wrapper {
@@ -229,6 +232,17 @@ export const LikedContainer = styled('div')`
 
   .swiper-button-prev {
     left: 0;
+  }
+
+  @media (max-width: 460px) {
+    width: 98svw;
+    .swiper-button-next {
+      opacity: 0;
+    }
+
+    .swiper-button-prev {
+      opacity: 0;
+    }
   }
 `;
 

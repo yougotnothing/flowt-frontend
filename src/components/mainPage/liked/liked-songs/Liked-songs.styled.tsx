@@ -14,6 +14,10 @@ export const Container = styled('div')`
   gap: 12px;
   width: 1200px;
   margin: 0 auto;
+
+  @media (max-width: 460px) {
+    width: 100%;
+  }
 `;
 
 export const Header = styled('div')`
@@ -21,11 +25,19 @@ export const Header = styled('div')`
   font-size: 26px;
   font-family: 'Raleway', sans-serif;
   color: white;
+
+  @media (max-width: 460px) {
+    font-size: 20px;
+  }
 `;
 
 export const Border = styled('div')`
   width: 100%;
   border-bottom: 2px solid white;
+
+  @media (max-width: 460px) {
+    border-bottom-width: 1px;
+  }
 `;
 
 export const Song = styled('div')`
@@ -33,12 +45,18 @@ export const Song = styled('div')`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: calc(100% - 8px * 2);
+  width: calc(100% - 16px);
   padding: 8px;
   background-color: transparent;
   border-radius: 12px;
   transition: background-color 0.3s ease;
   cursor: pointer;
+
+  @media (max-width: 460px) {
+    padding: 4px;
+    width: calc(100% - 8px);
+    border-radius: 8px;
+  }
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.2);
@@ -50,6 +68,10 @@ export const SongDataContainer = styled('div')`
   flex-direction: row;
   align-items: center;
   gap: 8px;
+
+  @media (max-width: 460px) {
+    gap: 5px;
+  }
 `;
 
 export const SongData = styled('div')`
@@ -68,6 +90,14 @@ export const SongDataButton = styled('button')`
   font-size: 18px;
   font-family: 'Urbanist', sans-serif;
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+
+  @media (max-width: 460px) {
+    font-size: 15px;
+    max-width: 68px;
+  }
 
   &:hover {
     text-decoration: underline;
@@ -94,8 +124,8 @@ export const SongImage = styled('button')<ISongImage>`
   &::after {
     content: "";
     opacity: 0;
-    height: 120px;
-    width: 120px;
+    height: 100%;
+    width: 100%;
     border-radius: 8px;
     background-size: 32px;
     background-position: center;
@@ -111,6 +141,12 @@ export const SongImage = styled('button')<ISongImage>`
     padding: 0;
   }
 
+  @media (max-width: 460px) {
+    height: 72px;
+    width: 72px;
+    border-radius: 6px;
+  }
+
   &:hover {
     &::after {
       opacity: 1;
@@ -123,6 +159,10 @@ export const SongLikesContainer = styled('div')`
   flex-direction: row;
   align-items: center;
   gap: 16px;
+
+  @media (max-width: 460px) {
+    gap: 7px;
+  }
 `;
 
 export const SongLikeButton = styled('button')<ISongLike>`
@@ -136,6 +176,13 @@ export const SongLikeButton = styled('button')<ISongLike>`
   width: 34px;
   height: 34px;
   background-repeat: no-repeat;
+
+  @media (max-width: 460px) {
+    background-size: 16px;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+  }
 `;
 
 export const SongLikeData = styled('div')`
@@ -143,4 +190,8 @@ export const SongLikeData = styled('div')`
   font-weight: 600;
   font-family: 'Urbanist', sans-serif;
   color: ${colors.DARK_WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 13px;
+  }
 `;
