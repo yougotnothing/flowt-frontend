@@ -142,8 +142,8 @@ export const SongImage = styled('button')<ISongImage>`
   }
 
   @media (max-width: 460px) {
-    height: 72px;
-    width: 72px;
+    height: 52px;
+    width: 52px;
     border-radius: 6px;
   }
 
@@ -178,10 +178,7 @@ export const SongLikeButton = styled('button')<ISongLike>`
   background-repeat: no-repeat;
 
   @media (max-width: 460px) {
-    background-size: 16px;
-    width: 28px;
-    height: 28px;
-    border-radius: 4px;
+    display: none;
   }
 `;
 

@@ -32,7 +32,6 @@ import {
   PlaylistInfoContainer
 } from "../../playlist/large/Playlist.styled";
 import { PageLoader } from "../../../loader/pageLoader/PageLoader";
-import { userDescriptionStore as descriptionStore } from "../../../../stores/toChangeDescription.mobx";
 import { FullsizeSongs } from "../../../songs/fullsizeSongs/FullsizeSongs";
 import { playlistsStore as playlists } from "../../../../stores/toPlaylists.mobx";
 import { editPlaylistStore as editPlaylist } from "../../../../stores/toEditPlaylist.mobx";

@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import { playlistsStore as playlist } from "../../../stores/toPlaylists.mobx";
 import { AddSong, Song, SongContainer, SongContainerText, SongIcon, SongInfo, SongMainInfo, SongStats, SongStatsContainer } from "./Playlist.styled";
 import { API_URL } from "../../../api/axiosConfig";
+import { formatNumbers } from "../functions";
 
 export const PlaylistItems: React.FC = observer(() => {
   useEffect(() => {
@@ -30,7 +31,7 @@ export const PlaylistItems: React.FC = observer(() => {
             <SongInfo>{song.genre}</SongInfo>
             <SongStatsContainer>
               <SongStats>listens: {song.listens}</SongStats>
-              <SongStats>liked</SongStats>
+              <SongStats>likes: {song.likes}</SongStats>
             </SongStatsContainer>
             <AddSong onClick={() => {
               playlist.removeAdded(song);
@@ -55,8 +56,8 @@ export const PlaylistItems: React.FC = observer(() => {
               </SongStatsContainer>
               <SongInfo>{song.genre}</SongInfo>
               <SongStatsContainer>
-                <SongStats>listens: {song.listens}</SongStats>
-                <SongStats>liked</SongStats>
+                <SongStats>listens: {formatNumbers(song.listens.toString())}</SongStats>
+                <SongStats>likes: {formatNumbers(song.likes.toString())}</SongStats>
               </SongStatsContainer>
               <AddSong onClick={() => {
                 playlist.setAdded(song);
