@@ -32,8 +32,8 @@ const fadeOut = keyframes`
   }
 `;
 
-export const Container = styled('div')<StyleProps>`
-  display: ${({ $style }) => $style === 'desktop' ? 'flex' : 'none'};
+export const Container = styled('div')`
+  display: flex;
   flex-direction: row;
   position: relative;
   width: 1200px;
@@ -41,7 +41,6 @@ export const Container = styled('div')<StyleProps>`
   margin: 0 auto;
 
   @media (max-width: 460px) {
-    display: ${({ $style }) => $style === 'desktop' ? 'none' : 'flex'};
     width: 100%;
     gap: 13px;
   }
@@ -76,6 +75,7 @@ export const ContentContainer = styled('div')`
   @media (max-width: 460px) {
     width: 100%;
     padding: 5px;
+    margin-top: 9em;
     gap: 5px;
   }
 `;
@@ -122,6 +122,11 @@ export const SearchFilterButton = styled('button')`
   height: 32px;
   transition: 0.3s;
   cursor: pointer;
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+    width: 80px;
+  }
   
   &:hover {
     color: ${colors.SECONDARY};
@@ -146,29 +151,9 @@ export const Card = styled('div')`
   padding: 4px;
 
   @media (max-width: 460px) {
-    display: none;
-  }
-`;
-
-export const ModileCard = styled('button')`
-  display: none;
-  flex-direction: row;
-  background-color: transparent;
-  z-index: 1;
-  justify-content: space-around;
-  align-items: center;
-  position: relative;
-  border: 1px solid ${colors.WHITE};
-  border-left-width: 0;
-  border-right-width: 0;
-  border-top-width: 0;
-  width: 670px;
-  height: 146px;
-  padding: 4px;
-  background-color: transparent;
-
-  @media (max-width: 460px) {
-    display: inline-flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
   }
 `;
 
@@ -183,6 +168,11 @@ export const CardIcon = styled('button')<ICardType>`
   background-repeat: no-repeat;
   background-color: transparent;
   cursor: pointer;
+
+  @media (max-width: 460px) {
+    width: 102px;
+    height: 102px;
+  }
 `;
 
 export const CardInfoContainer = styled('div')`
@@ -195,6 +185,10 @@ export const CardInfoContainer = styled('div')`
   white-space: nowrap;
   width: 218px;
   height: 66px;
+
+  @media (max-width: 460px) {
+    width: 106px;
+  }
 `;
 
 export const CardInfo = styled('button')`
@@ -211,6 +205,10 @@ export const CardInfo = styled('button')`
   white-space: nowrap;
   cursor: pointer;
   transition: 0.3s;
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+  }
 `;
 
 export const CardDiv = styled('div')`
@@ -230,6 +228,14 @@ export const CardButtonsContainer = styled('div')<ICardButtonsContainer>`
   border-radius: 6px;
   opacity: ${props => props.$isOpen ? '1' : '0'};
   animation: ${props => props.$isOpen ? css`${fadeIn} 0.3s ease` : css`${fadeOut} 0.3s ease`};
+
+  @media (max-width: 460px) {
+    opacity: 1;
+    animation: none;
+    width: max-content;
+    gap: 4px;
+    padding: 2px;
+  }
 `;
 
 export const CardButton = styled('button')`
@@ -246,9 +252,15 @@ export const CardButton = styled('button')`
   transition: 0.3s ease;
   cursor: pointer;
 
+  @media (max-width: 460px) {
+    font-size: 13px;
+    width: 100px;
+    height: 26px;
+    border-radius: 4px;
+  }
+
   &:hover {
     background-color: ${colors.BORDER};
     color: ${colors.SECONDARY};
-
   }
 `;

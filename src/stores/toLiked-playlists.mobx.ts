@@ -1,6 +1,6 @@
 import { observable, action, runInAction, makeObservable } from "mobx";
 import { IPlaylist, ISearchPlaylist } from "../types/props";
-import { api } from "../api/axiosConfig";
+import { API_URL, api } from "../api/axiosConfig";
 
 class LikedPlaylistsStore {
   playlists: IPlaylist[];
@@ -45,17 +45,27 @@ class LikedPlaylistsStore {
     }
   }
 
-  async addLikedPlaylist(playlist: IPlaylist) {
+  async addLikedPlaylist(playlist?: IPlaylist, data?: { name: string, username: string }) {
     try {
-      await api.post('/saved-playlists', {
-        username: playlist.username,
-        playlistName: playlist.name
-      });
+      if(playlist) {
 
-      console.log("playlist added to liked.");
-      runInAction(() => {
-        this.playlists.push(playlist);
-      });
+        await api.post('/saved-playlists', {
+          username: playlist.username,
+          playlistName: playlist.name
+        });
+        
+        console.log("playlist added to liked.");
+        runInAction(() => {
+          this.playlists.push(playlist);
+        });
+      }else if(data) {
+        await api.post('/saved-playlists', {
+          username: data.username,
+          name: data.username
+        });
+
+        console.log('playlist added to liked.');
+      }
     }catch(error: any) {
       console.error(error);
     }

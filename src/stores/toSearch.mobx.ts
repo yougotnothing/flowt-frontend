@@ -136,12 +136,12 @@ class SearchStore {
     }
   }
 
-  async get(param: string) {
+  async get(param: string, location?: string) {
     try {
       runInAction(async () => {
         switch(param) {
           case "All":
-            await this.all();
+            await this.all("search", location);
             break;
           case "Songs":
             await this.setSongs();
@@ -213,7 +213,7 @@ class SearchStore {
     }
   }
 
-  async all(method: 'main page' | 'search' = 'search') {
+  async all(method: 'main page' | 'search' = 'search', location?: string) {
     try {
       await this.setPlaylists(method);
       await this.setSongs(method);
@@ -222,7 +222,11 @@ class SearchStore {
       if(this.songs.length > 0 || this.users.length > 0) {
         runInAction(() => {
           this.message = null;
-          this.isOpen = true;
+          if(!location) {
+            this.isOpen = true;
+          }else{
+            this.isOpen = false;
+          }
         });
       }else{
         runInAction(() => {
