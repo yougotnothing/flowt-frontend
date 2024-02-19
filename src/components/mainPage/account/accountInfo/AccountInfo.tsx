@@ -125,8 +125,8 @@ export const AccountInfo: React.FC = observer(() => {
             <FullsizeSongs />
           </PlaylistContainer>
         )}
-        {playlists.self.map((item, index) => (
-          <Container $isEditing={editPlaylist.isEditing} key={index}>
+        {playlists.self.map((item) => (
+          <Container $isEditing={editPlaylist.isEditing} key={item.playlistId}>
             <PlaylistIcon
               $isEditing={editPlaylist.isEditing} 
               $username={$.username} 

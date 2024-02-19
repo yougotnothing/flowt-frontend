@@ -63,7 +63,7 @@ export const FullsizeSongs: React.FC = observer(() => {
 
   return (
     <>
-      {songs.container.map((song: ISongData, index: number) => (
+      {songs.container.map((song, index) => (
         <Container key={index}>
           <SongAvatar style={{backgroundImage: `url(${encodeURI(`${API_URL}/images/song/${user.username}/${song.name}`)})`}} />
           <DataContainer>

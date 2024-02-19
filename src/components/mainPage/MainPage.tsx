@@ -82,15 +82,12 @@ export const MainPage: FC = observer(() => {
   }, [location.pathname, token]);
 
   const handleSearch = async (key: any) => {
-    const inputLength = search.input.length;
-    const songsLength = search.songs.length;
-    const usersLength = search.users.length;
-    const isKeyEnter = (key.key === 'Enter' || key.code === 'Enter');
-
-    if(isKeyEnter && inputLength > 0 && songsLength > 0 && usersLength > 0) {
-      await search.all();
-      navigate('/search');
-      search.setIsOpen(false);
+    const isDataNull = (search.songs.length > 0  || search.users.length > 0 || search.playlists.length > 0);
+    if(search.input.length > 0 && isDataNull) {
+      if(key.key === 'Enter') {
+        await search.all('main page');
+        navigate('/search');
+      }
     }else{
       return;
     }
@@ -111,7 +108,7 @@ export const MainPage: FC = observer(() => {
     }
   }
 
-  const handleSearchButton = async () => {
+  const handleSearchButton = async (key?: any) => {
     const isDataNull = (search.songs.length > 0  || search.users.length > 0 || search.playlists.length > 0);
     if(search.input.length > 0 && isDataNull) {
       await search.all('main page');
@@ -145,8 +142,8 @@ export const MainPage: FC = observer(() => {
           <div className='form'>
             <Search
               className="search-input"
-              onKeyDown={handleSearch}
               name="search"
+              onKeyDown={handleSearch}
               placeholder="search"
               onChange={handleChange}
             />

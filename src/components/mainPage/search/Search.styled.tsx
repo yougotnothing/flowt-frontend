@@ -10,6 +10,10 @@ interface ICardButtonsContainer {
   $isOpen: boolean;
 }
 
+interface StyleProps {
+  $style: 'mobile' | 'desktop';
+}
+
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -28,13 +32,19 @@ const fadeOut = keyframes`
   }
 `;
 
-export const Container = styled('div')`
-  display: flex;
+export const Container = styled('div')<StyleProps>`
+  display: ${({ $style }) => $style === 'desktop' ? 'flex' : 'none'};
   flex-direction: row;
   position: relative;
   width: 1200px;
   gap: 28px;
   margin: 0 auto;
+
+  @media (max-width: 460px) {
+    display: ${({ $style }) => $style === 'desktop' ? 'none' : 'flex'};
+    width: 100%;
+    gap: 13px;
+  }
 `;
 
 export const Header = styled('div')`
@@ -45,6 +55,10 @@ export const Header = styled('div')`
   font-size: 28px;
   font-weight: 800;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 20px;
+  }
 `;
 
 export const ContentContainer = styled('div')`
@@ -52,12 +66,18 @@ export const ContentContainer = styled('div')`
   width: 760px;
   align-items: center;
   flex-direction: column;
-  margin:  5em auto 0 auto;
+  margin: 5em auto 0 auto;
   padding: 8px;
   gap: 6px;
   background-color: ${colors.FRONT};
   border: 2px solid ${colors.BORDER};
   border-radius: 6px;
+  
+  @media (max-width: 460px) {
+    width: 100%;
+    padding: 5px;
+    gap: 5px;
+  }
 `;
 
 export const FiltersContainer = styled('div')`
@@ -79,6 +99,11 @@ export const SearchFilters = styled('div')`
   border: 2px solid ${colors.BORDER};
   border-radius: 8px;
   padding: 4px;
+
+  
+  @media (max-width: 460px) {
+    flex-direction: row !important;
+  }
 `;
 
 export const SearchFilterButton = styled('button')`
@@ -119,6 +144,32 @@ export const Card = styled('div')`
   width: 670px;
   height: 146px;
   padding: 4px;
+
+  @media (max-width: 460px) {
+    display: none;
+  }
+`;
+
+export const ModileCard = styled('button')`
+  display: none;
+  flex-direction: row;
+  background-color: transparent;
+  z-index: 1;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  border: 1px solid ${colors.WHITE};
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 0;
+  width: 670px;
+  height: 146px;
+  padding: 4px;
+  background-color: transparent;
+
+  @media (max-width: 460px) {
+    display: inline-flex;
+  }
 `;
 
 export const CardIcon = styled('button')<ICardType>`

@@ -1,5 +1,5 @@
 import { makeObservable, observable, action, runInAction } from "mobx";
-import { ISearchPlaylist, ISongPlaylist, IUserSearch } from "../types/props";
+import { ISearchPlaylist, ISongPlaylist, ISongsSearch, IUserSearch } from "../types/props";
 import { api } from "../api/axiosConfig";
 import { ISongData } from "../types/types";
 
@@ -69,7 +69,7 @@ class SearchStore {
     });
   }
 
-  async setUsers(method?: 'main page' | 'search') {
+  async setUsers(method: 'main page' | 'search' = 'search') {
     try {
       const response = await api.get('/search/users', {
         params: {
@@ -78,23 +78,25 @@ class SearchStore {
         }
       });
 
-      runInAction(() => {
-        switch(method) {
-          case 'main page':
-            this.users = response.data.users;
-            break;
-          case 'search':
-            this.users = [...this.users, ...response.data.users];
-            break;
-          case undefined:
-            this.users = response.data.users;
-            break;
-        }
-        
-        if(this.users.length === 0) {
-          this.setMessage(`Can't find data by ${this.input}`);
-        }
-      });
+      if(method === 'main page') {
+        runInAction(() => this.users = response.data.users);
+      }else{
+        const uniqueList: Set<IUserSearch> = new Set(
+          response.data.users.filter((user: IUserSearch) => 
+            !this.users.some((existingUser: IUserSearch) =>
+              existingUser.username === user.username
+            )
+          )
+        );
+
+        const uniqueArray = Array.from(uniqueList);
+
+        runInAction(() => this.users = [...this.users, ...uniqueArray]);
+      }
+      
+      if(this.users.length === 0) {
+        this.setMessage(`Can't find data by ${this.input}`);
+      }
     }catch(error: any) {
       console.log(error);
     }
@@ -109,17 +111,25 @@ class SearchStore {
         }
       });
 
-      runInAction(() => {
-        if(method === 'main page') {
-          this.songs = response.data.songs;
-        }else{
-          this.songs = [...this.songs, response.data.songs];
-        }
+      if(method === 'main page') {
+        runInAction(() => this.songs = response.data.songs);
+      }else{
+        const uniqueList: Set<ISongPlaylist> = new Set(
+          response.data.songs.filter((song: ISongPlaylist) =>
+            !this.songs.some((existingSong: ISongPlaylist) =>
+              existingSong.songId === song.songId
+            )
+          )
+        );
 
-        if(this.songs.length === 0) {
-          this.message = `Can't find data by ${this.input}`;
-        }
-      });
+        const uniqueArray = Array.from(uniqueList);
+
+        runInAction(() => this.songs = [...this.songs, ...uniqueArray]);
+      }
+
+      if(this.songs.length === 0) {
+        this.message = `Can't find data by ${this.input}`;
+      }
       console.log(this.songs);
     }catch(error: any) {
       console.log(error);
@@ -135,18 +145,18 @@ class SearchStore {
             break;
           case "Songs":
             await this.setSongs();
-            this.playlists = [];
-            this.users = [];
+            runInAction(() => this.playlists = []);
+            runInAction(() => this.users = []);
             break;
           case "Playlists":
             await this.setPlaylists();
-            this.songs = [];
-            this.users = [];
+            runInAction(() => this.songs = []);
+            runInAction(() => this.users = []);
             break;
           case "Authors":
             await this.setUsers();
-            this.songs = [];
-            this.playlists = [];
+            runInAction(() => this.songs = []);
+            runInAction(() => this.playlists = []);
             break;
         }
       });
@@ -180,7 +190,17 @@ class SearchStore {
         if(method === 'main page') {
           this.playlists = response.data.playlists;
         }else{
-          this.playlists = [...this.playlists, ...response.data.playlists];
+          const uniqueList: Set<ISearchPlaylist> = new Set(
+            response.data.playlists.filter((playlist: ISearchPlaylist) =>
+              !this.playlists.some((existingPlaylist: ISearchPlaylist) => 
+                existingPlaylist.id === playlist.id
+              )
+            )
+          );
+
+          const uniqueArray = Array.from(uniqueList);
+
+          this.playlists = [...this.playlists, ...uniqueArray];
         }
 
         if(this.playlists.length === 0) {

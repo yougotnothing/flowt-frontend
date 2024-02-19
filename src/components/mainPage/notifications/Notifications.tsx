@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 import {
   NoticesContainer,
@@ -13,6 +13,10 @@ import { Droplist } from "./Droplist";
 import { user } from "../../../stores/toUser.mobx";
 
 export const Notifications: FC = observer(() => {
+  useEffect(() => {
+    notices.getInfo();
+  }, []);
+
   return (
     <Container>
       <Title>Notifications</Title>

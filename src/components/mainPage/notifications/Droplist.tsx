@@ -32,17 +32,11 @@ export const Droplist: React.FC<IDroplist> = ({ $isOpen: prop }) => {
             setIsOpen(!isOpen);
             setChosenNotice(notice.id);
           }}>
-            <NoticeIcon style={{backgroundImage: `url(${userAvatarStore.avatar})`}} />
             <NoticeTitle>{notice.message}</NoticeTitle>
+            <DroplistItem onClick={() => handleDeleteNotice()}>Delete</DroplistItem>
           </Notices>
         </Fragment>
       ))}
-      <DROPLIST $isOpen={isOpen}>
-        <DroplistItem onClick={() => {
-          setChosenNotice(chosenNotice);
-        }}>Mark as read</DroplistItem>
-        <DroplistItem onClick={() => handleDeleteNotice()}>Delete</DroplistItem>
-      </DROPLIST>
     </>
   )
 }

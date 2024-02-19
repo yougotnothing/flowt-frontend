@@ -31,6 +31,11 @@ export const Container = styled("div")`
   align-self: center;
   margin: auto;
   gap: 36px;
+
+  @media (max-width: 460px) {
+    width: 96%;
+    gap: 12px;
+  }
 `;
 
 export const ContentContainer = styled("div")`
@@ -38,6 +43,11 @@ export const ContentContainer = styled("div")`
   flex-direction: row;
   gap: 24px;
   height: 700px;
+
+  @media (max-width: 460px) {
+    height: 100%;
+    gap: 8px;
+  }
 `;
 
 export const ButtonsContainer = styled("div")`
@@ -74,7 +84,7 @@ export const NoticesContainer = styled("div")`
   margin: 0 auto;
 `;
 
-export const Notices = styled("button")`
+export const Notices = styled("div")`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -86,7 +96,14 @@ export const Notices = styled("button")`
   border-left-width: 0;
   border-right-width: 0;
   background-color: ${colors.FRONT};
+  justify-content: space-between;
   cursor: pointer;
+
+  @media (max-width: 460px) {
+    width: 96%;
+    padding: 8px;
+    border-bottom-width: 1px;
+  }
 `;
 
 export const Droplist = styled('div')<IDroplist>`
@@ -102,6 +119,13 @@ export const Droplist = styled('div')<IDroplist>`
   background-color: ${colors.FRONT_HOVER};
   border: 2px solid ${colors.BORDER};
   border-radius: 8px;
+
+  @media (max-width: 460px) {
+    padding: 4px;
+    gap: 5px;
+    border-width: 1px;
+    border-radius: 6px;
+  }
 `;
 
 export const DroplistItem = styled('button')`
@@ -111,13 +135,19 @@ export const DroplistItem = styled('button')`
   font-weight: 600;
   font-size: 16px;
   color: ${colors.DARK_WHITE};
-  background-color: ${colors.FRONT_HOVER};
-  border: 2px solid ${colors.FRONT_HOVER};
+  background-color: transparent;
+  border: 2px solid transparent;
   border-top-width: 0;
   border-left-width: 0;
   border-right-width: 0;
   cursor: pointer;
   transition: 0.3s;
+
+  @media (max-width: 460px) {
+    width: max-content;
+    height: 27px;
+    font-size: 12px;
+  }
   
   &:hover {
     color: ${colors.WHITE};
@@ -134,6 +164,10 @@ export const NoticeTitle = styled("div")`
   font-family: "Urbanist", sans-serif;
   font-size: 16px;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 13px;
+  }
 `;
 
 export const NoticeIcon = styled("picture")`
