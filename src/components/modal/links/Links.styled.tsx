@@ -15,7 +15,7 @@ export const Modal = styled('div')<IModal>`
   height: 100svh;
   background-color: rgba(0, 0, 0, 0.4);
   position: absolute;
-  z-index: 999;
+  z-index: 9999;
 `;
 
 export const ModalWindow = styled('div')`
@@ -29,6 +29,12 @@ export const ModalWindow = styled('div')`
   border-radius: 12px;
   width: 720px;
   gap: 16px;
+
+  @media (max-width: 460px) {
+    width: 91svw;
+    padding: 6px;
+    gap: 14px;
+  }
 `;
 
 export const Header = styled('div')`
@@ -36,6 +42,10 @@ export const Header = styled('div')`
   font-weight: 800;
   font-family: 'Raleway', sans-serif;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 19px;
+  }
 `;
 
 export const CloseButton = styled('button')`
@@ -55,6 +65,14 @@ export const Input = styled('input')`
   ${INPUT}
   height: 30px;
   width: 208px;
+
+  @media (max-width: 460px) {
+    width: 120px;
+    height: 26px;
+    font-size: 14px;
+    padding-left: 6px;
+    border-radius: 8px;
+  }
 `;
 
 export const ConfirmButton = styled('button')`
@@ -62,6 +80,12 @@ export const ConfirmButton = styled('button')`
   align-self: center;
   width: 142px;
   height: 34px;
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+    width: 83px;
+    height: 28px;
+  }
 `;
 
 export const Guide = styled('div')`
@@ -69,6 +93,10 @@ export const Guide = styled('div')`
   font-weight: 400;
   font-size: 16px;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 13px;
+  }
 `;
 
 export const GuideContainer = styled('div')`

@@ -10,7 +10,6 @@ export const AccountContainer = styled('div')`
   gap: 10em;
 
   @media (max-width: 460px) {
-    width: 96%;
     gap: 20px;
     margin-bottom: 146px;
   }
@@ -283,7 +282,11 @@ export const NavigationButton = styled('button')`
   color: ${colors.WHITE};
 `;
 
-export const Droplist = styled('button')`
+interface DroplistProps {
+  $isOpen: boolean;
+}
+
+export const Droplist = styled('button')<DroplistProps>`
   position: absolute;
   top: 8%;
   left: 93%;
@@ -298,10 +301,30 @@ export const Droplist = styled('button')`
   transition: 0.3s ease;
   z-index: 997;
   cursor: pointer;
+  padding: 0;
+
+  &::after {
+    display: flex;
+    content: "";
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background-image: url('/cross.png');
+    background-size: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+  }
 
   @media (max-width: 460px) {
-    left: 92.3%;
+    &::after {
+      opacity: ${({ $isOpen }) => $isOpen ? '1' : '0'};
+    }
+    background-image: url(${({ $isOpen }) => $isOpen ? 'none' : '/settings.png'});
     top: 0;
+    left: initial;
+    right: 0px;
     height: 32px;
     width: 32px;
   }
@@ -331,8 +354,9 @@ export const DroplistItemsContainer = styled('div')<IDroplistItemsContainer>`
   @media (max-width: 460px) {
     width: 146px;
     border-radius: 6px;
-    top: 4%;
-    left: 55%;
+    top: 30px;
+    left: initial;
+    right: 5px;
   }
 `;
 

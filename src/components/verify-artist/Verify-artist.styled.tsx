@@ -6,10 +6,6 @@ interface IBirthdayDataButton {
   $type: 'Mounth' | 'Switch';
 }
 
-interface IFinalData {
-  $type: 'header' | 'value';
-}
-
 interface IBirthdayContainer {
   $isOpen: boolean;
 }
@@ -52,6 +48,10 @@ export const Card = styled('div')`
   border-radius: 12px;
   position: relative;
   justify-content: space-between;
+  @media (max-width: 460px) {
+    width: max-content;
+    height: max-content;
+  }
 `;
 
 export const PersonalDataContainer = styled('div')`
@@ -60,6 +60,11 @@ export const PersonalDataContainer = styled('div')`
   flex-direction: row;
   justify-content: center;
   gap: 12px;
+
+  @media (max-width: 460px) {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
 `;
 
 export const PersonalData = styled('input')`
@@ -129,6 +134,10 @@ export const Header = styled('div')`
   font-weight: 800;
   font-size: 32px;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 19px;
+  }
 `;
 
 export const BirthdayButton = styled('button')`
@@ -168,6 +177,8 @@ export const Input = styled('input')<IInput>`
   font-weight: 400;
   font-size: 18px;
   transition: all 0.3s ease;
+  border-color: ${({ $isError }) => $isError ? colors.RED : colors.BORDER} !important;
+  animation: ${({ $isError }) => $isError ? css`${onError} 0.3s ease` : css`${noError} 0.3s ease`};
 
   &::placeholder {
     opacity: 1;
@@ -177,8 +188,14 @@ export const Input = styled('input')<IInput>`
     background-color: ${colors.DARK_BLUE};
     color: ${colors.WHITE};
   }
-  border-color: ${({ $isError }) => $isError ? colors.RED : colors.BORDER} !important;
-  animation: ${({ $isError }) => $isError ? css`${onError} 0.3s ease` : css`${noError} 0.3s ease`};
+
+  @media (max-width: 460px) {
+    font-size: 13px;
+    height: 26px;
+    width: 126px;
+    border-radius: 8px;
+    padding-left: 6px;
+  }
 `;
 
 export const BirthdayButtonsContainer = styled('div')<IBirthdayContainer>`
@@ -216,6 +233,12 @@ export const BirthdayContainer = styled('div')`
   display: flex;
   flex-direction: row;
   gap: 12px;
+
+  @media (max-width: 460px) {
+    flex-direction: column;
+    align-self: flex-start;
+    gap: 8px;
+  }
 `;
 
 export const LinksContainer = styled('div')`
@@ -237,6 +260,12 @@ export const LinkButton = styled('button')`
   width: 142px;
   transition: 0.3s ease;
   cursor: pointer;
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+    width: 82px;
+    height: 28px;
+  }
 
   &:hover {
     background-color: ${colors.BORDER};
@@ -260,6 +289,15 @@ export const CountryContainer = styled('div')<ICountryContainer>`
   overflow-y: auto;
   max-height: 240px;
   position: absolute;
+
+  @media (max-width: 460px) {
+    top: 204px;
+  }
+`;
+
+export const CountryTextWrapper = styled('div')`
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const CountryButton = styled('button')`
@@ -272,19 +310,35 @@ export const CountryButton = styled('button')`
   font-size: 18px;
   color: ${colors.DARK_WHITE};
   transition: 0.3s ease;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   cursor: pointer;
 
   &:hover {
     background-color: ${colors.BORDER};
     color: ${colors.SECONDARY};
   }
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+    width: 122px;
+  }
 `;
 
-export const P = styled('div')`
+interface P_Props {
+  $align: 'flex-start' | 'center' | 'flex-end';
+}
+
+export const P = styled('div')<P_Props>`
   font-size: 18px;
   font-weight: 600;
   font-family: 'Urbanist', sans-serif;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    align-self: ${({ $align }) => $align};
+    font-size: 13px;
+  }
 `;
 
 export const CountryContent = styled('div')`
@@ -299,4 +353,10 @@ export const FooterContent = styled('div')`
   flex-direction: row;
   gap: 24px;
   align-items: end;
+
+  @media (max-width: 460px) {
+    flex-direction: column-reverse;
+    gap: 14px;
+    align-items: center;
+  }
 `;

@@ -1,14 +1,29 @@
 import { useEffect, useState } from "react";
 
 import { observer } from "mobx-react-lite";
-import { Container, PersonalDataContainer, Card, Header, BirthdayButton, Input, BirthdayContainer, LinkButton, CountryButton, CountryContainer, P, CountryContent, FooterContent } from './Verify-artist.styled';
+import {
+  Container,
+  PersonalDataContainer,
+  Card,
+  Header,
+  BirthdayButton,
+  Input,
+  BirthdayContainer,
+  LinkButton,
+  CountryButton,
+  CountryContainer,
+  P,
+  CountryContent,
+  FooterContent,
+  CountryTextWrapper
+} from './Verify-artist.styled';
 import { useFormik } from "formik";
-import { verifyArtistSchema } from "../../validation/yup.config";
 import { verifyArtist } from "../../stores/toVerify-artist.mobx";
 import { modalStore } from "../../stores/toModal.mobx";
-import { regions } from "../../constants/regions";
 import { user } from "../../stores/toUser.mobx";
 import { Title } from "../../helmet";
+import { verifyArtistSchema } from "../../validation/yup.config";
+import { regions } from "../../constants/regions";
 
 export const VerifyArtist = observer(() => {
   const[currentCountry, setCurrentCountry] = useState<string>('');
@@ -64,7 +79,7 @@ export const VerifyArtist = observer(() => {
         <Header>Verify artist</Header>
         <PersonalDataContainer>
           <Card>
-            <P>enter your data</P>
+            <P $align="center">enter your data</P>
             <Input
               $isError={!!formik.errors.name}
               onChange={(e: any) => {
@@ -100,7 +115,7 @@ export const VerifyArtist = observer(() => {
             />
           </Card>
           <Card>
-            <P>select your birth date</P>
+            <P $align="flex-start">select your birth date</P>
             <BirthdayContainer>
               <Input
                 defaultValue={formik.values.birthDay}
@@ -128,24 +143,33 @@ export const VerifyArtist = observer(() => {
               />
             </BirthdayContainer>
             <FooterContent>
-              <CountryButton
-                onClick={() => setGender(gender === 'male' ? 'female' : 'male')}
-              >{gender}</CountryButton>
+              <CountryContent>
+                <P $align="center">sex</P>
+                <CountryButton
+                  onClick={() => setGender(gender === 'male' ? 'female' : 'male')}
+                >{gender}</CountryButton>
+              </CountryContent>
               <LinkButton
                 onClick={() => modalStore.setLinks(true)}
               >Add links</LinkButton>
               <CountryContent>
-                <P>select country</P>
-                <CountryButton
-                  onClick={() => setIsOpen(!isOpen)}
-                >{currentCountry ? currentCountry : user.region}</CountryButton>
+                <P $align="center">select country</P>
+                <CountryButton onClick={() => setIsOpen(!isOpen)}>
+                  <CountryTextWrapper>
+                    {currentCountry ? currentCountry : user.region}
+                  </CountryTextWrapper>
+                </CountryButton>
                 <CountryContainer $isOpen={isOpen}>
                   {regions.map((country, index) => (
                     <CountryButton key={index} onClick={() => {
                       setCurrentCountry(country);
                       verifyArtist.setPersonalData('country', country.replace(/[^\x00-\x7F]/g, '').trim());
                       setIsOpen(false);
-                    }}>{country}</CountryButton>
+                    }}>
+                      <CountryTextWrapper> 
+                        {country}
+                      </CountryTextWrapper>
+                    </CountryButton>
                   ))}
                 </CountryContainer>
               </CountryContent>

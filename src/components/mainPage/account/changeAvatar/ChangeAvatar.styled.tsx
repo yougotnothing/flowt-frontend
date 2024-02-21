@@ -9,6 +9,7 @@ export const ChangeAvatarContainer = styled('div')`
   width: max-content;
   gap: 24px;
   margin: 4em auto 0 auto;
+  align-self: center;
 `;
 
 export const Title = styled('div')`

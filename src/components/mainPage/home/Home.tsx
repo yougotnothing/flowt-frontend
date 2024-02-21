@@ -8,8 +8,18 @@ import { savedPlaylists } from "../../../stores/toSaved-playlists.mobx";
 import { likedSongs } from "../../../stores/toLiked-songs.mobx";
 import { Title as PageTitle } from "../../../helmet";
 import { PlaylistsSongs } from "./components/smallsize";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const Home: FC = observer(() => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(location.pathname === '/' && !user.isUserAuthenticated) {
+      navigate('/welcome');
+    }
+  }, [location.pathname]);
+
   useEffect(() => {
     recommendations.getRecommendationList();
     recommendations.getMustLikeList();

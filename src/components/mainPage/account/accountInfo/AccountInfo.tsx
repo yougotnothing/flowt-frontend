@@ -72,7 +72,7 @@ export const AccountInfo: React.FC = observer(() => {
         <Title>Your info</Title>
         {$.isUserAuthenticated && (
           <UserContainer>
-            <Droplist onClick={() => setIsOpen(!isOpen)} />
+            <Droplist $isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
             <DroplistItemsContainer $isOpen={isOpen}>
               {accountSettingsData.map((setting, index) => (
                 <DroplistItem
