@@ -17,13 +17,18 @@ export const Header = styled('div')`
   ${TITLE};
 
   margin-bottom: 12px;
+
+  @media (max-width: 460px) {
+    margin-bottom: 8px;
+    font-size: 22px;
+  }
 `;
 
 export const Input = styled('input')`
   ${INPUT};
 
   width: 264px;
-  height: 48px;  
+  height: 48px;
 `;
 
 export const Button = styled('button')`

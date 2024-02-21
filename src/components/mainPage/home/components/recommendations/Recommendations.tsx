@@ -12,6 +12,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import { searchUsersStore } from "../../../../../stores/toSearchUsers.mobx";
 
 export const Recommendations = observer(() => {
   const navigate = useNavigate();
@@ -41,9 +42,7 @@ export const Recommendations = observer(() => {
           >
             {recommendations.list.length > 3 ? recommendations.list.map((recommendation, index) => (
               <SwiperSlide key={index}>
-                <RecommendationCard
-                  onClick={() => userSongsStore.setSong(index, recommendations.list)}
-                >
+                <RecommendationCard>
                   <RecommendationIcon
                     $author={recommendation.author}
                     $name={recommendation.name}
@@ -56,16 +55,16 @@ export const Recommendations = observer(() => {
                         navigate(generatePath('/song/:id', { id: recommendation.name }));  
                       }}
                     >{recommendation.name}</Text>
-                    <Text $type="author">{recommendation.author}</Text>
+                    <Text $type="author"
+                      onClick={() => searchUsersStore.getPublicUser(recommendation.author, navigate)}
+                    >{recommendation.author}</Text>
                   </RecommendationTitleContainer>
                 </RecommendationCard>
               </SwiperSlide>
             )) : (
               <div style={{display: 'flex', flexDirection: 'row', gap: 40}}>
                 {recommendations.list.map((recommendation, index) => (
-                  <RecommendationCard key={index}
-                    onClick={() => userSongsStore.setSong(index, recommendations.list)}
-                  >
+                  <RecommendationCard key={index}>
                     <RecommendationIcon
                       $author={recommendation.author}
                       $name={recommendation.name}
@@ -77,7 +76,9 @@ export const Recommendations = observer(() => {
                           navigate(generatePath('/song/:id', { id: recommendation.name }));
                         }}
                       >{recommendation.name}</Text>
-                      <Text $type="author">{recommendation.author}</Text>
+                      <Text $type="author"
+                        onClick={() => searchUsersStore.getPublicUser(recommendation.author, navigate)}
+                      >{recommendation.author}</Text>
                     </RecommendationTitleContainer>
                   </RecommendationCard>
                 ))}
@@ -99,9 +100,7 @@ export const Recommendations = observer(() => {
         >
           {recommendations.mustLikeList.length > 3 ? recommendations.mustLikeList.map((recommendation, index) => (
             <SwiperSlide key={index}>
-              <RecommendationCard
-                onClick={() => userSongsStore.setSong(index, recommendations.mustLikeList)}
-              >
+              <RecommendationCard>
                 <RecommendationIcon 
                   $author={recommendation.author}
                   $name={recommendation.name}
@@ -114,7 +113,9 @@ export const Recommendations = observer(() => {
                       navigate(generatePath('/song/:id', { id: recommendation.name }));  
                     }}
                   >{recommendation.name}</Text>
-                  <Text $type="author">{recommendation.author}</Text>
+                  <Text $type="author"
+                    onClick={() => searchUsersStore.getPublicUser(recommendation.author, navigate)}
+                  >{recommendation.author}</Text>
                 </RecommendationTitleContainer>
               </RecommendationCard>
             </SwiperSlide>

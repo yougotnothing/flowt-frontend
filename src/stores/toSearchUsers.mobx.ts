@@ -1,6 +1,7 @@
 import { observable, action, runInAction, makeObservable } from "mobx";
 import { IUserProps, IUserSearch } from "../types/props";
 import { api } from "../api/axiosConfig";
+import { NavigateFunction } from "react-router-dom";
 
 class SearchUsersStore {
   username: string | null;
@@ -68,6 +69,18 @@ class SearchUsersStore {
         email: this.email,
         description: this.description
       }));
+    }
+  }
+
+  async getPublicUser(username: string, navigate: NavigateFunction) {
+    try {
+      const response = await api.get(`/users/public/${username}`);
+      console.log(response.data);
+      this.setUser(response.data);
+      navigate(`/profile/${this.username}`);
+    }catch(error: any) {
+      console.error(error);
+      return;
     }
   }
 

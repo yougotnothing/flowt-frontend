@@ -30,6 +30,7 @@ import { PlaylistItems } from "./Playlist-Items";
 import { api } from "../../../api/axiosConfig";
 import { user } from "../../../stores/toUser.mobx";
 import { Title as Helmet } from "../../../helmet";
+import { searchStore } from "../../../stores/toSearch.mobx";
 
 export const Playlist: FC = observer(() => {
   const[isApply, setIsApply] = useState<boolean>(false);
@@ -37,6 +38,17 @@ export const Playlist: FC = observer(() => {
   const[isPrivate, setIsPrivate] = useState<boolean>(false);
   const[currentSetting, setCurrentSetting] = useState<boolean[]>(Array(settings.length).fill(false));
   const location = useLocation();
+
+  const handleSearch = async () => {
+    try {
+      await playlist.search();
+    }catch(error: any) {
+      console.error(error);
+      return;
+    }
+  }
+
+  const handleSearchKeyDown = async (key: any) => key.key === 'Enter' && await handleSearch();
 
   const handleCreatePlaylist = async () => {
     try {
@@ -47,12 +59,10 @@ export const Playlist: FC = observer(() => {
       });
 
       if(!playlist.added) {
-        console.log('add songs!!!');
         return;
       }else if(response.status === 200) {
         playlist.setSelf(response.data);
         await playlist.addSongs(formik.values.name);
-        console.log('Playlist created successfuly!');
       }
     }catch(error: any) {
       console.error(error);
@@ -72,12 +82,6 @@ export const Playlist: FC = observer(() => {
     onSubmit: () => {}
   });
 
-  useEffect(() => {
-    if(formik.values.name && playlist.isHaveAvatar) {
-      setIsNull(false);
-    }
-  }, [formik.values.name, playlist.isHaveAvatar]);
-  
   const handleSetAvatar = (e: any) => {
     const file = e.target.files[0];
     if(file) {
@@ -85,11 +89,16 @@ export const Playlist: FC = observer(() => {
       playlist.setAvatarURL(image);
       playlist.setAvatar(file);
       setIsApply(true); 
-      console.log('avatar changed!');
     }else{
-      console.log('something went wrong');
+      return;
     }
   }
+
+  useEffect(() => {
+    if(formik.values.name && playlist.isHaveAvatar) {
+      setIsNull(false);
+    }
+  }, [formik.values.name, playlist.isHaveAvatar]);
 
   useEffect(() => {
     if(location.pathname !== '/:id/playlists') {
@@ -98,7 +107,7 @@ export const Playlist: FC = observer(() => {
   }, [location.pathname]);
 
   useEffect(() => {
-    playlist.search('All');
+    playlist.search();
     currentSetting[0] = true;
   }, []);
 
@@ -153,8 +162,12 @@ export const Playlist: FC = observer(() => {
             ))}
           </NavItemContainer>
           <InputContainer>
-            <SearchSongs placeholder="Search" />
-            <AddSongs className="addSongs" />
+            <SearchSongs
+              placeholder="Search"
+              onChange={(e: any) => playlist.setInput(e.target.value)}
+              onKeyDown={handleSearchKeyDown}
+            />
+            <AddSongs className="addSongs" onClick={handleSearch} />
           </InputContainer>
         </SearchSongsNav>
         <PlaylistItems />

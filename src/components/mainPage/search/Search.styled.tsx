@@ -168,10 +168,37 @@ export const CardIcon = styled('button')<ICardType>`
   background-repeat: no-repeat;
   background-color: transparent;
   cursor: pointer;
+  padding: 0;
+
+  &::after {
+    opacity: 0;
+    content: "";
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    background-image: ${({ $type }) => 
+      $type === 'user' ? 'none' : 'url(/play_hover.png)'
+    };
+    background-size: 46px;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    &::after {
+      opacity: ${({ $type }) => $type === "user" ? 0 : 1};
+    }
+  }
 
   @media (max-width: 460px) {
     width: 102px;
     height: 102px;
+
+    &::after {
+      background-size: 36px;
+    }
   }
 `;
 

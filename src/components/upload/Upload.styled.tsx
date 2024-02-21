@@ -8,6 +8,10 @@ export const UploadContainer = styled('div')`
   align-items: center;
   margin-top: 4em;
   width: 100%;
+
+  @media (max-width: 460px) {
+    width: 96%;
+  }
 `;
 
 export const Input = styled('input')`
@@ -27,6 +31,12 @@ export const SongName = styled('input')`
   
   width: 240px;
   height: 36px;
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+    width: 165px;
+    height: 28px;
+  }
 `;
 
 export const Container = styled('div')`
@@ -39,6 +49,10 @@ export const Container = styled('div')`
   border: 2px solid ${colors.BORDER};
   border-radius: 16px;
   background-color: ${colors.FRONT};
+
+  @media (max-width: 460px) {
+    width: 100%;
+  }
 `;
 
 export const DataContainer = styled('div')`
@@ -55,6 +69,10 @@ export const AvatarInput = styled('input')`
 export const SongNameContainer = styled('div')`
   margin: 0 auto auto 0;
   height: 61px;
+  @media (max-width: 460px) {
+    height: 100px;
+    gap: 12px;
+  }
 `;
 
 export const SetAvatarLabelContainer = styled('div')`
@@ -87,15 +105,31 @@ export const Header = styled('div')`
   flex-direction: row;
   align-self: start;
   width: 100%;
+
+  @media (max-width: 460px) {
+    height: max-content;
+    flex-direction: column-reverse;
+  }
 `;
 
-export const SongAvatar = styled('picture')`
+interface SongAvatarProps {
+  $image: string | undefined;
+}
+
+export const SongAvatar = styled('picture')<SongAvatarProps>`
   width: 180px;
   height: 180px;
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 14px;
+  background-image: ${({ $image }) => $image ? `url(${$image})` : 'none'};
+
+  @media (max-width: 460px) {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+  }
 `;
 
 export const Validation = styled('div')`
@@ -113,6 +147,13 @@ export const AvatarContainer = styled('div')`
   padding: 18px;
   background-color: ${colors.VERY_DARK_BLUE};
   border-radius: 14px;
+
+  @media (max-width: 460px) {
+    height: 155px;
+    width: 120px;
+    padding: 7px;
+    gap: 9px;
+  }
 `;
 
 export const Title = styled('div')`
@@ -141,9 +182,14 @@ export const Genres = styled('ul')`
   flex-direction: column;
   overflow-y: auto;
   padding: 4px;
-  transition: 0.3s;
+  transition: 0.3s ease;
   gap: 4px;
   margin: 0;
+
+  @media (max-width: 460px) {
+    width: max-content;
+    height: 155px;
+  }
 `;
 
 export const GenresItem = styled('li')`
@@ -166,13 +212,17 @@ export const AvatarAndGenre = styled('div')`
   display: flex;
   flex-direction: row;
   gap: 36px;
+
+  @media (max-width: 460px) {
+    gap: initial;
+    justify-content: space-between;
+  }
 `;
 
 export const SongInfoContainer = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin: 24px auto auto 0;
   gap: 24px;
   background-color: ${colors.VERY_DARK_BLUE};
   border-radius: 14px;

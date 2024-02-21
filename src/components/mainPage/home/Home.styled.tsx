@@ -20,6 +20,11 @@ export const Text = styled('a')<TextProps>`
   outline: none;
   transition: color 0.3s ease;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  z-index: 9999;
 
   @media (max-width: 460px) {
     font-size: ${({ $type }) => $type === 'author' ? '14px' : '18px'};
@@ -201,7 +206,7 @@ export const Recommendation = styled('div')`
   }
 `;
 
-export const RecommendationCard = styled('button')`
+export const RecommendationCard = styled('div')`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -219,7 +224,7 @@ export const RecommendationCard = styled('button')`
   }
 `;
 
-export const RecommendationIcon = styled('picture')<UrlProps>`
+export const RecommendationIcon = styled('button')<UrlProps>`
   width: 164px;
   height: 164px;
   background-image: url(${({ $author, $name }) => `${API_URL}/images/song/${$author}/${$name}`});
@@ -227,10 +232,38 @@ export const RecommendationIcon = styled('picture')<UrlProps>`
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 8px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  &::after {
+    display: flex;
+    opacity: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    background-image: url(/play_hover.png);
+    background-position: center;
+    background-size: 54px;
+    background-repeat: no-repeat;
+    transition: opacity 0.3s ease;
+    border-radius: 8px;
+  }
+
+  &:hover {
+    &::after {
+      opacity: 1;
+    }
+  }
 
   @media (max-width: 460px) {
     height: 102px;
     width: 102px;
+
+    &::after {
+      background-size: 26px;
+    }
   }
 `;
 

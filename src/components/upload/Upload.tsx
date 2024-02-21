@@ -40,7 +40,7 @@ export const Upload: FC = () => {
   const[songGenre, setSongGenre] = useState<string | null>(null);
   const[isLoading, setIsLoading] = useState(false);
   const[song, setSong] = useState<any | Blob>(null);
-  const[avatar, setAvatar] = useState<any | Blob>(null);
+  const[avatar, setAvatar] = useState<Blob>();
   const navigate = useNavigate();
 
   const formik = useFormik<{
@@ -96,7 +96,7 @@ export const Upload: FC = () => {
   const postSongAvatar = async () => {
     try {
       const avatarData = new FormData();
-      avatarData.append('file', avatar);
+      avatar && avatarData.append('file', avatar);
 
       await api.post(`/songs/avatar/${formik.values.songName}`,
         avatarData, {
@@ -146,6 +146,8 @@ export const Upload: FC = () => {
     }
   };
 
+  const avatarURL = avatar && URL.createObjectURL(avatar);
+
   return (
     <>
       {!user && <PageLoader />}
@@ -188,11 +190,7 @@ export const Upload: FC = () => {
                       accept="image/*"
                       onChange={(event: any) => handleChoseAvatar(event)}
                     />
-                    {avatar ? (
-                      <SongAvatar style={{display: "flex", backgroundImage: `url(${URL.createObjectURL(avatar)})`}} />
-                    ) : (
-                      <SongAvatar style={{display: "none"}} />
-                    )}
+                    <SongAvatar $image={avatarURL} />
                     <SetAvatarLabelContainer>
                       <SetAvatarLabel htmlFor="setAvatar">{avatar ? "Chose another" : "Set avatar"}</SetAvatarLabel>
                     </SetAvatarLabelContainer>

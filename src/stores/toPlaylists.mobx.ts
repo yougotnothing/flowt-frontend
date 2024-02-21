@@ -150,10 +150,11 @@ class PlaylistsStore {
     }
   }
 
-  async search(param: string, substring: string = this.input) {
+  async search(substring: string = this.input) {
     try {
       const response = await api.get('/search/songs',{
         params: {
+          page: 0,
           substring: substring
         }
       });

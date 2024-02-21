@@ -13,6 +13,10 @@ export const Span = styled('span')`
   font-family: 'Urbanist', sans-serif;
   font-weight: 800;
   font-size: 32px;
+
+  @media (max-width: 460px) {
+    font-size: 23px;
+  }
 `;
 
 export const LoginCard = styled('div')`

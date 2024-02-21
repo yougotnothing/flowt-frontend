@@ -18,7 +18,6 @@ import {
   ContentContainer,
   Error
 } from "./ChangeEmail.styled";
-import { Span } from "../../login-register/Login.register.styled";
 import { Loader } from "../../../loader/Loader";
 import { AccountSettings } from "../AccountSettings";
 import { AccountContainer } from "../Account.styled";
@@ -86,7 +85,7 @@ export const ChangeEmail: React.FC = observer(() => {
           </GoBackContainer>
           <ChangeEmailContainer>
             <ContentContainer>
-              <Header>Change <Span>email</Span></Header>
+              <Header>Change email</Header>
               <Input
                 name="email"
                 type="text"
@@ -107,5 +106,5 @@ export const ChangeEmail: React.FC = observer(() => {
         </GlobalContainer>
       )}
     </AccountContainer>
-  )
+  );
 });

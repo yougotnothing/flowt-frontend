@@ -1,5 +1,4 @@
 import { api } from "../../../../api/axiosConfig";
-import { likedSongs } from "../../../../stores/toLiked-songs.mobx";
 import { playlistsStore } from "../../../../stores/toPlaylists.mobx";
 
 export const handleCreatePlaylist = async (name: string, isPrivate: boolean) => {
