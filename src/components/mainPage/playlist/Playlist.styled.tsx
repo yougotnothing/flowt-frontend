@@ -499,11 +499,17 @@ export const PlaylistOptionsButton = styled('button')`
   background-position: center;
   background-color: transparent;
   border: none;
-  z-index: 999;
+  z-index: 998;
   position: absolute;
   left: 1158px;
   top: 6px;
   cursor: pointer;
+
+  @media (max-width: 460px) {
+    left: initial;
+    right: 0px;
+    top: 0px;
+  }
 `;
 
 interface IPlaylistOptionsContainer {
@@ -521,10 +527,31 @@ export const PlaylistOptionsContainer = styled('div')<IPlaylistOptionsContainer>
   position: absolute;
   left: 1026px;
   top: 42px;
+
+  @media (max-width: 460px) {
+    left: initial;
+    top: 4px;
+    right: 32px;
+    z-index: 998;
+    gap: 4px;
+    border-radius: 6px;
+  }
 `;
 
 export const PlaylistOption = styled('button')`
   width: 146px;
   height: 32px;
   ${BUTTON}
+  border: none;
+
+  @media (max-width: 460px) {
+    height: 26px;
+    width: 104px;
+    font-size: 14px;
+
+    &:hover {
+      translate: 0 -2px;
+      border-radius: 6px;
+    }
+  }
 `;

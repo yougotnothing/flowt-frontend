@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite"
-import { ChangeAvatarButton, Input, Modal, ModalWindow, SetAvatarButton } from "./Change-playlist-avatar.styled";
+import { ChangeAvatarButton, CloseButton, Input, Modal, ModalWindow, SetAvatarButton } from "./Change-playlist-avatar.styled";
 import { modalStore } from "../../../stores/toModal.mobx";
 import { changePlaylistAvatar } from "../../../stores/toChange-playlist-avatar.mobx";
 import { editPlaylistStore } from "../../../stores/toEditPlaylist.mobx";
@@ -15,6 +15,7 @@ export const ChangePlaylistAvatar = observer(() => {
   return (
     <Modal $isOpen={modalStore.changeAvatar}>
       <ModalWindow>
+      <CloseButton onClick={() => modalStore.setChangeAvatar(false)} />
         <Input 
           id="avatar"
           type="file"

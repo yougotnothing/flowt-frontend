@@ -114,7 +114,7 @@ export const PlaylistInfo = styled('button')<IPlaylistInfoProps>`
   transition: color 0.3s ease;
 
   @media (max-width: 460px) {
-    font-size: ${({ $type }) => $type === 'name' ? '18px' : '14px'};
+    font-size: ${({ $type }) => $type === 'name' ? '16px' : '13px'};
   }
 
   &:hover {
@@ -150,6 +150,12 @@ export const PlaylistDroplist = styled('div')<IPlaylistDroplist>`
   left: 71%;
   opacity: ${p => p.$isOpen ? '1' : '0'};
   animation: ${p => p.$isOpen ? css`${fadeIn} 0.3s ease` : css`${fadeOut} 0.3s ease`};
+
+  @media (max-width: 460px) {
+    left: initial;
+    right: 99px;
+    border-radius: 6px;
+  }
 `;
 
 export const PlaylistItem = styled('button')`
@@ -157,8 +163,18 @@ export const PlaylistItem = styled('button')`
   height: 32px;
   text-align: start;
   border: none !important;
-  
   ${BUTTON}
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+    height: 29px;
+    width: 120px;
+    border-radius: 6px;
+
+    &:hover {
+      translate: 0 -2px;
+    }
+  }
 `;
 
 export const Header = styled('div')`
@@ -166,6 +182,10 @@ export const Header = styled('div')`
   font-weight: 800;
   font-family: 'Raleway', sans-serif;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 19px;
+  }
 `;
 
 export const Settings = styled('button')`

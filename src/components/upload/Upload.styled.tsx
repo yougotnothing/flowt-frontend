@@ -8,10 +8,7 @@ export const UploadContainer = styled('div')`
   align-items: center;
   margin-top: 4em;
   width: 100%;
-
-  @media (max-width: 460px) {
-    width: 96%;
-  }
+  position: relative;
 `;
 
 export const Input = styled('input')`
@@ -19,11 +16,15 @@ export const Input = styled('input')`
 `;
 
 export const Label = styled('label')`
-  ${BUTTON};
-  
-  margin: auto;
   width: 142px;
   height: 42px;
+  ${BUTTON}
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+    height: 29px;
+    width: 92px;
+  }
 `;
 
 export const SongName = styled('input')`
@@ -36,6 +37,8 @@ export const SongName = styled('input')`
     font-size: 14px;
     width: 165px;
     height: 28px;
+    border-radius: 8px;
+    padding-left: 6px;
   }
 `;
 
@@ -51,7 +54,10 @@ export const Container = styled('div')`
   background-color: ${colors.FRONT};
 
   @media (max-width: 460px) {
-    width: 100%;
+    width: 94%;
+    padding: 8px;
+    border-radius: 9px;
+    margin: 0 auto;
   }
 `;
 
@@ -68,10 +74,13 @@ export const AvatarInput = styled('input')`
 
 export const SongNameContainer = styled('div')`
   margin: 0 auto auto 0;
-  height: 61px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  
   @media (max-width: 460px) {
-    height: 100px;
     gap: 12px;
+    margin-top: 12px;
   }
 `;
 
@@ -93,8 +102,12 @@ export const UploadButton = styled('button')`
   background-color: ${colors.FRONT};
   width: 80px;
   height: 35px;
-  
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    align-self: flex-end;
+  }
+
   &:hover {
     color: ${colors.SECONDARY_HOVER};
   }
@@ -126,8 +139,8 @@ export const SongAvatar = styled('picture')<SongAvatarProps>`
   background-image: ${({ $image }) => $image ? `url(${$image})` : 'none'};
 
   @media (max-width: 460px) {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 8px;
   }
 `;
@@ -149,7 +162,7 @@ export const AvatarContainer = styled('div')`
   border-radius: 14px;
 
   @media (max-width: 460px) {
-    height: 155px;
+    height: initial;
     width: 120px;
     padding: 7px;
     gap: 9px;
@@ -165,7 +178,10 @@ export const Title = styled('div')`
 export const ButtonsContainer = styled('div')`
   display: flex;
   flex-direction: row;
-  width: 85%;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+
 `;
 
 export const SubmitContainer = styled('div')`
@@ -188,7 +204,7 @@ export const Genres = styled('ul')`
 
   @media (max-width: 460px) {
     width: max-content;
-    height: 155px;
+    height: 152px;
   }
 `;
 
@@ -201,6 +217,11 @@ export const GenresItem = styled('li')`
   font-size: 18px;
   font-family: 'Urbanist', sans-serif;
   color: ${colors.DARK_WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 13px;
+    padding: 5px;
+  }
 
   &:hover {
     background-color: ${colors.BORDER};
@@ -227,6 +248,12 @@ export const SongInfoContainer = styled('div')`
   background-color: ${colors.VERY_DARK_BLUE};
   border-radius: 14px;
   padding: 24px;
+
+  @media (max-width: 460px) {
+    padding: 5px;
+    border-radius: 6px;
+    gap: 9px;
+  }
 `;
 
 export const SongInfoText = styled('div')`
@@ -234,4 +261,8 @@ export const SongInfoText = styled('div')`
   font-weight: 600;
   font-size: 18px;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 13px;
+  }
 `;

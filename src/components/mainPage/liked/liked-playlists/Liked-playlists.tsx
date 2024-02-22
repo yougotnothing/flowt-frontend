@@ -18,9 +18,12 @@ import {
 import { likedPlaylists } from "../../../../stores/toLiked-playlists.mobx";
 import { userSongsStore as songs } from "../../../../stores/toSongs.mobx";
 import { Title as Helmet } from "../../../../helmet";
+import { searchUsersStore } from "../../../../stores/toSearchUsers.mobx";
+import { useNavigate } from "react-router-dom";
 
 export const LikedPlaylists = observer(() => {
   const [isLiked, setIsLiked] = useState<boolean[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     likedPlaylists.setLikedPlaylists();
@@ -39,13 +42,20 @@ export const LikedPlaylists = observer(() => {
                 <PlaylistIcon $playlist={playlist} />
                 <TextButtonsContainer>
                   <TextButton $type="name">{playlist.name}</TextButton>
-                  <TextButton $type="author">{playlist.username}</TextButton>
+                  <TextButton $type="author"
+                    onClick={() => {
+                      searchUsersStore.getPublicUser(playlist.username, navigate);
+                    }}
+                  >{playlist.username}</TextButton>
                 </TextButtonsContainer>
               </DataContainer>
               <ManagementButtonsContainer>
                 <LikeButton $isLiked={isLiked[index]} onClick={() => likedPlaylists.deleteLikedPlaylist(playlist)} />
                 <ManagementButton
-                  onClick={() => songs.setSong(0, playlist.songs)}
+                  onClick={() => {
+                    songs.getInfo(playlist.songs);
+                    songs.setSong(0);
+                  }}
                 >play</ManagementButton>
               </ManagementButtonsContainer>
             </Playlist>

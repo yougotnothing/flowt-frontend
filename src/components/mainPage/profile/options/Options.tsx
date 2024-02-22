@@ -54,9 +54,9 @@ export const Options: FC<{ isCurrentUser: boolean }> = ({ isCurrentUser }) => {
           <Select onClick={() => navigate(generatePath('/:id/songs/upload', { id: user.username }))}>
             <SelectText>Upload song</SelectText>
           </Select>
-          <Select onClick={() => navigate(generatePath('/account/:id/settings', { id: user.username }))}>
+          {/* <Select onClick={() => navigate(generatePath('/account/:id/settings', { id: user.username }))}>
             <SelectText>Settings</SelectText>
-          </Select>
+          </Select> */}
           <Select onClick={() => navigate(generatePath('/notifications/:id', { id: user.username }))}>
             <SelectText>Notifications</SelectText>
           </Select>

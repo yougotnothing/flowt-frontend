@@ -75,3 +75,21 @@ export const ChangeAvatarButton = styled('label')<IChangeAvatarButton>`
     background-color: rgba(0, 0, 0, 0.4);
   }
 `;
+
+export const CloseButton = styled('button')`
+  width: 34px;
+  height: 34px;
+  border: none;
+  align-self: end;
+  background-color: transparent;
+  background-size: cover;
+  background-image: url(/cross.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+
+  @media (max-width: 460px) {
+    width: 26px;
+    height: 26px;
+  }
+`;

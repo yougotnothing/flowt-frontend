@@ -36,12 +36,22 @@ export const Text = styled('div')`
   font-size: 18px;
   font-family: 'Urbanist', sans-serif;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+  }
 `;
 
 export const ConfirmButton = styled('button')`
   width: 146px;
   height: 34px;
   ${BUTTON}
+
+  @media (max-width: 460px) {
+    font-size: 14px;
+    width: 120px;
+    height: 29px;
+  }
 `;
 
 export const CloseButton = styled('button')`

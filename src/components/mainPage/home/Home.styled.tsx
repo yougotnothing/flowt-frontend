@@ -23,8 +23,10 @@ export const Text = styled('a')<TextProps>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
+  text-align: center;
+  width: 100%;
   z-index: 9999;
+  max-width: 90px;
 
   @media (max-width: 460px) {
     font-size: ${({ $type }) => $type === 'author' ? '14px' : '18px'};

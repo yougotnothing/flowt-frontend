@@ -19,7 +19,6 @@ export const Recommendations = observer(() => {
 
   useEffect(() => {
     recommendations.getRecommendationList();
-    // recommendations.getMustLikeList();
   }, []);
 
   return (
@@ -44,6 +43,7 @@ export const Recommendations = observer(() => {
               <SwiperSlide key={index}>
                 <RecommendationCard>
                   <RecommendationIcon
+                    onClick={() => userSongsStore.setSong(index, recommendations.list)}
                     $author={recommendation.author}
                     $name={recommendation.name}
                   />
@@ -66,6 +66,7 @@ export const Recommendations = observer(() => {
                 {recommendations.list.map((recommendation, index) => (
                   <RecommendationCard key={index}>
                     <RecommendationIcon
+                      onClick={() => userSongsStore.setSong(index, recommendations.list)}
                       $author={recommendation.author}
                       $name={recommendation.name}
                     />
@@ -101,7 +102,8 @@ export const Recommendations = observer(() => {
           {recommendations.mustLikeList.length > 3 ? recommendations.mustLikeList.map((recommendation, index) => (
             <SwiperSlide key={index}>
               <RecommendationCard>
-                <RecommendationIcon 
+                <RecommendationIcon
+                  onClick={() => userSongsStore.setSong(index, recommendations.mustLikeList)}
                   $author={recommendation.author}
                   $name={recommendation.name}
                 />

@@ -48,7 +48,6 @@ class LikedPlaylistsStore {
   async addLikedPlaylist(playlist?: IPlaylist, data?: { name: string, username: string }) {
     try {
       if(playlist) {
-
         await api.post('/saved-playlists', {
           username: playlist.username,
           playlistName: playlist.name
@@ -61,7 +60,7 @@ class LikedPlaylistsStore {
       }else if(data) {
         await api.post('/saved-playlists', {
           username: data.username,
-          name: data.username
+          playlistName: data.name
         });
 
         console.log('playlist added to liked.');
