@@ -53,7 +53,10 @@ export const ChangeRegion: React.FC = observer(() => {
                   >{region}</DroplistItem>
                 ))}
               </Droplist>
-              <Button onClick={() => user.changeRegion(chosenRegion, navigate)}>Apply</Button>
+              <Button 
+                onKeyDown={(e) => e.key === 'Enter' && user.changeRegion(chosenRegion, navigate)}
+                onClick={() => user.changeRegion(chosenRegion, navigate)}
+              >Apply</Button>
             </Container>
           </ChangeRegionContainer>
         </GlobalContainer>

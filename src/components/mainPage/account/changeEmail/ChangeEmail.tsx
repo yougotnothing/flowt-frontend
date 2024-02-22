@@ -89,6 +89,7 @@ export const ChangeEmail: React.FC = observer(() => {
               <Input
                 name="email"
                 type="text"
+                onKeyDown={e => e.key === 'Enter' && handleChangeEmail()}
                 onChange={(e: any) => {
                   formik.setFieldValue('email', e.target.value);
                   userEmailStore.setEmail(e.target.value);

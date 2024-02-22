@@ -32,22 +32,13 @@ export const ChangeUsername: React.FC = observer(() => {
     username: string
   }>({
     initialValues: {
-      username: ""
+      username: user.username || ''
     },
     validationSchema: changeUsernameSchema,
     onSubmit: () => {}
   });
 
-  const handleChangedUsernameEnter = async (e: any) => {
-    try {
-      if(e.target.value !== user.username && (e.key === 'Enter' || e.code === 'Enter')) {
-        await user.changeUsername(formik.values.username, navigate, setIsLoading);
-        await user.login();
-      }
-    }catch(error: any) {
-      console.error(error);
-    }
-  }
+  const handleChangedUsernameEnter = async (e: any) => e.key === 'Enter' && handleChangedUsername();
 
   const handleChangedUsername = async () => {
     try {
@@ -59,12 +50,6 @@ export const ChangeUsername: React.FC = observer(() => {
       console.error(error);
     }
   }
-  
-  useEffect(() => {
-    if(user.isUserAuthenticated) {
-      formik.setValues({ username: user.username || "" });
-    }
-  }, [user.isUserAuthenticated]);
   
   return (
     <AccountContainer>
@@ -84,7 +69,7 @@ export const ChangeUsername: React.FC = observer(() => {
             <Container>
               <Header>Change username</Header>
               <Input
-                onKeyDown={e => handleChangedUsernameEnter(e)}
+                onKeyDown={handleChangedUsernameEnter}
                 name="username"
                 onBlur={formik.handleBlur}
                 onChange={e => formik.setFieldValue('username', e.target.value)}
