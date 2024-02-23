@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { observer } from "mobx-react-lite";
 import {
@@ -24,11 +24,29 @@ import {
   RandomSongWrapper,
 } from "./Songs.styled";
 import { searchStore as search } from "../../../stores/toSearch.mobx";
-import { userSongsStore as songs } from "../../../stores/toSongs.mobx";
+import { userSongsStore as songs, userSongsStore } from "../../../stores/toSongs.mobx";
 import { likedSongs } from "../../../stores/toLiked-songs.mobx";
 import { Title as Helmet } from "../../../helmet";
+import { user } from "../../../stores/toUser.mobx";
+import { ISongData } from "../../../types/types";
 
 export const BrowseSongs: FC = observer(() => {
+  const[isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  const handleLikeSong = async (song: ISongData) => {
+    for(let index = 0; index < userSongsStore.container.length; index++) {
+      const existingSong: ISongData = userSongsStore.container[index];
+
+      if(existingSong.songId !== song.songId) {
+        setIsDisabled(false);
+        return;
+      }else{
+        setIsDisabled(true);
+        likedSongs.likeSong(song);
+      }
+    }
+  }
+
   useEffect(() => {
     if(search.song) {
       const searchSong = localStorage.getItem('song');
@@ -37,6 +55,8 @@ export const BrowseSongs: FC = observer(() => {
       searchSong && songArray.push(JSON.parse(searchSong));
       songs.getInfo(songArray);
       songs.getRandomByGenre(search.song.genre);
+
+      userSongsStore.getSongs(user.username);
     }
   }, []);
 

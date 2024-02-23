@@ -13,6 +13,10 @@ export const Container = styled('div')`
   flex-direction: column;
   gap: 24px;
   margin: 0 auto;
+
+  @media (max-width: 460px) {
+    width: 100%;
+  }
 `;
 
 export const SongDataWrapper = styled('div')`
@@ -33,6 +37,12 @@ export const Song = styled('div')`
   padding: 1em;
   background: linear-gradient(100deg, ${colors.SECONDARY} 0%, ${colors.AQUAMARINE} 30%, ${colors.DARK_BLUE} 120%);
   border-radius: 12px;
+
+  @media (max-width: 460px) {
+    width: 100%;
+    padding: 6px;
+    border-radius: 8px;
+  }
 `;
 
 interface ISongAvatar {
@@ -47,6 +57,11 @@ export const SongAvatar = styled('picture')<ISongAvatar>`
   height: 280px;
   border-radius: 8px;
   border: none;
+
+  @media (max-width: 460px) {
+    width: 125px;
+    height: 125px;
+  }
 `;
 
 export const SongInfoContainer = styled('div')`

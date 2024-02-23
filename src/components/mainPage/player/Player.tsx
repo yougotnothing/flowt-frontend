@@ -94,9 +94,11 @@ export const Player: React.FC = observer(() => {
             volume={0.5}
             src={song.url}
             autoPlay={true}
+            timeFormat="mm:ss"
             showSkipControls={true}
             showFilledVolume={false}
             showJumpControls={false}
+            onChangeCurrentTimeError={() => console.log('error time change')}
             onEnded={handlePlayNext}
             onClickNext={handlePlayNext}
             onClickPrevious={handlePlayPrev}

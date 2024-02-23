@@ -11,6 +11,7 @@ export const LikedPlaylists: FC<{ size: 'big' | 'small' }> = observer(({ size })
 
   useEffect(() => {
     savedPlaylists.getSaved();
+    console.log('playlists: ', savedPlaylists.playlists);
   }, []);
 
   return (
@@ -20,7 +21,7 @@ export const LikedPlaylists: FC<{ size: 'big' | 'small' }> = observer(({ size })
         {savedPlaylists.playlists.length ? savedPlaylists.playlists.map((playlist, index) => (
           <Song key={index}>
             <SongIcon
-              $author={playlist.author}
+              $author={playlist.username}
               $name={playlist.name}
               $playlist
             />
@@ -29,7 +30,7 @@ export const LikedPlaylists: FC<{ size: 'big' | 'small' }> = observer(({ size })
                 $type="name"
                 onClick={() => navigate(generatePath('/song/:id', { id: playlist.name }))}
               >{playlist.name}</SongInfo>
-              <SongInfo $type="author">{playlist.author}</SongInfo>
+              <SongInfo $type="author">{playlist.username}</SongInfo>
             </SongInfoContainer>
           </Song>
         )) : (
