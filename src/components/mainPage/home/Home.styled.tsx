@@ -98,7 +98,7 @@ export const SongIcon = styled('button')<UrlProps>`
   width: 68px;
   height: 68px;
   border: none;
-  background-image: url(${({ $author, $name, $playlist }) => ($playlist ? `${API_URL}/images/playlist/${$author}/${$name}` : `${API_URL}/images/song/${$author}/${$name}`)});
+  background-image: url(${({ $author, $name, $playlist }) => ($playlist ? encodeURI(`${API_URL}/images/playlist/${$author}/${$name}`) : encodeURI(`${API_URL}/images/song/${$author}/${$name}`))});
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -227,7 +227,7 @@ export const RecommendationCard = styled('div')`
 export const RecommendationIcon = styled('button')<UrlProps>`
   width: 164px;
   height: 164px;
-  background-image: url(${({ $author, $name }) => `${API_URL}/images/song/${$author}/${$name}`});
+  background-image: url(${({ $author, $name }) => encodeURI(`${API_URL}/images/song/${$author}/${$name}`)});
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
