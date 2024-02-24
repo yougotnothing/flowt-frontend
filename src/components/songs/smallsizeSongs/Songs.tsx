@@ -19,10 +19,12 @@ import { userSongsStore as songs } from "../../../stores/toSongs.mobx";
 import { api } from "../../../api/axiosConfig";
 import { user } from "../../../stores/toUser.mobx";
 import { searchStore } from "../../../stores/toSearch.mobx";
+import { likedSongs } from "../../../stores/toLiked-songs.mobx";
 
 export const Songs: React.FC = observer(() => {
   const[isLiked, setIsLiked] = useState<boolean[]>(Array(songs.container.length).fill(false));
   const navigate = useNavigate();
+  const isLikedSong = songs.container.some((existingSong, index) => existingSong.songId === likedSongs.songs[index].songId);
 
   const handleLikedSong = async (song_name: string | null, username: string | null, index: number) => {
     try {
@@ -45,6 +47,10 @@ export const Songs: React.FC = observer(() => {
       console.log(error);
     }
   }
+
+  useEffect(() => {
+    likedSongs.setSongs();
+  }, []);
 
   return (
     <>
@@ -82,8 +88,9 @@ export const Songs: React.FC = observer(() => {
           </SongData>
           <LikeSongButton
             disabled={song.author === user.username}
-            $isLiked={isLiked[index]}
-            onClick={() => handleLikedSong(song.name, user.username, index)} />
+            $isLiked={isLikedSong}
+            onClick={() => handleLikedSong(song.name, user.username, index)}
+          />
         </SongContainer>
       )) : null}
     </>

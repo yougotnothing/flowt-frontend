@@ -21,9 +21,7 @@ export const GoogleButton: FC = () => {
       <OAuthText
         $type="google"
         $whereUsing={OAuth.whereUsing}
-      >
-        {OAuth.whereUsing} with Google
-      </OAuthText>
+      >{OAuth.whereUsing} with Google</OAuthText>
     </OAuthButton>
   );
 }
@@ -42,9 +40,10 @@ export const FacebookButton: FC = () => {
   return (
     <OAuthButton $type="facebook" href={process.env.REACT_APP_FACEBOOK_REDIRECT_URI}>
       <OAuthIcon $type="facebook" />
-      <OAuthText $type="facebook" $whereUsing={OAuth.whereUsing}>
-        {OAuth.whereUsing} with Facebook
-      </OAuthText>
+      <OAuthText
+        $type="facebook"
+        $whereUsing={OAuth.whereUsing}
+      >{OAuth.whereUsing} with Facebook</OAuthText>
     </OAuthButton>
   );
 }

@@ -124,7 +124,7 @@ export const SongButton = styled('button')`
 `;
 
 interface ILikeSongButton {
-  $isLiked: boolean;
+  $isLiked: boolean | (() => boolean);
 }
 
 export const LikeSongButton = styled('button')<ILikeSongButton>`

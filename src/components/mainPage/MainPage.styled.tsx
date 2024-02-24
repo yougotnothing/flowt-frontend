@@ -194,6 +194,7 @@ export const ButtonsContainer = styled('div')`
   }
   
   .link-mobile {
+    display: none;
     text-decoration: none;
     margin: auto;
     font-size: 15px;
@@ -351,6 +352,10 @@ export const Droplist = styled('div')<IDroplistProp>`
   &::-webkit-scrollbar {
     opacity: 0;
   }
+
+  @media (max-width: 460px) {
+    width: 92%;
+  }
 `;
 
 export const Item = styled('div')`
@@ -366,6 +371,10 @@ export const Item = styled('div')`
   width: 350px;
   height: max-content;
   gap: 4px;
+
+  @media (max-width: 460px) {
+    width: 98%;
+  }
 `;
 
 export interface IIconProps {

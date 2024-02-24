@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { colors } from "../../../../constants/colors.const";
-import { BUTTON } from "../../../../constants/styles.const";
 
 interface IStats {
   $type: 'header' | 'content';
@@ -11,6 +10,10 @@ export const Header = styled('div')`
   font-weight: 800;
   font-family: 'Urbanist', sans-serif;
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 20px;
+  }
 `;
 
 export const Container = styled('div')`
@@ -20,6 +23,10 @@ export const Container = styled('div')`
   width: 1200px;
   gap: 26px;
   margin: 0 auto;
+
+  @media (max-width: 460px) {
+    width: 100%;
+  }
 `;
 
 export const Navbar = styled('div')`
@@ -51,6 +58,12 @@ export const NavButton = styled('button')<INavButton>`
   cursor: pointer;
   transition: 0.3s ease;
 
+  @media (max-width: 460px) {
+    font-size: 15px;
+    width: 84px;
+    height: 28px;
+  }
+
   &:hover {
     color: ${({ $isPrimary }) => !$isPrimary ? colors.WHITE : colors.SECONDARY_HOVER};
   }
@@ -65,6 +78,10 @@ export const StatsContainer = styled('div')`
   border: 2px solid ${colors.BORDER};
   border-radius: 12px;
   padding: 8px;
+
+  @media (max-width: 460px) {
+    width: 100%;
+  }
 `;
 
 export const Stats = styled('span')<IStats>`
@@ -72,4 +89,8 @@ export const Stats = styled('span')<IStats>`
   font-size: 18px;
   font-weight: ${({ $type }) => $type === 'header' ? '800' : '600'};
   color: ${({ $type }) => $type === 'header' ? colors.DARK_WHITE : colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: 15px;
+  }
 `;

@@ -60,10 +60,14 @@ export const Upload: FC = () => {
       await postSongInfo(formik, songGenre);
       await postSongAudio(formik, setIsLoading, song, navigate);
       await postSongAvatar(formik, avatar);
+
+      setIsLoading(false);
+
       navigate(generatePath('/account/:id', { id: user.username }));
     }catch(error: any) {
       setIsLoading(false);
       console.log(error);
+      return;
     }
   }
 

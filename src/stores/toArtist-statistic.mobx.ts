@@ -1,6 +1,9 @@
 import { action, makeObservable, observable, runInAction } from "mobx";
 import { api } from "../api/axiosConfig";
 import { IOverallStatistic } from "../types/props";
+import { Dispatch, SetStateAction } from "react";
+
+type SetState<T> = Dispatch<SetStateAction<T>>;
 
 class ArtistStatisticStore {
   stats: any;
@@ -21,7 +24,7 @@ class ArtistStatisticStore {
     });
   }
 
-  async getOverall() {
+  async getOverall(set: SetState<string>) {
     try {
       const { data } = await api.get('/artist-statistic/overall');
 
@@ -31,6 +34,7 @@ class ArtistStatisticStore {
       console.log(this.overall);
     }catch(error: any) {
       console.error(error);
+      set('You are not verifyed artist.');
       return;
     }
   }
