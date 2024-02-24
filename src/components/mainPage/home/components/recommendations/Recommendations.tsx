@@ -24,7 +24,7 @@ export const Recommendations = observer(() => {
   return (
     <RecommendationsWrapper>
       <Title>Recommendations</Title>
-      <Span $size="22">Play random song! <RandomSongButton
+      <Span $size="22">Play random song! <RandomSongButton $type="play"
         onClick={() => {
           userSongsStore.getRandomSong();
         }}

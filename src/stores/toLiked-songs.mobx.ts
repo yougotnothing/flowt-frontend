@@ -19,12 +19,8 @@ class LikedSongsStore {
   async likeSong(song: ISongData | null, obj?: { author: string | null, name: string | null }) {
     try {
       await api.post(`/liked/${song ? song.author : obj?.author}/${song ? song.name : obj?.name}`);
+      await this.setSongs();
 
-      runInAction(() => {
-        if(song) {
-          this.songs.push(song);
-        }
-      });
       console.log('song liked');
     }catch(error: any) {
       console.error(error);
@@ -36,18 +32,30 @@ class LikedSongsStore {
       const response = await api.get('/users/liked');
 
       runInAction(() => {
-        this.songs = [...response.data.songs];
+        this.songs = response.data.songs;
       });
-      console.log(response.data.songs);
+      console.log('liked songs', response.data);
     }catch(error: any) {
       console.error(error);
       return;
     }
   }
 
-  async deleteSong(song: ISongData, index: number) {
+  async dislikeSong(song: ISongData | null, obj?: { author: string | null, name: string | null }) {
     try {
-      await api.delete(`/songs/${song.name}`);
+      await api.delete(`/liked/${song ? song.author : obj?.author}/${song ? song.name : obj?.name}`);
+      await this.setSongs();
+
+      console.log('song disliked');
+    }catch(error: any) {
+      console.error(error);
+      return;
+    }
+  }
+
+  async deleteSong(song: ISongData | null, index: number) {
+    try {
+      await api.delete(`/songs/${song?.name}`);
 
       runInAction(() => {
         this.songs.splice(index, 1);

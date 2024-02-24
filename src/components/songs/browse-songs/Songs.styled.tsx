@@ -15,7 +15,8 @@ export const Container = styled('div')`
   margin: 0 auto;
 
   @media (max-width: 460px) {
-    width: 100%;
+    width: 96%;
+    margin: 0;
   }
 `;
 
@@ -24,6 +25,10 @@ export const SongDataWrapper = styled('div')`
   flex-direction: row;
   align-items: center;
   gap: 6rem;
+
+  @media (max-width: 460px) {
+    gap: 12px;
+  }
 `;
 
 export const Song = styled('div')`
@@ -42,6 +47,8 @@ export const Song = styled('div')`
     width: 100%;
     padding: 6px;
     border-radius: 8px;
+    gap: initial;
+    justify-content: space-between;
   }
 `;
 
@@ -69,6 +76,10 @@ export const SongInfoContainer = styled('div')`
   flex-direction: column;
   align-items: start;
   gap: 1em;
+
+  @media (max-width: 460px) {
+    gap: 8px;
+  }
 `;
 
 export const SongInfo = styled('div')<ISongInfo>`
@@ -76,18 +87,44 @@ export const SongInfo = styled('div')<ISongInfo>`
   font-weight: ${props => props.$type === 'name' ? '800' : '600'};
   font-size: ${props => props.$type === 'name' ? '32px' : '18px'};
   color: ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    font-size: ${props => props.$type === 'name' ? '20px' : '13px'};
+  }
 `;
 
 export const ButtonsWrapper = styled('div')`
   display: flex;
   flex-direction: row;
   gap: 24px;
+
+  @media (max-width: 460px) {
+    gap: 14px;
+  }
 `;
 
 export const SongButton = styled('button')`
   width: 142px;
   height: 36px;
   ${BUTTON}
+
+  @media (max-width: 460px) {
+    width: 26px;
+    height: 26px;
+    background-image: url(/play_hover.png);
+    background-color: transparent;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    color: transparent;
+
+    &:hover {
+      color: transparent;
+      background-color: transparent;
+      translate: initial;
+    }
+  }
 `;
 
 interface LikeButtonProps {
@@ -104,6 +141,11 @@ export const LikeButton = styled('button')<LikeButtonProps>`
   background-position: center;
   border: none;
   cursor: pointer;
+
+  @media (max-width: 460px) {
+    width: 25px;
+    height: 25px;
+  }
 `;
 
 export const SongDataContainer = styled('div')`
@@ -116,6 +158,10 @@ export const SongDataContainer = styled('div')`
   border: 2px solid ${colors.BORDER};
   border-radius: 12px;
   background-color: ${colors.FRONT};
+
+  @media (max-width: 460px) {
+    width: 93%;
+  }
 `;
 
 export const SongDataSpan = styled('span')`
@@ -225,6 +271,7 @@ export const RandomSongWrapper = styled('div')`
 
 interface RandomSongButtonProps {
   $like?: boolean;
+  $type: "play" | "like";
 }
 
 export const RandomSongButton = styled('button')<RandomSongButtonProps>`
@@ -235,7 +282,14 @@ export const RandomSongButton = styled('button')<RandomSongButtonProps>`
   background-position: center;
   background-repeat: no-repeat;
   background-color: transparent;
-  background-image: ${({ $like }) => $like ? 'url(/like_hover.png)' : 'url(/play_hover.png)'};
+  background-image: ${({ $like, $type }) => 
+    $type === 'like' 
+    ? (
+        $like === true
+        ? 'url(/like_hover.png)'
+        : 'url(/like.png)'        
+      ) 
+    : 'url(/play_hover.png)'};
   cursor: pointer;
 
   @media (max-width: 460px) {

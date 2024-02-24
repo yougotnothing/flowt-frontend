@@ -31,21 +31,24 @@ import { user } from "../../../stores/toUser.mobx";
 import { ISongData } from "../../../types/types";
 
 export const BrowseSongs: FC = observer(() => {
-  const[isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
 
-  const handleLikeSong = async (song: ISongData) => {
-    for(let index = 0; index < userSongsStore.container.length; index++) {
-      const existingSong: ISongData = userSongsStore.container[index];
-
-      if(existingSong.songId !== song.songId) {
-        setIsDisabled(false);
-        return;
-      }else{
-        setIsDisabled(true);
-        likedSongs.likeSong(song);
-      }
+  const handleLikeSong = async (song: ISongData | null) => {
+    if(!isLiked) {
+      likedSongs.likeSong(song);
+      setIsLiked(true);
+    }else{
+      likedSongs.dislikeSong(song);
+      setIsLiked(false);
     }
   }
+
+  useEffect(() => {
+    likedSongs.setSongs();
+  
+    setIsLiked(likedSongs.songs.some(existingSong => search.song && existingSong.songId === search.song.songId));
+  }, []);
+  
 
   useEffect(() => {
     if(search.song) {
@@ -54,7 +57,6 @@ export const BrowseSongs: FC = observer(() => {
 
       searchSong && songArray.push(JSON.parse(searchSong));
       songs.getInfo(songArray);
-      songs.getRandomByGenre(search.song.genre);
 
       userSongsStore.getSongs(user.username);
     }
@@ -74,7 +76,7 @@ export const BrowseSongs: FC = observer(() => {
               </SongInfoContainer>
             </SongDataWrapper>
             <ButtonsWrapper>
-              <LikeButton $isLiked onClick={() => likedSongs.likeSong(search.song)} />
+              <LikeButton $isLiked={isLiked} onClick={() => handleLikeSong(search.song)} />
               <SongButton onClick={() => songs.setSong(0)}>Listen</SongButton>
             </ButtonsWrapper>
           </Song>
@@ -86,26 +88,6 @@ export const BrowseSongs: FC = observer(() => {
             <SongData><SongDataSpan>Likes: </SongDataSpan>{search.song.likes}</SongData>
             <SongData><SongDataSpan>Year of issue: </SongDataSpan>{search.song.issueYear.replaceAll('/', '.')}</SongData>
           </SongDataContainer>
-          <Line> </Line>
-          <RandomSongsWrapper>
-            <RandomSong>
-              {songs.randomByGenre && (
-                <>
-                  <RandomSongWrapper>
-                    <RandomSongAvatar $src={songs.randomByGenre} />
-                    <RandomSongDataWrapper>
-                      <RandomSongData>{songs.randomByGenre.author}</RandomSongData>
-                      <RandomSongData $name>{songs.randomByGenre.name}</RandomSongData>
-                    </RandomSongDataWrapper>
-                  </RandomSongWrapper>
-                  <RandomSongWrapper>
-                    <RandomSongButton />
-                    <RandomSongButton $like />
-                  </RandomSongWrapper>
-                </>
-              )}
-            </RandomSong>
-          </RandomSongsWrapper>
         </>
       )}
     </Container>
