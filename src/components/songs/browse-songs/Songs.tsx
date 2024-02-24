@@ -14,14 +14,6 @@ import {
   ButtonsWrapper,
   SongDataWrapper,
   LikeButton,
-  Line,
-  RandomSong,
-  RandomSongsWrapper,
-  RandomSongAvatar,
-  RandomSongButton,
-  RandomSongData,
-  RandomSongDataWrapper,
-  RandomSongWrapper,
 } from "./Songs.styled";
 import { searchStore as search } from "../../../stores/toSearch.mobx";
 import { userSongsStore as songs, userSongsStore } from "../../../stores/toSongs.mobx";

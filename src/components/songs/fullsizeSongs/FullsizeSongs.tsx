@@ -19,6 +19,7 @@ import { URLS } from "../../../constants/urls.const";
 import { observer } from "mobx-react-lite";
 import { generatePath, useNavigate } from "react-router-dom";
 import { user } from "../../../stores/toUser.mobx";
+import { searchStore } from "../../../stores/toSearch.mobx";
 
 export const FullsizeSongs: React.FC = observer(() => {
   const[isLiked, setIsLiked] = useState<boolean[]>(Array(songs.container.length).fill(false));
@@ -70,9 +71,12 @@ export const FullsizeSongs: React.FC = observer(() => {
             <UserName onClick={() => navigate(generatePath('/profile/:id', {id: user.username}))}>
               {user.username}
             </UserName>
-            <DataInfo onClick={() => navigate(generatePath('/song/:id', {id: song.name}))}>
-              {song.name}
-            </DataInfo>
+            <DataInfo onClick={() => {
+                searchStore.setSong(song);
+                localStorage.setItem('song', JSON.stringify(song));
+                navigate(generatePath('/song/:id', {id: song.name}));
+              }}
+            >{song.name}</DataInfo>
             <StatsContainer>
               <StatsInfoContainer>
                 <StatsIcon style={{backgroundImage: 'url(/play.png)'}} />

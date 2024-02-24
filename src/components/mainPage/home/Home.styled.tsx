@@ -26,7 +26,7 @@ export const Text = styled('a')<TextProps>`
   text-align: center;
   width: 100%;
   z-index: 9999;
-  max-width: 90px;
+  width: 100%;
 
   @media (max-width: 460px) {
     font-size: ${({ $type }) => $type === 'author' ? '14px' : '18px'};
@@ -72,8 +72,10 @@ export const LikedSongs = styled('div')`
   width: 200px;
   max-height: 360px;
   overflow-y: auto;
-
   scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    
+  }
 `;
 
 export const Song = styled('div')`
@@ -158,7 +160,6 @@ export const RecommendationsWrapper = styled('div')`
   flex-direction: column;
   align-items: start;
   gap: 24px;
-  overflow-y: scroll;
 
   .swiper-wrapper {
     padding: 0;
@@ -213,9 +214,6 @@ export const RecommendationCard = styled('div')`
   flex-direction: column;
   align-items: center;
   border: none;
-  background-color: ${colors.VERY_DARK_BLUE};
-  border-radius: 8px;
-  padding: 8px;
   gap: 6px;
   cursor: pointer;
 
@@ -274,6 +272,9 @@ export const RecommendationTitleContainer = styled('div')`
   flex-direction: column;
   align-items: center;
   gap: 6px;
+  background-color: ${colors.DARK_BLUE};
+  width: 100%;
+  border-radius: 8px;
 `;
 
 interface ContainerProps {

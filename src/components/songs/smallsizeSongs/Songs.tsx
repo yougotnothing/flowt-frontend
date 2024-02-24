@@ -61,18 +61,14 @@ export const Songs: React.FC = observer(() => {
           <SongData>
             <SongTitle
               onClick={() => navigate(generatePath('/profile/:id', { id: user.username }))}
-            >
-              {song.author}
-            </SongTitle>
+            >{song.author}</SongTitle>
             <SongTitle
               onClick={() => {
                 searchStore.setSong(song);
-                localStorage.setItem('song', JSON.stringify(song))
+                localStorage.setItem('song', JSON.stringify(song));
                 navigate(generatePath('/song/:id', { id: song.name }));
               }}
-            >
-              {song.name}
-            </SongTitle>
+            >{song.name}</SongTitle>
             <SongStatsContainer>
               <Stats>
                 <SongListensIcon />

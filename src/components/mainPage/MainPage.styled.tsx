@@ -189,6 +189,29 @@ export const ButtonsContainer = styled('div')`
   justify-content: center;
   gap: 20px;
 
+  @media (max-width: 460px) {
+    gap: 8px;
+  }
+  
+  .link-mobile {
+    text-decoration: none;
+    margin: auto;
+    font-size: 15px;
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 300;
+    background-color: transparent;
+    border: none;
+    width: 78px;
+    margin: auto 0;
+    color: ${colors.DARK_WHITE};
+    justify-content: center;
+    align-self: flex-end;
+
+    @media (max-width: 460px) {
+      display: block;
+    }
+  }
+
   .link {
     text-decoration: none;
     margin: auto;
@@ -202,6 +225,10 @@ export const ButtonsContainer = styled('div')`
     color: ${colors.DARK_WHITE};
     justify-content: center;
     align-self: flex-end;
+
+    @media (max-width: 460px) {
+      display: none;
+    }
   
     &:hover {
       transition: all 0.2s;

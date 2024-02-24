@@ -32,6 +32,11 @@ export const LoginCard = styled('div')`
   padding: 24px;
   border-radius: 24px;
   background-color: ${colors.FRONT};
+
+  @media (max-width: 460px) {
+    width: 90%;
+    padding: 12px;
+  }
 `;
 
 export const LoginInput = styled('input')`

@@ -76,9 +76,7 @@ export const MainPage: FC = observer(() => {
     if(!token && (location.pathname === '/' || location.pathname === '/home')) {
       navigate('/welcome');
       console.log(location.pathname);
-    }else{
-      return;
-    }
+    }else return;
   }, [location.pathname, token]);
 
   const handleSearch = async (key: any) => {
@@ -88,9 +86,7 @@ export const MainPage: FC = observer(() => {
         await search.all('main page');
         navigate('/search');
       }
-    }else{
-      return;
-    }
+    }else return;
   }
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,17 +109,13 @@ export const MainPage: FC = observer(() => {
     if(search.input.length > 0 && isDataNull) {
       await search.all('main page');
       navigate('/search');
-    }else{
-      return;
-    }
+    }else return;
   }
 
   useEffect(() => {
     if(location.pathname !== '/welcome') {
       setIsWelcomePage(false);
-    }else{
-      setIsWelcomePage(true);
-    }
+    }else setIsWelcomePage(true);
   }, [location.pathname]);
 
   return (
@@ -165,6 +157,7 @@ export const MainPage: FC = observer(() => {
             <ButtonsContainer>
               <Link to="/login" className="link">Login</Link>
               <Link to="/register" className="link">Register</Link>
+              <Link to="/login" className="link-mobile">Sign up</Link>
             </ButtonsContainer>
           }
         </NavContainer>

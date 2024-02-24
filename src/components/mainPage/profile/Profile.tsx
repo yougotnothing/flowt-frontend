@@ -40,10 +40,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { Breakpoints } from "./swiper-breakpoints";
 import { formatNumbers } from "../functions";
+import { likedSongs } from "../../../stores/toLiked-songs.mobx";
 
 export const Profile: React.FC = observer(() => {
   const[isCurrentUser, setIsCurrentUser] = useState<boolean>(false);
   const[isFetching, setIsFetching] = useState<boolean>(true);
+  const[isLiked, setIsLiked] = useState<Array<boolean>>(Array(userSongsStore.getSongs.length).fill(false));
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -76,6 +78,11 @@ export const Profile: React.FC = observer(() => {
     }
     setIsFetching(false);
   }, [searchUsers.username]);
+
+  useEffect(() => {
+    likedSongs.setSongs();
+  }, []);
+  
 
   return (
     <>
