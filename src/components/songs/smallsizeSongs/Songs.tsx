@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 
 import { generatePath, useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
@@ -20,19 +20,26 @@ import { api } from "../../../api/axiosConfig";
 import { user } from "../../../stores/toUser.mobx";
 import { searchStore } from "../../../stores/toSearch.mobx";
 import { likedSongs } from "../../../stores/toLiked-songs.mobx";
+import { ISongData } from "../../../types/types";
 
 export const Songs: React.FC = observer(() => {
   const navigate = useNavigate();
-  const isLikedSong = songs.container.some((existingSong, index) => likedSongs.songs.length > 0 ? existingSong.songId === likedSongs.songs[index].songId : false);
+  const isLikedSong = songs.container.some(existingSong => 
+    likedSongs.songs.some(likedSong => 
+      likedSong.songId === existingSong.songId
+    )
+  );
+  
 
-  const handleLikedSong = async (song_name: string | null, username: string | null) => {
+  const handleLikedSong = async (song: ISongData) => {
     try {
+      const { name, author } = song as ISongData;
       if(!isLikedSong) {
-        await api.post(`/liked/${username}/${song_name}`);
+        await api.post(`/liked/${author}/${name}`);
         
         console.log('song disliked');
       }else{
-        await api.delete(`/liked/${username}/${song_name}`);
+        await api.delete(`/liked/${author}/${name}`);
         
         console.log('song liked');
       }
@@ -41,7 +48,7 @@ export const Songs: React.FC = observer(() => {
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     likedSongs.setSongs();
   }, []);
 
@@ -82,7 +89,7 @@ export const Songs: React.FC = observer(() => {
           <LikeSongButton
             disabled={song.author === user.username}
             $isLiked={likedSongs.songs.length > 0 ? isLikedSong : false}
-            onClick={() => handleLikedSong(song.name, user.username)}
+            onClick={() => handleLikedSong(song)}
           />
         </SongContainer>
       )) : null}
