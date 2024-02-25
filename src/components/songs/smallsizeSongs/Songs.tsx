@@ -23,7 +23,7 @@ import { likedSongs } from "../../../stores/toLiked-songs.mobx";
 
 export const Songs: React.FC = observer(() => {
   const navigate = useNavigate();
-  const isLikedSong = songs.container.some((existingSong, index) => existingSong.songId === likedSongs.songs[index].songId);
+  const isLikedSong = songs.container.some((existingSong, index) => likedSongs.songs.length > 0 ? existingSong.songId === likedSongs.songs[index].songId : false);
 
   const handleLikedSong = async (song_name: string | null, username: string | null) => {
     try {
