@@ -22,26 +22,19 @@ import { searchStore } from "../../../stores/toSearch.mobx";
 import { likedSongs } from "../../../stores/toLiked-songs.mobx";
 
 export const Songs: React.FC = observer(() => {
-  const[isLiked, setIsLiked] = useState<boolean[]>(Array(songs.container.length).fill(false));
   const navigate = useNavigate();
   const isLikedSong = songs.container.some((existingSong, index) => existingSong.songId === likedSongs.songs[index].songId);
 
-  const handleLikedSong = async (song_name: string | null, username: string | null, index: number) => {
+  const handleLikedSong = async (song_name: string | null, username: string | null) => {
     try {
-      if(!isLiked[index]) {
+      if(!isLikedSong) {
         await api.post(`/liked/${username}/${song_name}`);
-        setIsLiked((prevState) => {
-          const updatedStates = [...prevState];
-          updatedStates[index] = true;
-          return updatedStates;
-        });
+        
+        console.log('song disliked');
       }else{
         await api.delete(`/liked/${username}/${song_name}`);
-        setIsLiked((prevState) => {
-          const updatedStates = [...prevState];
-          updatedStates[index] = false;
-          return updatedStates;
-        });
+        
+        console.log('song liked');
       }
     }catch(error: any) {
       console.log(error);
@@ -88,8 +81,8 @@ export const Songs: React.FC = observer(() => {
           </SongData>
           <LikeSongButton
             disabled={song.author === user.username}
-            $isLiked={isLikedSong}
-            onClick={() => handleLikedSong(song.name, user.username, index)}
+            $isLiked={likedSongs.songs.length > 0 ? isLikedSong : false}
+            onClick={() => handleLikedSong(song.name, user.username)}
           />
         </SongContainer>
       )) : null}

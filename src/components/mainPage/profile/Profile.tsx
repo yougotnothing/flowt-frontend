@@ -79,11 +79,6 @@ export const Profile: React.FC = observer(() => {
     setIsFetching(false);
   }, [searchUsers.username]);
 
-  useEffect(() => {
-    likedSongs.setSongs();
-  }, []);
-  
-
   return (
     <>
       {isFetching ? <PageLoader /> : (

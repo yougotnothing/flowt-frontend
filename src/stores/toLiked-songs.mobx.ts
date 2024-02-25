@@ -43,7 +43,8 @@ class LikedSongsStore {
 
   async dislikeSong(song: ISongData | null, obj?: { author: string | null, name: string | null }) {
     try {
-      await api.delete(`/liked/${song ? song.author : obj?.author}/${song ? song.name : obj?.name}`);
+      const { author, name } = song as ISongData;
+      await api.delete(`/liked/${author}/${name}`);
       await this.setSongs();
 
       console.log('song disliked');

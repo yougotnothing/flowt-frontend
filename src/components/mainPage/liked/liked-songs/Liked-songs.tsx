@@ -64,7 +64,7 @@ export const LikedSongs = observer(() => {
               <SongLikeData>likes: {song.likes}</SongLikeData>
               <SongLikeButton
                 $isLiked={isLiked[index]}
-                onClick={() => likedSongs.deleteSong(song, index)}
+                onClick={() => song && likedSongs.dislikeSong(song)}
               />
             </SongLikesContainer>
           </Song>
