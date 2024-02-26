@@ -20,6 +20,7 @@ import { Loader } from "../../loader/Loader";
 import { URLS } from "../../../constants/urls.const";
 import { user } from "../../../stores/toUser.mobx";
 import { Title as Helmet } from "../../../helmet";
+import { modalStore } from "../../../stores/toModal.mobx";
 
 export const RestorePassword: React.FC = () => {
   const[errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -44,24 +45,13 @@ export const RestorePassword: React.FC = () => {
 
   const handleChangePassword = async () => {
     try {
-      setIsLoading(true);
-      if(localStorage.getItem('email') === null) {
-        await api.post(url.change_password, {
-          newPassword: formik.values.password,
-          code: formik.values.code
-        });
-      }else{
-        await api.post(url.restore_pass, {
-          email: localStorage.getItem('email'),
-          newPassword: formik.values.password,
-          code: formik.values.code
-        });
-        localStorage.removeItem('email');
-      }
-      if(isVerify) {
-        navigate('/home');
-        setIsLoading(false);
-      }
+      await api.post('/users/restore-password', {
+        email: modalStore.restore_email,
+        newPassword: formik.values.password,
+        code: parseInt(formik.values.code)
+      });
+
+      navigate('/login');
     }catch(error: any) {
       setErrorMessage(error.response.data.message);
       setIsVerify(false);

@@ -30,10 +30,15 @@ export const ModalWindow = styled('div')`
   position: relative;
 `;
 
-export const Input = styled('input')`
+interface InputProps {
+  $error?: boolean;
+}
+
+export const Input = styled('input')<InputProps>`
   width: 189px;
   height: 32px;
   ${INPUT}
+  border-color: ${({ $error }) => $error ? colors.RED : colors.BORDER};
 `;
 
 export const ConfirmButton = styled('button')`

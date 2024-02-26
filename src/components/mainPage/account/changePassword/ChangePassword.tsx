@@ -21,13 +21,13 @@ import { Loader } from "../../../loader/Loader";
 import { URLS } from "../../../../constants/urls.const";
 import { user } from "../../../../stores/toUser.mobx";
 import { Title as Helmet } from "../../../../helmet";
+import { modalStore } from "../../../../stores/toModal.mobx";
 
 export const ChangePassword: React.FC = () => {
   const[errorMessage, setErrorMessage] = useState<any>('');
   const[isLoading, setIsLoading] = useState<boolean>(false);
   const[isVerify, setIsVerify] = useState<boolean>(false);
   const navigate = useNavigate();
-  const url = new URLS();
 
   const formik = useFormik<{
     password: string,
@@ -45,45 +45,22 @@ export const ChangePassword: React.FC = () => {
 
   const handleChangePassword = async () => {
     try{
-      setIsLoading(true);
-      if(!localStorage.getItem('email')) {
-        await api.post(url.change_password, {
-          newPassword: formik.values.password,
-          code: formik.values.code
-        });
-      }else{
-        await api.post(url.restore_pass, {
-          email: localStorage.getItem('email'),
-          newPassword: formik.values.password,
-          code: formik.values.code
-        });
-        localStorage.removeItem('email');
-      }
-        if(isVerify) {
-          navigate('/home');
-          setIsLoading(false);
-        }
+      await api.post('/users/change-password', {
+        newPassword: formik.values.password,
+        code: formik.values.code
+      });
+
+      console.log('password changed');
+      user.login();
     }catch(error: any) {
       if(error) {
         setErrorMessage("Incorrect restore code");
-        setIsVerify(false);
       }
     }
   }
 
   useEffect(() => {
-    const handleGetCode = async () => {
-      try {
-        const response = await api.get('/verify/password');
-
-        console.log(response.data);
-      }catch(error: any) {
-        console.error(error);
-        return;
-      }
-    }
-
-    handleGetCode();
+    modalStore.setIsOpen(true, 'change password');
   }, []);
 
   const passwordError = (
@@ -121,7 +98,7 @@ export const ChangePassword: React.FC = () => {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
             autoComplete="new-password"
-            />
+          />
           {passwordError}
           <LoginInput 
             placeholder="confirm password"
@@ -129,20 +106,20 @@ export const ChangePassword: React.FC = () => {
             type="password"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
-            />
+          />
           {confirmPasswordError}
           <LoginInput 
             placeholder="Enter code" 
             name="code"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
-            />
+          />
           {codeError}
-          <ValidationSpan>{errorMessage}</ValidationSpan>
           </InputContainer>
           <LoginButton onClick={handleChangePassword} disabled={isLoading}>
             {isLoading ? <Loader /> : "Send code"}
           </LoginButton>
+          <ValidationSpan>{errorMessage}</ValidationSpan>
         </LoginCard>
       </Container>
     </AccountContainer>

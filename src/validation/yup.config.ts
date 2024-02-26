@@ -71,3 +71,7 @@ export const verifyArtistSchema = Yup.object().shape({
     .max(31, 'true')
     .required('true')
 });
+
+export const emailSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Enter email")
+});

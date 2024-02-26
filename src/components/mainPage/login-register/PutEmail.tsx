@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { api } from "../../../api/axiosConfig";
@@ -18,7 +18,7 @@ import {
 import { URLS } from "../../../constants/urls.const";
 import { Title as Helmet } from "../../../helmet";
 
-export const PutEmail: React.FC = () => {
+export const PutEmail: FC = () => {
   const[validationError, setValidationError] = useState<string | null>(null);
   const[isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -67,9 +67,7 @@ export const PutEmail: React.FC = () => {
       <LoginButton 
         onClick={handlePutEmail}
         disabled={isLoading}
-      >
-        { isLoading ? <Loader /> : "Send email" }
-      </LoginButton>
+      >{isLoading ? <Loader /> : "Send email"}</LoginButton>
       <RegisteredButton>Go back</RegisteredButton>
     </LoginCard>
   )
