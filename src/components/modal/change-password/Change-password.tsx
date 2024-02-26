@@ -7,8 +7,8 @@ import { api } from "../../../api/axiosConfig";
 import { Loader } from "../../loader/Loader";
 
 export const ChangePasswordModal: FC = observer(() => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>('');
+  const[isLoading, setIsLoading] = useState<boolean>(false);
+  const[message, setMessage] = useState<string>('');
 
   const handleGetCode = async () => {
     try {

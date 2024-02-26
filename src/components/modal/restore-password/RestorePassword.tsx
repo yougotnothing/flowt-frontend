@@ -39,10 +39,6 @@ export const RestorePasswordModal = observer(() => {
     }
   }
 
-  useEffect(() => {
-    modalStore.setIsOpen(true, "restore password");
-  }, []);
-
   return (
     <Wrapper $isOpen={modalStore.restorePassword}>
       <ModalWindow>

@@ -26,7 +26,6 @@ import { modalStore } from "../../../../stores/toModal.mobx";
 export const ChangePassword: React.FC = () => {
   const[errorMessage, setErrorMessage] = useState<any>('');
   const[isLoading, setIsLoading] = useState<boolean>(false);
-  const[isVerify, setIsVerify] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const formik = useFormik<{
@@ -45,6 +44,7 @@ export const ChangePassword: React.FC = () => {
 
   const handleChangePassword = async () => {
     try{
+      setIsLoading(true);
       await api.post('/users/change-password', {
         newPassword: formik.values.password,
         code: formik.values.code
@@ -52,10 +52,11 @@ export const ChangePassword: React.FC = () => {
 
       console.log('password changed');
       user.login();
+      setIsLoading(false);
+      navigate(`/account/${user.username}`);
     }catch(error: any) {
-      if(error) {
-        setErrorMessage("Incorrect restore code");
-      }
+      setErrorMessage("Incorrect restore code");
+      setIsLoading(false);
     }
   }
 

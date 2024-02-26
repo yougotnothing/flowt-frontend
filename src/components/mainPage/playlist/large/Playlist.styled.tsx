@@ -94,7 +94,8 @@ export const PlaylistInfoContainer = styled('div')`
   background-color: rgba(0, 0, 0, 0.3);
 
   @media (max-width: 460px) {
-    height: 100%;
+    height: 60px;
+    justify-content: space-evenly;
     width: 100px;
   }
 `;

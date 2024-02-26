@@ -25,7 +25,7 @@ class ModalStore {
       isOpen: observable,
       setIsOpen: action,
       setChangeAvatar: action,
-      setLinks: action,
+      setLinks: action
     });
   }
 

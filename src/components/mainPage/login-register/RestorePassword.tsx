@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 
 import { api } from "../../../api/axiosConfig";
@@ -25,9 +25,7 @@ import { modalStore } from "../../../stores/toModal.mobx";
 export const RestorePassword: React.FC = () => {
   const[errorMessage, setErrorMessage] = useState<string | null>(null);
   const[isLoading, setIsLoading] = useState<boolean>(false);
-  const[isVerify, setIsVerify] = useState<boolean>(false);
   const navigate = useNavigate();
-  const url = new URLS();
 
   const formik = useFormik<{
     password: string,
@@ -43,6 +41,10 @@ export const RestorePassword: React.FC = () => {
     onSubmit: () => {}
   });
 
+  useEffect(() => {
+    modalStore.setIsOpen(true, 'restore password');
+  }, []);
+
   const handleChangePassword = async () => {
     try {
       await api.post('/users/restore-password', {
@@ -54,7 +56,7 @@ export const RestorePassword: React.FC = () => {
       navigate('/login');
     }catch(error: any) {
       setErrorMessage(error.response.data.message);
-      setIsVerify(false);
+      return;
     }
   }
 

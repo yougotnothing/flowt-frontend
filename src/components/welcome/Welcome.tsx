@@ -89,9 +89,14 @@ export const Welcome: FC = () => {
             <GoogleButton />
             <FacebookButton />
           </ButtonsWrapper>
-          <Button
-            onClick={() => navigate('/register')}
-          >Not registered?</Button>
+          <ButtonsWrapper>
+            <Button
+              onClick={() => navigate('/register')}
+            >Not registered?</Button>
+            <Button
+              onClick={() => navigate('/verify/restore-password')}
+            >Forgot password?</Button>
+          </ButtonsWrapper>
         </LoginWrapper>
         <LinkWrapper size="small" />
       </RowWrapper>

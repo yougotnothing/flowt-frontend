@@ -57,6 +57,16 @@ export const BUTTON = `
   transition: 0.3s;
   cursor: pointer;
 
+  &:disabled {
+    background-color: ${colors.DARK_BLUE};
+    color: ${colors.GREY};
+    border-color: ${colors.GREY};
+
+    &:hover {
+      border-color: ${colors.GREY};
+    }
+  }
+
   &:hover {
     background-color: ${colors.BORDER};
     color: ${colors.SECONDARY};

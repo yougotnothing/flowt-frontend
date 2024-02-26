@@ -39,6 +39,8 @@ import accountSettingsData from "../../../../json/accountSettingsDroplist.json";
 import { user as $ } from "../../../../stores/toUser.mobx";
 import { userSongsStore as songs } from "../../../../stores/toSongs.mobx";
 import { Title as Helmet } from "../../../../helmet";
+import { searchStore } from "../../../../stores/toSearch.mobx";
+import { searchUsersStore } from "../../../../stores/toSearchUsers.mobx";
 
 export const AccountInfo: React.FC = observer(() => {
   const[isOpen, setIsOpen] = useState<boolean>(false);
@@ -48,6 +50,9 @@ export const AccountInfo: React.FC = observer(() => {
     playlists.getPlaylists();
     editPlaylist.setEditing(false);
   }, []);
+
+  const handleNavigateToPlaylist = (name: string) => {
+  }
 
   const handleRedirectToEditPlaylist = (name: string | null) => {
     if(name && $.username) {
@@ -125,16 +130,23 @@ export const AccountInfo: React.FC = observer(() => {
             <FullsizeSongs />
           </PlaylistContainer>
         )}
-        {playlists.self.map((item) => (
-          <Container $isEditing={editPlaylist.isEditing} key={item.playlistId}>
+        {playlists.self.map((item, index) => (
+          <Container $isEditing={editPlaylist.isEditing} key={index}>
             <PlaylistIcon
               $isEditing={editPlaylist.isEditing} 
               $username={$.username} 
               $name={item.name}
             />
             <PlaylistInfoContainer>
-              <PlaylistInfo $type="name">{item.name}</PlaylistInfo>
-              <PlaylistInfo $type="username">{$.username}</PlaylistInfo>
+              <PlaylistInfo $type="name"
+                onClick={() => handleNavigateToPlaylist(item.name)}
+              >{item.name}</PlaylistInfo>
+              <PlaylistInfo $type="username"
+                onClick={() => {
+                  searchUsersStore.setUser($.user);
+                  navigate(generatePath('/profile/:id', { id: $.username }));
+                }}
+              >{$.username}</PlaylistInfo>
             </PlaylistInfoContainer>
             <PlaylistButton onClick={() => {
               playlists.setContainer(item);

@@ -31,6 +31,10 @@ export const ModalWindow = styled('div')`
   border: 2px solid ${colors.BORDER};
   padding: 12px;
   border-radius: 14px;
+
+  @media (max-width: 460px) {
+    width: 96%;
+  }
 `;
 
 export const Text = styled('div')<TextProps>`
