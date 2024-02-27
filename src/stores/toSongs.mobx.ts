@@ -108,7 +108,7 @@ class UserSongsStore implements ISongParameters {
       const response = await api.get(`/songs/user-songs/${encodeURI(username)}`);
 
       runInAction(() => {
-        if(!profile) {
+        if(profile) {
           const uniqueSongs: Set<ISongData> = new Set(
             response.data.songs.filter((existingSong: ISongData) => 
               !this.container.some((song: ISongData) => 
