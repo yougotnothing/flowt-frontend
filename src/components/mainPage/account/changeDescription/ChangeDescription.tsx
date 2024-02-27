@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, generatePath } from 'react-router-dom';
 
 import { useFormik } from 'formik';
-import { AccountSettings } from '../AccountSettings';
 import { changeDescriptionSchema } from '../../../../validation/yup.config';
 import { api } from '../../../../api/axiosConfig';
 import { Loader } from '../../../loader/Loader';
 import { A, AContainer, GoBackContainer } from '../../MainPage.styled';
 import { AccountContainer } from '../Account.styled';
-import { userDescriptionStore } from "../../../../stores/toChangeDescription.mobx";
 import { 
   ChangeDescriptionContainer, 
   Input, 
@@ -18,7 +16,6 @@ import {
   Container 
 } from './ChangeDescription.styled';
 import { Span } from '../../login-register/Login.register.styled';
-import { PageLoader } from "../../../loader/pageLoader/PageLoader";
 import { URLS } from "../../../../constants/urls.const";
 import { user } from '../../../../stores/toUser.mobx';
 import { Title as Helmet } from '../../../../helmet';
@@ -40,8 +37,6 @@ export const ChangeDescription: React.FC = () => {
 
   const patchDescription = async () => {
     try {
-      // user.setDescription(formik.values.description);
-
       await api.patch(url.description, {
         newDescription: formik.values.description
       });
@@ -65,17 +60,9 @@ export const ChangeDescription: React.FC = () => {
     <Error>{formik.errors.description}</Error>
   );
 
-  useEffect(() => {
-    if(user.isUserAuthenticated) {
-      formik.setValues({ description: userDescriptionStore.description || "" });
-    }
-  }, [user.isUserAuthenticated]);
-
   return (
     <AccountContainer>
       <Helmet title="Change description" />
-      {!user.isUserAuthenticated && <PageLoader />}
-      {user.isUserAuthenticated && <AccountSettings />}
       <Container>
         {user.isUserAuthenticated && (
           <GoBackContainer>

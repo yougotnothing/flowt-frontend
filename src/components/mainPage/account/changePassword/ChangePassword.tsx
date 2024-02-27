@@ -80,7 +80,6 @@ export const ChangePassword: React.FC = () => {
   return (
     <AccountContainer>
       <Helmet title={`${user.username}: change password`} />
-      <AccountSettings />
       <Container>
         {localStorage.getItem('token') ? (
           <AContainer>

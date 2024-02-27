@@ -26,11 +26,10 @@ export const ChangeRegion: React.FC = observer(() => {
 
   return (
     <AccountContainer>
-    <Helmet title={`${user.username}: change region`} />
-    {!user.isUserAuthenticated && <PageLoader />}
-    {user.isUserAuthenticated && (
-      <GlobalContainer>
-        <AccountSettings />
+      <Helmet title={`${user.username}: change region`} />
+      {!user.isUserAuthenticated && <PageLoader />}
+      {user.isUserAuthenticated && (
+        <GlobalContainer>
           <GoBackContainer>
             <AContainer>
               <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>

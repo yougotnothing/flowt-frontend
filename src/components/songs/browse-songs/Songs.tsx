@@ -69,7 +69,7 @@ export const BrowseSongs: FC = observer(() => {
             </SongDataWrapper>
             <ButtonsWrapper>
               <LikeButton $isLiked={isLiked} onClick={() => handleLikeSong(search.song)} />
-              <SongButton onClick={() => songs.setSong(0)}>Listen</SongButton>
+              <SongButton onClick={() => songs.setSongObject_(search.song)}>Listen</SongButton>
             </ButtonsWrapper>
           </Song>
           <SongInfo $type="name">Song info:</SongInfo>

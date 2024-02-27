@@ -75,7 +75,6 @@ export const ChangeEmail: React.FC = observer(() => {
       {!user.isUserAuthenticated && <PageLoader />}
       {user.isUserAuthenticated && (
         <GlobalContainer>
-          <AccountSettings />
           <GoBackContainer>
             <AContainer>
               <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>

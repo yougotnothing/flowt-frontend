@@ -61,7 +61,7 @@ interface ISongAvatar {
 export const SongAvatar = styled('picture')<ISongAvatar>`
   background-size: cover;
   background-position: center;
-  background-image: url(${({ $src }) => `${API_URL}/images/song/${$src.author}/${$src.name}`});
+  background-image: url(${({ $src }) => encodeURI(`${API_URL}/images/song/${$src.author}/${$src.name}`)});
   width: 280px;
   height: 280px;
   border-radius: 8px;

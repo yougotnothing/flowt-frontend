@@ -18,7 +18,7 @@ import {
 import filters from "../../../json/filters.json";
 import { searchStore as search } from "../../../stores/toSearch.mobx";
 import { observer } from "mobx-react-lite";
-import { useLocation, useNavigate } from "react-router-dom";
+import { generatePath, useLocation, useNavigate } from "react-router-dom";
 import { modalStore as modal } from "../../../stores/toModal.mobx";
 import { playlistsStore as playlists } from "../../../stores/toPlaylists.mobx";
 import { reportStore } from "../../../stores/toReport.mobx";
@@ -38,6 +38,7 @@ import { Title as Helmet } from "../../../helmet";
 import { likedSongs } from "../../../stores/toLiked-songs.mobx";
 import { LikedPlaylists } from "../liked/liked-playlists/Liked-playlists";
 import { likedPlaylists } from "../../../stores/toLiked-playlists.mobx";
+import { userSongsStore } from "../../../stores/toSongs.mobx";
 
 export const Search: FC = observer(() => {
   const[isOpenSongs, setIsOpenSongs] = useState<boolean[]>(Array(search.songs.length).fill(false));
@@ -127,12 +128,18 @@ export const Search: FC = observer(() => {
             onMouseLeave={() => handleMouseLeave(index, setIsOpenSongs)}
           >
             <CardIcon
+              onClick={() => userSongsStore.setSong(index, search.songs)}
               $type='song'
               $src={encodeURI(`${API_URL}/images/song/${song.author}/${song.name}`)}
             />
             <CardInfoContainer>
               <CardInfo>{song.author}</CardInfo>
-              <CardInfo>{song.name}</CardInfo>
+              <CardInfo
+                onClick={() => {
+                  search.setSong(song);
+                  navigate(generatePath('/song/:id', { id: song.name }));
+                }}
+              >{song.name}</CardInfo>
             </CardInfoContainer>
             <CardButtonsContainer $isOpen={isOpenSongs[index]}>
               <CardButton>Like</CardButton>
@@ -140,7 +147,7 @@ export const Search: FC = observer(() => {
                 disabled={song.author === User.username ? true : false}
                 onClick={() => handleClickSongModalButton(song)}
               >Report</CardButton>
-              <CardButton 
+              <CardButton
                 onClick={() => {
                   playlists.getPlaylists();
                   playlists.setSongData(song);

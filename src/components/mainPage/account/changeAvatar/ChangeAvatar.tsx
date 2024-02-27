@@ -92,10 +92,8 @@ export const ChangeAvatar: React.FC = observer(() => {
   return (
     <AccountContainer>
       <Helmet title="Change avatar" />
-      {!user.isUserAuthenticated && <PageLoader />}
       {user.isUserAuthenticated && (
         <GlobalContainer>
-          <AccountSettings />
           <GoBackContainer>
             <AContainer>
               <A onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>

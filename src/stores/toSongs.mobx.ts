@@ -295,8 +295,8 @@ class UserSongsStore implements ISongParameters {
     }
   }
 
-  setSongObject_(song: ISongData) {
-    runInAction(() => {
+  setSongObject_(song: ISongData | null) {
+    song && runInAction(() => {
       this.setUrl(`${API_URL}/songs/audio/${song.author}/${song.name}`);
       this.setAvatar(`${API_URL}/images/song/${song.author}/${song.name}`);
       this.issueYear = song.issueYear;
