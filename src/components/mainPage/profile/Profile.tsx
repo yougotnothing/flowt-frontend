@@ -67,7 +67,7 @@ export const Profile: React.FC = observer(() => {
   }, [searchUsers.username, user.username]);
 
   useEffect(() => {
-    userSongsStore.getSongs(searchUsers.username);
+    userSongsStore.getSongs(searchUsers.username, true);
 
     if(searchUsers.username !== user.username) {
       user.getSubscribes(searchUsers.username);

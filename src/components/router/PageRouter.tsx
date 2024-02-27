@@ -37,6 +37,7 @@ import { VerifyArtist } from "../verify-artist/Verify-artist";
 import { VerifyArtists } from "../admin/Verify-artists";
 import { ArtistStatistic } from "../mainPage/account/artist-statistic/Artist-statistic";
 import { Welcome } from "../welcome/Welcome";
+import { UserSongs } from "../songs/User-songs";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -130,6 +131,10 @@ export const pageRouter = createBrowserRouter([
       {
         path: '/song/:id',
         element: <BrowseSongs />
+      },
+      {
+        path: '/profile/:id/songs',
+        element: <UserSongs />
       },
       {
         path: '/oauth/google/login',

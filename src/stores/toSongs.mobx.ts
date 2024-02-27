@@ -24,6 +24,7 @@ class UserSongsStore implements ISongParameters {
   randomByGenre: ISongData | null;
   lastListened: ISongData[];
   randomByGenreList: ISongData[];
+  userSongs: ISongData[];
 
   constructor() {
     this.author = null;
@@ -44,6 +45,7 @@ class UserSongsStore implements ISongParameters {
     this.randomByGenre = null;
     this.lastListened = [];
     this.randomByGenreList = [];
+    this.userSongs = [];
 
     makeObservable(this, {
       author: observable,
@@ -64,6 +66,7 @@ class UserSongsStore implements ISongParameters {
       randomByGenre: observable,
       lastListened: observable,
       randomByGenreList: observable,
+      userSongs: observable,
       getLastListened: action,
       getSongs: action,
       getRandomByGenre: action,
@@ -98,27 +101,44 @@ class UserSongsStore implements ISongParameters {
     });
   }
 
-  async getSongs(username: string | null) {
+  async getSongs(username: string | null, profile?: boolean) {
     if(!username) return;
 
     try {
       const response = await api.get(`/songs/user-songs/${encodeURI(username)}`);
 
       runInAction(() => {
-        const uniqueSongs: Set<ISongData> = new Set(
-          response.data.songs.filter((existingSong: ISongData) => 
-            !this.container.some((song: ISongData) => 
-              song.songId === existingSong.songId
+        if(!profile) {
+          const uniqueSongs: Set<ISongData> = new Set(
+            response.data.songs.filter((existingSong: ISongData) => 
+              !this.container.some((song: ISongData) => 
+                song.songId === existingSong.songId
+              )
             )
-          )
-        );
+          );
 
-        const arr = Array.from(uniqueSongs);
-        console.log(arr);
+          const arr = Array.from(uniqueSongs);
+          console.log(arr);
 
-        this.container = response.data.songs;
-        
-        if(!response.data.songs.length) this.container = [];
+          this.container = response.data.songs;
+          
+          if(!response.data.songs.length) this.container = [];
+        }else{
+          const uniqueSongs: Set<ISongData> = new Set(
+            response.data.songs.filter((existingSong: ISongData) => 
+              !this.userSongs.some((song: ISongData) => 
+                song.songId === existingSong.songId
+              )
+            )
+          );
+
+          const arr = Array.from(uniqueSongs);
+          console.log(arr);
+
+          this.userSongs = response.data.songs;
+          
+          if(!response.data.songs.length) this.userSongs = [];
+        }
       });
     }catch(error: any) {
       console.error(error);

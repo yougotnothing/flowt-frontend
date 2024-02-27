@@ -17,6 +17,7 @@ export const Container = styled('div')`
   @media (max-width: 460px) {
     width: 96%;
     margin: 0;
+    gap: 14px;
   }
 `;
 
@@ -37,7 +38,8 @@ export const Song = styled('div')`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 78em;
+  position: relative;
+  width: 1168px;
   gap: 6em;
   padding: 1em;
   background: linear-gradient(100deg, ${colors.SECONDARY} 0%, ${colors.AQUAMARINE} 30%, ${colors.DARK_BLUE} 120%);
@@ -142,6 +144,10 @@ export const LikeButton = styled('button')<LikeButtonProps>`
   border: none;
   cursor: pointer;
 
+  &:disabled {
+    cursor: not-allowed;
+  }
+
   @media (max-width: 460px) {
     width: 25px;
     height: 25px;
@@ -154,7 +160,6 @@ export const SongDataContainer = styled('div')`
   align-items: start;
   gap: 1em;
   padding: 1em;
-  width: 78em;
   border: 2px solid ${colors.BORDER};
   border-radius: 12px;
   background-color: ${colors.FRONT};
@@ -296,4 +301,49 @@ export const RandomSongButton = styled('button')<RandomSongButtonProps>`
     height: 25px;
     width: 25px;
   }
+`;
+
+export const Droplist = styled('button')`
+  width: 34px;
+  height: 34px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: transparent;
+  background-image: url(/settings.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+`;
+
+interface DroplistContainerProps {
+  $isOpen: boolean;  
+}
+
+export const DroplistContainer = styled('div')<DroplistContainerProps>`
+  display: ${({ $isOpen }) => $isOpen ? 'flex' : 'none'};
+  position: absolute;
+  top: 42px;
+  right: 18px;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  border-radius: 8px;
+  padding: 6px;
+  background-color: ${colors.FRONT};
+  border-color: ${colors.BORDER};
+`;
+
+export const DroplistButton = styled('button')<DroplistContainerProps>`
+  ${BUTTON}
+  display: ${({ $isOpen }) => $isOpen ? 'flex' : 'none'};
+  position: absolute;
+  top: 42px;
+  right: 18px;
+  width: 124px;
+  height: 34px;
+  translate: initial !important;
+  border: none;
 `;

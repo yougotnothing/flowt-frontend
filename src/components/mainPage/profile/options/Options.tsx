@@ -42,6 +42,12 @@ export const Options: FC<{ isCurrentUser: boolean }> = ({ isCurrentUser }) => {
           <Select onClick={() => navigate(generatePath('/account/:id', { id: user.username }))}>
             <SelectText>Account</SelectText>
           </Select>
+          <Select onClick={() => navigate(generatePath('/profile/:id/songs', { id: user.username }))}>
+            <SelectText>Your songs</SelectText>
+          </Select>
+          <Select onClick={() => navigate(generatePath('/:id/songs/upload', { id: user.username }))}>
+            <SelectText>Upload song</SelectText>
+          </Select>
           <Select onClick={() => navigate(generatePath('/profile/:id/liked-songs', { id: user.username }))}>
             <SelectText>Liked songs</SelectText>
           </Select>
@@ -51,12 +57,6 @@ export const Options: FC<{ isCurrentUser: boolean }> = ({ isCurrentUser }) => {
           <Select onClick={() => navigate(generatePath('/:id/playlists/create-playlist', { id: user.username }))}>
             <SelectText>Create playlist</SelectText>
           </Select>
-          <Select onClick={() => navigate(generatePath('/:id/songs/upload', { id: user.username }))}>
-            <SelectText>Upload song</SelectText>
-          </Select>
-          {/* <Select onClick={() => navigate(generatePath('/account/:id/settings', { id: user.username }))}>
-            <SelectText>Settings</SelectText>
-          </Select> */}
           <Select onClick={() => navigate(generatePath('/notifications/:id', { id: user.username }))}>
             <SelectText>Notifications</SelectText>
           </Select>
@@ -81,6 +81,9 @@ export const Options: FC<{ isCurrentUser: boolean }> = ({ isCurrentUser }) => {
             <CloseOptions onClick={() => setIsVisible(false)} />
             <Select onClick={handleClickSubscribeButton}>
               <SelectText>{subscribeButtonText}</SelectText>
+            </Select>
+            <Select onClick={() => navigate(generatePath('/profile/:id/songs', { id: searchUsers.username }))}>
+              <SelectText>Songs</SelectText>
             </Select>
             <Select onClick={() => reportStore.setIsOpen(true)}>
               <SelectText>Report</SelectText>
