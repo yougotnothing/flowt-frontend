@@ -9,10 +9,11 @@ import { searchUsersStore } from "../../stores/toSearchUsers.mobx";
 import { Header } from "../mainPage/playlist/large/Playlist.styled";
 import { api } from "../../api/axiosConfig";
 import { runInAction } from "mobx";
+import { modalStore } from "../../stores/toModal.mobx";
 
 export const UserSongs = observer(() => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean[]>(Array(songs.userSongs.length).fill(false));
 
   const handleLikeSong = async (song: ISongData | null) => {
     if(!isLiked) {
@@ -24,17 +25,17 @@ export const UserSongs = observer(() => {
     }
   }
 
-  const handleDeleteSong = async (name: string, index: number) => {
-    try {
-      await api.delete(`/songs/${name}`);
+  const handleSetIsOpen = (index: number) => {
+    setIsOpen((prevState) => {
+      const newState = [...prevState];
+      newState[index] = !newState[index];
+      return newState;
+    });
+  }
 
-      runInAction(() => {
-        delete songs.userSongs[index];
-      });
-    }catch(error: any) {
-      console.error(error);
-      return;
-    }
+  const handleDeleteSong = (name: string) => {
+    modalStore.setDeleteSong_name(name)
+    modalStore.setIsOpen(true, 'delete song');
   }
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export const UserSongs = observer(() => {
       <Header>{searchUsersStore.username} songs:</Header>
       {songs.userSongs.map((song, index) => (
         <Song key={index}>
-          {searchUsersStore.username === user.username && <Droplist onClick={() => setIsOpen(!isOpen)} />}
+          {searchUsersStore.username === user.username && <Droplist onClick={() => handleSetIsOpen(index)} />}
           <SongDataWrapper>
             <SongAvatar $src={song} />
             <SongInfoContainer>
@@ -68,7 +69,7 @@ export const UserSongs = observer(() => {
             <SongButton onClick={() => songs.setSong(index, songs.userSongs)}>Listen</SongButton>
           </ButtonsWrapper>
           {searchUsersStore.username === user.username && (
-            <DroplistButton $isOpen={isOpen} onClick={() => handleDeleteSong(song.name, index)}>Delete song</DroplistButton>
+            <DroplistButton $isOpen={isOpen[index]} onClick={() => handleDeleteSong(song.name)}>Delete song</DroplistButton>
           )}
         </Song>
       ))}

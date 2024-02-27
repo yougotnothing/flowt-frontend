@@ -1,5 +1,19 @@
 import { observable, makeObservable, action, runInAction } from "mobx";
 
+enum _ {
+  'change password',
+  'restore password',
+  'change avatar',
+  'links',
+  'delete song'
+}
+
+type Modal = 'change password'
+           | 'restore password'
+           | 'change avatar'
+           | 'links'
+           | 'delete song'
+
 class ModalStore {
   isOpen: boolean;
   changeAvatar: boolean;
@@ -7,6 +21,8 @@ class ModalStore {
   changePassword: boolean;
   restorePassword: boolean;
   restore_email: string;
+  deleteSong: boolean;
+  deleteSong_name: string;
 
   constructor() {
     this.isOpen = false;
@@ -14,13 +30,17 @@ class ModalStore {
     this.links = false;
     this.changePassword = false;
     this.restorePassword = false;
+    this.deleteSong = false;
     this.restore_email = '';
+    this.deleteSong_name = '';
 
     makeObservable(this, {
       changeAvatar: observable,
       changePassword: observable,
       restorePassword: observable,
       restore_email: observable,
+      deleteSong: observable,
+      deleteSong_name: observable,
       links: observable,
       isOpen: observable,
       setIsOpen: action,
@@ -41,7 +61,7 @@ class ModalStore {
     });
   }
 
-  setIsOpen(arg: boolean, modal?: 'change avatar' | 'links' | 'change password' | 'restore password') {
+  setIsOpen(arg: boolean, modal?: Modal) {
     switch(modal) {
       case "change avatar":
         this.changeAvatar = arg;
@@ -55,10 +75,17 @@ class ModalStore {
       case "restore password":
         this.restorePassword = arg;
         break;
+      case "delete song":
+        this.deleteSong = arg;
+        break;
       default:
         this.isOpen = arg;
         break;
     }
+  }
+
+  setDeleteSong_name(name: string) {
+    runInAction(() => this.deleteSong_name = name);
   }
 
   setRestoreEmail(email: string) {

@@ -94,6 +94,7 @@ export const CloseModal = styled('button')`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  align-self: end;
   cursor: pointer;
 `;
 

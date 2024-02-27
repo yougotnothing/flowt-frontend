@@ -32,6 +32,7 @@ import { ChangePlaylistName } from "../modal/change-playlist-name/Change-playlis
 import { LinksModal } from "../modal/links/Links";
 import { ChangePasswordModal } from "../modal/change-password/Change-password";
 import { RestorePasswordModal } from "../modal/restore-password/RestorePassword";
+import { DeleteSongModal } from "../modal/delete-song/Delete-song";
 
 export const MainPage: FC = observer(() => {
   const[isVisible, setIsVisible] = useState<boolean>(false);
@@ -130,6 +131,7 @@ export const MainPage: FC = observer(() => {
       <LinksModal />
       <ChangePasswordModal />
       <RestorePasswordModal />
+      <DeleteSongModal />
       {isVisible && successAlert && <AlertSuccess />}
       {isVisible && warningAlert && <AlertWarning />}
       <Navbar $isWelcome={isWelcomePage}>
