@@ -18,7 +18,9 @@ class LikedSongsStore {
 
   async likeSong(song: ISongData | null, obj?: { author: string | null, name: string | null }) {
     try {
-      await api.post(`/liked/${song ? song.author : obj?.author}/${song ? song.name : obj?.name}`);
+      const author = song ? song.author : obj?.author;
+      const name = song ? song.name : obj?.name;
+      await api.post(`/liked/${author}/${name}`);
       await this.setSongs();
 
       console.log('song liked');
@@ -43,8 +45,7 @@ class LikedSongsStore {
 
   async dislikeSong(song: ISongData | null, obj?: { author: string | null, name: string | null }) {
     try {
-      const { author, name } = song as ISongData;
-      await api.delete(`/liked/${author}/${name}`);
+      await api.delete(`/liked/${song ? song.author : obj?.author}/${song ? song.name : obj?.name}`);
       await this.setSongs();
 
       console.log('song disliked');

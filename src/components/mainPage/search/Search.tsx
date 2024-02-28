@@ -36,9 +36,10 @@ import {
 import { addModerator, deleteUser } from "../../admin/functions";
 import { Title as Helmet } from "../../../helmet";
 import { likedSongs } from "../../../stores/toLiked-songs.mobx";
-import { LikedPlaylists } from "../liked/liked-playlists/Liked-playlists";
 import { likedPlaylists } from "../../../stores/toLiked-playlists.mobx";
 import { userSongsStore } from "../../../stores/toSongs.mobx";
+import { IPlaylist, ISearchPlaylist } from "../../../types/props";
+import { searchUsersStore } from "../../../stores/toSearchUsers.mobx";
 
 export const Search: FC = observer(() => {
   const[isOpenSongs, setIsOpenSongs] = useState<boolean[]>(Array(search.songs.length).fill(false));
@@ -49,6 +50,16 @@ export const Search: FC = observer(() => {
   const[param, setParam] = useState<string>('All');
   const navigate = useNavigate();
   const location = useLocation();
+
+  const handleGetPlaylist = async (playlist: ISearchPlaylist) => {
+    try {
+      await playlists.getPlaylist(playlist);
+      navigate(generatePath('/playlist/:id', { id: playlist.name }));
+    }catch(error: any) {
+      console.error(error);
+      return;
+    }
+  }
 
   const handleScroll = (e: any) => {
     if(e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
@@ -202,10 +213,18 @@ export const Search: FC = observer(() => {
             onMouseEnter={() => handleMouseEnter(index, setIsOpenPlaylists)}
             onMouseLeave={() => handleMouseLeave(index, setIsOpenPlaylists)}
           >
-            <CardIcon $type='song' $src={`${API_URL}/images/playlist/${playlist.username}/${playlist.name}`} />
+            <CardIcon
+              $type='song'
+              $src={`${API_URL}/images/playlist/${playlist.username}/${playlist.name}`}
+              onClick={() => handleGetPlaylist(playlist)}
+            />
             <CardInfoContainer>
-              <CardInfo>{playlist.username}</CardInfo>
-              <CardInfo>{playlist.name}</CardInfo>
+              <CardInfo
+                onClick={() => searchUsersStore.getPublicUser(playlist.username, navigate)}
+              >{playlist.username}</CardInfo>
+              <CardInfo
+                onClick={() => handleGetPlaylist(playlist)}
+              >{playlist.name}</CardInfo>
             </CardInfoContainer>
             <CardButtonsContainer $isOpen={isOpenPlaylists[index]}>
               <CardButton

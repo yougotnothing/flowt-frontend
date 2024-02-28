@@ -25,6 +25,19 @@ export const Player: React.FC = observer(() => {
   const[isLiked, setIsLiked] = useState<boolean>(false);
   const SHUFFLE_ICON = isShuffled ? "url(/shuffle-on.webp)" : "url(/shuffle-off.webp)";
 
+  const handleLikedSong = async () => {
+    try {
+      if(!isLiked) {
+        await likedSongs.likeSong(null, { author: song.author, name: song.name });
+      }else{
+        await likedSongs.dislikeSong(null, { author: song.author, name: song.name });
+      }
+    }catch(error: any) {
+      console.error(error);
+      return;
+    }
+  }
+
   const handlePlayNext = useCallback(() => {
     if(isShuffled) {
       setIndex((prevIndex) => {
@@ -71,14 +84,9 @@ export const Player: React.FC = observer(() => {
   }, [isShuffled]);
 
   useEffect(() => {
-    for(let index = 0; index < likedSongs.songs.length; index++) {
-      const likedSongElement = likedSongs.songs[index];
-
-      if(likedSongElement.author === song.author && likedSongElement.name === song.name) {
-        setIsLiked(true);
-      }
-    }
-  }, [song.author, song.name, likedSongs.songs]);
+    setIsLiked(likedSongs.songs.some(existingSong => existingSong.songId === song.id));
+  }, [song.id, likedSongs.songs]);
+  
 
   useEffect(() => {
     song.setSong(index);
@@ -116,7 +124,7 @@ export const Player: React.FC = observer(() => {
                 </SongInfoContainer>
                 <LikeButton 
                   $isLiked={isLiked}
-                  onClick={() => likedSongs.likeSong(null, { author: song.author, name: song.name })}
+                  onClick={handleLikedSong}
                 />
               </SongContainer>,
               <ShuffleButton

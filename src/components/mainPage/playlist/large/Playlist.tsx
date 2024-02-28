@@ -18,30 +18,22 @@ import { Title as Helmet } from "../../../../helmet";
 
 export const Playlist: FC = observer(() => {
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 26,
-      width: 1200,
-      margin: '0 auto'
-    }}>
+    <ContentContainer>
       <Helmet title={`Playlist: ${playlists.container?.name}`} />
       <Header>Playlist: </Header>
-      <ContentContainer>
-        {playlists.container && (
-          <Container $isEditing>
-            <PlaylistIcon
-              $username={playlists.container.username}
-              $name={playlists.container.name}
-            />
-            <PlaylistInfoContainer>
-              <PlaylistInfo $type="name">{playlists.container.name}</PlaylistInfo>
-              <PlaylistInfo $type="username">{user.username}</PlaylistInfo>
-            </PlaylistInfoContainer>
-            <PlaylistButton onClick={() => songs.setSong(0, playlists.container?.songs)}>listen</PlaylistButton>
-          </Container>
-        )}
-      </ContentContainer>
-    </div>
+      {playlists.container && (
+        <Container $isEditing>
+          <PlaylistIcon
+            $username={playlists.container.username}
+            $name={playlists.container.name}
+          />
+          <PlaylistInfoContainer>
+            <PlaylistInfo $type="name">{playlists.container.name}</PlaylistInfo>
+            <PlaylistInfo $type="username">{user.username}</PlaylistInfo>
+          </PlaylistInfoContainer>
+          <PlaylistButton onClick={() => songs.setSong(0, playlists.container?.songs)}>listen</PlaylistButton>
+        </Container>
+      )}
+    </ContentContainer>
   );
 });

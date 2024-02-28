@@ -44,8 +44,15 @@ const fadeOut = keyframes`
 
 export const ContentContainer = styled('div')`
   display: flex;
+  flex-direction: column;
+  gap: 24px;
   width: 1200px;
   margin: 0 auto;
+
+  @media (max-width: 460px) {
+    width: 96%;
+    margin: 0;
+  }
 `;
 
 export const Container = styled('div')<IPlaylistContainerProps>`
@@ -62,7 +69,7 @@ export const Container = styled('div')<IPlaylistContainerProps>`
 
   @media (max-width: 460px) {
     padding: 5px;
-    width: max-content;
+    width: 96%;
   }
 `;
 
@@ -134,7 +141,7 @@ export const PlaylistButton = styled('button')`
     width: 84px;
     height: 28px;
     font-size: 14px;
-    margin: auto 0;
+    margin: auto 0 auto auto;
   }
 `;
 

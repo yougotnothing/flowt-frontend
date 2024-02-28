@@ -245,6 +245,10 @@ export const RandomSongDataWrapper = styled('div')`
 export const Line = styled('div')`
   width: 100%;
   border-bottom: 2px solid ${colors.WHITE};
+
+  @media (max-width: 460px) {
+    width: 95svw;
+  }
 `;
 
 interface RandomSongDataProps {
