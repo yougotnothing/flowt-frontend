@@ -273,7 +273,7 @@ class PlaylistsStore {
 
   async getPlaylist(playlist: ISearchPlaylist) {
     try {
-      const response = await api.get(`/playlists/${playlist.username}/${playlist.name}`);
+      const response = await api.get(encodeURI(`/playlists/${playlist.username}/${playlist.name}`));
       this.setContainer(response.data);
       console.log(response.data);
     }catch(error: any) {

@@ -7,8 +7,6 @@ import { likedSongs } from "../../stores/toLiked-songs.mobx";
 import { ISongData } from "../../types/types";
 import { searchUsersStore } from "../../stores/toSearchUsers.mobx";
 import { Header } from "../mainPage/playlist/large/Playlist.styled";
-import { api } from "../../api/axiosConfig";
-import { runInAction } from "mobx";
 import { modalStore } from "../../stores/toModal.mobx";
 
 export const UserSongs = observer(() => {

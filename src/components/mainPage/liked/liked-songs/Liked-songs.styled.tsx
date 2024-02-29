@@ -109,7 +109,7 @@ interface ISongImage {
 }
 
 export const SongImage = styled('button')<ISongImage>`
-  background-image: ${p => `url(${API_URL}/images/song/${p.$song.author}/${p.$song.name})`};
+  background-image: ${p => encodeURI(`url(${API_URL}/images/song/${p.$song.author}/${p.$song.name})`)};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

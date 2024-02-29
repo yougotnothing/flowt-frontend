@@ -3,6 +3,8 @@ import { Container, LikedSongs, Song, SongIcon, SongInfo, SongInfoContainer, Spa
 import { useEffect } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 import { userSongsStore } from "../../../../../stores/toSongs.mobx";
+import { searchStore } from "../../../../../stores/toSearch.mobx";
+import { searchUsersStore } from "../../../../../stores/toSearchUsers.mobx";
 
 export const LastListened: React.FC<{ size: 'big' | 'small' }> = observer(({ size }) => {
   const navigate = useNavigate();
@@ -28,9 +30,15 @@ export const LastListened: React.FC<{ size: 'big' | 'small' }> = observer(({ siz
             <SongInfoContainer>
               <SongInfo 
                 $type="name"
-                onClick={() => navigate(generatePath('/song/:id', { id: song.name }))}
+                onClick={() => {
+                  searchStore.setSong(song);
+                  navigate(generatePath('/song/:id', { id: song.name }));
+                }}
               >{song.name}</SongInfo>
-              <SongInfo $type="author">{song.author}</SongInfo>
+              <SongInfo
+                $type="author"
+                onClick={() => searchUsersStore.getPublicUser(song.author, navigate)}
+              >{song.author}</SongInfo>
             </SongInfoContainer>
           </Song>
         )) : (

@@ -2,6 +2,8 @@ import styled, { css, keyframes } from "styled-components";
 import { colors } from "../../../../constants/colors.const";
 import { API_URL } from "../../../../api/axiosConfig";
 import { BUTTON } from "../../../../constants/styles.const";
+import { IPlaylist } from "../../../../types/props";
+import { ISongData } from "../../../../types/types";
 
 interface IPlaylistIconProps {
   $name: string | null;
@@ -233,4 +235,150 @@ export const PlaylistDataContainer = styled('div')`
   gap: 12px;
   background-color: ${colors.FRONT};
   border: 2px solid ${colors.BORDER};
+`;
+
+export const PlaylistSongsWrapper = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 14px;
+  width: calc(100% - 16px);
+
+  @media (max-width: 460px) {
+    gap: 10px;
+  }
+`;
+
+export const PlaylistSong = styled('div')`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-radius: 12px;
+  width: 100%;
+  background-color: transparent;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+`;
+
+interface PlaylistSongImageProps {
+  $song: ISongData;
+}
+
+export const PlaylistSongImage = styled('button')<PlaylistSongImageProps>`
+  width: 86px;
+  height: 86px;
+  border-radius: 8px;
+  border: none;
+  background-image: url(${({ $song }) => `${API_URL}/images/song/${$song.author}/${$song.name}`});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  padding: 0;
+  transition: 0.3s ease;
+
+  &::after {
+    content: "";
+    display: flex;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background-image: url(/play_hover.png);
+    background-size: 32px;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.4);
+    background-position: center;
+    transition: 0.3s ease;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+
+  @media (max-width: 460px) {
+    width: 48px;
+    height: 48px;
+    border-radius: 5px;
+    
+    &::after {
+      background-size: 24px;
+      border-radius: 5px;
+    }
+  }
+`;
+
+export const PlaylistMainInfoWrapper = styled('div')`
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+
+  @media (max-width: 460px) {
+    gap: 8px;
+  }
+`;
+
+export const PlaylistSongInfoWrapper = styled('div')`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+  width: 140px;
+  height: 34px;
+  align-self: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media (max-width: 460px) {
+    width: 50px;
+  }
+`;
+
+interface PlaylistSongInfoProps {
+  $name?: boolean;
+  $author?: boolean;
+  $likes?: boolean;
+}
+
+export const PlaylistSongInfo = styled('div')<PlaylistSongInfoProps>`
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 600;
+  font-size: ${({ $name, $author }) => $name ? '19px' : $author ? '16px' : '14px'};
+  color: ${({ $name }) => $name ? colors.WHITE : colors.LIGHT_GREY};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+
+  @media (max-width: 460px) {
+    font-size: ${({ $name, $author }) => $name ? '16px' : $author ? '14px' : '13px'};
+  }
+`;
+
+interface LikeSongButtonProps {
+  $isLiked: boolean | (() => boolean);  
+}
+
+export const LikeSongButton = styled('button')<LikeSongButtonProps>`
+  width: 34px;
+  height: 34px;
+  background-image: url(${({ $isLiked }) => $isLiked ? '/like_hover.png' : '/like.png'});
+  border: 2px solid ${({ $isLiked }) => $isLiked ? colors.BORDER : 'transparent'};
+  border-radius: 6px;
+  background-color: ${({ $isLiked }) => $isLiked ? colors.DARK_BLUE : 'transparent'};
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 18px;
+  transition: 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    border-color: ${colors.BORDER};
+    background-color: ${colors.DARK_BLUE};
+  }
 `;

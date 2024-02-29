@@ -20,7 +20,7 @@ class LikedSongsStore {
     try {
       const author = song ? song.author : obj?.author;
       const name = song ? song.name : obj?.name;
-      await api.post(`/liked/${author}/${name}`);
+      await api.post(encodeURI(`/liked/${author}/${name}`));
       await this.setSongs();
 
       console.log('song liked');
