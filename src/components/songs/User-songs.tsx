@@ -10,19 +10,17 @@ import { Header } from "../mainPage/playlist/large/Playlist.styled";
 import { modalStore } from "../../stores/toModal.mobx";
 
 export const UserSongs = observer(() => {
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isLikedArr, setIsLikedArr] = useState<boolean[]>(Array(likedSongs.songs.length).fill(false));
   const [isOpen, setIsOpen] = useState<boolean[]>(Array(songs.userSongs.length).fill(false));
 
-  const handleLikeSong = async (song: ISongData | null) => {
-    if(!isLiked) {
-      likedSongs.likeSong(song);
-      setIsLiked(true);
+  const handleLikeSong = async (song: ISongData, index: number) => {
+    if(!isLikedArr[index]) {
+      await likedSongs.like(song);
     }else{
-      likedSongs.dislikeSong(song);
-      setIsLiked(false);
+      await likedSongs.dislike(song);
     }
   }
-
+  
   const handleSetIsOpen = (index: number) => {
     setIsOpen((prevState) => {
       const newState = [...prevState];
@@ -39,15 +37,16 @@ export const UserSongs = observer(() => {
   useEffect(() => {
     songs.getSongs(searchUsersStore.username);
     likedSongs.setSongs();
-
-    setIsLiked(
-      likedSongs.songs.some(existingSong => 
-        songs.userSongs.some(song => 
-          song.songId === existingSong.songId
-        )
-      )
-    );
   }, []);
+
+  useEffect(() => {
+    setIsLikedArr(() => {
+      return songs.userSongs.map(existingSong =>
+        likedSongs.songs.some(song => song.songId === existingSong.songId)
+      );
+    });
+  }, [likedSongs.songs]);
+  
 
   return (
     <Container>
@@ -63,7 +62,7 @@ export const UserSongs = observer(() => {
             </SongInfoContainer>
           </SongDataWrapper>
           <ButtonsWrapper>
-            <LikeButton disabled={song.author === user.username} $isLiked={isLiked} onClick={() => handleLikeSong(song)} />
+            <LikeButton disabled={song.author === user.username} $isLiked={isLikedArr[index]} onClick={() => handleLikeSong(song, index)} />
             <SongButton onClick={() => songs.setSong(index, songs.userSongs)}>Listen</SongButton>
           </ButtonsWrapper>
           {searchUsersStore.username === user.username && (

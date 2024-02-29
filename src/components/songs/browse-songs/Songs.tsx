@@ -43,10 +43,8 @@ export const BrowseSongs: FC = observer(() => {
   const handleLikeSong = async (song: ISongData | null) => {
     if(!isLiked) {
       likedSongs.likeSong(song);
-      setIsLiked(true);
     }else{
       likedSongs.dislikeSong(song);
-      setIsLiked(false);
     }
   }
 

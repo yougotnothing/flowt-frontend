@@ -328,11 +328,8 @@ export const PlaylistSongInfoWrapper = styled('div')`
   align-items: start;
   justify-content: space-between;
   width: 140px;
-  height: 34px;
+  height: 44px;
   align-self: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
   @media (max-width: 460px) {
     width: 50px;
