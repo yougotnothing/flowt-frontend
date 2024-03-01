@@ -72,12 +72,12 @@ class SearchUsersStore {
     }
   }
 
-  async getPublicUser(username: string, navigate: NavigateFunction) {
+  async getPublicUser(username: string, navigate?: NavigateFunction) {
     try {
-      const response = await api.get(`/users/public/${username}`);
+      const response = await api.get(encodeURI(`/users/public/${username}`));
       console.log(response.data);
       this.setUser(response.data);
-      navigate(`/profile/${this.username}`);
+      navigate && navigate(`/profile/${this.username}`);
     }catch(error: any) {
       console.error(error);
       return;

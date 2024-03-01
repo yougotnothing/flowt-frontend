@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
+
 import { observer } from "mobx-react-lite";
 import { ButtonsWrapper, Container, Droplist, DroplistButton, LikeButton, Song, SongAvatar, SongButton, SongDataWrapper, SongInfo, SongInfoContainer } from "./browse-songs/Songs.styled";
-import { useEffect, useState } from "react";
 import { userSongsStore as songs } from "../../stores/toSongs.mobx";
 import { user } from "../../stores/toUser.mobx";
 import { likedSongs } from "../../stores/toLiked-songs.mobx";
@@ -40,13 +41,14 @@ export const UserSongs = observer(() => {
   }, []);
 
   useEffect(() => {
-    setIsLikedArr(() => {
-      return songs.userSongs.map(existingSong =>
-        likedSongs.songs.some(song => song.songId === existingSong.songId)
-      );
-    });
+    songs.userSongs.map((existingSong, index) =>
+      setIsLikedArr(prevState => {
+        const newState = [...prevState];
+        newState[index] = likedSongs.songs.some(song => song.songId === existingSong.songId);
+        return newState;
+      })
+    );
   }, [likedSongs.songs]);
-  
 
   return (
     <Container>

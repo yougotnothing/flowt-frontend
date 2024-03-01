@@ -21,25 +21,26 @@ import { user } from "../../../stores/toUser.mobx";
 import { searchStore } from "../../../stores/toSearch.mobx";
 import { likedSongs } from "../../../stores/toLiked-songs.mobx";
 import { ISongData } from "../../../types/types";
+import { searchUsersStore } from "../../../stores/toSearchUsers.mobx";
 
 export const Songs: React.FC = observer(() => {
+  const [isLiked, setIsLiked] = useState<boolean[]>(Array(songs.container.length).fill(false));
   const navigate = useNavigate();
+
   const isLikedSong = songs.container.some(existingSong => 
     likedSongs.songs.some(likedSong => 
       likedSong.songId === existingSong.songId
     )
   );
-  
 
   const handleLikedSong = async (song: ISongData) => {
     try {
-      const { name, author } = song as ISongData;
       if(!isLikedSong) {
-        await api.post(`/liked/${author}/${name}`);
+        await likedSongs.like(song)
         
         console.log('song disliked');
       }else{
-        await api.delete(`/liked/${author}/${name}`);
+        await likedSongs.dislike(song);
         
         console.log('song liked');
       }
@@ -50,7 +51,18 @@ export const Songs: React.FC = observer(() => {
 
   useLayoutEffect(() => {
     likedSongs.setSongs();
+    songs.getSongs(searchUsersStore.username, true);
   }, []);
+
+  useEffect(() => {
+    songs.container.map((existingSong, index) =>
+      setIsLiked(prevState => {
+        const newState = [...prevState];
+        newState[index] = likedSongs.songs.some(song => existingSong.songId === song.songId);
+        return newState;
+      })
+    );
+  }, [likedSongs.songs]);
 
   return (
     <>
@@ -88,7 +100,7 @@ export const Songs: React.FC = observer(() => {
           </SongData>
           <LikeSongButton
             disabled={song.author === user.username}
-            $isLiked={likedSongs.songs.length > 0 ? isLikedSong : false}
+            $isLiked={isLiked[index]}
             onClick={() => handleLikedSong(song)}
           />
         </SongContainer>

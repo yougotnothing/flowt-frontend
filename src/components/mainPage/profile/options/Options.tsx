@@ -85,6 +85,9 @@ export const Options: FC<{ isCurrentUser: boolean }> = ({ isCurrentUser }) => {
             <Select onClick={() => navigate(generatePath('/profile/:id/songs', { id: searchUsers.username }))}>
               <SelectText>Songs</SelectText>
             </Select>
+            <Select onClick={() => navigate(generatePath('/playlists/:id', { id: searchUsers.username }))}>
+              <SelectText>Playlists</SelectText>
+            </Select>
             <Select onClick={() => reportStore.setIsOpen(true)}>
               <SelectText>Report</SelectText>
             </Select>

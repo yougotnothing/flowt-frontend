@@ -52,6 +52,7 @@ export const AccountInfo: React.FC = observer(() => {
   }, []);
 
   const handleNavigateToPlaylist = (name: string) => {
+    navigate(generatePath(`/account/:id/${name}`, { id: $.username }));
   }
 
   const handleRedirectToEditPlaylist = (name: string | null) => {

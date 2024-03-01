@@ -55,7 +55,11 @@ export const Profile: React.FC = observer(() => {
   }, []);
 
   useEffect(() => {
-    if(location.pathname === `/profile/${user.username}`) searchUsers.setUser(user.user);
+    const splittedLocation = location.pathname.split('/');
+    console.log(splittedLocation);
+    searchUsers.getPublicUser(splittedLocation[2]);
+
+    if(splittedLocation[2] === user.username) searchUsers.setUser(user.user);
   }, [location.pathname]);
 
   useEffect(() => {
