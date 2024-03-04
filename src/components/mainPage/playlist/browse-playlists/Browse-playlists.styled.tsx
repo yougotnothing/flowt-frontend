@@ -16,7 +16,7 @@ interface CardIconProps {
 export const Wrapper = styled('div')`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   width: 1200px;
   margin: 0 auto;
   gap: 24px;
@@ -43,6 +43,7 @@ export const CardsWrapper = styled('div')`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+  width: 100%;
   gap: 24px;
 
   @media (max-width: 460px) {
@@ -59,6 +60,8 @@ export const Card = styled('button')`
   border-radius: 8px;
   border: 2px solid ${colors.BORDER};
   background-color: ${colors.DARK_BLUE};
+  cursor: pointer;
+
 `;
 
 export const CardIcon = styled('picture')<CardIconProps>`
@@ -66,9 +69,28 @@ export const CardIcon = styled('picture')<CardIconProps>`
   height: 180px;
   background-position: center;
   background-size: cover;
-  background-image: url(${({ $icon_url: { author, name } }) => `${API_URL}/images/playlist/${author}/${name}`});
+  background-image: url(${({ $icon_url: { username, name } }) => `${API_URL}/images/playlist/${username}/${name}`});
   background-repeat: no-repeat;
   border-radius: 8px;
+
+  &::after {
+    content: "";
+    opacity: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.6);
+    background-image: url(/play.png);
+    background-repeat: no-repeat;
+    background-size: 46px;
+    background-position: center;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
 
   @media (max-width: 460px) {
     height: 120px;

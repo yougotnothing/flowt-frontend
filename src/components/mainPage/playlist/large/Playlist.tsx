@@ -27,7 +27,13 @@ import { likedSongs } from "../../../../stores/toLiked-songs.mobx";
 import { ISongData } from "../../../../types/types";
 
 export const Playlist: FC = observer(() => {
-  const [isLikedSongs, setIsLikedSongs] = useState<boolean[]>(Array(playlists.container?.songs.length).fill(false));
+  const [isLikedSongs, setIsLikedSongs] = useState<boolean[]>(
+    playlists.container ? playlists.container.songs.map(song =>
+      likedSongs.songs.some(likedSong => 
+        likedSong.songId === song.songId
+      ))
+    : Array(likedSongs.songs.length).fill(false)
+  );
 
   const handleLikedSong = async (song: ISongData) => {
     try {
@@ -45,10 +51,8 @@ export const Playlist: FC = observer(() => {
   }
 
   useEffect(() => {
-    const updatedLikedSongs = playlists.container?.songs.map(song =>
-      likedSongs.songs.some(likedSong => likedSong.songId === song.songId)
-    );
-  
+    const updatedLikedSongs = playlists.container?.songs.map(song => likedSongs.songs.some(likedSong => likedSong.songId === song.songId));
+
     updatedLikedSongs && setIsLikedSongs(updatedLikedSongs);
   }, [likedSongs.songs]);
   
@@ -84,6 +88,7 @@ export const Playlist: FC = observer(() => {
                 <PlaylistSongInfo $likes>listens: {formatNumbers(song.listens.toString())}</PlaylistSongInfo>
                 <PlaylistSongInfo $likes>likes: {formatNumbers(song.likes.toString())}</PlaylistSongInfo>
                 <LikeSongButton
+                  disabled={user.username === song.author}
                   $isLiked={isLikedSongs[index]}
                   onClick={() => handleLikedSong(song)}
                 />

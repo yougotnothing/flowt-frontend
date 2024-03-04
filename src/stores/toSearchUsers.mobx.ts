@@ -1,5 +1,5 @@
 import { observable, action, runInAction, makeObservable } from "mobx";
-import { IUserProps, IUserSearch } from "../types/props";
+import { IPlaylist, IUserProps, IUserSearch } from "../types/props";
 import { api } from "../api/axiosConfig";
 import { NavigateFunction } from "react-router-dom";
 
@@ -12,6 +12,7 @@ class SearchUsersStore {
   avatar: any;
   followers: string[] | [];
   subscribes: string[] | [];
+  playlists: IPlaylist[];
 
   constructor() {
     this.username = null;
@@ -22,6 +23,7 @@ class SearchUsersStore {
     this.avatar = null;
     this.followers = [];
     this.subscribes = [];
+    this.playlists = [];
 
     makeObservable(this, {
       username: observable,
@@ -30,6 +32,9 @@ class SearchUsersStore {
       email: observable,
       avatar: observable,
       userHaveAvatar: observable,
+      playlists: observable,
+      subscribes: observable,
+      followers: observable,
       setUser: action,
       setAvatar: action,
       setFollowers: action,
@@ -77,6 +82,7 @@ class SearchUsersStore {
       const response = await api.get(encodeURI(`/users/public/${username}`));
       console.log(response.data);
       this.setUser(response.data);
+      this.getPlaylists(username);
       navigate && navigate(`/profile/${this.username}`);
     }catch(error: any) {
       console.error(error);
@@ -112,6 +118,20 @@ class SearchUsersStore {
         email: this.email,
         description: this.description
       }));
+    }
+  }
+
+  async getPlaylists(username?: string) {
+    try {
+      const response = await api.get(`/playlists/info/${username ? username : this.username}`);
+
+      console.log(response.data);
+
+      runInAction(() => {
+        this.playlists = response.data.playlists;
+      });
+    }catch(error: any) {
+      console.error(error.response.data.message);
     }
   }
 

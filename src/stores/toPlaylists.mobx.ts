@@ -271,7 +271,7 @@ class PlaylistsStore {
     }
   }
 
-  async getPlaylist(playlist: ISearchPlaylist) {
+  async getPlaylist(playlist: ISearchPlaylist | IPlaylist) {
     try {
       const response = await api.get(encodeURI(`/playlists/${playlist.username}/${playlist.name}`));
       this.setContainer(response.data);

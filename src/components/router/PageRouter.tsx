@@ -38,6 +38,7 @@ import { VerifyArtists } from "../admin/Verify-artists";
 import { ArtistStatistic } from "../mainPage/account/artist-statistic/Artist-statistic";
 import { Welcome } from "../welcome/Welcome";
 import { UserSongs } from "../songs/User-songs";
+import { BrowsePlaylists } from "../mainPage/playlist/browse-playlists/Browse-playlists";
 
 export const pageRouter = createBrowserRouter([
   {
@@ -196,6 +197,10 @@ export const pageRouter = createBrowserRouter([
       {
         path: '/welcome',
         element: <Welcome />
+      },
+      {
+        path: '/playlists/:id',
+        element: <BrowsePlaylists />
       }
     ]
   }
