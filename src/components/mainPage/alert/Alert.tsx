@@ -14,7 +14,7 @@ export const AlertSuccess: React.FC = () => {
     isOpen: isVisible,
     onClose,
     onOpen,
-  } = useDisclosure({defaultIsOpen: true});
+  } = useDisclosure({ defaultIsOpen: true });
 
   return (isVisible && successAlert) ? (
     <Alert
@@ -39,7 +39,7 @@ export const AlertSuccess: React.FC = () => {
       boxSize="40px"
       mr={0} 
     />
-    <div style={{flexDirection: "column", margin: "20px"}}>
+    <div style={{ flexDirection: "column", margin: "20px" }}>
       <AlertTitle 
         mt={4}
         mb={1}
@@ -83,7 +83,7 @@ export const AlertWarning: React.FC = () => {
     isOpen: isVisible,
     onClose,
     onOpen,
-  } = useDisclosure({defaultIsOpen: true})
+  } = useDisclosure({ defaultIsOpen: true });
   
   return (isVisible && warningAlert) ? (
     <Alert

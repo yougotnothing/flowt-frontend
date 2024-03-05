@@ -28,7 +28,7 @@ export const BrowsePlaylists: FC = observer(() => {
             <Text
               $text_weight="bold"
               $text_type="header"
-              onClick={() => navigate(generatePath('/playlist/:id', { id: playlist.name }))}
+              onClick={() => navigate(generatePath('/playlist/:author/:id', { author: playlist.username, id: playlist.name }))}
             >{playlist.name}</Text>
             <Text
               $text_weight="thin"

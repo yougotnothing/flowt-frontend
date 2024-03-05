@@ -39,7 +39,6 @@ import accountSettingsData from "../../../../json/accountSettingsDroplist.json";
 import { user as $ } from "../../../../stores/toUser.mobx";
 import { userSongsStore as songs } from "../../../../stores/toSongs.mobx";
 import { Title as Helmet } from "../../../../helmet";
-import { searchStore } from "../../../../stores/toSearch.mobx";
 import { searchUsersStore } from "../../../../stores/toSearchUsers.mobx";
 
 export const AccountInfo: React.FC = observer(() => {
