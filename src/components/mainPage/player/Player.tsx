@@ -100,11 +100,13 @@ export const Player: React.FC = observer(() => {
           <H5AudioPlayer
             layout="stacked-reverse"
             volume={0.5}
-            preload="auto"
+            preload="none"
             loop={song.container.length > 1 ? false : true}
             src={song.url}
             autoPlay={true}
             timeFormat="mm:ss"
+            defaultCurrentTime="00:00"
+            defaultDuration="00:00"
             showSkipControls={true}
             showFilledVolume={false}
             showJumpControls={false}
