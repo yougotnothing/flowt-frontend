@@ -9,14 +9,14 @@ import {
   PlaylistIcon,
   ContentContainer,
   Header,
-  PlaylistDataContainer,
   PlaylistSongsWrapper,
   PlaylistSong,
   PlaylistSongImage,
   PlaylistSongInfoWrapper,
   PlaylistSongInfo,
   PlaylistMainInfoWrapper,
-  LikeSongButton
+  LikeSongButton,
+  PlaylistButtonsWrapper
 } from "./Playlist.styled";
 import { playlistsStore as playlists } from "../../../../stores/toPlaylists.mobx";
 import { user } from "../../../../stores/toUser.mobx";
@@ -25,6 +25,7 @@ import { Title as Helmet } from "../../../../helmet";
 import { formatNumbers } from "../../functions";
 import { likedSongs } from "../../../../stores/toLiked-songs.mobx";
 import { ISongData } from "../../../../types/types";
+import { useLocation } from "react-router-dom";
 
 export const Playlist: FC = observer(() => {
   const [isLikedSongs, setIsLikedSongs] = useState<boolean[]>(
@@ -34,6 +35,7 @@ export const Playlist: FC = observer(() => {
       ))
     : Array(likedSongs.songs.length).fill(false)
   );
+  const location = useLocation();
 
   const handleLikedSong = async (song: ISongData) => {
     try {
@@ -51,11 +53,18 @@ export const Playlist: FC = observer(() => {
   }
 
   useEffect(() => {
+    const url = location.pathname.split('/');
+
+    console.log(url);
+    playlists.getPlaylistByURL(url[2], url[3]);
+  }, []);
+  
+
+  useEffect(() => {
     const updatedLikedSongs = playlists.container?.songs.map(song => likedSongs.songs.some(likedSong => likedSong.songId === song.songId));
 
     updatedLikedSongs && setIsLikedSongs(updatedLikedSongs);
   }, [likedSongs.songs]);
-  
 
   return (
     <ContentContainer>
@@ -72,7 +81,10 @@ export const Playlist: FC = observer(() => {
               <PlaylistInfo $type="name">{playlists.container.name}</PlaylistInfo>
               <PlaylistInfo $type="username">{user.username}</PlaylistInfo>
             </PlaylistInfoContainer>
-            <PlaylistButton onClick={() => songs.setSong(0, playlists.container?.songs)}>listen</PlaylistButton>
+            <PlaylistButtonsWrapper>
+              <LikeSongButton $isLiked />
+              <PlaylistButton onClick={() => songs.setSong(0, playlists.container?.songs)}>listen</PlaylistButton>
+            </PlaylistButtonsWrapper>
           </Container>
           <PlaylistSongsWrapper>
             {playlists.container.songs.map((song, index) => (

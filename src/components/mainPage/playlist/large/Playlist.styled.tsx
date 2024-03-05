@@ -147,6 +147,18 @@ export const PlaylistButton = styled('button')`
   }
 `;
 
+export const PlaylistButtonsWrapper = styled('div')`
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  gap: 24px;
+  margin: auto 0 auto auto;
+
+  @media (max-width: 460px) {
+    gap: 12px;
+  }
+`;
+
 export const PlaylistDroplist = styled('div')<IPlaylistDroplist>`
   display: ${p => p.$isOpen ? 'flex' : 'none'};
   flex-direction: column;

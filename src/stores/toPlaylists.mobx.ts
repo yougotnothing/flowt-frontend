@@ -2,7 +2,6 @@ import { makeObservable, observable, action, runInAction } from "mobx";
 import { IPlaylist, IPlaylistProps, ISearchPlaylist, ISongPlaylist } from "../types/props";
 import { api } from "../api/axiosConfig";
 import { ISongData } from "../types/types";
-import { ChangeEvent, ChangeEventHandler } from "react";
 
 class PlaylistsStore {
   self: IPlaylist[];
@@ -267,6 +266,17 @@ class PlaylistsStore {
       console.log(response.data);
     }catch(error: any) {
       console.error('last listened: ', error);
+      return;
+    }
+  }
+
+  async getPlaylistByURL(author: string, name: string) {
+    try {
+      const response = await api.get(encodeURI(`/playlists/${author}/${name}`));
+      this.setContainer(response.data);
+      console.log(response.data);
+    }catch(error: any) {
+      console.error(error);
       return;
     }
   }

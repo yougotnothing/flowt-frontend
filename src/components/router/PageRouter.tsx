@@ -150,7 +150,7 @@ export const pageRouter = createBrowserRouter([
         element: <EditPlaylist />
       },
       {
-        path: '/playlist/:id',
+        path: '/playlist/:author/:id',
         element: <BrowsePlaylist />
       },
       {

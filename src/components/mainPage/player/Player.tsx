@@ -111,6 +111,11 @@ export const Player: React.FC = observer(() => {
             onEnded={handlePlayNext}
             onClickNext={handlePlayNext}
             onClickPrevious={handlePlayPrev}
+            customProgressBarSection={[
+              RHAP_UI.CURRENT_TIME,
+              RHAP_UI.PROGRESS_BAR,
+              RHAP_UI.CURRENT_LEFT_TIME,
+            ]}
             customControlsSection={[
               <SongContainer>
                 <SongPicture style={{ backgroundImage: `url(${song.avatar})` }}/>
