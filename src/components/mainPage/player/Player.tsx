@@ -103,6 +103,7 @@ export const Player: React.FC = observer(() => {
             loop={song.container.length > 1 ? false : true}
             src={song.url}
             autoPlay
+            timeFormat="mm:ss"
             showSkipControls={true}
             showJumpControls={false}
             onPlay={() => console.log('play')}

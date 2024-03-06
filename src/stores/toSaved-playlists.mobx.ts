@@ -31,7 +31,7 @@ class SavedPlaylists {
 
   async savePlaylist(playlist: IPlaylist) {
     try {
-      await api.post('/saved-playlists');
+      await api.post(`/saved-playlists/${playlist.author}/${playlist.name}`);
       console.log('playlist saved');
       console.log(playlist);
     }catch(error: any) {
@@ -42,7 +42,7 @@ class SavedPlaylists {
 
   async removePlaylist(playlist: IPlaylist) {
     try {
-      await api.delete('/saved-playlists');
+      await api.delete(`/saved-playlists/${playlist.author}/${playlist.name}`);
       console.log('playlist deleted');
       console.log(playlist);
     }catch(error: any) {

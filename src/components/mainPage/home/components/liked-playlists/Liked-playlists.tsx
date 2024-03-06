@@ -35,7 +35,9 @@ export const LikedPlaylists: FC<{ size: 'big' | 'small' }> = observer(({ size })
                   navigate(generatePath('/playlist/:author/:id', { author: playlist.username, id: playlist.name }));
                 }}
               >{playlist.name}</SongInfo>
-              <SongInfo $type="author">{playlist.username}</SongInfo>
+              <SongInfo $type="author"
+                onClick={() => navigate(generatePath('/profile/:id', { id: playlist.username }))}
+              >{playlist.username}</SongInfo>
             </SongInfoContainer>
           </Song>
         )) : (

@@ -50,7 +50,7 @@ export const LikedPlaylists = observer(() => {
                 </TextButtonsContainer>
               </DataContainer>
               <ManagementButtonsContainer>
-                <LikeButton $isLiked={isLiked[index]} onClick={() => likedPlaylists.deleteLikedPlaylist(playlist)} />
+                <LikeButton $isLiked={isLiked[index]} onClick={() => likedPlaylists.dislike(playlist)} />
                 <ManagementButton
                   onClick={() => {
                     songs.getInfo(playlist.songs);

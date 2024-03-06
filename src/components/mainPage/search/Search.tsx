@@ -228,7 +228,7 @@ export const Search: FC = observer(() => {
             </CardInfoContainer>
             <CardButtonsContainer $isOpen={isOpenPlaylists[index]}>
               <CardButton
-                onClick={() => likedPlaylists.addLikedPlaylist(undefined, { name: playlist.name, username: playlist.username })}
+                onClick={() => likedPlaylists.like({ name: playlist.name, username: playlist.username })}
               >Like</CardButton>
               <CardButton
                 disabled={playlist.username === User.username}

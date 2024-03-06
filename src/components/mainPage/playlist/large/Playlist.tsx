@@ -26,8 +26,16 @@ import { formatNumbers } from "../../functions";
 import { likedSongs } from "../../../../stores/toLiked-songs.mobx";
 import { ISongData } from "../../../../types/types";
 import { useLocation } from "react-router-dom";
+import { savedPlaylists } from "../../../../stores/toSaved-playlists.mobx";
+import { IPlaylist } from "../../../../types/props";
+import { likedPlaylists } from "../../../../stores/toLiked-playlists.mobx";
 
 export const Playlist: FC = observer(() => {
+  const [isLikedPlaylist, setisLikedPlaylist] = useState<boolean>(
+    savedPlaylists.playlists.some(existingPlaylist =>
+      existingPlaylist.playlistId === playlists.container?.playlistId
+    )
+  );
   const [isLikedSongs, setIsLikedSongs] = useState<boolean[]>(
     playlists.container ? playlists.container.songs.map(song =>
       likedSongs.songs.some(likedSong => 
@@ -46,6 +54,17 @@ export const Playlist: FC = observer(() => {
       }else{
         await likedSongs.dislikeSong(song);
       }
+    }catch(error: any) {
+      console.error(error);
+      return;
+    }
+  }
+
+  const handleLikePlaylist = async (playlist: IPlaylist) => {
+    try {
+      if(isLikedPlaylist) {
+        likedPlaylists.dislike(playlist);
+      }else likedPlaylists.like(playlist);
     }catch(error: any) {
       console.error(error);
       return;
@@ -82,7 +101,7 @@ export const Playlist: FC = observer(() => {
               <PlaylistInfo $type="username">{user.username}</PlaylistInfo>
             </PlaylistInfoContainer>
             <PlaylistButtonsWrapper>
-              <LikeSongButton $isLiked />
+              <LikeSongButton $isLiked={isLikedPlaylist} onClick={() => playlists.container && handleLikePlaylist(playlists.container)} />
               <PlaylistButton onClick={() => songs.setSong(0, playlists.container?.songs)}>listen</PlaylistButton>
             </PlaylistButtonsWrapper>
           </Container>

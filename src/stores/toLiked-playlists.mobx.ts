@@ -11,8 +11,8 @@ class LikedPlaylistsStore {
     makeObservable(this, {
       playlists: observable,
       setLikedPlaylists: action,
-      deleteLikedPlaylist: action,
-      addLikedPlaylist: action
+      dislike: action,
+      like: action
     });
   }
 
@@ -30,7 +30,7 @@ class LikedPlaylistsStore {
     }
   }
 
-  async deleteLikedPlaylist(playlist: IPlaylist) {
+  async dislike(playlist: IPlaylist) {
     try {
       const response = await api.delete('/saved-playlists', {
         params: {
@@ -45,26 +45,14 @@ class LikedPlaylistsStore {
     }
   }
 
-  async addLikedPlaylist(playlist?: IPlaylist, data?: { name: string, username: string }) {
+  async like(playlist: IPlaylist | { name: string, username: string }) {
     try {
-      if(playlist) {
-        await api.post('/saved-playlists', {
-          username: playlist.username,
-          playlistName: playlist.name
-        });
-        
-        console.log("playlist added to liked.");
-        runInAction(() => {
-          this.playlists.push(playlist);
-        });
-      }else if(data) {
-        await api.post('/saved-playlists', {
-          username: data.username,
-          playlistName: data.name
-        });
+      await api.post('/saved-playlists', {
+        username: playlist.username,
+        playlistName: playlist.name
+      });
 
-        console.log('playlist added to liked.');
-      }
+      this.setLikedPlaylists();
     }catch(error: any) {
       console.error(error);
     }
