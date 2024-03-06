@@ -96,7 +96,7 @@ export const Player: React.FC = observer(() => {
       {user && song.url && (
         <PlayerContainer>
           <Helmet title={`Playing: ${song.name}`} />
-          <AudioPlayer
+          {/* <AudioPlayer
             layout="stacked-reverse"
             volume={0.5}
             preload="none"
@@ -134,6 +134,18 @@ export const Player: React.FC = observer(() => {
               RHAP_UI.ADDITIONAL_CONTROLS,
               RHAP_UI.VOLUME_CONTROLS,
             ]}
+          /> */}
+          <AudioPlayer
+            style={{ borderRadius: "1rem", color: "green", background: "#E9FFE9" }}
+            autoPlay
+            src={"https://www.bensound.com/bensound-music/bensound-acousticbreeze.mp3"}
+            onPlay={(e) => console.log("onPlay")}
+            showSkipControls={true}
+            showJumpControls={false}
+            header={`Now playing: ${song.name}`}
+            onClickPrevious={handlePlayPrev}
+            onClickNext={handlePlayNext}
+            onEnded={handlePlayNext}
           />
         </PlayerContainer>
       )}
