@@ -258,7 +258,11 @@ export const SongCreatorLink = styled('a')`
   }
 `;
 
-export const ShuffleButton = styled('button')`
+interface ShuffleButtonProps {
+  $isShuffled: boolean;
+}
+
+export const ShuffleButton = styled('button')<ShuffleButtonProps>`
   cursor: pointer;
   display: flex;
   height: 24px;
@@ -271,6 +275,7 @@ export const ShuffleButton = styled('button')`
   background-position: center;
   justify-content: center;
   position: absolute;
+  background-image: url(${({ $isShuffled }) => $isShuffled ? '/shuffle-on.webp' : '/shuffle-off.webp'});
   left: 55.5%;
 
   @media (max-width: 460px) {

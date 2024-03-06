@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 
-import H5AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
+import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import {
   PlayerContainer,
   SongContainer,
@@ -23,7 +23,6 @@ export const Player: React.FC = observer(() => {
   const[index, setIndex] = useState<number>(0);
   const[isShuffled, setIsShuffled] = useState<boolean>(false);
   const[isLiked, setIsLiked] = useState<boolean>(false);
-  const SHUFFLE_ICON = isShuffled ? "url(/shuffle-on.webp)" : "url(/shuffle-off.webp)";
 
   const handleLikedSong = async () => {
     try {
@@ -97,28 +96,19 @@ export const Player: React.FC = observer(() => {
       {user && song.url && (
         <PlayerContainer>
           <Helmet title={`Playing: ${song.name}`} />
-          <H5AudioPlayer
+          <AudioPlayer
             layout="stacked-reverse"
             volume={0.5}
             preload="none"
             loop={song.container.length > 1 ? false : true}
             src={song.url}
-            autoPlay={true}
-            timeFormat="mm:ss"
-            defaultCurrentTime="00:00"
-            defaultDuration="00:00"
+            autoPlay
             showSkipControls={true}
-            showFilledVolume={false}
             showJumpControls={false}
-            onChangeCurrentTimeError={() => console.log('error time change')}
+            onPlay={() => console.log('play')}
             onEnded={handlePlayNext}
             onClickNext={handlePlayNext}
             onClickPrevious={handlePlayPrev}
-            customProgressBarSection={[
-              RHAP_UI.CURRENT_TIME,
-              RHAP_UI.PROGRESS_BAR,
-              RHAP_UI.CURRENT_LEFT_TIME,
-            ]}
             customControlsSection={[
               <SongContainer>
                 <SongPicture style={{ backgroundImage: `url(${song.avatar})` }}/>
@@ -136,7 +126,7 @@ export const Player: React.FC = observer(() => {
                 />
               </SongContainer>,
               <ShuffleButton
-                style={{ backgroundImage: SHUFFLE_ICON }}
+                $isShuffled={isShuffled}
                 onClick={handleShuffleClick}
               />,
               RHAP_UI.MAIN_CONTROLS,
