@@ -55,21 +55,10 @@ export const playlistSchema = Yup.object().shape({
 export const verifyArtistSchema = Yup.object().shape({
   name: Yup.string().min(2, 'name too short').max(24, 'Name too long.'),
   surname: Yup.string().min(2, 'surname too short').max(24, 'Surname too long.'),
-  passportNumber: Yup.string()
-    .min(8, 'Passport number too short')
-    .max(8, 'Passport number too long'),
-  birthYear: Yup.number()
-    .min(1900, 'true')
-    .max(2024, 'true')
-    .required('true'),
-  birthMonth: Yup.number()
-    .max(12, 'true')
-    .min(1, 'true')
-    .required('true'),
-  birthDay: Yup.number()
-    .min(1, 'true')
-    .max(31, 'true')
-    .required('true')
+  passportNumber: Yup.string().min(8, 'Passport number too short').max(8, 'Passport number too long'),
+  birthYear: Yup.number().min(1900, 'true').max(new Date().getUTCFullYear(), 'true').required('true'),
+  birthMonth: Yup.number().max(12, 'true').min(1, 'true').required('true'),
+  birthDay: Yup.number().min(1, 'true').max(31, 'true').required('true')
 });
 
 export const emailSchema = Yup.object().shape({
